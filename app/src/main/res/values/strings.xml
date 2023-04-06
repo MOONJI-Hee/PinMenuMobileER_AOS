@@ -1,0 +1,294 @@
+<resources>
+    <string name="app_name">PinmenuMobileER</string>
+
+    <string name="login">로그인</string>
+    <string name="id">아이디</string>
+    <string name="password">비밀번호</string>
+
+    <string name="signup">회원가입</string>
+
+    <string name="won">원</string>
+    <string name="gea">개</string>
+
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+
+    <string name="total">총</string>
+    <string name="order">주문하기</string>
+    <string name="delete_order">주문삭제</string>
+
+    <string name="set_tableno">테이블 번호 설정</string>
+    <string name="tableno">테이블 번호</string>
+    <string name="tablepass">테이블 비밀번호</string>
+
+    <string name="essential">필수</string>
+
+    <string name="confirm">확인</string>
+    <string name="cancel">취소</string>
+    <string name="save">저장</string>
+    <string name="delete">삭제</string>
+    <string name="update">수정</string>
+    <string name="sequence">순서</string>
+    <string name="call">호출</string>
+
+    <!--  버튼 텍스트  -->
+    <string name="btn_login">로&#160;그&#160;인</string>
+    <string name="btn_confirm">확&#160;&#160;인</string>
+    <string name="btn_cancel">취&#160;&#160;소</string>
+    <string name="btn_save">저&#160;&#160;장</string>
+    <string name="btn_save2">저&#160;장</string>
+    <string name="btn_delete">삭&#160;&#160;제</string>
+    <string name="btn_update">수&#160;&#160;정</string>
+    <string name="btn_update2">수&#160;정</string>
+    <string name="btn_sequence">순&#160;&#160;서</string>
+    <string name="btn_sequence2">순&#160;서</string>
+    <string name="btn_call">호&#160;&#160;출</string>
+    <string name="btn_call2">호&#160;출</string>
+    <string name="btn_complete">완&#160;&#160;료</string>
+    <string name="btn_payment2">결&#160;제</string>
+
+    <string name="udt_info">정보변경</string>
+
+    <string name="date">날짜</string>
+    <string name="month">월</string>
+    <string name="day">일</string>
+    <string name="tilde">~</string>
+    <string name="colon">:</string>
+    <string name="zero">0</string>
+    <string name="zero2">00</string>
+    <string name="min">분</string>
+
+    <string name="zeroClock"><font color="#B4B4B4">00</font>:<font color="#B4B4B4">00</font></string>
+
+    <string name="monday">월요일</string>
+    <string name="tuesday">화요일</string>
+    <string name="wednesday">수요일</string>
+    <string name="thursday">목요일</string>
+    <string name="friday">금요일</string>
+    <string name="saturday">토요일</string>
+    <string name="sunday">일요일</string>
+
+    <string name="mon">월</string>
+    <string name="tue">화</string>
+    <string name="wed">수</string>
+    <string name="thu">목</string>
+    <string name="fri">금</string>
+    <string name="sat">토</string>
+    <string name="sun">일</string>
+
+    <!--  로그인 & 비번찾기  -->
+    <string name="login_info">회원가입은 홈페이지\n또는 태블릿용 앱에서 가능합니다.</string>
+    <string name="find_pwd">비밀번호 찾기</string>
+    <string name="email">아이디(이메일)</string>
+    <string name="email_hint">이메일을 입력해주세요.</string>
+    <string name="find_pwd_info1">회원 아이디(이메일)를 입력해 주세요.\n작성하신 아이디로 새로운 비밀번호가 전송됩니다.</string>
+    <string name="find_pwd_info2">가입되지 않은 아이디는 이메일이 발송되지 않습니다.</string>
+    <string name="send_pwd">새로운 비밀번호 전송</string>
+
+    <!-- 매장 리스트 -->
+    <string name="use">사용중</string>
+    <string name="not_use">미사용</string>
+    <string name="store_addition">부가서비스&#160;:&#160;</string>
+    <string name="arpayo_conn">알파요연동</string>
+    <string name="main">메인</string>
+    <string name="store_udt">정보수정</string>
+    <string name="store_pay_info">결제정보</string>
+    <string name="store_pay_date">다음결제일</string>
+    <string name="store_pay_no">없음</string>
+    <string name="store_list_info">운영중인 매장을 등록하여 이용하실 수 있습니다.\n복수의 매장을 운영중이시면 다수의 매장을 등록하실 수 있습니다.</string>
+
+    <!--  매장 등록 & 수정  -->
+    <string name="store_name">매장명</string>
+    <string name="store_name_hint">매장명을 입력해주세요.</string>
+    <string name="store_addr">매장 주소</string>
+    <string name="store_addr_hint">우측 지도 검색을 눌러 주소를 입력해주세요.</string>
+    <string name="store_map">지도검색</string>
+    <string name="map_hint">주소를 입력하세요.</string>
+    <string name="store_addr_info">매장 주소는 매우 중요한 정보입니다.\n매장 주소를 토대로 주변 고객분들께 재방문, 신규방문 이벤트가 진행됩니다.\n매장 주소는 지도에서 정확하게 선택해 주십시요.</string>
+    <string name="store_reg">매장등록</string>
+    <!--  매장 세부 정보  -->
+    <string name="store_detail">세부정보</string>
+    <string name="store_tel">매장 전화번호</string>
+    <string name="store_sns">SNS 계정 정보</string>
+    <string name="store_pd">배달/주차 정보</string>
+    <string name="store_tel_hint">예) 1688-2315</string>
+    <string name="store_insta">인스타그램 계정</string>
+    <string name="at"><![CDATA[@]]></string>
+    <string name="store_insta_hint">계정을 입력해주세요</string>
+    <string name="store_delivery">배달 가능 여부</string>
+    <string name="store_delivery_y">배달 가능</string>
+    <string name="store_delivery_n">배달 없음</string>
+    <string name="store_parking">주차 가능 여부</string>
+    <string name="store_parking_y">주차 가능</string>
+    <string name="store_parking_n">주차장 없음</string>
+    <string name="store_parking_addr">주차장 주소</string>
+    <!--  매장 영업 시간 -->
+    <string name="store_open_hours">영업시간</string>
+    <string name="store_day_of_week">요일별</string>
+    <string name="store_break">브레이크타임</string>
+    <string name="store_holiday">휴일</string>
+    <string name="store_same_hour">매일 동일한 영업시간</string>
+    <string name="store_diff_hour">매일 다른 영업시간</string>
+    <string name="store_same_break">매일 동일한 브레이크 타임</string>
+    <string name="store_diff_break">매일 다른 브레이크 타임</string>
+    <string name="store_same_holiday">매주 동일한 휴일</string>
+    <string name="store_special_holiday">특별 휴일 입력</string>
+    <string name="everyday">매일</string>
+    <string name="everymonth">매월</string>
+    <string name="store_time_info">새벽 6시 마감은 30:00으로 설정</string>
+    <string name="store_time_set">영업시간 설정</string>
+    <string name="store_break_set">브레이크타임 설정</string>
+    <string name="store_holiday_set">휴일 설정</string>
+    <string name="store_holiday_name">휴일 명칭</string>
+    <string name="store_holiday_name_hint">명칭을 입력해주세요.</string>
+    <string name="store_holiday_set_info">‘월’을 입력하지 않으면 ‘매월’로 표시합니다.</string>
+    <!--  매장 대표 사진 -->
+    <string name="store_img">매장사진</string>
+    <string name="store_rep_img">대표 사진</string>
+    <string name="store_img_reg">등록 및 관리</string>
+    <string name="store_img_reg_hint">[ 등록 및 관리 ] 버튼으로\n이미지를 등록해주세요</string>
+    <string name="store_img_info"><b>매장 대표 사진</b>\n매장을 대표할 이미지를 올려주세요.\n음식 사진 혹은 매장 내부 혹은 외부 사진을 올려주세요.</string>
+
+    <!--  메뉴 선택 (메인)  -->
+    <string name="order_mgmt">주문정보</string>
+    <string name="call_mgmt">직원 호출</string>
+    <string name="menu_mgmt">메뉴판 설정</string>
+    <string name="event_mgmt">이벤트 관리</string>
+    <string name="find_menu">메뉴판 찾기</string>
+    <string name="order_info_sub">주문 내역 확인</string>
+    <string name="call_mgmt_sub">호출 내역 확인</string>
+    <string name="menu_mgmt_sub">메뉴 정보 입력</string>
+    <string name="menu_mgmt_sub2">메뉴판 색상 설정</string>
+    <string name="event_mgmt_sub">재방문 이벤트 관리</string>
+
+    <!--  더보기  -->
+    <string name="more">더보기</string>
+    <string name="more_set_nick">메뉴판 별명 설정</string>
+    <string name="more_set_nick_info">별명을 설정하지 않으면 기기의 기본으로 설정된\n이름으로 표시됩니다.</string>
+    <string name="more_menu_reg">등록 메뉴판</string>
+    <string name="more_menu_nick">메뉴판 별명</string>
+    <string name="version_info">버전 정보</string>
+
+    <!--  카테고리 설정  -->
+    <string name="category_info_seq"><b>카테고리 순서 변경</b>은\n변경하고자하는 카테고리를 누른 후 좌우 버튼을 눌러 순서를 변경합니다.\n변경 후에는 [ 저장 ] 버튼을 눌러주셔야 변경된 내용이 적용됩니다.</string>
+    <string name="category_info_udt"><b>카테고리 [ 수정 ] [ 삭제 ] [ 숨기기 ]를 할 경우</b> 에는\n변경하고자하는 카테고리를 누른 후 변경 팝업창이 나오면 텍스트 수정, 삭제, 카테고리 숨김을 진행하실 수 있습니다.</string>
+    <string name="category_name">카테고리 명칭</string>
+    <string name="category_name_hint">명칭을 입력해주세요.</string>
+    <string name="category_exp">카테고리 설명</string>
+    <string name="category_exp_hint">설명 혹은 영문을 입력해주세요.</string>
+    <string name="category_dialog_info1"><b>카테고리 순서 변경이 필요한 경우</b>에는\n우측 상단 [ 카테고리 순서 변경 ] 버튼을 누른 후\n변경하고자하는 카테고리를 선택하여 좌우로 이동시켜 순서를 변경합니다.\n변경 후에는 [ 저장 ] 버튼을 눌러주셔야 변경된 내용이 적용됩니다.</string>
+    <string name="category_dialog_info2"><b>카테고리 [ 숨김 ] 필요한 경우</b>에는\n우측 상단에 있는 [ 숨기기 ] 옆 Off 버튼을 On으로 변경 후 저장을 눌러주세요.\n삭제는 카테고리에 입력된 모든 메뉴 정보가 삭제되지만,\n[ 숨기기 ]는 고객에게 보여지지 않도록 설정됩니다.</string>
+    <string name="category_hide">숨기기</string>
+    <string name="category_set">카테고리\n설정</string>
+    <string name="category_add">카테고리 추가</string>
+    <string name="category_seq">카테고리 순서 변경</string>
+
+    <!--  메뉴 설정  -->
+    <string name="change_seq">순서변경</string>
+    <string name="menu_delete">메뉴삭제</string>
+    <string name="menu_delete_info">[ %s ]\n메뉴를 삭제하시겠습니까?\n삭제를 누르시면 입력한 모든 정보가 삭제되며,\n삭제 이후에는 복원하실 수 없습니다.</string>
+    <string name="menu_name_hint">상품명을 입력해주세요.</string>
+    <string name="menu_exp_hint">상품 설명을 입력해주세요.\n두 줄 이상으로 상품 설명을 입력하실 수 있습니다.\n외국어 설명이 필요한 경우 줄을 바꿔 입력하여 사용할 수 있습니다.</string>
+    <string name="cookingTime">조리시간</string>
+    <string name="menu_img_reg_info">동영상은 첫번째 사진등록에 해주십시오. (사진 크기 최대 5BM / 동영상 최대 10MB)</string>
+    <string name="menu_vid_reg">동영상 / 사진 등록</string>
+    <string name="menu_vid_reg_hint">동영상 / 이미지 없음</string>
+    <string name="menu_img_reg">사진 등록</string>
+    <string name="menu_img_reg_hint">이미지 없음</string>
+    <string name="menu_sleep">슬립 모드 때 상품 노출</string>
+    <string name="menu_status">메뉴 상태 사용</string>
+    <string name="none">None</string>
+    <string name="hide">Hide</string>
+    <string name="best">Best</string>
+    <string name="soldout">Sold Out</string>
+    <string name="New">New</string>
+
+    <string name="option">옵션</string>
+    <string name="option_require">필수 옵션</string>
+    <string name="option_choice">선택 옵션</string>
+
+    <!--  옵션 설정  -->
+    <string name="opt_num">옵션 %d</string>
+    <string name="opt_req_name">필수옵션명</string>
+    <string name="opt_chc_name">선택옵션명</string>
+    <string name="opt_name_hint">옵션 이름을 입력해주세요.</string>
+    <string name="opt_hint">옵션을 입력해주세요.</string>
+    <string name="opt_req_info1"><b>필수 옵션</b>은 사용자가 옵션을 하나만 선택할 수 있습니다.</string>
+    <string name="opt_req_info2"><b>다중 선택 옵션</b>이 필요하면 팝업을 닫고, [ + 선택 옵션 ] 버튼으로 옵션을 추가해주세요.</string>
+    <string name="opt_chc_info1"><b>선택 옵션</b>은 사용자가 옵션을 다중 선택할 수 있습니다.</string>
+    <string name="opt_chc_info2"><b>한가지 선택</b>만 가능한 옵션이 필요하면 팝업을 닫고, [ + 필수 옵션 ] 버튼으로 옵션을 추가해주세요.</string>
+
+    <!--  메뉴판 설정  -->
+    <string name="table_pass">테이블 비밀번호 설정</string>
+    <string name="table_pass_hint">예) 1234</string>
+    <string name="table_pass_info">비밀번호를 설정하지 않으시면\n누구나 테이블 번호를 변경할 수 있습니다.</string>
+    <string name="bg">배경 : %s</string>
+    <string name="sel_bg">배경 선택</string>
+    <string name="bg_dark">어두운 배경</string>
+    <string name="bg_silver">은색 배경</string>
+    <string name="bg_light">밝은 배경</string>
+    <string name="set_bg">배경 적용</string>
+    <string name="viewmode">뷰어 모드 : %s</string>
+    <string name="sel_viewmode">뷰어 모드 선택</string>
+    <string name="viewmode_basic">기본 모드</string>
+    <string name="viewmode_pic">사진 모드</string>
+    <string name="set_viewmode">뷰어 모드 적용</string>
+
+    <!-- 주문 정보 -->
+    <string name="title_order">주문정보</string>
+    <string name="order_history">주문내역</string>
+    <string name="order_btn_merge">주문 합치기</string>
+    <string name="print">프 린 트</string>
+    <string name="today">TODAY</string>
+    <string name="complete">완 료</string>
+    <string name="order_sel_merge">이 항목으로 합치기</string>
+    <string name="order_merge">주문항목 합치기</string>
+    <string name="order_merge_info">해당 항목으로 선택된 주문 정보를 합칩니다.\n합쳐진 이후에는 복구가 불가능합니다.</string>
+    <string name="merge">합치기</string>
+
+    <!-- 직원 호출 -->
+    <string name="call_emp">직원호출</string>
+    <string name="call_manage">호출목록 관리</string>
+    <string name="call_info"><b>호출 목록 추가</b>는 [ + ]버튼을 누른 후 목록을 추가합니다.\n수정이 필요한 경우 추가한 목록을 선택하면 수정이 가능합니다.</string>
+    <string name="call_add">호출목록 추가</string>
+    <string name="call_udt">호출목록 수정</string>
+    <string name="call_name">목록명</string>
+    <string name="call_name_hint">목록명을 입력해주세요.</string>
+
+    <!--  타이틀  -->
+    <string name="title_login">핀메뉴 로그인</string>
+    <string name="title_signup">핀메뉴 회원가입</string>
+    <string name="title_udt_mbr">회원정보 수정</string>
+    <string name="title_set_store">매장 설정</string>
+    <string name="title_reg_store">매장 등록</string>
+    <string name="title_udt_store">매장 정보 수정</string>
+    <string name="title_store_detail">매장 정보 : 세부정보</string>
+    <string name="title_store_hours">매장 정보 : 영업시간</string>
+    <string name="title_store_img">매장 정보 : 매장 대표 사진</string>
+    <string name="title_cate_add">카테고리 입력</string>
+    <string name="title_cate_udt">카테고리 수정</string>
+    <string name="title_map">지도 검색</string>
+
+    <!--  권한 다이얼로그  -->
+    <string name="pms_storage_title">외부 저장소 권한 요청</string>
+    <string name="pms_storage_content">원활한 서비스 이용을 위해서는 외부 저장소 권한이 필요합니다.</string>
+
+    <!--  토스트 메세지  -->
+    <string name="msg_retry">다시 시도해주세요.</string>
+    <string name="msg_complete">완료되었습니다.</string>
+    <string name="msg_no_id">아이디를 입력해주세요.</string>
+    <string name="msg_no_pw">비밀번호를 입력해주세요.</string>
+    <string name="msg_no_addr">주소를 입력해주세요.</string>
+    <string name="msg_check_addr">주소를 확인해주세요.</string>
+    <string name="msg_reg_store_first">매장 등록을 완료한 후 이용해주시기 바랍니다.</string>
+    <string name="msg_no_endtm">시간을 확인해주세요.</string>
+    <string name="msg_no_date">날짜를 확인해주세요.</string>
+    <string name="msg_no_img">이미지를 등록해주세요.</string>
+    <string name="msg_no_name">명칭을 입력해주세요.</string>
+    <string name="msg_no_item_name">목록명을 입력해주세요.</string>
+    <string name="msg_no_goods_name">상품명을 입력해주세요.</string>
+    <string name="backpress">뒤로 가기 버튼을 한 번 더 누르시면 종료됩니다.</string>
+    <string name="msg_no_search_result">검색 결과가 없습니다.</string>
+    <string name="msg_no_cart">주문 목록을 확인해주세요</string>
+    <string name="msg_no_table_no">테이블 번호를 입력해주세요.</string>
+</resources>

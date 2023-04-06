@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="10dp">
+    <TextView
+        style="@style/text18"
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:maxLines="2"
+        android:ellipsize="marquee"/>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            style="@style/text18"
+            android:id="@+id/amount"
+            android:layout_marginEnd="1dp"/>
+
+        <TextView
+            style="@style/text18"
+            android:text="@string/gea"/>
+
+        <TextView
+            style="@style/text18"
+            android:id="@+id/price"
+            android:layout_weight="1"
+            android:textAlignment="viewEnd"
+            android:layout_marginHorizontal="4dp"/>
+
+        <TextView
+            style="@style/text18"
+            android:text="@string/won"/>
+    </LinearLayout>
+
+    <TextView
+        style="@style/subtext"
+        android:id="@+id/option"
+        android:layout_width="match_parent"
+        android:layout_marginTop="3dp"
+        android:visibility="visible"
+        tools:text="코코팜추가"/>
+</LinearLayout>

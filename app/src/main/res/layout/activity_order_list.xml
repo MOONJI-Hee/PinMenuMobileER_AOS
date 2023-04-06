@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <TextView
+        style="@style/title"
+        android:id="@+id/title"
+        android:text="@string/order_mgmt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/back"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="@+id/title"
+        app:layout_constraintTop_toTopOf="@+id/title"
+        app:layout_constraintBottom_toBottomOf="@+id/title">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_back_black"/>
+    </LinearLayout>
+
+    <TextView
+        style="@style/text14w"
+        android:text="@string/today"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/ordCnt"
+        app:layout_constraintTop_toTopOf="@+id/ordCnt"
+        app:layout_constraintBottom_toBottomOf="@+id/ordCnt"/>
+    <TextView
+        style="@style/text17w"
+        android:id="@+id/ordCnt"
+        android:textStyle="bold"
+        android:layout_marginEnd="18dp"
+        app:layout_constraintEnd_toEndOf="@+id/title"
+        app:layout_constraintTop_toTopOf="@+id/title"
+        app:layout_constraintBottom_toBottomOf="@+id/title"
+        tools:text="10"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#00000029"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/list_order"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

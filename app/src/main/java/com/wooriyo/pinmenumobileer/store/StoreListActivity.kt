@@ -1,0 +1,83 @@
+package com.wooriyo.pinmenumobileer.store
+
+import android.content.Intent
+import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.wooriyo.pinmenumobileer.model.StoreDTO
+import com.wooriyo.pinmenumobileer.model.StoreListDTO
+import com.wooriyo.pinmenumobileer.util.ApiClient
+import com.wooriyo.pinmenumobileer.util.AppHelper
+import com.wooriyo.pinmenumobileer.util.AppHelper.Companion.getRoundedCornerLT
+import com.wooriyo.pinmenumobileer.BaseActivity
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.density
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.pref
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
+import com.wooriyo.pinmenumobileer.R
+import com.wooriyo.pinmenumobileer.databinding.ActivityStoreListBinding
+import com.wooriyo.pinmenumobileer.more.MoreActivity
+import com.wooriyo.pinmenumobileer.store.adapter.StoreAdapter
+import retrofit2.Call
+import retrofit2.Response
+
+class StoreListActivity : BaseActivity() {
+    lateinit var binding: ActivityStoreListBinding
+
+    val TAG = "StoreActivity"
+    val mActivity = this
+
+    var storeList = ArrayList<StoreDTO>()
+    var storeAdapter = StoreAdapter(storeList)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityStoreListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        useridx = pref.getUserIdx()
+
+        // 리사이클러뷰 뒤 배경 라운드 처리 (45dp)
+        getRoundedCornerLT(binding.bgRv, 45*density)
+
+        // 매장 리사이클러뷰, 어댑터 초기화
+        binding.rvStore.layoutManager = LinearLayoutManager(mActivity, RecyclerView.VERTICAL, false)
+        binding.rvStore.adapter = storeAdapter
+
+        getStoreList()
+
+        binding.icMain.setOnClickListener { startActivity(intent)}
+        binding.icMore.setOnClickListener { startActivity(Intent(mActivity, MoreActivity::class.java)) }
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    // 매장리스트 조회 Api
+    fun getStoreList() {
+        ApiClient.service.getStoreList(useridx)
+            .enqueue(object: retrofit2.Callback<StoreListDTO>{
+                override fun onResponse(call: Call<StoreListDTO>, response: Response<StoreListDTO>) {
+                    Log.d(TAG, "매장 리스트 조회 url : $response")
+                    if(response.isSuccessful) {
+                        val storeListDTO = response.body() ?: return
+                        if(storeListDTO.status == 1) {
+                            storeList.clear()
+                            storeList.addAll(storeListDTO.storeList)
+                            storeAdapter.notifyDataSetChanged()
+
+                            AppHelper.setViewHeight(binding.rvStore, storeList.size, 200)
+                        }else Toast.makeText(mActivity, storeListDTO.msg, Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<StoreListDTO>, t: Throwable) {
+                    Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "매장 리스트 조회 오류 > $t")
+                    Log.d(TAG, "매장 리스트 조회 오류 > ${call.request()}")
+                }
+            })
+    }
+}
