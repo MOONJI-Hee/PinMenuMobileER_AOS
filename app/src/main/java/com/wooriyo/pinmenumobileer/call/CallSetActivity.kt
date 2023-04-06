@@ -2,7 +2,6 @@ package com.wooriyo.pinmenumobileer.call
 
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.wooriyo.pinmenumobileer.BaseActivity

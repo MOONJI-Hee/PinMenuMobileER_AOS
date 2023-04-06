@@ -37,10 +37,6 @@ class OrderListActivity : BaseActivity() {
         binding = ActivityOrderListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        orderAdapter.setOnCmpltClickListener(object:ItemClickListener{
-            override fun onItemClick(position: Int) {setComplete(position)}
-        })
-
         binding.rv.layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false)
         binding.rv.adapter = orderAdapter
 

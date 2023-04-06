@@ -1,51 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginBottom="4dp"
     android:background="@color/white"
     android:orientation="vertical"
     android:padding="10dp">
     <TextView
-        style="@style/text18"
+        style="@style/text18b"
         android:id="@+id/name"
         android:layout_width="match_parent"
-        android:maxLines="2"
-        android:ellipsize="marquee"/>
-
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp">
-
-        <TextView
-            style="@style/text18"
-            android:id="@+id/amount"
-            android:layout_marginEnd="1dp"/>
-
-        <TextView
-            style="@style/text18"
-            android:text="@string/gea"/>
-
-        <TextView
-            style="@style/text18"
-            android:id="@+id/price"
-            android:layout_weight="1"
-            android:textAlignment="viewEnd"
-            android:layout_marginHorizontal="4dp"/>
-
-        <TextView
-            style="@style/text18"
-            android:text="@string/won"/>
-    </LinearLayout>
-
+        android:ellipsize="marquee"
+        tools:text="아메리카노"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        style="@style/text20"
+        android:id="@+id/gea"
+        android:textStyle="bold"
+        android:layout_marginEnd="3dp"
+        tools:text="1"
+        app:layout_constraintBottom_toBottomOf="@+id/name"
+        app:layout_constraintEnd_toStartOf="@+id/tv_gea"/>
+    <TextView
+        style="@style/text"
+        android:id="@+id/tv_gea"
+        android:textSize="16sp"
+        android:text="@string/gea"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/name" />
+    <TextView
+        style="@style/text16"
+        android:id="@+id/price"
+        android:layout_marginTop="7dp"
+        tools:text="5,000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name"/>
+    <TextView
+        style="@style/text16"
+        android:text="@string/won"
+        android:layout_marginStart="1dp"
+        app:layout_constraintStart_toEndOf="@+id/price"
+        app:layout_constraintBottom_toBottomOf="@+id/price"/>
     <TextView
         style="@style/subtext"
         android:id="@+id/option"
         android:layout_width="match_parent"
-        android:layout_marginTop="3dp"
-        android:visibility="visible"
-        tools:text="코코팜추가"/>
-</LinearLayout>
+        android:layout_marginTop="4dp"
+        android:visibility="gone"
+        tools:text="코코팜추가"
+        app:layout_constraintTop_toBottomOf="@+id/price"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,7 +26,7 @@ class OrderDetailAdapter(val dataSet: ArrayList<OrderDTO>): RecyclerView.Adapter
         fun bind (data : OrderDTO) {
             binding.run {
                 name.text = data.name
-                amount.text = data.gea.toString()
+                gea.text = data.gea.toString()
                 price.text = AppHelper.price(data.price)
 
                 if(data.opt.isNotEmpty()) {
