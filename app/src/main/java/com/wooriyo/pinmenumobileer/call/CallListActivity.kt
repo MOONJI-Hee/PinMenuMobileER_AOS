@@ -11,14 +11,12 @@ import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.call.adapter.CallListAdapter
-import com.wooriyo.pinmenumobileer.databinding.ActivityCallListBinding
+import com.wooriyo.pinmenumobileer.databinding.ActivityOrderListBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.CallDTO
 import com.wooriyo.pinmenumobileer.model.CallHistoryDTO
 import com.wooriyo.pinmenumobileer.model.CallListDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
-import com.wooriyo.pinmenumobileer.store.StoreMenuActivity
-import com.wooriyo.pinmenumobileer.util.Api
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,7 +25,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class CallListActivity : BaseActivity(), View.OnClickListener {
-    lateinit var binding: ActivityCallListBinding
+    lateinit var binding: ActivityOrderListBinding
     lateinit var timer: Timer
 
     val TAG = "CallListActivity"
@@ -38,7 +36,7 @@ class CallListActivity : BaseActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCallListBinding.inflate(layoutInflater)
+        binding = ActivityOrderListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // 호출어댑터 리스너 설정 (완료 버튼 눌렀을 때 position 가져오기)
@@ -46,12 +44,11 @@ class CallListActivity : BaseActivity(), View.OnClickListener {
             override fun onItemClick(position: Int) { setComplete(position) }
         })
         // 리사이클러뷰 초기화 및 어댑터 연결
-        binding.rvCall.layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false)
-        binding.rvCall.adapter = callListAdapter
+        binding.rv.layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false)
+        binding.rv.adapter = callListAdapter
 
         // 클릭 이벤트
         binding.back.setOnClickListener(this)
-        binding.btnSet.setOnClickListener(this)
 
         getCallList()
     }
@@ -75,7 +72,6 @@ class CallListActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v) {
             binding.back -> finish()
-            binding.btnSet -> startActivity(Intent(mActivity, CallSetActivity::class.java))
         }
     }
 

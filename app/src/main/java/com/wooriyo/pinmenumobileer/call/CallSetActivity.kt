@@ -6,12 +6,11 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.wooriyo.pinmenumobileer.BaseActivity
-import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.call.adapter.CallSetAdapter
-import com.wooriyo.pinmenumobileer.databinding.ActivityCallListBinding
+import com.wooriyo.pinmenumobileer.databinding.ActivityOrderListBinding
 import com.wooriyo.pinmenumobileer.model.CallDTO
 import com.wooriyo.pinmenumobileer.model.CallSetListDTO
 import com.wooriyo.pinmenumobileer.util.ApiClient
@@ -22,23 +21,20 @@ import retrofit2.Response
 class CallSetActivity : BaseActivity() {
     val TAG = "CallSetActivity"
     val mActivity = this@CallSetActivity
-    lateinit var binding: ActivityCallListBinding
+    lateinit var binding: ActivityOrderListBinding
 
     val setList = ArrayList<CallDTO>()
     private val callSetAdapter = CallSetAdapter(setList)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCallListBinding.inflate(layoutInflater)
+        binding = ActivityOrderListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // CallList와 레이아웃 같이 쓰기 때문에, SetActivity에 맞게 뷰 변경
-        binding.btnSet.setBackgroundResource(R.drawable.bg_btn_r6_grd)
-        binding.rvCall.visibility = View.GONE
-        binding.callSetArea.visibility = View.VISIBLE
+        // OrderList와 레이아웃 같이 쓰기 때문에, SetActivity에 맞게 뷰 변경
 
         binding.back.setOnClickListener{finish()}
-        binding.btnSet.setOnClickListener{finish()}
+//        binding.btnSet.setOnClickListener{finish()}
 
         setView()
         getCallList()
@@ -46,8 +42,8 @@ class CallSetActivity : BaseActivity() {
 
     fun setView() {
         // 리사이클러뷰 초기화
-        binding.rvCallSet.layoutManager = GridLayoutManager(mActivity, 4)
-        binding.rvCallSet.adapter = callSetAdapter
+        binding.rv.layoutManager = GridLayoutManager(mActivity, 4)
+        binding.rv.adapter = callSetAdapter
     }
 
     private fun getCallList() {
