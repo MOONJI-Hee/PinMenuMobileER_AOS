@@ -1,7 +1,6 @@
 package com.wooriyo.pinmenumobileer.model
 
 import com.google.gson.annotations.SerializedName
-import retrofit2.http.Query
 import java.io.Serializable
 
 data class StoreDTO(
@@ -11,6 +10,8 @@ data class StoreDTO(
     @SerializedName("name2") var name2 : String,
     @SerializedName("buse") var buse : String,
     @SerializedName("paydt") var paydt : String,
+    @SerializedName("ordCnt") var ordCnt: Int,
+    @SerializedName("callCnt") var callCnt: Int,
     @SerializedName("address") var address : String,
     @SerializedName("Lclat") var lat : String,
     @SerializedName("Lclong") var long : String,
@@ -35,10 +36,10 @@ data class StoreDTO(
     @SerializedName("fri_buse") var fri_buse : String,
     @SerializedName("sat_buse") var sat_buse : String,
     @SerializedName("sun_buse") var sun_buse : String,
-    @SerializedName("workList")  var opentime: OpenTimeDTO?,
-    @SerializedName("breakList")  var breaktime: BrkTimeDTO?,
-    @SerializedName("holidayList")  var spcHoliday: ArrayList<SpcHolidayDTO>?
+//    @SerializedName("workList")  var opentime: OpenTimeDTO?,
+//    @SerializedName("breakList")  var breaktime: BrkTimeDTO?,
+//    @SerializedName("holidayList")  var spcHoliday: ArrayList<SpcHolidayDTO>?
 ):Serializable {
-    constructor(useridx: Int) :  this(0, useridx, "", "", "", "", "", "", "", "", "", "", "", null, null, null, null, null, null, null,
-        "d", "b", "N", "N", "N", "N", "N", "N", "N", "N" ,null, null, null)
+    constructor(useridx: Int) :  this(0, useridx, "", "", "", "", 0, 0,"", "", "", "", "", "", "", null, null, null, null, null, null, null,
+        "d", "b", "N", "N", "N", "N", "N", "N", "N", "N")
 }

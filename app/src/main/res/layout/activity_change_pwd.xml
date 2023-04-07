@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".more.ChangePwdActivity">
+
+    <TextView
+        style="@style/title"
+        android:id="@+id/title"
+        android:text="@string/change_pwd"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/back"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="@+id/title"
+        app:layout_constraintTop_toTopOf="@+id/title"
+        app:layout_constraintBottom_toBottomOf="@+id/title">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_back_black"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text1"
+        style="@style/text15"
+        android:layout_marginTop="50dp"
+        android:text="@string/pwd_now"
+        app:layout_constraintStart_toStartOf="@+id/nowPwd"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <EditText
+        style="@style/edittext"
+        android:id="@+id/nowPwd"
+        android:hint="@string/pwd_now"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="20dp"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:maxLines="1"
+        app:layout_constraintTop_toBottomOf="@+id/text1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        style="@style/text15"
+        android:id="@+id/text2"
+        android:text="@string/pwd_new"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="@+id/nowPwd"
+        app:layout_constraintTop_toBottomOf="@+id/nowPwd"/>
+
+    <EditText
+        style="@style/edittext"
+        android:id="@+id/newPwd"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="20dp"
+        android:hint="@string/pwd_new_hint"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:maxLines="1"
+        app:layout_constraintStart_toStartOf="@+id/text2"
+        app:layout_constraintTop_toBottomOf="@+id/text2" />
+
+    <TextView
+        android:id="@+id/save"
+        style="@style/btn"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="30dp"
+        android:layout_marginHorizontal="20dp"
+        android:text="@string/btn_save"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

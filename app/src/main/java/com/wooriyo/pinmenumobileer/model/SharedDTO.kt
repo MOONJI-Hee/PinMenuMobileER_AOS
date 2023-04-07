@@ -47,6 +47,5 @@ class SharedDTO(context: Context) {
         pref.edit().remove("mbrData").apply()
         pref.edit().remove("useridx").apply()
         pref.edit().remove("pw").apply()
-        pref.edit().remove("storeData").apply()
     }
 }

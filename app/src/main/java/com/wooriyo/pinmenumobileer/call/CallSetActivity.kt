@@ -8,7 +8,6 @@ import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
-import com.wooriyo.pinmenumobileer.call.adapter.CallSetAdapter
 import com.wooriyo.pinmenumobileer.databinding.ActivityOrderListBinding
 import com.wooriyo.pinmenumobileer.model.CallDTO
 import com.wooriyo.pinmenumobileer.model.CallSetListDTO
@@ -23,7 +22,7 @@ class CallSetActivity : BaseActivity() {
     lateinit var binding: ActivityOrderListBinding
 
     val setList = ArrayList<CallDTO>()
-    private val callSetAdapter = CallSetAdapter(setList)
+//    private val callSetAdapter = CallSetAdapter(setList)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +41,7 @@ class CallSetActivity : BaseActivity() {
     fun setView() {
         // 리사이클러뷰 초기화
         binding.rv.layoutManager = GridLayoutManager(mActivity, 4)
-        binding.rv.adapter = callSetAdapter
+//        binding.rv.adapter = callSetAdapter
     }
 
     private fun getCallList() {
@@ -62,7 +61,7 @@ class CallSetActivity : BaseActivity() {
 
                                 setList.add(CallDTO())
 
-                                callSetAdapter.notifyDataSetChanged()
+//                                callSetAdapter.notifyDataSetChanged()
                             }
                             else -> Toast.makeText(mActivity, callSetList.msg, Toast.LENGTH_SHORT).show()
                         }

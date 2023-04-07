@@ -4,18 +4,28 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/bg_btn_r6.xml" value="0.221" />
+        <entry key="app/src/main/res/drawable/bg_circle.xml" value="0.264" />
+        <entry key="app/src/main/res/drawable/bg_edittext.xml" value="0.264" />
         <entry key="app/src/main/res/drawable/bg_main.xml" value="0.221" />
+        <entry key="app/src/main/res/drawable/bg_r6_grd.xml" value="0.264" />
+        <entry key="app/src/main/res/drawable/bg_r6b.xml" value="0.264" />
+        <entry key="app/src/main/res/drawable/bg_r6g.xml" value="0.264" />
         <entry key="app/src/main/res/drawable/bg_r6w.xml" value="0.221" />
         <entry key="app/src/main/res/drawable/bg_r6y.xml" value="0.221" />
         <entry key="app/src/main/res/drawable/selector_arrow.xml" value="0.2675" />
+        <entry key="app/src/main/res/drawable/selector_btn.xml" value="0.264" />
         <entry key="app/src/main/res/drawable/selector_check.xml" value="0.1735" />
+        <entry key="app/src/main/res/layout/activity_change_pwd.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_find_pw.xml" value="0.5765625" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.375" />
-        <entry key="app/src/main/res/layout/activity_more.xml" value="0.5765625" />
+        <entry key="app/src/main/res/layout/activity_more.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_order_list.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_start.xml" value="0.5765625" />
         <entry key="app/src/main/res/layout/activity_store_list.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/dialog_confirm.xml" value="0.5765625" />
         <entry key="app/src/main/res/layout/list.xml" value="0.5765625" />
+        <entry key="app/src/main/res/layout/list_call.xml" value="0.590625" />
+        <entry key="app/src/main/res/layout/list_call_detail.xml" value="0.375" />
         <entry key="app/src/main/res/layout/list_order.xml" value="0.5" />
         <entry key="app/src/main/res/layout/list_order_detail.xml" value="0.32916666666666666" />
         <entry key="app/src/main/res/layout/list_store.xml" value="0.375" />

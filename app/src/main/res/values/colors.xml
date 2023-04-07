@@ -10,6 +10,7 @@
     <color name="black25">#40000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="white25">#40FFFFFF</color>
+    <color name="white70">#B3FFFFFF</color>
     <!--  메인 테마색  -->
     <color name="main">#FFD600</color>
     <color name="sub">#FFC400</color>

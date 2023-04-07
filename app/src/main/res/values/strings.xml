@@ -2,10 +2,12 @@
     <string name="app_name">PinmenuMobileER</string>
 
     <string name="login">로그인</string>
+    <string name="logout">로그아웃</string>
     <string name="id">아이디</string>
     <string name="password">비밀번호</string>
 
     <string name="signup">회원가입</string>
+    <string name="drop">탈퇴</string>
 
     <string name="won">원</string>
     <string name="gea">개</string>
@@ -90,6 +92,7 @@
     <string name="not_use">미사용</string>
     <string name="store_addition">부가서비스&#160;:&#160;</string>
     <string name="arpayo_conn">알파요연동</string>
+    <string name="arpayo_dis_conn">알파요미연동</string>
     <string name="main">메인</string>
     <string name="store_udt">정보수정</string>
     <string name="store_pay_info">결제정보</string>
@@ -163,10 +166,10 @@
 
     <!--  더보기  -->
     <string name="more">더보기</string>
-    <string name="more_set_nick">메뉴판 별명 설정</string>
-    <string name="more_set_nick_info">별명을 설정하지 않으면 기기의 기본으로 설정된\n이름으로 표시됩니다.</string>
-    <string name="more_menu_reg">등록 메뉴판</string>
-    <string name="more_menu_nick">메뉴판 별명</string>
+    <string name="change_pwd">비밀번호 변경</string>
+    <string name="pwd_now">현재 비밀번호</string>
+    <string name="pwd_new">새로운 비밀번호</string>
+    <string name="pwd_new_hint">새로운 비밀번호를 입력</string>
     <string name="version_info">버전 정보</string>
 
     <!--  카테고리 설정  -->
@@ -269,6 +272,10 @@
     <string name="title_cate_udt">카테고리 수정</string>
     <string name="title_map">지도 검색</string>
 
+    <!--  확인 다이얼로그  -->
+    <string name="dialog_logout">로그아웃 하시겠습니까?</string>
+    <string name="dialog_drop">탈퇴 하시겠습니까?</string>
+
     <!--  권한 다이얼로그  -->
     <string name="pms_storage_title">외부 저장소 권한 요청</string>
     <string name="pms_storage_content">원활한 서비스 이용을 위해서는 외부 저장소 권한이 필요합니다.</string>
@@ -278,6 +285,10 @@
     <string name="msg_complete">완료되었습니다.</string>
     <string name="msg_no_id">아이디를 입력해주세요.</string>
     <string name="msg_no_pw">비밀번호를 입력해주세요.</string>
+    <string name="msg_no_now_pw">현재 비밀번호를 입력해주세요.</string>
+    <string name="msg_no_new_pw">새로운 비밀번호를 입력해주세요.</string>
+    <string name="backpress">뒤로 가기 버튼을 한 번 더 누르시면 종료됩니다.</string>
+
     <string name="msg_no_addr">주소를 입력해주세요.</string>
     <string name="msg_check_addr">주소를 확인해주세요.</string>
     <string name="msg_reg_store_first">매장 등록을 완료한 후 이용해주시기 바랍니다.</string>
@@ -287,7 +298,6 @@
     <string name="msg_no_name">명칭을 입력해주세요.</string>
     <string name="msg_no_item_name">목록명을 입력해주세요.</string>
     <string name="msg_no_goods_name">상품명을 입력해주세요.</string>
-    <string name="backpress">뒤로 가기 버튼을 한 번 더 누르시면 종료됩니다.</string>
     <string name="msg_no_search_result">검색 결과가 없습니다.</string>
     <string name="msg_no_cart">주문 목록을 확인해주세요</string>
     <string name="msg_no_table_no">테이블 번호를 입력해주세요.</string>

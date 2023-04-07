@@ -37,6 +37,14 @@ class OrderListActivity : BaseActivity() {
         binding = ActivityOrderListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        orderAdapter.setOnCompleteListener(object: ItemClickListener{
+            override fun onItemClick(position: Int) { setComplete(position) }
+        })
+
+        orderAdapter.setOnDeleteListener(object: ItemClickListener{
+            override fun onItemClick(position: Int) { delete(position) }
+        })
+
         binding.rv.layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false)
         binding.rv.adapter = orderAdapter
 
@@ -137,8 +145,63 @@ class OrderListActivity : BaseActivity() {
         })
     }
 
-    // 주문 완료 처리
+    // 주문 완료 처리 (결제)
     fun setComplete(position: Int) {
+        ApiClient.service.payOrder(storeidx, orderList[position].idx ,"Y").enqueue(object:Callback<ResultDTO>{
+            override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                Log.d(TAG, "주문 완료 url : $response")
+                if(!response.isSuccessful) return
+
+                val result = response.body() ?: return
+                when(result.status){
+                    1 -> {
+                        orderList[position].iscompleted = 1
+                        orderList.sortBy {
+                            it.iscompleted
+                            it.regdt
+                        }
+                        orderAdapter.notifyItemChanged(position)
+                    }
+                    else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "주문 완료 실패 > $t")
+                Log.d(TAG, "주문 완료 실패 > ${call.request()}")
+            }
+        })
+    }
+
+    // 주문 삭제
+    fun delete(position: Int) {
+        ApiClient.service.deleteOrder(storeidx, orderList[position].idx).enqueue(object:Callback<ResultDTO>{
+            override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                Log.d(TAG, "주문 삭제 url : $response")
+                if(!response.isSuccessful) return
+
+                val result = response.body() ?: return
+                when(result.status){
+                    1 -> {
+                        Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                        orderList.removeAt(position)
+                        orderAdapter.notifyItemRemoved(position)
+                    }
+                    else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "주문 삭제 실패 > $t")
+                Log.d(TAG, "주문 삭제 실패 > ${call.request()}")
+            }
+        })
+    }
+
+    // 주문 프린트
+    fun print(position: Int) {
 
     }
 }

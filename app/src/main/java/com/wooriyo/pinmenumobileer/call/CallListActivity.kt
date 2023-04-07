@@ -1,19 +1,18 @@
 package com.wooriyo.pinmenumobileer.call
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wooriyo.pinmenumobileer.BaseActivity
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.store
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.call.adapter.CallListAdapter
 import com.wooriyo.pinmenumobileer.databinding.ActivityOrderListBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
-import com.wooriyo.pinmenumobileer.model.CallDTO
 import com.wooriyo.pinmenumobileer.model.CallHistoryDTO
 import com.wooriyo.pinmenumobileer.model.CallListDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
@@ -24,7 +23,8 @@ import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CallListActivity : BaseActivity(), View.OnClickListener {
+// 호출 목록 확인 페이지 ( 주문 목록 페이지와 레이아웃 같이 사용)
+class CallListActivity : BaseActivity() {
     lateinit var binding: ActivityOrderListBinding
     lateinit var timer: Timer
 
@@ -39,6 +39,11 @@ class CallListActivity : BaseActivity(), View.OnClickListener {
         binding = ActivityOrderListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // OrderList와 layout 같이 쓰기 때문에 Call에 맞게 뷰 변경
+        binding.title.text = getString(R.string.call_emp)
+        binding.tv.visibility = View.GONE
+        binding.today.visibility = View.GONE
+
         // 호출어댑터 리스너 설정 (완료 버튼 눌렀을 때 position 가져오기)
         callListAdapter.setOnItemClickListener(object : ItemClickListener{
             override fun onItemClick(position: Int) { setComplete(position) }
@@ -48,7 +53,7 @@ class CallListActivity : BaseActivity(), View.OnClickListener {
         binding.rv.adapter = callListAdapter
 
         // 클릭 이벤트
-        binding.back.setOnClickListener(this)
+        binding.back.setOnClickListener{finish()}
 
         getCallList()
     }
@@ -69,11 +74,6 @@ class CallListActivity : BaseActivity(), View.OnClickListener {
         timer.cancel()
     }
 
-    override fun onClick(v: View?) {
-        when(v) {
-            binding.back -> finish()
-        }
-    }
 
     // 새로운 호출 유무 확인 > 3초마다 한번씩 태우기
     fun getCallStatus() {
@@ -152,6 +152,30 @@ class CallListActivity : BaseActivity(), View.OnClickListener {
 
     // 호출 완료 처리
     fun setComplete(position: Int) {
+        ApiClient.service.completeCall(storeidx, callHistory[position].idx, "Y").enqueue(object:Callback<ResultDTO>{
+            override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                Log.d(TAG, "호출 완료 url : $response")
+                if(!response.isSuccessful) return
 
+                val result = response.body() ?: return
+                when(result.status){
+                    1 -> {
+                        callHistory[position].iscompleted = 1
+                        callHistory.sortBy {
+                            it.iscompleted
+                            it.regdt
+                        }
+                        callListAdapter.notifyItemChanged(position)
+                    }
+                    else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "호출 완료 실패 > $t")
+                Log.d(TAG, "호출 완료 실패 오류 > ${call.request()}")
+            }
+        })
     }
 }

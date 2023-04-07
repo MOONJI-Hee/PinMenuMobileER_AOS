@@ -134,6 +134,22 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/done"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white70"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/tableNo"
+        app:layout_constraintBottom_toTopOf="@+id/bottom">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_complete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <LinearLayout
         android:id="@+id/arrowUp"
         android:layout_width="match_parent"

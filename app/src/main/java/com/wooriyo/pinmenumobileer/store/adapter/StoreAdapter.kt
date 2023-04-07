@@ -35,6 +35,8 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
             binding.run {
                 // TODO 사용 미사용 구분하기
                 storeName.text = data.name
+                ordCnt.text = data.ordCnt.toString()
+                callCnt.text = data.callCnt.toString()
 
                 btnOrder.setOnClickListener {
                     ordCnt.isPressed = true

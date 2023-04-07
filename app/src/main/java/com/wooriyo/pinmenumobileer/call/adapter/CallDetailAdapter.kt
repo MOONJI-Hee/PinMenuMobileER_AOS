@@ -27,9 +27,9 @@ class CallDetailAdapter(val dataSet: ArrayList<CallDTO>): RecyclerView.Adapter<C
             binding.run {
                 name.text = data.name
                 if(data.gea > 0) {
-                    amount.text = data.gea.toString()
+                    gea.text = data.gea.toString()
                     tvGea.visibility = View.VISIBLE
-                }
+                }else tvGea.visibility = View.GONE
             }
         }
     }

@@ -5,5 +5,92 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".more.MoreActivity">
+    <TextView
+        style="@style/title"
+        android:id="@+id/title"
+        android:text="@string/more"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/back"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="@+id/title"
+        app:layout_constraintTop_toTopOf="@+id/title">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_back_black"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/f9"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/changePwd"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingHorizontal="20dp"
+            android:background="@color/white">
+            <TextView
+                style="@style/text17"
+                android:text="@string/change_pwd"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_list_arrow_right"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/versionInfo"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingHorizontal="20dp"
+            android:background="@color/white">
+            <TextView
+                style="@style/text17"
+                android:text="@string/version_info"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_list_arrow_right"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            style="@style/text17"
+            android:id="@+id/logout"
+            android:text="@string/logout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingHorizontal="20dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"/>
+        <TextView
+            style="@style/text17"
+            android:id="@+id/drop"
+            android:text="@string/drop"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingHorizontal="20dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

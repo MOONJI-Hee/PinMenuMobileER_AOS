@@ -45,7 +45,17 @@ class StoreListActivity : BaseActivity() {
         binding.rvStore.layoutManager = LinearLayoutManager(mActivity, RecyclerView.VERTICAL, false)
         binding.rvStore.adapter = storeAdapter
 
+        // 매장리스트 조회
         getStoreList()
+
+        // 우측 상단에 userid, 알파요 연동여부 출력
+        val member = pref.getMbrDTO()
+        if(member != null) {
+            binding.userid.text = member.userid.substringBefore("@")
+
+            if(member.arpayoid.isNullOrEmpty())
+                binding.arpayo.text = getString(R.string.arpayo_dis_conn)
+        }
 
         binding.icMain.setOnClickListener { startActivity(intent)}
         binding.icMore.setOnClickListener { startActivity(Intent(mActivity, MoreActivity::class.java)) }

@@ -27,14 +27,15 @@
 
     <TextView
         style="@style/text14w"
+        android:id="@+id/tv"
         android:text="@string/today"
         android:layout_marginEnd="5dp"
-        app:layout_constraintEnd_toStartOf="@+id/ordCnt"
-        app:layout_constraintTop_toTopOf="@+id/ordCnt"
-        app:layout_constraintBottom_toBottomOf="@+id/ordCnt"/>
+        app:layout_constraintEnd_toStartOf="@+id/today"
+        app:layout_constraintTop_toTopOf="@+id/today"
+        app:layout_constraintBottom_toBottomOf="@+id/today"/>
     <TextView
         style="@style/text17w"
-        android:id="@+id/ordCnt"
+        android:id="@+id/today"
         android:textStyle="bold"
         android:layout_marginEnd="18dp"
         app:layout_constraintEnd_toEndOf="@+id/title"
