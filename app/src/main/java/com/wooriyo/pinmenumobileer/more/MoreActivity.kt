@@ -37,7 +37,7 @@ class MoreActivity : BaseActivity() {
             }
             drop.setOnClickListener {
                 val onClickListener = View.OnClickListener {dropMbr()}
-                ConfirmDialog(getString(R.string.dialog_drop), getString(R.string.drop), onClickListener).show(supportFragmentManager, "DropDialog")
+                ConfirmDialog(getString(R.string.dialog_drop), getString(R.string.btn_confirm), onClickListener).show(supportFragmentManager, "DropDialog")
             }
         }
     }

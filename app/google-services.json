@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "877189443021-pils0al658ut3qpgeecsgt2h02i6u022.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wooriyo.pinmenumobileer",
+            "certificate_hash": "c9cd39ec8e6e944879ef69123b30d48ee16ecfbc"
+          }
+        },
+        {
           "client_id": "877189443021-n1ia4s1midg2h72p8bmrqoh3p9bj720b.apps.googleusercontent.com",
           "client_type": 3
         }

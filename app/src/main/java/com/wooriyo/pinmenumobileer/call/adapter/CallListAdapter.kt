@@ -39,7 +39,7 @@ class CallListAdapter(val dataSet: ArrayList<CallHistoryDTO>): RecyclerView.Adap
                 rv.adapter = CallDetailAdapter(data.clist)
 
                 tableNo.text = data.tableNo
-                regdt.text = data.regdt
+                regdt.text = data.regDt
 
                 if(data.iscompleted == 1) {
                     tableNo.setBackgroundColor(Color.parseColor("#E0E0E0"))

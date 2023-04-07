@@ -24,6 +24,7 @@ class ChangePwdActivity : BaseActivity() {
         binding = ActivityChangePwdBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.back.setOnClickListener { finish() }
         binding.save.setOnClickListener {
             val nowPw = binding.nowPwd.text.toString()
             val newPw = binding.newPwd.text.toString()

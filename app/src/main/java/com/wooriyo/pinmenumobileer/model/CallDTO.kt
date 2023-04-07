@@ -1,9 +1,9 @@
 package com.wooriyo.pinmenumobileer.model
 
-import java.io.Serializable
+import com.google.gson.annotations.SerializedName
 
 data class CallDTO(
-    var idx: Int,
-    var name: String,
-    var gea : Int               // callHistory에서는 개수, callSetList에서는 seq
+    @SerializedName("idx") var idx: Int,
+    @SerializedName("name") var name: String,
+    @SerializedName("gea") var gea : Int               // callHistory에서는 개수, callSetList에서는 seq
 ){ constructor(): this(0, "", 0) }

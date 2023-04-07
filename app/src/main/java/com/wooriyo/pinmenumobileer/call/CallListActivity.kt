@@ -163,7 +163,7 @@ class CallListActivity : BaseActivity() {
                         callHistory[position].iscompleted = 1
                         callHistory.sortBy {
                             it.iscompleted
-                            it.regdt
+                            it.regDt
                         }
                         callListAdapter.notifyItemChanged(position)
                     }
