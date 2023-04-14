@@ -165,7 +165,7 @@ class CallListActivity : BaseActivity() {
                             it.iscompleted
                             it.regDt
                         }
-                        callListAdapter.notifyItemChanged(position)
+                        callListAdapter.notifyDataSetChanged()
                     }
                     else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                 }

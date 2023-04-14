@@ -113,11 +113,11 @@ interface Api {
     // 직원 호출 완료 처리 (확인과 다름)
     // 확인 : 새로운 호출이 있을 때 알림음을 끄고 확인했다는 것을 알리기 위한 Api
     // 완료 : 주문/호출 목록이 고객에게 완전히 다 제공되었다는 것을 알리기 위한 Api
-    @GET("udtCompletedCall.php")
+    @GET("m/udtCompletedCall.php")
     fun completeCall(
         @Query("storeidx") storeidx: Int,
         @Query("ordidx") ordidx: Int,
-        @Query("iscomplated") iscomplated: String
+        @Query("iscompleted") iscompleted: String
     ): Call<ResultDTO>
 
     // 직원 호출 등록된 목록 조회 >> (고객이 호출한 내역 아님!! 관리자가 등록했던 리스트 전체)
