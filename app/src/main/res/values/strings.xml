@@ -276,6 +276,9 @@
     <string name="dialog_logout">로그아웃 하시겠습니까?</string>
     <string name="dialog_drop">탈퇴 하시겠습니까?</string>
 
+    <!--  알림 다이얼로그  -->
+    <string name="dialog_version">%s 버전입니다.</string>
+
     <!--  권한 다이얼로그  -->
     <string name="pms_storage_title">외부 저장소 권한 요청</string>
     <string name="pms_storage_content">원활한 서비스 이용을 위해서는 외부 저장소 권한이 필요합니다.</string>

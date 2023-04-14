@@ -17,7 +17,6 @@ class MyApplication: Application() {
         var osver = 0
         lateinit var appver : String
         lateinit var md : String
-        lateinit var deviceName: String
 
         var useridx = 0
         var storeidx = 0
@@ -35,7 +34,6 @@ class MyApplication: Application() {
         osver = Build.VERSION.SDK_INT
         appver = applicationContext.packageManager.getPackageInfo(applicationContext.packageName, 0).versionName
         md = Build.MODEL
-        deviceName = Settings.Secure.getString(contentResolver, "bluetooth_name") ?: ""
 
         density = resources.displayMetrics.density
 

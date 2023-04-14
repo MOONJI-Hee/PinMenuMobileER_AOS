@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
+import com.wooriyo.pinmenumobileer.common.AlertDialog
 import com.wooriyo.pinmenumobileer.common.ConfirmDialog
 import com.wooriyo.pinmenumobileer.databinding.ActivityMoreBinding
 import com.wooriyo.pinmenumobileer.member.LoginActivity
@@ -30,7 +31,10 @@ class MoreActivity : BaseActivity() {
         binding.run {
             back.setOnClickListener { finish() }
             changePwd.setOnClickListener { startActivity(Intent(mActivity, ChangePwdActivity::class.java)) }
-            versionInfo.setOnClickListener {  }
+            versionInfo.setOnClickListener {
+                val content = getString(R.string.dialog_version).format(MyApplication.appver)
+                AlertDialog(content).show(supportFragmentManager, "VersionDialog")
+            }
             logout.setOnClickListener {
                 val onClickListener = View.OnClickListener {logout()}
                 ConfirmDialog(getString(R.string.dialog_logout), getString(R.string.btn_confirm), onClickListener).show(supportFragmentManager, "LogoutDialog")
