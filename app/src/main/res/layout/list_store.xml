@@ -29,12 +29,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
             <TextView
-                android:id="@+id/ordCnt"
                 style="@style/text22bw"
+                android:id="@+id/ordCnt"
                 tools:text="2" />
             <TextView
-                android:id="@+id/ordTxt"
                 style="@style/text15w"
+                android:id="@+id/ordTxt"
                 android:layout_marginTop="10dp"
                 android:text="@string/order_history" />
         </LinearLayout>
@@ -68,7 +68,6 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/call_emp" />
         </LinearLayout>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

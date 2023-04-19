@@ -9,6 +9,7 @@ data class StoreDTO(
     @SerializedName("name") var name : String,
     @SerializedName("name2") var name2 : String,
     @SerializedName("buse") var buse : String,
+    @SerializedName("payuse") var payuse : String,
     @SerializedName("paydt") var paydt : String,
     @SerializedName("ordCnt") var ordCnt: Int,
     @SerializedName("callCnt") var callCnt: Int,
@@ -40,6 +41,6 @@ data class StoreDTO(
 //    @SerializedName("breakList")  var breaktime: BrkTimeDTO?,
 //    @SerializedName("holidayList")  var spcHoliday: ArrayList<SpcHolidayDTO>?
 ):Serializable {
-    constructor(useridx: Int) :  this(0, useridx, "", "", "", "", 0, 0,"", "", "", "", "", "", "", null, null, null, null, null, null, null,
+    constructor(useridx: Int) :  this(0, useridx, "", "", "", "N", "", 0, 0,"", "", "", "", "", "", "", null, null, null, null, null, null, null,
         "d", "b", "N", "N", "N", "N", "N", "N", "N", "N")
 }

@@ -52,6 +52,25 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
                     MyApplication.storeidx = data.idx
                     context.startActivity(Intent(context, CallListActivity::class.java))
                 }
+
+                if(data.payuse == "N") {
+                    storeName.isEnabled = false
+                    ordCnt.isEnabled = false
+                    ordTxt.isEnabled = false
+                    btnOrder.isEnabled = false
+                    callCnt.isEnabled = false
+                    callTxt.isEnabled = false
+                    btnCall.isEnabled = false
+                }else {
+                    storeName.isEnabled = true
+                    ordCnt.isEnabled = true
+                    ordTxt.isEnabled = true
+                    btnOrder.isEnabled = true
+                    callCnt.isEnabled = true
+                    callTxt.isEnabled = true
+                    btnCall.isEnabled = true
+                }
+
             }
 
         }
