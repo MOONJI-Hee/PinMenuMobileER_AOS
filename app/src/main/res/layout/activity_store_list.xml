@@ -71,6 +71,15 @@
                 android:layout_marginHorizontal="20dp"
                 android:nestedScrollingEnabled="false"
                 android:clipToPadding="false"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent"/>
+            <TextView
+                style="@style/text17w"
+                android:id="@+id/empty"
+                android:text="@string/no_store_list"
+                android:layout_marginTop="80dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

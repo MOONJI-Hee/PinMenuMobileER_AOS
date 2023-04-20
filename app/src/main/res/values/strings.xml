@@ -272,9 +272,14 @@
     <string name="title_cate_udt">카테고리 수정</string>
     <string name="title_map">지도 검색</string>
 
+    <!--  비어있는 목록  -->
+    <string name="no_order_list">주문정보가 없습니다.</string>
+    <string name="no_call_list">호출정보가 없습니다.</string>
+    <string name="no_store_list">등록된 매장이 없습니다.</string>
+
     <!--  확인 다이얼로그  -->
     <string name="dialog_logout">로그아웃 하시겠습니까?</string>
-    <string name="dialog_drop">탈퇴 하시겠습니까?</string>
+    <string name="dialog_drop">탈퇴 시 등록한 모든 정보가 사라집니다.\n정말 탈퇴하시겠습니까?</string>
 
     <!--  알림 다이얼로그  -->
     <string name="dialog_version">%s 버전입니다.</string>

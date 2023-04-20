@@ -43,6 +43,7 @@ class CallListActivity : BaseActivity() {
         binding.title.text = getString(R.string.call_emp)
         binding.tv.visibility = View.GONE
         binding.today.visibility = View.GONE
+        binding.empty.text = getString(R.string.no_call_list)
 
         // 호출어댑터 리스너 설정 (완료 버튼 눌렀을 때 position 가져오기)
         callListAdapter.setOnItemClickListener(object : ItemClickListener{
@@ -136,7 +137,15 @@ class CallListActivity : BaseActivity() {
                         1 -> {
                             callHistory.clear()
                             callHistory.addAll(result.callList)
-                            callListAdapter.notifyDataSetChanged()
+
+                            if(callHistory.isEmpty()) {
+                                binding.empty.visibility = View.VISIBLE
+                                binding.rv.visibility = View.GONE
+                            }else {
+                                binding.empty.visibility = View.GONE
+                                binding.rv.visibility = View.VISIBLE
+                                callListAdapter.notifyDataSetChanged()
+                            }
                         }
                         else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                     }

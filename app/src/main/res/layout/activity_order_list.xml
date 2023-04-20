@@ -34,22 +34,33 @@
         app:layout_constraintTop_toTopOf="@+id/today"
         app:layout_constraintBottom_toBottomOf="@+id/today"/>
     <TextView
-        style="@style/text17w"
+        style="@style/text17"
         android:id="@+id/today"
-        android:textStyle="bold"
+        android:text="@string/zero"
+        android:textSize="17sp"
+        android:textColor="@color/white"
         android:layout_marginEnd="18dp"
         app:layout_constraintEnd_toEndOf="@+id/title"
         app:layout_constraintTop_toTopOf="@+id/title"
-        app:layout_constraintBottom_toBottomOf="@+id/title"
-        tools:text="10"/>
+        app:layout_constraintBottom_toBottomOf="@+id/title"/>
+
+    <TextView
+        style="@style/text17"
+        android:id="@+id/empty"
+        android:text="@string/no_order_list"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#29000000"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/title"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/list_order"/>
+        tools:listitem="@layout/list_order" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

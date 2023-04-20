@@ -3,6 +3,7 @@ package com.wooriyo.pinmenumobileer.store
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -76,8 +77,15 @@ class StoreListActivity : BaseActivity() {
                         if(storeListDTO.status == 1) {
                             storeList.clear()
                             storeList.addAll(storeListDTO.storeList)
-                            storeAdapter.notifyDataSetChanged()
 
+                            if(storeList.isEmpty()) {
+                                binding.empty.visibility = View.VISIBLE
+                                binding.rvStore.visibility = View.GONE
+                            }else {
+                                binding.empty.visibility = View.GONE
+                                binding.rvStore.visibility = View.VISIBLE
+                                storeAdapter.notifyDataSetChanged()
+                            }
                             AppHelper.setViewHeight(binding.rvStore, storeList.size, 200)
                         }else Toast.makeText(mActivity, storeListDTO.msg, Toast.LENGTH_SHORT).show()
                     }

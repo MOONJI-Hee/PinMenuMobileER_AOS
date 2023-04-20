@@ -2,6 +2,7 @@ package com.wooriyo.pinmenumobileer.order
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wooriyo.pinmenumobileer.BaseActivity
@@ -130,7 +131,16 @@ class OrderListActivity : BaseActivity() {
                         1 -> {
                             orderList.clear()
                             orderList.addAll(result.orderlist)
-                            orderAdapter.notifyDataSetChanged()
+
+                            if(orderList.isEmpty()) {
+                                binding.empty.visibility = View.VISIBLE
+                                binding.rv.visibility = View.GONE
+                            }else {
+                                binding.today.text = orderList.size.toString()
+                                binding.empty.visibility = View.GONE
+                                binding.rv.visibility = View.VISIBLE
+                                orderAdapter.notifyDataSetChanged()
+                            }
                         }
                         else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                     }

@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.pref
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.ActivityChangePwdBinding
 import com.wooriyo.pinmenumobileer.model.ResultDTO
@@ -23,6 +24,9 @@ class ChangePwdActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityChangePwdBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 비밀번호 노출하는 거 맞는지 다시 확인
+        binding.nowPwd.setText(pref.getPw())
 
         binding.back.setOnClickListener { finish() }
         binding.save.setOnClickListener {

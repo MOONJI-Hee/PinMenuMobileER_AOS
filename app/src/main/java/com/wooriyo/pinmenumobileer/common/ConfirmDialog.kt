@@ -6,14 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
+import com.wooriyo.pinmenumobileer.BaseDialogFragment
 import com.wooriyo.pinmenumobileer.databinding.DialogConfirmBinding
 
-class ConfirmDialog(val content: String, val btn: String, val onClickListener: View.OnClickListener): DialogFragment() {
+class ConfirmDialog(val content: String, val btn: String, val onClickListener: View.OnClickListener): BaseDialogFragment() {
     lateinit var binding: DialogConfirmBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    val TAG = "ConfirmDialog"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DialogConfirmBinding.inflate(layoutInflater)
@@ -27,12 +25,10 @@ class ConfirmDialog(val content: String, val btn: String, val onClickListener: V
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        val window = dialog?.window ?: return
-        val params = window.attributes
-        params.width = WindowManager.LayoutParams.MATCH_PARENT
-//        params.height = 600
-        window.attributes = params
+    fun show() {
+        val activity = activity
+        if(activity != null) {
+            show(activity.supportFragmentManager, TAG)
+        }
     }
 }

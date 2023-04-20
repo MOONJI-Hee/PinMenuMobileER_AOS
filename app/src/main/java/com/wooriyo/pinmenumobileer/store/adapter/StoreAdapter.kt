@@ -10,6 +10,7 @@ import com.wooriyo.pinmenumobileer.call.CallListActivity
 import com.wooriyo.pinmenumobileer.databinding.ListStoreBinding
 import com.wooriyo.pinmenumobileer.model.StoreDTO
 import com.wooriyo.pinmenumobileer.order.OrderListActivity
+import com.wooriyo.pinmenumobileer.util.AppHelper
 
 class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
 
@@ -33,7 +34,6 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
     class ViewHolder(val binding: ListStoreBinding, val context: Context): RecyclerView.ViewHolder(binding.root) {
         fun bind(data: StoreDTO) {
             binding.run {
-                // TODO 사용 미사용 구분하기
                 storeName.text = data.name
                 ordCnt.text = data.ordCnt.toString()
                 callCnt.text = data.callCnt.toString()
@@ -53,15 +53,7 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
                     context.startActivity(Intent(context, CallListActivity::class.java))
                 }
 
-                if(data.payuse == "N") {
-                    storeName.isEnabled = false
-                    ordCnt.isEnabled = false
-                    ordTxt.isEnabled = false
-                    btnOrder.isEnabled = false
-                    callCnt.isEnabled = false
-                    callTxt.isEnabled = false
-                    btnCall.isEnabled = false
-                }else {
+                if(data.payuse == "Y" && AppHelper.CompareToday(data.paydt)) {
                     storeName.isEnabled = true
                     ordCnt.isEnabled = true
                     ordTxt.isEnabled = true
@@ -69,10 +61,16 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
                     callCnt.isEnabled = true
                     callTxt.isEnabled = true
                     btnCall.isEnabled = true
+                }else {
+                    storeName.isEnabled = false
+                    ordCnt.isEnabled = false
+                    ordTxt.isEnabled = false
+                    btnOrder.isEnabled = false
+                    callCnt.isEnabled = false
+                    callTxt.isEnabled = false
+                    btnCall.isEnabled = false
                 }
-
             }
-
         }
     }
 }

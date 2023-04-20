@@ -14,10 +14,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wooriyo.pinmenumobileer.MyApplication
 import java.text.DecimalFormat
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.*
 
 // 자주 쓰는 메소드 모음 - 문지희 (2022.10 갱신)
 class AppHelper {
     companion object {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
         // 네비게이션바 숨기기
         fun hideInset(activity: Activity) {
@@ -81,6 +85,24 @@ class AppHelper {
                 }
             }
             view.clipToOutline = true
+        }
+
+        // 오늘 날짜와 비교 - true: 오늘, false : 오늘 아님
+        fun CompareToday(strDate: String): Boolean {
+            val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val list = strDate.split("-").toTypedArray()
+                val year = list[0].toInt()
+                val month = list[1].toInt()
+                val day = list[2].toInt()
+                val today: LocalDate = LocalDate.now()
+                val date: LocalDate = LocalDate.of(year, month, day)
+                today.isEqual(date)
+            } else {
+                val now: Calendar = Calendar.getInstance()
+                val today: String = dateFormat.format(now.getTime())
+                today == strDate
+            }
+            return result
         }
 
         fun osVersion(): Int = Build.VERSION.SDK_INT    // 안드로이드 버전
