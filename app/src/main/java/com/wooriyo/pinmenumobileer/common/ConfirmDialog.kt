@@ -24,11 +24,4 @@ class ConfirmDialog(val content: String, val btn: String, val onClickListener: V
 
         return binding.root
     }
-
-    fun show() {
-        val activity = activity
-        if(activity != null) {
-            show(activity.supportFragmentManager, TAG)
-        }
-    }
 }

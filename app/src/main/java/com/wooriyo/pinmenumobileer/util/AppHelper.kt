@@ -87,24 +87,6 @@ class AppHelper {
             view.clipToOutline = true
         }
 
-        // 오늘 날짜와 비교 - true: 오늘, false : 오늘 아님
-        fun CompareToday(strDate: String): Boolean {
-            val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val list = strDate.split("-").toTypedArray()
-                val year = list[0].toInt()
-                val month = list[1].toInt()
-                val day = list[2].toInt()
-                val today: LocalDate = LocalDate.now()
-                val date: LocalDate = LocalDate.of(year, month, day)
-                today.isEqual(date)
-            } else {
-                val now: Calendar = Calendar.getInstance()
-                val today: String = dateFormat.format(now.getTime())
-                today == strDate
-            }
-            return result
-        }
-
         fun osVersion(): Int = Build.VERSION.SDK_INT    // 안드로이드 버전
         fun versionName(context: Context): String = context.packageManager.getPackageInfo(context.packageName, 0).versionName
         fun getPhoneModel(): String = Build.MODEL       // 디바이스 모델명

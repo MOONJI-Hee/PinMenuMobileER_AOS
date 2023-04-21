@@ -53,7 +53,7 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
                     context.startActivity(Intent(context, CallListActivity::class.java))
                 }
 
-                if(data.payuse == "Y" && AppHelper.CompareToday(data.paydt)) {
+                if(data.payuse == "Y") {
                     storeName.isEnabled = true
                     ordCnt.isEnabled = true
                     ordTxt.isEnabled = true

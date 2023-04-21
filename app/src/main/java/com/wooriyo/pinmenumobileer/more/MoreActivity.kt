@@ -33,15 +33,15 @@ class MoreActivity : BaseActivity() {
             changePwd.setOnClickListener { startActivity(Intent(mActivity, ChangePwdActivity::class.java)) }
             versionInfo.setOnClickListener {
                 val content = getString(R.string.dialog_version).format(MyApplication.appver)
-                AlertDialog(content).show()
+                AlertDialog(content).show(supportFragmentManager, "VersionDialog")
             }
             logout.setOnClickListener {
                 val onClickListener = View.OnClickListener {logout()}
-                ConfirmDialog(getString(R.string.dialog_logout), getString(R.string.btn_confirm), onClickListener).show()
+                ConfirmDialog(getString(R.string.dialog_logout), getString(R.string.btn_confirm), onClickListener).show(supportFragmentManager, "LogoutDialog")
             }
             drop.setOnClickListener {
                 val onClickListener = View.OnClickListener {dropMbr()}
-                ConfirmDialog(getString(R.string.dialog_drop), getString(R.string.btn_confirm), onClickListener).show()
+                ConfirmDialog(getString(R.string.dialog_drop), getString(R.string.btn_confirm), onClickListener).show(supportFragmentManager, "DropDialog")
             }
         }
     }
