@@ -20,6 +20,13 @@ interface Api {
         @Query("md") md: String
     ): Call<MemberDTO>
 
+    // 로그아웃
+    @GET("checkLogout.php")
+    fun logout(
+        @Query("userid") userid: String,
+        @Query("storeidx") storeidx: Int
+    ): Call<ResultDTO>
+
     // 비밀번호 찾기
     @GET()
     fun findPwd(
