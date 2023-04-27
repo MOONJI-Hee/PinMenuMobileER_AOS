@@ -22,11 +22,4 @@ class AlertDialog(val content: String): BaseDialogFragment() {
 
         return binding.root
     }
-
-    fun show() {
-        val activity = activity
-        if(activity != null) {
-            show(activity.supportFragmentManager, TAG)
-        }
-    }
 }

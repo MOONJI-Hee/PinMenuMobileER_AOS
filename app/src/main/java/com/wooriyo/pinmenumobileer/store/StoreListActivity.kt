@@ -13,6 +13,7 @@ import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.util.AppHelper
 import com.wooriyo.pinmenumobileer.util.AppHelper.Companion.getRoundedCornerLT
 import com.wooriyo.pinmenumobileer.BaseActivity
+import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.density
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.pref
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
@@ -39,12 +40,12 @@ class StoreListActivity : BaseActivity() {
 
         useridx = pref.getUserIdx()
 
-        // 리사이클러뷰 뒤 배경 라운드 처리 (45dp)
-        getRoundedCornerLT(binding.bgRv, 45*density)
-
         // 매장 리사이클러뷰, 어댑터 초기화
         binding.rvStore.layoutManager = LinearLayoutManager(mActivity, RecyclerView.VERTICAL, false)
         binding.rvStore.adapter = storeAdapter
+
+        // 매장리스트 배경 최소 높이 지정 (최소 화면을 덮을 정도로)
+        binding.storeArea.minHeight = MyApplication.height
 
         // 매장리스트 조회
         getStoreList()
@@ -85,8 +86,8 @@ class StoreListActivity : BaseActivity() {
                                 binding.empty.visibility = View.GONE
                                 binding.rvStore.visibility = View.VISIBLE
                                 storeAdapter.notifyDataSetChanged()
+                                AppHelper.setViewHeight(binding.rvStore, storeList.size, 200)
                             }
-                            AppHelper.setViewHeight(binding.rvStore, storeList.size, 200)
                         }else Toast.makeText(mActivity, storeListDTO.msg, Toast.LENGTH_SHORT).show()
                     }
                 }

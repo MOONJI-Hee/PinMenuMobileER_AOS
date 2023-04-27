@@ -35,8 +35,7 @@ open class BaseDialogFragment: DialogFragment() {
         super.onResume()
         val window = dialog?.window ?: return
         val params = window.attributes
-        params.width = WindowManager.LayoutParams.WRAP_CONTENT
-        params.height = WindowManager.LayoutParams.WRAP_CONTENT
+        params.width = WindowManager.LayoutParams.MATCH_PARENT
         window.attributes = params
     }
 }
