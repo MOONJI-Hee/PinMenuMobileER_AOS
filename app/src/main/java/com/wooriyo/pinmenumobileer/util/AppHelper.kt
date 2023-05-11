@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Outline
 import android.graphics.Rect
 import android.os.Build
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewOutlineProvider
@@ -14,14 +15,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wooriyo.pinmenumobileer.MyApplication
 import java.text.DecimalFormat
 import java.text.NumberFormat
+import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 // 자주 쓰는 메소드 모음 - 문지희 (2022.10 갱신)
 class AppHelper {
     companion object {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+        private val datetimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 
         // 네비게이션바 숨기기
         fun hideInset(activity: Activity) {
@@ -85,6 +88,22 @@ class AppHelper {
                 }
             }
             view.clipToOutline = true
+        }
+
+        // 현재 날짜와 비교
+        fun dateNowCompare(dt: String?): Boolean {    // 과거 : false, 현재 혹은 미래 : true
+            return if(dt.isNullOrEmpty()) {
+                false
+            }else {
+                val strDt = dt.replace(" ", "T")
+
+                val now = LocalDateTime.now()
+                val day = LocalDateTime.parse(strDt)
+
+                val cmp = day.compareTo(now)
+
+                cmp >= 0
+            }
         }
 
         fun osVersion(): Int = Build.VERSION.SDK_INT    // 안드로이드 버전

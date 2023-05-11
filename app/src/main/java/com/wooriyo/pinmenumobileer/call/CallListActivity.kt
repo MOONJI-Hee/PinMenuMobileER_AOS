@@ -142,6 +142,7 @@ class CallListActivity : BaseActivity() {
                                 binding.empty.visibility = View.VISIBLE
                                 binding.rv.visibility = View.GONE
                             }else {
+                                callHistory.sortBy { it.iscompleted }
                                 binding.empty.visibility = View.GONE
                                 binding.rv.visibility = View.VISIBLE
                                 callListAdapter.notifyDataSetChanged()
@@ -170,11 +171,9 @@ class CallListActivity : BaseActivity() {
                 when(result.status){
                     1 -> {
                         callHistory[position].iscompleted = 1
-                        callHistory.sortBy {
-                            it.iscompleted
-                            it.regDt
-                        }
-                        callListAdapter.notifyDataSetChanged()
+                        callHistory.sortBy { it.iscompleted }
+
+                        callListAdapter.notifyItemChanged(position)
                     }
                     else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                 }

@@ -136,6 +136,7 @@ class OrderListActivity : BaseActivity() {
                                 binding.empty.visibility = View.VISIBLE
                                 binding.rv.visibility = View.GONE
                             }else {
+                                orderList.sortBy { it.iscompleted }
                                 binding.today.text = orderList.size.toString()
                                 binding.empty.visibility = View.GONE
                                 binding.rv.visibility = View.VISIBLE
@@ -166,10 +167,7 @@ class OrderListActivity : BaseActivity() {
                 when(result.status){
                     1 -> {
                         orderList[position].iscompleted = 1
-                        orderList.sortBy {
-                            it.iscompleted
-                            it.regdt
-                        }
+                        orderList.sortBy { it.iscompleted }
                         orderAdapter.notifyItemChanged(position)
                     }
                     else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()

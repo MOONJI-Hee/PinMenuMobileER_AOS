@@ -282,7 +282,7 @@
     <string name="dialog_drop">탈퇴 시 등록한 모든 정보가 사라집니다.\n정말 탈퇴하시겠습니까?</string>
 
     <!--  알림 다이얼로그  -->
-    <string name="dialog_version">%s 버전입니다.</string>
+    <string name="dialog_version">Ver %s</string>
 
     <!--  권한 다이얼로그  -->
     <string name="pms_storage_title">외부 저장소 권한 요청</string>

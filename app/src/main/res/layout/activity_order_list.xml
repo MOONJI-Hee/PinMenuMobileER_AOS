@@ -57,7 +57,7 @@
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#29000000"
+        android:background="@color/btn_cancel"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/title"
         app:layout_constraintBottom_toBottomOf="parent"

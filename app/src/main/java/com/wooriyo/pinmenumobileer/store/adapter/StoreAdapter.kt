@@ -11,6 +11,7 @@ import com.wooriyo.pinmenumobileer.databinding.ListStoreBinding
 import com.wooriyo.pinmenumobileer.model.StoreDTO
 import com.wooriyo.pinmenumobileer.order.OrderListActivity
 import com.wooriyo.pinmenumobileer.util.AppHelper
+import com.wooriyo.pinmenumobileer.util.AppHelper.Companion.dateNowCompare
 
 class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
 
@@ -53,7 +54,7 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
                     context.startActivity(Intent(context, CallListActivity::class.java))
                 }
 
-                if(data.payuse == "Y") {
+                if(data.payuse == "Y" && dateNowCompare(data.paydate)) {
                     storeName.isEnabled = true
                     ordCnt.isEnabled = true
                     ordTxt.isEnabled = true

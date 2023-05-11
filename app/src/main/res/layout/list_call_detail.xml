@@ -3,15 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="50dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:paddingHorizontal="10dp">
+
     <TextView
         style="@style/text18"
         android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_marginEnd="3dp"
         android:ellipsize="marquee"
         android:singleLine="true"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constrainedWidth="true"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gea"/>
 
     <TextView
         style="@style/text20"

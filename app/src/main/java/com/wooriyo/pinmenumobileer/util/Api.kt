@@ -80,7 +80,7 @@ interface Api {
     fun payOrder(
         @Query("storeidx") storeidx: Int,
         @Query("ordidx") ordidx: Int,
-        @Query("iscomplated") iscomplated: String
+        @Query("iscompleted") iscompleted: String
     ): Call<ResultDTO>
 
     // 주문 삭제
