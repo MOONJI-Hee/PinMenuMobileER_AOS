@@ -16,7 +16,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@drawable/bg_r6b">
+        android:background="@drawable/bg_r6w10">
 
         <LinearLayout
             android:id="@+id/btnOrder"
