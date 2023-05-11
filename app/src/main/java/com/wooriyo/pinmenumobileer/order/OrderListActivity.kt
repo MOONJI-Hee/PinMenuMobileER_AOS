@@ -38,8 +38,8 @@ class OrderListActivity : BaseActivity() {
         binding = ActivityOrderListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        orderAdapter.setOnCompleteListener(object: ItemClickListener{
-            override fun onItemClick(position: Int) { setComplete(position) }
+        orderAdapter.setOnPayClickListener(object: ItemClickListener{
+            override fun onItemClick(position: Int) { payOrder(position) }
         })
 
         orderAdapter.setOnDeleteListener(object: ItemClickListener{
@@ -157,7 +157,7 @@ class OrderListActivity : BaseActivity() {
     }
 
     // 주문 완료 처리 (결제)
-    fun setComplete(position: Int) {
+    fun payOrder(position: Int) {
         ApiClient.service.payOrder(storeidx, orderList[position].idx ,"Y").enqueue(object:Callback<ResultDTO>{
             override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                 Log.d(TAG, "주문 완료 url : $response")

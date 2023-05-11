@@ -13,11 +13,11 @@ import com.wooriyo.pinmenumobileer.model.OrderHistoryDTO
 import com.wooriyo.pinmenumobileer.util.AppHelper
 
 class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapter<OrderAdapter.ViewHolder>() {
-    lateinit var completeListener: ItemClickListener
+    lateinit var payClickListener: ItemClickListener
     lateinit var deleteListener: ItemClickListener
 
-    fun setOnCompleteListener(completeListener: ItemClickListener) {
-        this.completeListener = completeListener
+    fun setOnPayClickListener(payClickListener: ItemClickListener) {
+        this.payClickListener = payClickListener
     }
 
     fun setOnDeleteListener(deleteListener: ItemClickListener) {
@@ -27,7 +27,7 @@ class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapte
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ListOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         binding.rv.layoutManager = LinearLayoutManager(parent.context, LinearLayoutManager.VERTICAL, false)
-        return ViewHolder(binding, completeListener, deleteListener)
+        return ViewHolder(binding, payClickListener, deleteListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -38,7 +38,7 @@ class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapte
         return dataSet.size
     }
 
-    class ViewHolder(val binding: ListOrderBinding, val completeListener: ItemClickListener, val deleteListener: ItemClickListener): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(val binding: ListOrderBinding, val payClickListener: ItemClickListener, val deleteListener: ItemClickListener): RecyclerView.ViewHolder(binding.root) {
         fun bind (data : OrderHistoryDTO) {
             binding.run {
                 rv.adapter = OrderDetailAdapter(data.olist)
@@ -60,7 +60,7 @@ class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapte
 
                 delete.setOnClickListener { deleteListener.onItemClick(adapterPosition) }
                 print.setOnClickListener {  }
-                payment.setOnClickListener { completeListener.onItemClick(adapterPosition) }
+                payment.setOnClickListener { payClickListener.onItemClick(adapterPosition) }
             }
         }
 

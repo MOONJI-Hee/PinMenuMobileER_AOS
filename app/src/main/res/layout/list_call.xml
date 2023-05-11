@@ -12,7 +12,7 @@
         android:id="@+id/tableNo"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:paddingHorizontal="13dp"
+        android:paddingHorizontal="10dp"
         android:background="@color/main"
         android:gravity="center_vertical"
         android:textStyle="bold"
