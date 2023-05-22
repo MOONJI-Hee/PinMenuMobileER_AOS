@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ApiClient {
     val service: Api = initService()
     val imgService: Api = imgService()
-//    val kakaoService: Api = kakaoService()
+    val kakaoService: Api = kakaoService()
 
     private fun initService() : Api =
         Retrofit.Builder()
@@ -25,10 +25,10 @@ object ApiClient {
             .build()
             .create(Api::class.java)
 
-//    fun kakaoService() : Api =
-//        Retrofit.Builder()
-//            .baseUrl(AppProperties.KAKAO_URL)
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-//            .create(Api::class.java)
+    fun kakaoService() : Api =
+        Retrofit.Builder()
+            .baseUrl(AppProperties.KAKAO_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(Api::class.java)
 }

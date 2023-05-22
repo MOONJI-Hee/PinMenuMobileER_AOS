@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        style="@style/title"
+        android:id="@+id/title"
+        android:text="@string/title_reg_store"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/title">
+
+        <TextView
+            style="@style/text15"
+            android:id="@+id/tv_email"
+            android:text="@string/store_name"
+            android:layout_marginTop="50dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            style="@style/text15"
+            android:layout_marginBottom="9dp"
+            android:layout_marginEnd="27dp"
+            android:textColor="#FF6200"
+            android:text="@string/essential"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/et_name"/>
+
+        <EditText
+            style="@style/edittext"
+            android:id="@+id/et_name"
+            android:layout_marginTop="10dp"
+            android:hint="@string/store_name_hint"
+            android:inputType="text"
+            app:layout_constraintTop_toBottomOf="@+id/tv_email"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            style="@style/text15"
+            android:id="@+id/tv_arpayo"
+            android:layout_marginTop="20dp"
+            android:text="@string/store_addr"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_name"/>
+
+        <TextView
+            style="@style/text15"
+            android:layout_marginBottom="9dp"
+            android:layout_marginEnd="27dp"
+            android:textColor="#FF6200"
+            android:text="@string/essential"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_map"/>
+
+        <EditText
+            style="@style/edittext"
+            android:id="@+id/et_addr"
+            android:layout_width="0dp"
+            android:layout_marginTop="10dp"
+            android:hint="@string/store_addr_hint"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_map"
+            app:layout_constraintTop_toBottomOf="@+id/tv_arpayo"/>
+
+        <TextView
+            style="@style/btn"
+            android:id="@+id/btn_map"
+            android:layout_width="83dp"
+            android:layout_marginStart="10dp"
+            android:text="@string/store_map"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/et_addr"
+            app:layout_constraintBottom_toBottomOf="@+id/et_addr"
+            app:layout_constraintStart_toEndOf="@+id/et_addr" />
+
+        <TextView
+            android:id="@+id/info1"
+            style="@style/subtext"
+            android:layout_marginTop="28dp"
+            android:text="@string/store_addr_info1"
+            app:layout_constraintStart_toStartOf="@+id/et_addr"
+            app:layout_constraintTop_toBottomOf="@+id/et_addr" />
+
+        <TextView
+            style="@style/subtext"
+            android:id="@+id/info2_mark"
+            android:layout_width="wrap_content"
+            android:text="※"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="@+id/info1"
+            app:layout_constraintTop_toBottomOf="@+id/info1"/>
+
+        <TextView
+            style="@style/subtext"
+            android:id="@+id/info2"
+            android:layout_width="0dp"
+            android:layout_marginStart="3dp"
+            android:text="@string/store_addr_info2"
+            app:layout_constraintTop_toTopOf="@+id/info2_mark"
+            app:layout_constraintStart_toEndOf="@+id/info2_mark"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            style="@style/subtext"
+            android:id="@+id/info3_mark"
+            android:layout_width="wrap_content"
+            android:text="※"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="@+id/info2_mark"
+            app:layout_constraintTop_toBottomOf="@+id/info2"/>
+
+        <TextView
+            style="@style/subtext"
+            android:id="@+id/info3"
+            android:layout_width="0dp"
+            android:layout_marginStart="3dp"
+            android:text="@string/store_addr_info3"
+            app:layout_constraintTop_toTopOf="@+id/info3_mark"
+            app:layout_constraintStart_toEndOf="@+id/info3_mark"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        style="@style/btn"
+        android:id="@+id/save"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="30dp"
+        android:layout_marginHorizontal="20dp"
+        android:text="@string/store_reg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

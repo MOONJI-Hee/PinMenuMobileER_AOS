@@ -51,6 +51,10 @@ class LoginActivity: BaseActivity() {
             }
         }
 
+        binding.signup.setOnClickListener {     // 회원가입 버튼 클릭
+            startActivity(Intent(mActivity, SignupActivity::class.java))
+        }
+
         binding.findPw.setOnClickListener{startActivity(Intent(mActivity, FindPwdActivity::class.java))}
     }
 

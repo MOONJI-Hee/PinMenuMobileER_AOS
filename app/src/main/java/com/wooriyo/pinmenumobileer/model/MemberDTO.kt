@@ -7,8 +7,6 @@ data class MemberDTO (
     var msg : String,
     @SerializedName("useridx") var useridx : Int,
     @SerializedName("userid") var userid : String,
-    @SerializedName("name")  var name : String,
-    @SerializedName("emplyr_id") var arpayoid: String ? = "",
-//    var use_start : String ? = "",
-//    var use_end : String ?= ""
+//    @SerializedName("name")  var name : String,
+    @SerializedName("emplyr_id") var arpayoid: String ? = ""
 )

@@ -20,6 +20,31 @@ interface Api {
         @Query("md") md: String
     ): Call<MemberDTO>
 
+    @GET("m/regmbr.php")
+    fun regMember(
+        @Query("userid") userid: String,
+        @Query("alpha_userid") arpayo_id: String,
+        @Query("user_pwd") pw: String,
+        @Query("push_token") push_token: String,
+        @Query("os") os: String,
+        @Query("osvs") osver: Int,
+        @Query("appvs") appver: String,
+        @Query("md") model: String
+    ): Call<ResultDTO>
+
+    //아이디 중복 체크
+    @FormUrlEncoded
+    @POST("m/checkid.php")
+    fun checkId(
+        @Field("userid") userid: String
+    ): Call<ResultDTO>
+
+    //알파요 ID 연동
+    @GET("m/checkalpha.php")
+    fun checkArpayo(
+        @Query("userid") arpayoId: String
+    ): Call<ResultDTO>
+
     // 로그아웃
     @GET("checkLogout.php")
     fun logout(
@@ -53,6 +78,16 @@ interface Api {
         @Query("useridx") useridx: Int,
         @Query("storeidx") storeidx: String?="" // null일 때 처리를 위해서 여기만 String
     ): Call<StoreListDTO>
+
+    //매장 등록
+    @GET("m/regstore.php")
+    fun regStore(
+        @Query("useridx") useridx: Int,
+        @Query("storenm") storenm: String,
+        @Query("addr") addr: String,                // 주소
+        @Query("lclong") lclong: String,           // 매장 경도
+        @Query("lclat") lclat: String                  // 매장 위도
+    ): Call<ResultDTO>
 
     // 새로운 주문 유무 확인 (status == 1 : 새로운 주문 있음)
     @GET("m/udtOrdStatus.php")
@@ -156,4 +191,11 @@ interface Api {
         @Query("useridx") useridx: Int,
         @Query("idx") callidx: Int
     ): Call<ResultDTO>
+
+    // 카카오 지도 관련 api
+    @GET("/v2/local/search/address.json")
+    fun kakaoSearch(
+        @Header("Authorization") key : String,
+        @Query("query") query : String
+    ): Call<KakaoResultDTO>
 }

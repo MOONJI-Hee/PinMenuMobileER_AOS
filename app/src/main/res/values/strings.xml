@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">핀메뉴 관리</string>
 
+    <string name="kakao_appKey">398d9c3d6b47f73780e5413b1f4b167f</string>
+    <string name="kakao_apiKey">0a9047a6f0f9b350e4fca5168f2c5ef8</string>
+
     <string name="login">로그인</string>
     <string name="logout">로그아웃</string>
     <string name="id">아이디</string>
@@ -78,6 +81,20 @@
     <string name="sat">토</string>
     <string name="sun">일</string>
 
+    <!--  회원가입  -->
+    <string name="password_hint">8자리 이상 입력해 주세요.</string>
+    <string name="check_id">중복체크</string>
+    <string name="unable">사용불가</string>
+    <string name="able">사용가능</string>
+    <string name="link">연동</string>
+    <string name="link_before">연동전</string>
+    <string name="link_after">연동됨</string>
+    <string name="link_fail">연동불가</string>
+    <string name="arpayo_id">알파요 아이디</string>
+    <string name="arpayo_id_hint">알파요 ID(이메일) 입력해 주세요.</string>
+    <string name="signup_info1">아이디(이메일)는\n비밀번호 찾기를 할 때 필요한 정보입니다.\n사용 가능한 이메일로 가입해 주세요.</string>
+    <string name="signup_info2">실시간 자동시급계산 앱 알파요를 이용중이신\n사장님이시라면, 핀메뉴 유료 결제에 따른 추가 보상을\n알파요 앱으로 받아보실 수 있습니다.\n회원가입 이후에도 알파요 앱을 연동하여 추가 보상을\n받으실 수 있습니다.</string>
+
     <!--  로그인 & 비번찾기  -->
     <string name="login_info">회원가입은 홈페이지\n또는 태블릿용 앱에서 가능합니다.</string>
     <string name="find_pwd">비밀번호 찾기</string>
@@ -103,11 +120,13 @@
     <!--  매장 등록 & 수정  -->
     <string name="store_name">매장명</string>
     <string name="store_name_hint">매장명을 입력해주세요.</string>
-    <string name="store_addr">매장 주소</string>
-    <string name="store_addr_hint">우측 지도 검색을 눌러 주소를 입력해주세요.</string>
+    <string name="store_addr">매장주소</string>
+    <string name="store_addr_hint">지도검색 버튼을 눌러서 입력</string>
     <string name="store_map">지도검색</string>
     <string name="map_hint">주소를 입력하세요.</string>
-    <string name="store_addr_info">매장 주소는 매우 중요한 정보입니다.\n매장 주소를 토대로 주변 고객분들께 재방문, 신규방문 이벤트가 진행됩니다.\n매장 주소는 지도에서 정확하게 선택해 주십시요.</string>
+    <string name="store_addr_info1">매장 주소는 매우 중요한 정보입니다.\n매장 주소를 토대로 주변 고객분들께 재방문, 신규방문\n이벤트가 진행됩니다.\n매장 주소는 지도에서 정확하게 선택해 주세요.</string>
+    <string name="store_addr_info2">핀메뉴 관리자 앱을 사용하시기 위해서는 1개의\n매장을 필수로 등록 하셔야 이용이 가능합니다.</string>
+    <string name="store_addr_info3">매장정보 수정, 메뉴등록은 태블릿PC 또는\n홈페이지에서 가능합니다</string>
     <string name="store_reg">매장등록</string>
     <!--  매장 세부 정보  -->
     <string name="store_detail">세부정보</string>
@@ -263,7 +282,7 @@
     <string name="title_signup">핀메뉴 회원가입</string>
     <string name="title_udt_mbr">회원정보 수정</string>
     <string name="title_set_store">매장 설정</string>
-    <string name="title_reg_store">매장 등록</string>
+    <string name="title_reg_store">매장등록</string>
     <string name="title_udt_store">매장 정보 수정</string>
     <string name="title_store_detail">매장 정보 : 세부정보</string>
     <string name="title_store_hours">매장 정보 : 영업시간</string>
@@ -295,6 +314,10 @@
     <string name="msg_no_pw">비밀번호를 입력해주세요.</string>
     <string name="msg_no_now_pw">현재 비밀번호를 입력해주세요.</string>
     <string name="msg_no_new_pw">새로운 비밀번호를 입력해주세요.</string>
+    <string name="msg_typemiss_pw">비밀번호는 8자리 이상 영문, 숫자만 입력해 주세요.</string>
+    <string name="msg_typemiss_id">이메일 형식이 아닙니다.</string>
+    <string name="msg_no_checked">아이디 중복체크클 해주세요.</string>
+    <string name="msg_no_linked">알파요 아이디를 연동해 주세요.</string>
     <string name="backpress">뒤로 가기 버튼을 한 번 더 누르시면 종료됩니다.</string>
 
     <string name="msg_no_addr">주소를 입력해주세요.</string>

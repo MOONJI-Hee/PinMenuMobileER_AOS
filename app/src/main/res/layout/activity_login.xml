@@ -41,36 +41,57 @@
             app:layout_constraintTop_toTopOf="@+id/logo" />
 
         <EditText
-            style="@style/edittext"
             android:id="@+id/etId"
+            style="@style/edittext"
+            android:layout_marginTop="87dp"
             android:hint="@string/id"
+            android:imeOptions="actionNext"
             android:inputType="text"
             android:maxLines="1"
-            android:imeOptions="actionNext"
-            android:layout_marginTop="87dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logo"/>
+            app:layout_constraintTop_toBottomOf="@+id/logo" />
 
         <EditText
-            style="@style/edittext"
             android:id="@+id/etPw"
-            android:hint="@string/password"
-            android:inputType="text"
-            android:maxLines="1"
-            android:imeOptions="actionDone"
+            style="@style/edittext"
             android:layout_marginTop="20dp"
             android:digits="0123456789qwertyuiopasdfghjklzxcvbnm"
+            android:hint="@string/password"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etId"/>
+            app:layout_constraintTop_toBottomOf="@id/etId" />
 
         <TextView
+            android:id="@+id/signup"
             style="@style/text17"
-            android:id="@+id/findPw"
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:text="@string/find_pwd"
+            android:layout_width="wrap_content"
+            android:layout_marginEnd="40dp"
             android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@+id/etPw"/>
+            android:text="@string/signup"
+            app:layout_constraintEnd_toStartOf="@+id/findPw"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/line" />
+
+        <TextView
+            android:id="@+id/line"
+            style="@style/text17"
+            android:layout_marginTop="20dp"
+            android:text="|"
+            app:layout_constraintEnd_toStartOf="@id/findPw"
+            app:layout_constraintStart_toEndOf="@+id/signup"
+            app:layout_constraintTop_toBottomOf="@+id/etPw" />
+
+        <TextView
+            android:id="@+id/findPw"
+            style="@style/text17"
+            android:gravity="center"
+            android:text="@string/find_pwd"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/signup"
+            app:layout_constraintTop_toTopOf="@id/line" />
 
         <TextView
             style="@style/subtext"
