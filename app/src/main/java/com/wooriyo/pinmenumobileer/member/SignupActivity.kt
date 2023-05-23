@@ -42,8 +42,7 @@ class SignupActivity : BaseActivity() {
             override fun afterTextChanged(s: Editable?) {
                 if(idChecked) {
                     idChecked = false
-                    binding.checkResult.text = getString(R.string.unable)
-                    binding.checkResult.setTextColor(Color.parseColor("#5A5A5A"))
+                    binding.checkResult.text = ""
                 }
             }
         })
@@ -52,10 +51,9 @@ class SignupActivity : BaseActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
+                binding.linkResult.text = ""
                 if(arpaLinked) {
                     arpaLinked = false
-                    binding.linkResult.text = getString(R.string.link_fail)
-                    binding.linkResult.setTextColor(Color.parseColor("#5A5A5A"))
                 }
             }
         })

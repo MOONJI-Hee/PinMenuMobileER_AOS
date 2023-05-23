@@ -16,6 +16,7 @@ import com.wooriyo.pinmenumobileer.model.OrderListDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.order.adapter.OrderAdapter
 import com.wooriyo.pinmenumobileer.util.ApiClient
+import com.wooriyo.pinmenumobileer.util.AppHelper
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,7 +26,7 @@ import kotlin.concurrent.timerTask
 
 class OrderListActivity : BaseActivity() {
     lateinit var binding: ActivityOrderListBinding
-    lateinit var timer: Timer
+//    lateinit var timer: Timer
 
     val TAG = "OrderListActivity"
     val mActivity = this@OrderListActivity
@@ -49,7 +50,7 @@ class OrderListActivity : BaseActivity() {
         binding.rv.layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false)
         binding.rv.adapter = orderAdapter
 
-        binding.back.setOnClickListener { finish() }
+        binding.back.setOnClickListener { AppHelper.leaveStore(mActivity) }
 
         getOrderList()
     }
@@ -67,7 +68,7 @@ class OrderListActivity : BaseActivity() {
 
     override fun onPause() {
         super.onPause()
-        timer.cancel()
+//        timer.cancel()
     }
 
     // 새로운 주문 유무 확인 > 3초마다 한번씩 태우기

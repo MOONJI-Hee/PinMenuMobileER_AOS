@@ -10,9 +10,15 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewOutlineProvider
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity.INPUT_METHOD_SERVICE
 import androidx.recyclerview.widget.RecyclerView
 import com.wooriyo.pinmenumobileer.MyApplication
+import com.wooriyo.pinmenumobileer.R
+import com.wooriyo.pinmenumobileer.model.ResultDTO
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.ParseException
@@ -120,5 +126,27 @@ class AppHelper {
         fun versionName(context: Context): String = context.packageManager.getPackageInfo(context.packageName, 0).versionName
         fun getPhoneModel(): String = Build.MODEL       // 디바이스 모델명
 
+        fun leaveStore(activity: Activity) {
+            ApiClient.service.leaveStore(MyApplication.useridx, MyApplication.storeidx, MyApplication.androidId)
+                .enqueue(object : Callback<ResultDTO> {
+                    override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                        Log.d("AppHelper", "매장 나가기 url : $response")
+                        if(!response.isSuccessful) return
+
+                        val result = response.body() ?: return
+                        if(result.status == 1){
+                            MyApplication.storeidx = 0
+                            activity.finish()
+                        }else
+                            Toast.makeText(activity, result.msg, Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                        Toast.makeText(activity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                        Log.d("AppHelper", "매장 나가기 오류 > $t")
+                        Log.d("AppHelper", "매장 나가기 오류 > ${call.request()}")
+                    }
+                })
+        }
     }
 }

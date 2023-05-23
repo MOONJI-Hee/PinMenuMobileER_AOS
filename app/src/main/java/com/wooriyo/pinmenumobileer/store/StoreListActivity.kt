@@ -1,5 +1,6 @@
 package com.wooriyo.pinmenumobileer.store
 
+import android.content.ClipData
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,12 +15,17 @@ import com.wooriyo.pinmenumobileer.util.AppHelper
 import com.wooriyo.pinmenumobileer.util.AppHelper.Companion.getRoundedCornerLT
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.androidId
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.density
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.pref
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.ActivityStoreListBinding
+import com.wooriyo.pinmenumobileer.listener.ItemClickListener
+import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.more.MoreActivity
+import com.wooriyo.pinmenumobileer.order.OrderListActivity
 import com.wooriyo.pinmenumobileer.store.adapter.StoreAdapter
 import retrofit2.Call
 import retrofit2.Response
@@ -39,6 +45,13 @@ class StoreListActivity : BaseActivity() {
         setContentView(binding.root)
 
         useridx = pref.getUserIdx()
+
+        // 어댑터 클릭이벤트
+        storeAdapter.setOnItemClickListener(object : ItemClickListener{
+            override fun onStoreClick(storeDTO: StoreDTO, intent: Intent) {
+                checkDeviceLimit(storeDTO, intent)
+            }
+        })
 
         // 매장 리사이클러뷰, 어댑터 초기화
         binding.rvStore.layoutManager = LinearLayoutManager(mActivity, RecyclerView.VERTICAL, false)
@@ -98,6 +111,29 @@ class StoreListActivity : BaseActivity() {
                     Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, "매장 리스트 조회 오류 > $t")
                     Log.d(TAG, "매장 리스트 조회 오류 > ${call.request()}")
+                }
+            })
+    }
+
+    fun checkDeviceLimit(store: StoreDTO, intent: Intent) {
+        ApiClient.service.checkDeviceLimit(useridx, store.idx, androidId)
+            .enqueue(object : retrofit2.Callback<ResultDTO>{
+                override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                    Log.d(TAG, "이용자수 체크 url : $response")
+                    if(!response.isSuccessful) return
+
+                    val result = response.body() ?: return
+                    if(result.status == 1){
+                        MyApplication.store = store
+                        MyApplication.storeidx = store.idx
+                        startActivity(intent)
+                    }else
+                        Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                }
+                override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                    Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "이용자수 체크 오류 > $t")
+                    Log.d(TAG, "이용자수 체크 오류 > ${call.request()}")
                 }
             })
     }

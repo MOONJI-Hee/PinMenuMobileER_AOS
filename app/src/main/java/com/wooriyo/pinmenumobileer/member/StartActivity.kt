@@ -8,6 +8,7 @@ import com.wooriyo.pinmenumobileer.model.MemberDTO
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.androidId
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.pref
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.store.StoreListActivity
@@ -40,6 +41,8 @@ class StartActivity : BaseActivity() {
             token = pref.getToken().toString()
             loginWithApi()
         }
+
+        Log.d(TAG, "Android ID >>> $androidId")
     }
     fun loginWithApi()  {
         ApiClient.service.checkMbr(id, pw, token, MyApplication.os, MyApplication.osver, MyApplication.appver, MyApplication.md)

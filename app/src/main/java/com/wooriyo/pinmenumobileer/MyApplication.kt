@@ -1,5 +1,6 @@
 package com.wooriyo.pinmenumobileer
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.graphics.Point
@@ -27,12 +28,16 @@ class MyApplication: Application() {
         var storeidx = 0
         lateinit var store: StoreDTO
 
+        lateinit var androidId : String
+
         fun setStoreDTO() {
             store = StoreDTO(useridx)
         }
     }
 
     override fun onCreate() {
+        androidId = Settings.Secure.getString(applicationContext.contentResolver, Settings.Secure.ANDROID_ID)
+
         pref = SharedDTO(applicationContext)
 //        db = AppDatabase.getInstance(applicationContext)
 

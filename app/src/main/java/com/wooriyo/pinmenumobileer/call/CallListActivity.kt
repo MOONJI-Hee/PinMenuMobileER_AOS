@@ -6,6 +6,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wooriyo.pinmenumobileer.BaseActivity
+import com.wooriyo.pinmenumobileer.MyApplication
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.androidId
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.store
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
@@ -16,7 +18,9 @@ import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.CallHistoryDTO
 import com.wooriyo.pinmenumobileer.model.CallListDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
+import com.wooriyo.pinmenumobileer.model.StoreDTO
 import com.wooriyo.pinmenumobileer.util.ApiClient
+import com.wooriyo.pinmenumobileer.util.AppHelper
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,7 +30,7 @@ import kotlin.collections.ArrayList
 // 호출 목록 확인 페이지 ( 주문 목록 페이지와 레이아웃 같이 사용)
 class CallListActivity : BaseActivity() {
     lateinit var binding: ActivityOrderListBinding
-    lateinit var timer: Timer
+//    lateinit var timer: Timer
 
     val TAG = "CallListActivity"
     val mActivity = this@CallListActivity
@@ -54,7 +58,9 @@ class CallListActivity : BaseActivity() {
         binding.rv.adapter = callListAdapter
 
         // 클릭 이벤트
-        binding.back.setOnClickListener{finish()}
+        binding.back.setOnClickListener{ // 뒤로가기 > 매장 밖으로 나가기 때문에 이용자수 차감 Api 태움
+            AppHelper.leaveStore(mActivity)
+        }
 
         getCallList()
     }
@@ -72,7 +78,7 @@ class CallListActivity : BaseActivity() {
 
     override fun onPause() {
         super.onPause()
-        timer.cancel()
+//        timer.cancel()
     }
 
 
@@ -162,28 +168,29 @@ class CallListActivity : BaseActivity() {
 
     // 호출 완료 처리
     fun setComplete(position: Int) {
-        ApiClient.service.completeCall(storeidx, callHistory[position].idx, "Y").enqueue(object:Callback<ResultDTO>{
-            override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
-                Log.d(TAG, "호출 완료 url : $response")
-                if(!response.isSuccessful) return
+        ApiClient.service.completeCall(storeidx, callHistory[position].idx, "Y")
+            .enqueue(object : Callback<ResultDTO> {
+                override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                    Log.d(TAG, "호출 완료 url : $response")
+                    if (!response.isSuccessful) return
 
-                val result = response.body() ?: return
-                when(result.status){
-                    1 -> {
-                        callHistory[position].iscompleted = 1
-                        callHistory.sortBy { it.iscompleted }
+                    val result = response.body() ?: return
+                    when (result.status) {
+                        1 -> {
+                            callHistory[position].iscompleted = 1
+                            callHistory.sortBy { it.iscompleted }
 
-                        callListAdapter.notifyItemChanged(position)
+                            callListAdapter.notifyItemChanged(position)
+                        }
+                        else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                     }
-                    else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
-                Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
-                Log.d(TAG, "호출 완료 실패 > $t")
-                Log.d(TAG, "호출 완료 실패 오류 > ${call.request()}")
-            }
-        })
+                override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                    Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "호출 완료 실패 > $t")
+                    Log.d(TAG, "호출 완료 실패 오류 > ${call.request()}")
+                }
+            })
     }
 }

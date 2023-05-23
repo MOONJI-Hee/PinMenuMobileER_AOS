@@ -89,6 +89,22 @@ interface Api {
         @Query("lclat") lclat: String                  // 매장 위도
     ): Call<ResultDTO>
 
+    // 매장 이용자수 체크
+    @GET("m/checkLimitedDevice.php")
+    fun checkDeviceLimit(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("uuid") androidId : String
+    ): Call<ResultDTO>
+
+    // 매장 나갈 때 이용자수 차감
+    @GET("m/leaveStore.php")
+    fun leaveStore(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("uuid") androidId : String
+    ): Call<ResultDTO>
+
     // 새로운 주문 유무 확인 (status == 1 : 새로운 주문 있음)
     @GET("m/udtOrdStatus.php")
     fun getOrdStatus(
