@@ -4,5 +4,6 @@
         <domain includeSubdomains="true">app.pinmenu.biz</domain>
         <domain includeSubdomains="true">49.247.20.125</domain>
         <domain includeSubdomains="true">pinmenu.biz</domain>
+        <domain includeSubdomains="true">maps.daum-img.net</domain>
     </domain-config>
 </network-security-config>

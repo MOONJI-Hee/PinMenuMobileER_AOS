@@ -82,6 +82,8 @@ class StoreListActivity : BaseActivity() {
                             if(storeList.isEmpty()) {
                                 binding.empty.visibility = View.VISIBLE
                                 binding.rvStore.visibility = View.GONE
+
+                                startActivity(Intent(mActivity, RegStoreActivity::class.java))
                             }else {
                                 binding.empty.visibility = View.GONE
                                 binding.rvStore.visibility = View.VISIBLE

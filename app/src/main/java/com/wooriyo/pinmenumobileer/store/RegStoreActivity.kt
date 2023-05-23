@@ -48,11 +48,11 @@ class RegStoreActivity : BaseActivity() {
 
         binding.save.setOnClickListener{ save() }
         binding.btnMap.setOnClickListener{
-//            val intent = Intent(mActivity, MapActivity::class.java)
-//            intent.putExtra("lat", store.lat) // 위도 (latitude)
-//            intent.putExtra("long", store.long) // 경도 (longitude)
-//            intent.putExtra("address", store.address)
-//            setAddr.launch(intent)
+            val intent = Intent(mActivity, MapActivity::class.java)
+            intent.putExtra("lat", store.lat) // 위도 (latitude)
+            intent.putExtra("long", store.long) // 경도 (longitude)
+            intent.putExtra("address", store.address)
+            setAddr.launch(intent)
         }
     }
 

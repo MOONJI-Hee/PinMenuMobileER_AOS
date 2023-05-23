@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.wooriyo.pinmenumobileer">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -54,7 +58,9 @@
         <activity
             android:name=".store.StoreListActivity"
             android:exported="false" />
-
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_appKey" />
         <service
             android:name="com.wooriyo.pinmenumobileer.fcm.MyFirebaseService"
             android:exported="false">

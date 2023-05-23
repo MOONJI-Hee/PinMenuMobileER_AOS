@@ -55,7 +55,6 @@
             android:id="@+id/etPw"
             style="@style/edittext"
             android:layout_marginTop="20dp"
-            android:digits="0123456789qwertyuiopasdfghjklzxcvbnm"
             android:hint="@string/password"
             android:imeOptions="actionDone"
             android:inputType="text"

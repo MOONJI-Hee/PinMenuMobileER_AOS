@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">핀메뉴 관리</string>
 
-    <string name="kakao_appKey">398d9c3d6b47f73780e5413b1f4b167f</string>
-    <string name="kakao_apiKey">0a9047a6f0f9b350e4fca5168f2c5ef8</string>
+    <string name="kakao_appKey">ed079e485180274fc2b0ae6a18748457</string>
+    <string name="kakao_apiKey">015591dc3e42af388c31ed63f3597fd3</string>
 
     <string name="login">로그인</string>
     <string name="logout">로그아웃</string>

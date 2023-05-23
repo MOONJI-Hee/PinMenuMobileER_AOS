@@ -11,6 +11,8 @@ import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.ActivityLoginBinding
 import com.wooriyo.pinmenumobileer.store.StoreListActivity
+import com.wooriyo.pinmenumobileer.util.AppHelper.Companion.verifyEmail
+import com.wooriyo.pinmenumobileer.util.AppHelper.Companion.verifyPw
 import retrofit2.Call
 import retrofit2.Response
 
@@ -47,6 +49,8 @@ class LoginActivity: BaseActivity() {
             when {
                 id.isEmpty() -> Toast.makeText(this@LoginActivity, R.string.msg_no_id, Toast.LENGTH_SHORT).show()
                 pw.isEmpty() -> Toast.makeText(this@LoginActivity, R.string.msg_no_pw, Toast.LENGTH_SHORT).show()
+                !verifyEmail(id) -> Toast.makeText(mActivity, R.string.msg_typemiss_id, Toast.LENGTH_SHORT).show()
+                !verifyPw(pw) -> Toast.makeText(mActivity, R.string.msg_typemiss_pw, Toast.LENGTH_SHORT).show()
                 else -> loginWithApi()
             }
         }

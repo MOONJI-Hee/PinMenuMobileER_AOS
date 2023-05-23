@@ -61,13 +61,13 @@ class CallListActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        timer = Timer()
-        val timerTask: TimerTask = object : TimerTask() {
-            override fun run() {
-                getCallStatus()
-            }
-        }
-        timer.schedule(timerTask, 0, 3000)
+//        timer = Timer()
+//        val timerTask: TimerTask = object : TimerTask() {
+//            override fun run() {
+//                getCallStatus()
+//            }
+//        }
+//        timer.schedule(timerTask, 0, 3000)
     }
 
     override fun onPause() {

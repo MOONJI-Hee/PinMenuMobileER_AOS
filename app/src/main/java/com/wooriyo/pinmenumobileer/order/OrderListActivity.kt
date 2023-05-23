@@ -56,13 +56,13 @@ class OrderListActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        timer = Timer()
-        val timerTask = object : TimerTask(){
-            override fun run() {
-                getOrdStatus()
-            }
-        }
-        timer.schedule(timerTask, 0, 3000)
+//        timer = Timer()
+//        val timerTask = object : TimerTask(){
+//            override fun run() {
+//                getOrdStatus()
+//            }
+//        }
+//        timer.schedule(timerTask, 0, 3000)
     }
 
     override fun onPause() {

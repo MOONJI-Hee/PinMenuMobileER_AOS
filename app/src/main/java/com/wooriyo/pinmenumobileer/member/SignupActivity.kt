@@ -8,8 +8,6 @@ import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
-import com.google.gson.annotations.SerializedName
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
@@ -20,7 +18,6 @@ import com.wooriyo.pinmenumobileer.store.RegStoreActivity
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.util.AppHelper
 import com.wooriyo.pinmenumobileer.util.AppHelper.Companion.verifyEmail
-import com.wooriyo.pinmenumobileer.util.Encoder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
