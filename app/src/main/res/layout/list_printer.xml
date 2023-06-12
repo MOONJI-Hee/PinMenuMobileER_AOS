@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="141dp"
+    android:paddingVertical="15dp"
+    android:paddingHorizontal="20dp">
+
+    <ImageView
+        android:id="@+id/ivPrinter"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/skl_ts400b"
+        app:layout_constraintBottom_toTopOf="@+id/btnTest"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/btnTest"
+        style="@style/btn_small"
+        android:layout_width="70dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/test"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivPrinter" />
+
+    <TextView
+        style="@style/text17b"
+        android:id="@+id/model"
+        android:layout_width="0dp"
+        android:layout_marginHorizontal="15dp"
+        app:layout_constraintTop_toTopOf="@+id/ivPrinter"
+        app:layout_constraintBottom_toTopOf="@+id/tv_nick"
+        app:layout_constraintStart_toEndOf="@+id/ivPrinter"
+        app:layout_constraintEnd_toStartOf="@+id/line"
+        tools:text="세우테크 SKL_TS400B" />
+
+    <TextView
+        style="@style/text15"
+        android:id="@+id/tv_nick"
+        android:layout_marginBottom="5dp"
+        android:text="@string/printer_nick"
+        android:fontFamily="@font/notosans_demilight"
+        app:layout_constraintBottom_toTopOf="@+id/nick"
+        app:layout_constraintStart_toStartOf="@+id/model" />
+
+    <TextView
+        style="@style/btn_cancel_small"
+        android:id="@+id/nick"
+        android:layout_width="0dp"
+        android:paddingHorizontal="10dp"
+        android:gravity="center_vertical"
+        android:fontFamily="@font/notosans_demilight"
+        app:layout_constraintBottom_toBottomOf="@+id/btnTest"
+        app:layout_constraintEnd_toStartOf="@+id/line"
+        app:layout_constraintStart_toStartOf="@+id/model"
+        tools:text="주방 프린터1" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="15dp"
+        android:background="@color/f9"
+        app:layout_constraintEnd_toStartOf="@+id/btnConn"
+        app:layout_constraintStart_toEndOf="@+id/nick"/>
+
+    <TextView
+        style="@style/subtext"
+        android:id="@+id/connNo"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="22dp"
+        android:text="@string/printer_not_conn"
+        android:lineSpacingExtra="0dp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="@+id/btnConn"
+        app:layout_constraintEnd_toEndOf="@+id/btnConn"
+        app:layout_constraintBottom_toTopOf="@+id/btnConn"/>
+
+    <ImageView
+        android:id="@+id/connDot"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginBottom="6dp"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="#49D300"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/connStatus"
+        app:layout_constraintEnd_toEndOf="@+id/connStatus"
+        app:layout_constraintBottom_toTopOf="@+id/connStatus"/>
+
+    <TextView
+        style="@style/text15"
+        android:id="@+id/connStatus"
+        android:textStyle="bold"
+        android:layout_marginBottom="22dp"
+        android:lineSpacingExtra="0dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/btnConn"
+        app:layout_constraintEnd_toEndOf="@+id/btnConn"
+        app:layout_constraintBottom_toTopOf="@+id/btnConn"
+        tools:text="@string/good"/>
+
+    <LinearLayout
+        style="@style/btn_small"
+        android:id="@+id/btnConn"
+        android:layout_width="52dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_print_refresh"/>
+    </LinearLayout>
+
+    <TextView
+        style="@style/btn_cancel_small"
+        android:id="@+id/btnClear"
+        android:layout_width="52dp"
+        android:text="@string/clear"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

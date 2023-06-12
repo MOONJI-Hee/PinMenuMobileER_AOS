@@ -27,6 +27,7 @@
     <string name="tablepass">테이블 비밀번호</string>
 
     <string name="essential">필수</string>
+    <string name="empty">없음</string>
 
     <string name="confirm">확인</string>
     <string name="cancel">취소</string>
@@ -51,6 +52,7 @@
     <string name="btn_call2">호&#160;출</string>
     <string name="btn_complete">완&#160;&#160;료</string>
     <string name="btn_payment2">결&#160;제</string>
+    <string name="btn_choice">선&#160;&#160;택</string>
 
     <string name="udt_info">정보변경</string>
 
@@ -114,7 +116,6 @@
     <string name="store_udt">정보수정</string>
     <string name="store_pay_info">결제정보</string>
     <string name="store_pay_date">다음결제일</string>
-    <string name="store_pay_no">없음</string>
     <string name="store_list_info">운영중인 매장을 등록하여 이용하실 수 있습니다.\n복수의 매장을 운영중이시면 다수의 매장을 등록하실 수 있습니다.</string>
 
     <!--  매장 등록 & 수정  -->
@@ -182,6 +183,66 @@
     <string name="menu_mgmt_sub">메뉴 정보 입력</string>
     <string name="menu_mgmt_sub2">메뉴판 색상 설정</string>
     <string name="event_mgmt_sub">재방문 이벤트 관리</string>
+
+    <!--  결제  -->
+    <string name="payment">결제</string>
+
+    <!--  프린터  -->
+    <string name="printer_title_store">매장 선택</string>
+
+    <string name="printer">프린터</string>
+    <string name="printer_title_set">프린터 설정</string>
+    <string name="printer_menu_conn">프린터\n연결 관리</string>
+    <string name="printer_menu_support">연결 가능\n프린터 보기</string>
+    <string name="printer_menu_contents">출력 내용\n설정</string>
+    <string name="printer_menu_info">핀메뉴에서는 ‘출력 내용 설정’을 통해 주방과\n음료부가 나누어져 있는 경우 이를 분리하여\n출력할 수 있으며, 카테고리 출력을 설정하여\n편리하게 이용할 수 있습니다.</string>
+
+    <string name="printer_title_new">신규 프린터 연결</string>
+    <string name="android_smartphone">안드로이드 스마트폰</string>
+    <string name="printer_conn_info">스마트 기기 한대에 하나의 프린터만 연결하여\n이용할 수 있으며,\n연결된 블루투스 프린터는 반드시 관리앱이 실행중인\n기기와 근거리에 프린터를 배치해 주세요.\n프린터와 연결할 기기(디바이스) 및 연결된 프린터는\n별명을 부여하여 관리할 수 있습니다.</string>
+    <string name="before_conn">연결전</string>
+    <string name="after_conn">연결완료</string>
+
+    <string name="printer_nick">별명</string>
+    <string name="printer_nick_title">별명 입력</string>
+    <string name="printer_nick_hint">예) 주방</string>
+    <string name="printer_device">선택된 기기</string>
+    <string name="printer_nick_info">별명은 반드시 구별 할 수 있는 명칭을\n사용해 주세요.</string>
+
+    <string name="sewoo_tech">세우테크</string>
+    <string name="skl_ts400b">SKL-TS400B</string>
+    <string name="skl_te202">SKL-TE202</string>
+    <string name="sewoo_recommend">(세우테크 추천)</string>
+    <string name="gcube">GCUBE</string>
+    <string name="sam4s">Sam4S</string>
+
+    <string name="printer_title_conn_mng">연결 프린터 관리</string>
+    <string name="printer_available">연결 가능한 프린터</string>
+    <string name="test">테스트</string>
+    <string name="good">좋음</string>
+    <string name="clear">해제</string>
+    <string name="printer_not_conn">연결\n안됨</string>
+    <string name="unrest">불안</string>
+
+    <string name="printer_choose">선택된 프린터</string>
+    <string name="printer_nick_change_info">별명 변경 후 반드시 저장을 눌러주세요.\n삭제를 누르면 해당 프린터는 삭제됩니다.</string>
+
+    <string name="printer_title_support">연결 가능 프린터 보기</string>
+
+    <string name="printer_title_contents">출력 내용 설정</string>
+    <string name="printer_nick_format">별명 : %s</string>
+    <string name="font">폰트</string>
+    <string name="big">크게</string>
+    <string name="small">작게</string>
+    <string name="printer_kitchen">주방 영수증</string>
+    <string name="printer_kitchen_format">선택된 카테고리 : %n개</string>
+    <string name="printer_kitchen_info">선택된 카테고리만 출력가능 (최대 10개)\n선택하지 않으면 모든 카테고리가 출력됩니다.</string>
+    <string name="printer_customer">고객 영수증</string>
+    <string name="printer_customer_info">결제된 고객용 영수증을 출력할 수 있습니다.</string>
+    <string name="printer_order_no">주문 번호</string>
+    <string name="printer_order_no_info">핀메뉴에서 생성된 주문 번호를 출력합니다.</string>
+    <string name="printer_title_category_set">출력 카테고리 설정(%n/10)</string>
+    <string name="printer_category_info">최대 10개까지 선택이 가능합니다.</string>
 
     <!--  더보기  -->
     <string name="more">더보기</string>
@@ -301,6 +362,7 @@
     <string name="dialog_drop">탈퇴 시 등록한 모든 정보가 사라집니다.\n정말 탈퇴하시겠습니까?</string>
 
     <!--  알림 다이얼로그  -->
+    <string name="dialog_notice">알림</string>
     <string name="dialog_version">Ver %s</string>
 
     <!--  권한 다이얼로그  -->

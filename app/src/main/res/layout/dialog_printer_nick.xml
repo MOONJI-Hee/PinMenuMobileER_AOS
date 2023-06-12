@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_r6w"
+        android:paddingTop="30dp">
+        <TextView
+            style="@style/text20m"
+            android:id="@+id/title"
+            android:text="@string/printer_nick_title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <LinearLayout
+            android:id="@+id/content"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="30dp"
+            android:layout_marginHorizontal="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintBottom_toTopOf="@+id/save">
+            <TextView
+                style="@style/text15"
+                android:text="@string/printer_device"/>
+            <TextView
+                style="@style/text17"
+                android:text="@string/android_smartphone"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold" />
+            <TextView
+                style="@style/text15"
+                android:text="@string/printer_nick"
+                android:layout_marginTop="20dp"/>
+            <EditText
+                style="@style/edittext"
+                android:id="@+id/etNick"
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:hint="@string/printer_nick_hint"/>
+            <TextView
+                style="@style/subtext"
+                android:layout_marginTop="13dp"
+                android:text="@string/printer_nick_info"/>
+        </LinearLayout>
+
+        <TextView
+            style="@style/btn_dialog"
+            android:id="@+id/save"
+            android:layout_width="match_parent"
+            android:text="@string/btn_save"
+            app:layout_constraintTop_toBottomOf="@+id/content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -20,6 +20,21 @@
         android:theme="@style/Theme.PinmenuMobileER"
         tools:targetApi="31">
         <activity
+            android:name=".SelectStoreActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SetConnActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SupportPrinterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NewConnActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PrinterMenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".common.MapActivity"
             android:exported="false" />
         <activity
@@ -58,9 +73,11 @@
         <activity
             android:name=".store.StoreListActivity"
             android:exported="false" />
+
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_appKey" />
+
         <service
             android:name="com.wooriyo.pinmenumobileer.fcm.MyFirebaseService"
             android:exported="false">

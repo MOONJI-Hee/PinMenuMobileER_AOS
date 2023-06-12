@@ -88,10 +88,11 @@
             android:id="@+id/icMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
             android:orientation="vertical"
             android:gravity="center"
-            app:layout_constraintEnd_toStartOf="@+id/icMore"
-            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintEnd_toStartOf="@+id/icPay"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
@@ -109,16 +110,62 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/icPay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            app:layout_constraintEnd_toStartOf="@+id/icPrinter"
+            app:layout_constraintStart_toEndOf="@id/icMain"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:src="@drawable/icon_card_n_white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="@string/payment"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/icPrinter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            app:layout_constraintEnd_toStartOf="@+id/icMore"
+            app:layout_constraintStart_toEndOf="@id/icPay"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:src="@drawable/icon_print_n_white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="@string/printer"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/icMore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="122dp"
+            android:layout_marginEnd="30dp"
             android:orientation="vertical"
             android:gravity="center"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/icMain" >
+            app:layout_constraintStart_toEndOf="@+id/icPrinter" >
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

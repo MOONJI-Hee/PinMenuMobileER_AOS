@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/f9"
+    tools:context=".printer.NewConnActivity">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/title"
+        android:text="@string/printer_title_new"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/back"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_back_white" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingHorizontal="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            style="@style/menu"
+            android:id="@+id/imgPhone"
+            android:layout_marginTop="30dp"
+            android:elevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_phone_aos"/>
+        </LinearLayout>
+
+        <TextView
+            style="@style/text17"
+            android:id="@+id/android"
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="20dp"
+            android:textStyle="bold"
+            android:text="@string/android_smartphone"
+            app:layout_constraintBottom_toTopOf="@+id/tv_nick"
+            app:layout_constraintStart_toEndOf="@+id/imgPhone" />
+
+        <TextView
+            android:id="@+id/tv_nick"
+            style="@style/text15"
+            android:layout_marginBottom="5dp"
+            android:text="@string/printer_nick"
+            app:layout_constraintBottom_toTopOf="@+id/et_nick_phone"
+            app:layout_constraintStart_toStartOf="@+id/android" />
+
+        <TextView
+            android:id="@+id/et_nick_phone"
+            style="@style/tv_nick"
+            android:hint="@string/printer_nick_hint"
+            app:layout_constraintBottom_toBottomOf="@+id/imgPhone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/android" />
+
+        <ImageView
+            android:id="@+id/ivStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_print_connection_off"
+            app:layout_constraintBottom_toTopOf="@+id/btnPlus"
+            app:layout_constraintEnd_toEndOf="@+id/imgPhone"
+            app:layout_constraintStart_toStartOf="@+id/imgPhone"
+            app:layout_constraintTop_toBottomOf="@+id/imgPhone" />
+
+        <TextView
+            style="@style/text15"
+            android:textColor="@color/hint"
+            android:text="@string/before_conn"
+            app:layout_constraintTop_toTopOf="@+id/ivStatus"
+            app:layout_constraintBottom_toBottomOf="@+id/ivStatus"
+            app:layout_constraintStart_toEndOf="@+id/ivStatus"/>
+
+        <LinearLayout
+            android:id="@+id/btnPlus"
+            android:layout_width="140dp"
+            android:layout_height="125dp"
+            android:layout_marginTop="60dp"
+            android:gravity="center"
+            android:background="@drawable/bg_btn_r6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgPhone">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_plus"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnPrinter"
+            android:layout_width="140dp"
+            android:layout_height="125dp"
+            android:gravity="center"
+            android:background="@drawable/bg_r6w"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="@+id/btnPlus"
+            app:layout_constraintBottom_toBottomOf="@id/btnPlus"
+            app:layout_constraintStart_toStartOf="@+id/btnPlus">
+            <ImageView
+                android:id="@+id/ivPrinter"
+                android:layout_width="140dp"
+                android:layout_height="125dp"
+                app:layout_constraintTop_toTopOf="@+id/btnPlus"
+                app:layout_constraintBottom_toBottomOf="@id/btnPlus"
+                app:layout_constraintStart_toStartOf="@+id/btnPlus"/>
+        </LinearLayout>
+
+        <TextView
+            style="@style/text17"
+            android:id="@+id/printer_model"
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="20dp"
+            android:textStyle="bold"
+            android:text="@string/empty"
+            app:layout_constraintBottom_toTopOf="@+id/tv_nick_printer"
+            app:layout_constraintStart_toEndOf="@+id/btnPlus" />
+
+        <TextView
+            android:id="@+id/tv_nick_printer"
+            style="@style/text15"
+            android:layout_marginBottom="5dp"
+            android:text="@string/printer_nick"
+            android:textColor="@color/hint"
+            app:layout_constraintBottom_toTopOf="@+id/et_nick_printer"
+            app:layout_constraintStart_toStartOf="@+id/printer_model" />
+
+        <TextView
+            android:id="@+id/et_nick_printer"
+            style="@style/tv_nick"
+            android:hint="@string/printer_nick_hint"
+            app:layout_constraintBottom_toBottomOf="@+id/btnPlus"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/printer_model" />
+
+        <TextView
+            style="@style/subtext"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/printer_conn_info"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnPlus"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
