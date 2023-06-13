@@ -20,28 +20,28 @@
         android:theme="@style/Theme.PinmenuMobileER"
         tools:targetApi="31">
         <activity
-            android:name=".SelectCateActivity"
+            android:name=".printer.SelectCateActivity"
             android:exported="false" />
         <activity
-            android:name=".ContentSetActivity"
+            android:name=".printer.ContentSetActivity"
             android:exported="false" />
         <activity
-            android:name=".DetailPrinterActivity"
+            android:name=".printer.DetailPrinterActivity"
             android:exported="false" />
         <activity
-            android:name=".SelectStoreActivity"
+            android:name=".printer.SelectStoreActivity"
             android:exported="false" />
         <activity
-            android:name=".SetConnActivity"
+            android:name=".printer.SetConnActivity"
             android:exported="false" />
         <activity
-            android:name=".SupportPrinterActivity"
+            android:name=".printer.SupportPrinterActivity"
             android:exported="false" />
         <activity
-            android:name=".NewConnActivity"
+            android:name=".printer.NewConnActivity"
             android:exported="false" />
         <activity
-            android:name=".PrinterMenuActivity"
+            android:name=".printer.PrinterMenuActivity"
             android:exported="false" />
         <activity
             android:name=".common.MapActivity"

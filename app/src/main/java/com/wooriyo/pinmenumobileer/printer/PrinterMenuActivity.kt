@@ -17,9 +17,11 @@ class PrinterMenuActivity : BaseActivity() {
         setContentView(binding.root)
 
         binding.run {
-//            connSet.setOnClickListener { startActivity(Intent(TAG, ))}
+            back.setOnClickListener { finish() }
+
+            connSet.setOnClickListener { startActivity(Intent(TAG, SetConnActivity::class.java))}
             support.setOnClickListener { startActivity(Intent(TAG, SupportPrinterActivity::class.java)) }
-//            contentSet.setOnClickListener { startActivity(Intent(TAG, )) }
+            contentSet.setOnClickListener { startActivity(Intent(TAG, ContentSetActivity::class.java)) }
         }
     }
 }

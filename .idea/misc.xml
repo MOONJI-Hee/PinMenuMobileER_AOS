@@ -29,7 +29,7 @@
         <entry key="app/src/main/res/font/custom_font_family.xml" value="0.3067708333333333" />
         <entry key="app/src/main/res/layout/activity_change_pwd.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_content_set.xml" value="0.47327917913638307" />
-        <entry key="app/src/main/res/layout/activity_detail_printer.xml" value="0.47327917913638307" />
+        <entry key="app/src/main/res/layout/activity_detail_printer.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_find_pw.xml" value="0.5765625" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_map.xml" value="0.5765625" />

@@ -18,6 +18,7 @@ import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.androidId
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.density
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.pref
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.store
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
@@ -26,6 +27,8 @@ import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.more.MoreActivity
 import com.wooriyo.pinmenumobileer.order.OrderListActivity
+import com.wooriyo.pinmenumobileer.printer.PrinterMenuActivity
+import com.wooriyo.pinmenumobileer.printer.SelectStoreActivity
 import com.wooriyo.pinmenumobileer.store.adapter.StoreAdapter
 import retrofit2.Call
 import retrofit2.Response
@@ -44,7 +47,10 @@ class StoreListActivity : BaseActivity() {
         binding = ActivityStoreListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 메인화면 돌아왔을 때 전역변수 초기화
         useridx = pref.getUserIdx()
+        storeidx = 0
+        MyApplication.setStoreDTO()
 
         // 어댑터 클릭이벤트
         storeAdapter.setOnItemClickListener(object : ItemClickListener{
@@ -73,6 +79,21 @@ class StoreListActivity : BaseActivity() {
         }
 
         binding.icMain.setOnClickListener { startActivity(intent)}
+        binding.icPrinter.setOnClickListener {
+            when(storeList.size) {
+                0 -> Toast.makeText(mActivity, R.string.msg_no_store, Toast.LENGTH_SHORT).show()
+                1 -> {
+                    store = storeList[0]
+                    storeidx = storeList[0].idx
+                    startActivity(Intent(mActivity, PrinterMenuActivity::class.java))
+                }
+                else -> {
+                    val intent = Intent(mActivity, SelectStoreActivity::class.java)
+                    intent.putExtra("storeList", storeList)
+                    startActivity(intent)
+                }
+            }
+        }
         binding.icMore.setOnClickListener { startActivity(Intent(mActivity, MoreActivity::class.java)) }
     }
 
