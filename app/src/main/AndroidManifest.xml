@@ -20,6 +20,15 @@
         android:theme="@style/Theme.PinmenuMobileER"
         tools:targetApi="31">
         <activity
+            android:name=".SelectCateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ContentSetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DetailPrinterActivity"
+            android:exported="false" />
+        <activity
             android:name=".SelectStoreActivity"
             android:exported="false" />
         <activity

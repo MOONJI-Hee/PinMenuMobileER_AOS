@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/f9"
+    tools:context=".printer.DetailPrinterActivity">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/title"
+        android:text="@string/printer_choose"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/back"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_back_white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btnPrinter"
+        android:layout_width="140dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="20dp"
+        android:gravity="center"
+        android:background="@drawable/bg_r6w"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintStart_toStartOf="parent">
+        <ImageView
+            android:id="@+id/ivPrinter"
+            android:layout_width="140dp"
+            android:layout_height="125dp"/>
+    </LinearLayout>
+
+    <TextView
+        style="@style/text17"
+        android:id="@+id/printer_model"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tv_nick_printer"
+        app:layout_constraintStart_toEndOf="@+id/btnPrinter"
+        tools:text="SKL-TS400B"/>
+
+    <TextView
+        android:id="@+id/tv_nick_printer"
+        style="@style/text15"
+        android:layout_marginBottom="5dp"
+        android:text="@string/printer_nick"
+        app:layout_constraintBottom_toTopOf="@+id/et_nick_printer"
+        app:layout_constraintStart_toStartOf="@+id/printer_model" />
+
+    <TextView
+        style="@style/tv_nick"
+        android:id="@+id/et_nick_printer"
+        android:layout_marginEnd="20dp"
+        android:hint="@string/printer_nick_hint"
+        app:layout_constraintBottom_toBottomOf="@+id/btnPrinter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/printer_model" />
+
+    <TextView
+        style="@style/subtext"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/printer_nick_change_info"
+        app:layout_constraintStart_toStartOf="@+id/btnPrinter"
+        app:layout_constraintTop_toBottomOf="@+id/btnPrinter"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingHorizontal="20dp"
+        android:paddingBottom="30dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <TextView
+            style="@style/btn_cancel"
+            android:id="@+id/delete"
+            android:layout_width="0dp"
+            android:text="@string/btn_delete2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/save"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            style="@style/btn"
+            android:id="@+id/save"
+            android:layout_width="0dp"
+            android:layout_marginStart="10dp"
+            android:text="@string/btn_save"
+            app:layout_constraintWidth_percent="0.76"
+            app:layout_constraintStart_toEndOf="@+id/delete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

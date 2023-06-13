@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/f9"
+    tools:context=".printer.ContentSetActivity">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/title"
+        android:text="@string/printer_title_contents"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/back"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_back_white" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/menu"
+        android:id="@+id/imgPhone"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="20dp"
+        android:elevation="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_phone_aos"/>
+    </LinearLayout>
+
+    <TextView
+        style="@style/text17"
+        android:id="@+id/android"
+        android:layout_marginStart="15dp"
+        android:textStyle="bold"
+        android:text="@string/android_smartphone"
+        app:layout_constraintTop_toTopOf="@+id/imgPhone"
+        app:layout_constraintStart_toEndOf="@+id/imgPhone" />
+
+    <TextView
+        android:id="@+id/tv_nick"
+        style="@style/text15"
+        android:layout_marginTop="5dp"
+        android:text="@string/printer_nick_format"
+        app:layout_constraintTop_toBottomOf="@+id/android"
+        app:layout_constraintStart_toStartOf="@+id/android" />
+
+    <TextView
+        style="@style/subtext"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:text="@string/font"
+        app:layout_constraintBottom_toTopOf="@+id/chkBig"
+        app:layout_constraintStart_toStartOf="@+id/android" />
+
+    <CheckBox
+        style="@style/text15"
+        android:id="@+id/chkBig"
+        android:layout_height="24dp"
+        android:text="@string/big"
+        android:textStyle="bold"
+        android:button="@null"
+        android:drawablePadding="6dp"
+        android:drawableStart="@drawable/selector_check"
+        app:layout_constraintBottom_toBottomOf="@+id/imgPhone"
+        app:layout_constraintStart_toStartOf="@+id/android" />
+
+    <CheckBox
+        style="@style/text15"
+        android:id="@+id/chkSmall"
+        android:layout_height="24dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/small"
+        android:textStyle="bold"
+        android:button="@null"
+        android:drawablePadding="6dp"
+        android:drawableStart="@drawable/selector_check"
+        app:layout_constraintStart_toEndOf="@+id/chkBig"
+        app:layout_constraintBottom_toBottomOf="@+id/chkBig"/>
+
+    <TextView
+        style="@style/text17m"
+        android:id="@+id/tv_kitchen"
+        android:text="@string/printer_kitchen"
+        app:layout_constraintStart_toStartOf="@+id/imgPhone"
+        app:layout_constraintTop_toTopOf="@+id/kitchen"
+        app:layout_constraintBottom_toBottomOf="@+id/kitchen"/>
+
+    <CheckBox
+        style="@style/toggle"
+        android:id="@+id/kitchen"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toBottomOf="@+id/imgPhone"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_cate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/kitchen">
+
+        <TextView
+            style="@style/text17"
+            android:id="@+id/cateCnt"
+            android:fontFamily="@font/notosans_demilight"
+            android:text="@string/printer_kitchen_format"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/cateSet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_set"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/cateCnt"/>
+
+        <TextView
+            style="@style/subtext"
+            android:layout_marginTop="10dp"
+            android:text="@string/printer_customer_info"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvCate"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        style="@style/text17m"
+        android:text="@string/printer_customer"
+        app:layout_constraintStart_toStartOf="@+id/tv_kitchen"
+        app:layout_constraintTop_toTopOf="@+id/customer"
+        app:layout_constraintBottom_toBottomOf="@+id/customer"/>
+
+    <CheckBox
+        style="@style/toggle"
+        android:id="@+id/customer"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/cl_cate"
+        app:layout_constraintEnd_toEndOf="@+id/kitchen"/>
+
+    <TextView
+        style="@style/subtext"
+        android:id="@+id/cl_customer"
+        android:padding="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:text="@string/printer_customer_info"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customer"/>
+
+    <TextView
+        style="@style/text17m"
+        android:text="@string/printer_order_no"
+        app:layout_constraintStart_toStartOf="@+id/tv_kitchen"
+        app:layout_constraintTop_toTopOf="@+id/orderNo"
+        app:layout_constraintBottom_toBottomOf="@+id/orderNo"/>
+
+    <CheckBox
+        style="@style/toggle"
+        android:id="@+id/orderNo"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/cl_customer"
+        app:layout_constraintEnd_toEndOf="@+id/kitchen"/>
+
+    <TextView
+        style="@style/subtext"
+        android:padding="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:text="@string/printer_order_no_info"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orderNo"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

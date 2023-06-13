@@ -44,6 +44,7 @@
     <string name="btn_save">저&#160;&#160;장</string>
     <string name="btn_save2">저&#160;장</string>
     <string name="btn_delete">삭&#160;&#160;제</string>
+    <string name="btn_delete2">삭&#160;제</string>
     <string name="btn_update">수&#160;&#160;정</string>
     <string name="btn_update2">수&#160;정</string>
     <string name="btn_sequence">순&#160;&#160;서</string>
@@ -241,7 +242,7 @@
     <string name="printer_customer_info">결제된 고객용 영수증을 출력할 수 있습니다.</string>
     <string name="printer_order_no">주문 번호</string>
     <string name="printer_order_no_info">핀메뉴에서 생성된 주문 번호를 출력합니다.</string>
-    <string name="printer_title_category_set">출력 카테고리 설정(%n/10)</string>
+    <string name="printer_title_category_set">카테고리 선택하기(%n/10)</string>
     <string name="printer_category_info">최대 10개까지 선택이 가능합니다.</string>
 
     <!--  더보기  -->
