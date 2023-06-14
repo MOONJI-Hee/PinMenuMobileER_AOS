@@ -21,7 +21,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.DecimalFormat
 import java.text.NumberFormat
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -31,6 +30,7 @@ import java.util.*
 class AppHelper {
     companion object {
         private val datetimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        private val appCallFormatter = DateTimeFormatter.ofPattern("yyMMddHHmmss")
         private val emailReg = "^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$".toRegex()
         private val pwReg = "^(?=.*[a-zA-Z0-9]).{8,}$".toRegex()
 
@@ -120,6 +120,11 @@ class AppHelper {
 
                 cmp >= 0
             }
+        }
+
+        // APPCALL 거래번호 생성
+        fun getAppCallNo(): String {
+            return appCallFormatter.format(LocalDateTime.now())
         }
 
         fun osVersion(): Int = Build.VERSION.SDK_INT    // 안드로이드 버전
