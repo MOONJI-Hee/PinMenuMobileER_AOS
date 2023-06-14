@@ -47,7 +47,7 @@
 
     <TextView
         style="@style/text17"
-        android:id="@+id/printer_model"
+        android:id="@+id/model"
         android:layout_marginStart="15dp"
         android:layout_marginBottom="20dp"
         android:textStyle="bold"
@@ -61,16 +61,16 @@
         android:layout_marginBottom="5dp"
         android:text="@string/printer_nick"
         app:layout_constraintBottom_toTopOf="@+id/et_nick_printer"
-        app:layout_constraintStart_toStartOf="@+id/printer_model" />
+        app:layout_constraintStart_toStartOf="@+id/model" />
 
-    <TextView
+    <EditText
         style="@style/tv_nick"
         android:id="@+id/et_nick_printer"
         android:layout_marginEnd="20dp"
         android:hint="@string/printer_nick_hint"
         app:layout_constraintBottom_toBottomOf="@+id/btnPrinter"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/printer_model" />
+        app:layout_constraintStart_toStartOf="@+id/model" />
 
     <TextView
         style="@style/subtext"

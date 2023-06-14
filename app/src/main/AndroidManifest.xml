@@ -4,6 +4,10 @@
     package="com.wooriyo.pinmenumobileer">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
@@ -21,6 +25,9 @@
         tools:targetApi="31">
         <activity
             android:name=".printer.SelectCateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".printer.SelectPrinterActivity"
             android:exported="false" />
         <activity
             android:name=".printer.ContentSetActivity"

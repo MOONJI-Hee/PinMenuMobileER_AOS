@@ -64,11 +64,11 @@
             style="@style/text15"
             android:layout_marginBottom="5dp"
             android:text="@string/printer_nick"
-            app:layout_constraintBottom_toTopOf="@+id/et_nick_phone"
+            app:layout_constraintBottom_toTopOf="@+id/nickDevice"
             app:layout_constraintStart_toStartOf="@+id/android" />
 
         <TextView
-            android:id="@+id/et_nick_phone"
+            android:id="@+id/nickDevice"
             style="@style/tv_nick"
             android:hint="@string/printer_nick_hint"
             app:layout_constraintBottom_toBottomOf="@+id/imgPhone"
@@ -87,11 +87,31 @@
 
         <TextView
             style="@style/text15"
+            android:id="@+id/tvStatus"
             android:textColor="@color/hint"
             android:text="@string/before_conn"
             app:layout_constraintTop_toTopOf="@+id/ivStatus"
             app:layout_constraintBottom_toBottomOf="@+id/ivStatus"
             app:layout_constraintStart_toEndOf="@+id/ivStatus"/>
+        
+        <LinearLayout
+            style="@style/btn_small"
+            android:id="@+id/btnRetry"
+            android:layout_width="140dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/btnPlus"
+            app:layout_constraintEnd_toEndOf="@+id/imgPhone"
+            app:layout_constraintStart_toStartOf="@+id/imgPhone"
+            app:layout_constraintTop_toBottomOf="@+id/imgPhone">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_print_refresh" />
+            <TextView
+                style="@style/text15"
+                android:layout_marginStart="10dp"
+                android:text="@string/retry_conn"/>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/btnPlus"
@@ -143,13 +163,14 @@
             android:layout_marginBottom="5dp"
             android:text="@string/printer_nick"
             android:textColor="@color/hint"
-            app:layout_constraintBottom_toTopOf="@+id/et_nick_printer"
+            app:layout_constraintBottom_toTopOf="@+id/nickPrinter"
             app:layout_constraintStart_toStartOf="@+id/printer_model" />
 
         <TextView
-            android:id="@+id/et_nick_printer"
+            android:id="@+id/nickPrinter"
             style="@style/tv_nick"
             android:hint="@string/printer_nick_hint"
+            android:enabled="false"
             app:layout_constraintBottom_toBottomOf="@+id/btnPlus"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/printer_model" />

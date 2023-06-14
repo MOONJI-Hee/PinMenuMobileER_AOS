@@ -12,5 +12,6 @@ data class PrintContentDTO(
     @SerializedName("fontSize") var fontSize: Int,
     @SerializedName("kitchen") var kitchen: String,
     @SerializedName("receipt") var receipt: String,
-    @SerializedName("ordcode") var ordcode: String
+    @SerializedName("ordcode") var ordcode: String,
+    @SerializedName("category") var category: String ?= "",
 )

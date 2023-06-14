@@ -27,8 +27,8 @@ class MyApplication: Application() {
         var useridx = 0
         var storeidx = 0
         lateinit var store: StoreDTO
-
         lateinit var androidId : String
+        var bidx = 0    //프린터 설정 시 부여되는 idx (기기별 매장 하나 당 한개씩 부여)
 
         fun setStoreDTO() {
             store = StoreDTO(useridx)

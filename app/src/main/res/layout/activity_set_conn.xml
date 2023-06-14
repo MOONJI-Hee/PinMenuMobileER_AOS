@@ -58,11 +58,11 @@
         style="@style/text15"
         android:layout_marginBottom="5dp"
         android:text="@string/printer_nick"
-        app:layout_constraintBottom_toTopOf="@+id/et_nick_phone"
+        app:layout_constraintBottom_toTopOf="@+id/phoneNick"
         app:layout_constraintStart_toStartOf="@+id/android" />
 
     <TextView
-        android:id="@+id/et_nick_phone"
+        android:id="@+id/phoneNick"
         style="@style/tv_nick"
         android:hint="@string/printer_nick_hint"
         android:layout_marginEnd="20dp"

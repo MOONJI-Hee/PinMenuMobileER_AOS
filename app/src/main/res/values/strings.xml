@@ -203,6 +203,8 @@
     <string name="printer_conn_info">스마트 기기 한대에 하나의 프린터만 연결하여\n이용할 수 있으며,\n연결된 블루투스 프린터는 반드시 관리앱이 실행중인\n기기와 근거리에 프린터를 배치해 주세요.\n프린터와 연결할 기기(디바이스) 및 연결된 프린터는\n별명을 부여하여 관리할 수 있습니다.</string>
     <string name="before_conn">연결전</string>
     <string name="after_conn">연결완료</string>
+    <string name="retry_conn">다시연결</string>
+    <string name="printer_title_sel_model">프린터 선택</string>
 
     <string name="printer_nick">별명</string>
     <string name="printer_nick_title">별명 입력</string>
@@ -236,13 +238,13 @@
     <string name="big">크게</string>
     <string name="small">작게</string>
     <string name="printer_kitchen">주방 영수증</string>
-    <string name="printer_kitchen_format">선택된 카테고리 : %n개</string>
+    <string name="printer_kitchen_format">선택된 카테고리 : %d개</string>
     <string name="printer_kitchen_info">선택된 카테고리만 출력가능 (최대 10개)\n선택하지 않으면 모든 카테고리가 출력됩니다.</string>
     <string name="printer_customer">고객 영수증</string>
     <string name="printer_customer_info">결제된 고객용 영수증을 출력할 수 있습니다.</string>
     <string name="printer_order_no">주문 번호</string>
     <string name="printer_order_no_info">핀메뉴에서 생성된 주문 번호를 출력합니다.</string>
-    <string name="printer_title_category_set">카테고리 선택하기(%n/10)</string>
+    <string name="printer_title_category_set">카테고리 선택하기(%d/10)</string>
     <string name="printer_category_info">최대 10개까지 선택이 가능합니다.</string>
 
     <!--  더보기  -->
@@ -366,10 +368,6 @@
     <string name="dialog_notice">알림</string>
     <string name="dialog_version">Ver %s</string>
 
-    <!--  권한 다이얼로그  -->
-    <string name="pms_storage_title">외부 저장소 권한 요청</string>
-    <string name="pms_storage_content">원활한 서비스 이용을 위해서는 외부 저장소 권한이 필요합니다.</string>
-
     <!--  토스트 메세지  -->
     <string name="msg_retry">다시 시도해주세요.</string>
     <string name="msg_complete">완료되었습니다.</string>
@@ -397,4 +395,15 @@
     <string name="msg_no_table_no">테이블 번호를 입력해주세요.</string>
 
     <string name="msg_no_store">매장 등록 후 이용할 수 있습니다.</string>
+
+    <!--  테스트 인쇄 문구  -->
+    <string name="print_test">오리지널 스마트 전자메뉴판 핀메뉴 테스트 인쇄 입니다.\n1234567890\n가나다라마바사아자차카타파하\nABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+
+    <!--  권한 다이얼로그  -->
+    <string name="pms_storage_title">외부 저장소 권한 요청</string>
+    <string name="pms_storage_content">원활한 서비스 이용을 위해서는 외부 저장소 권한이 필요합니다.</string>
+    <string name="pms_bluetooth_title">블루투스 권한 요청</string>
+    <string name="pms_bluetooth_content">원활한 서비스 이용을 위해서는 블루투스 권한이 필요합니다.</string>
+    <string name="pms_location_title">위치 권한 요청</string>
+    <string name="pms_location_content">원활한 서비스 이용을 위해서는 위치 권한이 필요합니다.</string>
 </resources>

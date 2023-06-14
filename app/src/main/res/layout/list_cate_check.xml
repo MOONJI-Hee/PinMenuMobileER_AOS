@@ -5,16 +5,19 @@
     android:paddingHorizontal="20dp"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <CheckBox
-        style="@style/text17"
         android:id="@+id/name"
+        style="@style/text17"
+        android:layout_width="match_parent"
         android:button="@null"
-        android:drawablePadding="10dp"
         android:drawableStart="@drawable/selector_check"
-        android:maxLines="1"
+        android:drawablePadding="10dp"
         android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         tools:text="커피" />
 </androidx.constraintlayout.widget.ConstraintLayout>

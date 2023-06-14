@@ -30,6 +30,7 @@ import com.wooriyo.pinmenumobileer.order.OrderListActivity
 import com.wooriyo.pinmenumobileer.printer.PrinterMenuActivity
 import com.wooriyo.pinmenumobileer.printer.SelectStoreActivity
 import com.wooriyo.pinmenumobileer.store.adapter.StoreAdapter
+import com.wooriyo.pinmenumobileer.util.Api
 import retrofit2.Call
 import retrofit2.Response
 
@@ -82,11 +83,7 @@ class StoreListActivity : BaseActivity() {
         binding.icPrinter.setOnClickListener {
             when(storeList.size) {
                 0 -> Toast.makeText(mActivity, R.string.msg_no_store, Toast.LENGTH_SHORT).show()
-                1 -> {
-                    store = storeList[0]
-                    storeidx = storeList[0].idx
-                    startActivity(Intent(mActivity, PrinterMenuActivity::class.java))
-                }
+                1 -> { insPrintSetting() }
                 else -> {
                     val intent = Intent(mActivity, SelectStoreActivity::class.java)
                     intent.putExtra("storeList", storeList)
@@ -155,6 +152,30 @@ class StoreListActivity : BaseActivity() {
                     Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, "이용자수 체크 오류 > $t")
                     Log.d(TAG, "이용자수 체크 오류 > ${call.request()}")
+                }
+            })
+    }
+
+    fun insPrintSetting() {
+        ApiClient.service.insPrintSetting(useridx, storeidx, androidId)
+            .enqueue(object : retrofit2.Callback<ResultDTO>{
+                override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                    Log.d(TAG, "프린터 설정 최초 진입 시 row 추가 url : $response")
+                    if(!response.isSuccessful) return
+
+                    val result = response.body() ?: return
+                    if(result.status == 1){
+                        store = storeList[0]
+                        storeidx = storeList[0].idx
+                        MyApplication.bidx = result.idx
+                        startActivity(Intent(mActivity, PrinterMenuActivity::class.java))
+                    }else
+                        Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                }
+                override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                    Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "프린터 설정 최초 진입 시 row 추가 오류 >> $t")
+                    Log.d(TAG, "프린터 설정 최초 진입 시 row 추가 오류 >> ${call.request()}")
                 }
             })
     }

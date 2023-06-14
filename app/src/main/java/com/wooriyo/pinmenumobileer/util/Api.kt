@@ -105,6 +105,13 @@ interface Api {
         @Query("uuid") androidId : String
     ): Call<ResultDTO>
 
+    // 카테고리 목록 조희
+    @GET("m/getcategory.php")
+    fun getCateList(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+    ): Call<CateListDTO>
+
     // 새로운 주문 유무 확인 (status == 1 : 새로운 주문 있음)
     @GET("m/udtOrdStatus.php")
     fun getOrdStatus(
@@ -221,7 +228,8 @@ interface Api {
     @GET("m/print_nick.php")
     fun setPrintNick(
         @Query("storeidx") storeidx: Int,
-        @Query("nick") nick: String
+        @Query("nick") nick: String,
+        @Query("type") type: Int        // 1 : 관리자 기기, 2 : 프린트 기기
     ): Call<ResultDTO>
 
     // 사용가능한 프린터 목록
@@ -229,7 +237,19 @@ interface Api {
     fun getSupportList(): Call<PrintModelListDTO>
 
     // 프린터 삭제
+    @GET("m/del_print.php")
+    fun delPrint(
+        @Query("idx") idx: Int,
+        @Query("storeidx") storeidx: Int
+    ): Call<ResultDTO>
 
+    // 프린터 기기 선택
+    @GET("m/udt_print_kind.php")
+    fun udtPrintModel(
+        @Query("storeidx") storeidx: Int,
+        @Query("uuid") androidId : String,
+        @Query("printType") printType: Int
+    ): Call<ResultDTO>
 
     // 프린터 출력 설정 불러오기
     @GET("m/getprintinfo.php")
@@ -242,7 +262,7 @@ interface Api {
     fun setPrintContent(
         @Query("idx") idx: Int,
         @Query("storeidx") storeidx: Int,
-        @Query("fontSize") fontSize: Int,
+        @Query("fontSize") fontSize: Int,   // 1: 크게 , 2 : 작게
         @Query("kitchen") kitchen: String,  // 주방영수증 사용 여부 (Y: 사용, N: 미사용)
         @Query("receipt") receipt: String,  // 주방영수증 사용 여부 (Y: 사용, N: 미사용)
         @Query("ordcode") ordcode: String,  // 주방영수증 사용 여부 (Y: 사용, N: 미사용)
