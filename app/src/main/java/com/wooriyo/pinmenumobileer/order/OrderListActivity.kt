@@ -2,6 +2,7 @@ package com.wooriyo.pinmenumobileer.order
 
 import android.content.ComponentName
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,16 +14,19 @@ import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.ActivityOrderListBinding
+import com.wooriyo.pinmenumobileer.listener.EasyCheckListener
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.OrderHistoryDTO
 import com.wooriyo.pinmenumobileer.model.OrderListDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.order.adapter.OrderAdapter
+import com.wooriyo.pinmenumobileer.receiver.EasyCheckReceiver
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.util.AppHelper
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class OrderListActivity : BaseActivity() {
     lateinit var binding: ActivityOrderListBinding
@@ -31,6 +35,7 @@ class OrderListActivity : BaseActivity() {
     // 결제 관련 변수
     var payPosition = -1
     var tran_type = "credit"
+    lateinit var receiver : EasyCheckReceiver
 
 
     val TAG = "OrderListActivity"
@@ -41,10 +46,16 @@ class OrderListActivity : BaseActivity() {
 
     val goKICC = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
+            Log.d(TAG, "결제 성공")
             //직전거래에 대한 취소거래필요정보를 받음
             val cancelInfo: Intent = it.data ?: return@registerForActivityResult
 
-            complete()
+            val rtn = it.data
+            if(rtn != null) {
+                val data = rtn.data
+                Log.d(TAG, "return 값 >> $data")
+            }
+
         }
     }
 
@@ -55,6 +66,7 @@ class OrderListActivity : BaseActivity() {
 
         orderAdapter.setOnPayClickListener(object: ItemClickListener{
             override fun onItemClick(position: Int) {
+                Log.d(TAG, "결제 버튼 클릭")
                 payPosition = position
                 payOrder()
             }
@@ -70,6 +82,17 @@ class OrderListActivity : BaseActivity() {
         binding.back.setOnClickListener { AppHelper.leaveStore(mActivity) }
 
         getOrderList()
+
+
+        receiver = EasyCheckReceiver()
+        receiver.setOnEasyCheckListener(object : EasyCheckListener {
+            override fun getIntent(intent: Intent?) {
+                //로그확인
+                Log.e("heykyul", "broadcast 들어옴")
+            }
+        })
+        val filter = IntentFilter("kr.co.kicc.ectablet.broadcast")
+        this.registerReceiver(receiver, filter)
     }
 
     override fun onResume() {
@@ -86,6 +109,12 @@ class OrderListActivity : BaseActivity() {
     override fun onPause() {
         super.onPause()
 //        timer.cancel()
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(receiver)
     }
 
     // 새로운 주문 유무 확인 > 3초마다 한번씩 태우기
@@ -180,52 +209,15 @@ class OrderListActivity : BaseActivity() {
 
         val intent = Intent(Intent.ACTION_MAIN)
 
-//        intent.putExtra("TRAN_NO", "1")
         intent.putExtra("APPCALL_TRAN_NO", AppHelper.getAppCallNo())
         intent.putExtra("TRAN_TYPE", tran_type)
-        intent.putExtra("TOTAL_AMOUNT", orderList[payPosition].amount)
-//        intent.putExtra("TAX", )  부과세
-//        intent.putExtra("TIP", )  팁
-//        intent.putExtra("RECEIPT_EMAIL", this.receipt_email.getText().toString())
-//        intent.putExtra("RECEIPT_SMS", this.receipt_sms.getText().toString())
-        intent.putExtra("INSTALLMENT", 0)
+        intent.putExtra("TOTAL_AMOUNT", (orderList[payPosition].amount).toString())
 
-        var signFlag = "N"
-        if(orderList[payPosition].amount >= 50000) signFlag = "Y"
-        intent.putExtra("SIGN_FLAG", signFlag)
-
-//        intent.putExtra("KEYIN_FLAG", this.keyin_flag.getText().toString())
-        intent.putExtra("PRINT_OPTION", this.print_option.getText().toString())
-        intent.putExtra("EXTENSION_OPTION", this.extension_option.getText().toString())
-        intent.putExtra("UI_SKIP_OPTION", this.uiskip_option.getText().toString())
-        intent.putExtra("TOKEN_DATA", this.token_data.getText().toString())
-        intent.putExtra("TOKEN_VALID", this.token_valid.getText().toString())
-        if (multi) { //다중사업자이면 아래 정보가 필요합니다.
-            intent.putExtra("SHOP_TID", this.tid.getText().toString())
-            intent.putExtra("SHOP_BIZ_NUM", this.biznum.getText().toString())
-            intent.putExtra("SHOP_NAME", this.name.getText().toString())
-            intent.putExtra("SHOP_OWNER", this.owner.getText().toString())
-            intent.putExtra("SHOP_ADDRESS", this.address.getText().toString())
-            intent.putExtra("SHOP_TEL", this.tel.getText().toString())
-        }
-
-        if (input_addfield) { //추가필드를 사용하면 데이터 넣어주고
-            intent.putExtra("ADD_FIELD", this.add_field.getText().toString())
-        } else { //추가필드 사용하지 않으면 주문번호와 고객코드를 넣어주고
-            intent.putExtra("ORDER_NUM", this.order_num.getText().toString())
-            intent.putExtra("CUSTOMER_CODE", this.customer_code.getText().toString())
-        }
-        //거래일련번호 취소인 경우 거래일련번호 입력
-        //거래일련번호 취소인 경우 거래일련번호 입력
-        if (("credit_cancel" == tran_type || "p_cash_cancel" == tran_type || "c_cash_cancel" == tran_type || "v_cash_cancel" == tran_type) && input_transerialno) {
-            intent.putExtra("TRAN_SERIALNO", this.tran_serialno.getText().toString())
-        }
-        //취소거래는 원승인번호, 원승인일자 입력
-        //취소거래는 원승인번호, 원승인일자 입력
-        if ("credit_cancel" == tran_type || "p_cash_cancel" == tran_type || "c_cash_cancel" == tran_type || "v_cash_cancel" == tran_type || "history" == tran_type || "barcode_cancel" == tran_type) {
-            intent.putExtra("APPROVAL_NUM", this.appr_num.getText().toString())
-            intent.putExtra("APPROVAL_DATE", this.appr_date.getText().toString())
-        }
+        val tax = (orderList[payPosition].amount * 0.1).toInt()
+        intent.putExtra("TAX", tax.toString())
+        intent.putExtra("TIP", "0")
+        intent.putExtra("INSTALLMENT", "0")
+        intent.putExtra("UI_SKIP_OPTION", "NNNNN")
 
         intent.addCategory(Intent.CATEGORY_LAUNCHER)
         intent.component = compName
