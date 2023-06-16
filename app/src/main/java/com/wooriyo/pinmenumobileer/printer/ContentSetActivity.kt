@@ -71,12 +71,11 @@ class ContentSetActivity : BaseActivity() {
 
     fun setCategory(strCate: String) {
         val category = strCate.split(",")
-        if(category.size > 0) {
+        if(category.isNotEmpty()) {
             cnt = category.size
             Log.d(TAG, "Category list >>>> $category")
             Log.d(TAG, "Category CNT >>>> $cnt")
         }
-
 
         binding.cateCnt.text = getString(R.string.printer_kitchen_format).format(cnt)
 

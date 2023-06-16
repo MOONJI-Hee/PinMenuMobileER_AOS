@@ -151,7 +151,7 @@
         <TextView
             style="@style/subtext"
             android:layout_marginTop="10dp"
-            android:text="@string/printer_customer_info"
+            android:text="@string/printer_kitchen_info"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rvCate"/>
 
