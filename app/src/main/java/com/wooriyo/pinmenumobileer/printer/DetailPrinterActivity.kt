@@ -48,7 +48,7 @@ class DetailPrinterActivity : BaseActivity() {
 
     fun save() {
         val nick = binding.etNickPrinter.text.toString()
-        ApiClient.service.setPrintNick(MyApplication.storeidx, nick, 1)
+        ApiClient.service.setPrintNick(MyApplication.storeidx, nick, 2)
             .enqueue(object : Callback<ResultDTO> {
                 override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                     Log.d(TAG, "프린터 별명 설정 URL >> $response")
