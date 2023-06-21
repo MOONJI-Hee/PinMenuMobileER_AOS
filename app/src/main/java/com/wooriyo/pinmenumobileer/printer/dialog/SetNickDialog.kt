@@ -8,10 +8,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.wooriyo.pinmenumobileer.BaseDialogFragment
 import com.wooriyo.pinmenumobileer.MyApplication
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.androidId
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.DialogPrinterNickBinding
 import com.wooriyo.pinmenumobileer.listener.DialogListener
-import com.wooriyo.pinmenumobileer.model.PrintDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import retrofit2.Call
@@ -39,7 +40,7 @@ class SetNickDialog(var nick: String, val type: Int, val model: String): BaseDia
 
     fun save() {
         nick = binding.etNick.text.toString()
-        ApiClient.service.setPrintNick(MyApplication.storeidx, nick, type)
+        ApiClient.service.setPrintNick(useridx, MyApplication.storeidx, androidId, nick, type)
             .enqueue(object : Callback<ResultDTO>{
                 override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                     Log.d(TAG, "디바이스 별명 설정 URL >> $response")

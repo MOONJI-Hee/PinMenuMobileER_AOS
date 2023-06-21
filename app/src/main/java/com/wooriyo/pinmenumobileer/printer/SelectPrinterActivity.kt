@@ -5,8 +5,10 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.wooriyo.pinmenumobileer.BaseActivity
+import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.androidId
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.ActivitySupportPrinterBinding
 import com.wooriyo.pinmenumobileer.model.ResultDTO
@@ -81,7 +83,7 @@ class SelectPrinterActivity : BaseActivity() {
     }
 
     fun setPrinterModel() {
-        ApiClient.service.udtPrintModel(storeidx, androidId, type).enqueue(object : Callback<ResultDTO> {
+        ApiClient.service.udtPrintModel(useridx, storeidx, androidId, type, "N").enqueue(object : Callback<ResultDTO>{
             override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                 Log.d(TAG, "프린터 모델 선택 url : $response")
                 if(!response.isSuccessful) return
@@ -89,7 +91,6 @@ class SelectPrinterActivity : BaseActivity() {
                 val result = response.body() ?: return
                 when(result.status) {
                     1 -> {
-                        intent.putExtra("idx", result.idx)
                         intent.putExtra("printType", type)
                         setResult(RESULT_OK, intent)
                         finish()
@@ -97,7 +98,6 @@ class SelectPrinterActivity : BaseActivity() {
                     else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                 }
             }
-
             override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
                 Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "프린터 모델 선택 오류 >> $t")

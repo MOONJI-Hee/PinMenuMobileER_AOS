@@ -3,13 +3,18 @@ package com.wooriyo.pinmenumobileer.printer.adapter
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.annotations.SerializedName
 import com.sewoo.jpos.command.ESCPOSConst
 import com.sewoo.jpos.printer.ESCPOSPrinter
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.bluetoothPort
 import com.wooriyo.pinmenumobileer.R
+import com.wooriyo.pinmenumobileer.common.AlertDialog
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.FONT_BIG
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.FONT_SMALL
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.FONT_WIDTH
@@ -84,33 +89,43 @@ class PrinterAdapter(val dataSet: ArrayList<PrintDTO>): RecyclerView.Adapter<Rec
                 binding.nick.text = data.nick
             }
 
-            //TODO 연결된 프린터 목록과 비교해서 연결 상태 표시
-
-            binding.btnTest.setOnClickListener {
-                var rtn = 0
-
-                try {
-                    rtn = escposPrinter.printerSts()
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-
-                try {
-                    escposPrinter.printAndroidFont(context.getString(R.string.print_test), FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
-                    escposPrinter.printAndroidFont(context.getString(R.string.print_test), FONT_WIDTH, FONT_BIG, ESCPOSConst.LK_ALIGNMENT_LEFT)
-                    escposPrinter.lineFeed(4)
-                    escposPrinter.cutPaper()
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
+            // 연결 상태에 따라 우측 버튼 및 뷰 변경
+            if(data.connected) {
+                binding.btnConn.visibility = View.INVISIBLE
+                binding.connNo.visibility = View.INVISIBLE
+                binding.btnClear.visibility = View.VISIBLE
+                binding.connDot.visibility = View.VISIBLE
+                binding.connStatus.visibility = View.VISIBLE
+                binding.connStatus.text = context.getString(R.string.good)
+            }else {
+                binding.btnConn.visibility = View.VISIBLE
+                binding.connNo.visibility = View.VISIBLE
+                binding.btnClear.visibility = View.GONE
+                binding.connDot.visibility = View.GONE
+                binding.connStatus.visibility = View.GONE
             }
 
-            binding.nick.setOnClickListener {
+            binding.layout.setOnClickListener {
                 val intent = Intent(context, DetailPrinterActivity::class.java)
                 intent.putExtra("printer", data)
                 context.startActivity(intent)
             }
 
+            binding.btnTest.setOnClickListener {
+                if(bluetoothPort.isConnected) {
+                    try {
+                        escposPrinter.printAndroidFont(context.getString(R.string.print_test), FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                        escposPrinter.printAndroidFont(context.getString(R.string.print_test), FONT_WIDTH, FONT_BIG, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                        escposPrinter.lineFeed(4)
+                        escposPrinter.cutPaper()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }else {
+                    val fragmentActivity = context as FragmentActivity
+                    AlertDialog(context.getString(R.string.dialog_check_conn)).show(fragmentActivity.supportFragmentManager, "AlertDialog")
+                }
+            }
             binding.btnConn.setOnClickListener {
                 itemClickListener.onItemClick(adapterPosition)
             }

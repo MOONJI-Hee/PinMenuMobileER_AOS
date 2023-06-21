@@ -1,6 +1,7 @@
 package com.wooriyo.pinmenumobileer.util
 
 import android.app.Activity
+import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.graphics.Outline
 import android.graphics.Rect
@@ -14,11 +15,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity.INPUT_METHOD_SERVICE
 import androidx.recyclerview.widget.RecyclerView
 import com.wooriyo.pinmenumobileer.MyApplication
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.bluetoothAdapter
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.remoteDevices
 import com.wooriyo.pinmenumobileer.R
+import com.wooriyo.pinmenumobileer.config.AppProperties
+import com.wooriyo.pinmenumobileer.model.OrderDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
+import java.lang.reflect.Method
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -152,6 +159,144 @@ class AppHelper {
                         Log.d("AppHelper", "매장 나가기 오류 > ${call.request()}")
                     }
                 })
+        }
+
+        // 블루투스 & 프린터기 연결 관련 메소드
+        fun searchDevice() {
+            MyApplication.bluetoothAdapter.startDiscovery()
+        }
+
+        fun connDevice(): Int {
+            var retVal: Int = -1
+
+            Log.d("AppHelper", "블루투스 기기 커넥트")
+            Log.d("AppHelper", "remote 기기 > $remoteDevices")
+            if(remoteDevices.isNotEmpty()) {
+                val connDvc = remoteDevices[0]
+                Log.d("AppHelper", "connDvc >> $connDvc")
+
+                try {
+                    MyApplication.bluetoothPort.connect(connDvc)
+                    retVal = Integer.valueOf(0)
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    retVal = Integer.valueOf(-1)
+                }
+            }else {
+                retVal = -2
+            }
+            return retVal
+        }
+
+        fun getPairedDevice() {
+            remoteDevices.clear()
+
+            val pairedDevices: Set<BluetoothDevice>? = bluetoothAdapter.bondedDevices
+            pairedDevices?.forEach { device ->
+//            val deviceName = device.name
+                val deviceHardwareAddress = device.address // MAC address
+
+                if(MyApplication.bluetoothPort.isValidAddress(deviceHardwareAddress)) {
+                    val deviceNum = device.bluetoothClass.majorDeviceClass
+
+                    if(deviceNum == MyApplication.BT_PRINTER) {
+                        remoteDevices.add(device)
+                    }
+                }
+            }
+            Log.d("AppHelper", "페어링된 기기 목록 >>$remoteDevices")
+            checkPrinterConn()
+        }
+
+        fun checkPrinterConn() {
+            Log.d("AppHelper", "CheckPrintConnn~~!~!~!")
+            remoteDevices.forEach {
+                val m: Method = it.javaClass.getMethod("isConnected")
+                val connected = m.invoke(it) as Boolean
+
+                if(connected) {
+                    val deviceHardwareAddress = it.address // MAC address
+
+                    if(MyApplication.bluetoothPort.isValidAddress(deviceHardwareAddress)) {
+                        val deviceNum = it.bluetoothClass.majorDeviceClass
+                        Log.d("AppHelper", "연결된 기기 == 세우테크 프린터 맞음")
+
+                    }
+                }
+            }
+        }
+
+        fun getPrint(ord: OrderDTO) : String {
+            var hangul_size = AppProperties.HANGUL_SIZE_BIG
+            var one_line = AppProperties.ONE_LINE_BIG
+            var space = AppProperties.SPACE_BIG
+
+            var total = 0.0
+
+            val result: StringBuilder = StringBuilder()
+            val underline1 = StringBuilder()
+            val underline2 = StringBuilder()
+
+            ord.name.forEach {
+                if(total < one_line)
+                    result.append(it)
+                else if(total < (one_line * 2))
+                    underline1.append(it)
+                else
+                    underline2.append(it)
+
+                if(it == ' ') {
+                    total++
+                }else
+                    total += hangul_size
+            }
+
+            val mlength = result.toString().length
+            val mHangul = result.toString().replace(" ", "").length
+            val mSpace = mlength - mHangul
+            val mLine = mHangul * hangul_size + mSpace
+
+            var diff = (one_line - mLine + 0.5).toInt()
+
+            if(MyApplication.store.fontsize == 1) {
+                if(ord.gea < 10) {
+                    diff += 1
+                    space = 4
+                } else if (ord.gea >= 100) {
+                    space = 1
+                }
+            }else if(MyApplication.store.fontsize == 2) {
+                if(ord.gea < 10) {
+                    diff += 1
+                    space += 2
+                } else if (ord.gea < 100) {
+                    space += 1
+                }
+            }
+
+            for(i in 1..diff) {
+                result.append(" ")
+            }
+            result.append(ord.gea.toString())
+
+            for (i in 1..space) {
+                result.append(" ")
+            }
+
+            var togo = ""
+            when(ord.togotype) {
+                1-> togo = "신규"
+                2-> togo = "포장"
+            }
+            result.append(togo)
+
+            if(underline1.toString() != "")
+                result.append("\n$underline1")
+
+            if(underline2.toString() != "")
+                result.append("\n$underline2")
+
+            return result.toString()
         }
     }
 }

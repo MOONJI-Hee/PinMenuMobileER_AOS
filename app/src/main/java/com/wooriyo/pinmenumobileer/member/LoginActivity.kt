@@ -8,6 +8,7 @@ import com.wooriyo.pinmenumobileer.model.MemberDTO
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.androidId
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.ActivityLoginBinding
 import com.wooriyo.pinmenumobileer.store.StoreListActivity
@@ -63,7 +64,7 @@ class LoginActivity: BaseActivity() {
     }
 
     fun loginWithApi()  {
-        ApiClient.service.checkMbr(id, pw, token, MyApplication.os, MyApplication.osver, MyApplication.appver, MyApplication.md)
+        ApiClient.service.checkMbr(id, pw, token, MyApplication.os, MyApplication.osver, MyApplication.appver, MyApplication.md, androidId)
             .enqueue(object: retrofit2.Callback<MemberDTO>{
                 override fun onResponse(call: Call<MemberDTO>, response: Response<MemberDTO>) {
                     Log.d(TAG, "로그인 url : $response")

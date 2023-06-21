@@ -9,13 +9,28 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sewoo.jpos.command.ESCPOSConst
+import com.sewoo.jpos.printer.ESCPOSPrinter
 import com.wooriyo.pinmenumobileer.BaseActivity
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.store
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
+import com.wooriyo.pinmenumobileer.config.AppProperties
+import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.FONT_BIG
+import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.FONT_SMALL
+import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.FONT_WIDTH
+import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.HANGUL_SIZE_BIG
+import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.HANGUL_SIZE_SMALL
+import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.ONE_LINE_BIG
+import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.ONE_LINE_SMALL
+import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.SPACE_BIG
+import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.SPACE_SMALL
+import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.TITLE_MENU
 import com.wooriyo.pinmenumobileer.databinding.ActivityOrderListBinding
 import com.wooriyo.pinmenumobileer.listener.EasyCheckListener
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
+import com.wooriyo.pinmenumobileer.model.OrderDTO
 import com.wooriyo.pinmenumobileer.model.OrderHistoryDTO
 import com.wooriyo.pinmenumobileer.model.OrderListDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
@@ -30,19 +45,27 @@ import retrofit2.Response
 
 class OrderListActivity : BaseActivity() {
     lateinit var binding: ActivityOrderListBinding
-//    lateinit var timer: Timer
-
-    // 결제 관련 변수
-    var payPosition = -1
-    var tran_type = "credit"
-    lateinit var receiver : EasyCheckReceiver
-
 
     val TAG = "OrderListActivity"
     val mActivity = this@OrderListActivity
 
     val orderList = ArrayList<OrderHistoryDTO>()
     val orderAdapter = OrderAdapter(orderList)
+
+    // 프린트 관련 변수 > MyApplication에 선언함
+    val escposPrinter = ESCPOSPrinter()
+
+    var hyphen = StringBuilder()    // 하이픈
+    var hyphen_num = 0              // 하이픈 개수
+    var font_size = 0
+    var hangul_size = 0.0
+    var one_line = 0
+    var space = 0
+
+    // 결제 관련 변수
+    lateinit var receiver : EasyCheckReceiver
+    var payPosition = -1
+    var tran_type = "credit"
 
     val goKICC = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
@@ -64,6 +87,24 @@ class OrderListActivity : BaseActivity() {
         binding = ActivityOrderListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 영수증에 들어가는 하이픈 문자열 초기화, 설정값 초기화
+        if(store.fontsize == 2) {
+            hyphen_num = AppProperties.HYPHEN_NUM_SMALL
+            font_size = FONT_SMALL
+            hangul_size = HANGUL_SIZE_SMALL
+            one_line = ONE_LINE_SMALL
+            space = SPACE_SMALL
+        }else if(store.fontsize == 1) {
+            hyphen_num = AppProperties.HYPHEN_NUM_BIG
+            font_size = FONT_BIG
+            hangul_size = HANGUL_SIZE_BIG
+            one_line = ONE_LINE_BIG
+            space = SPACE_BIG
+        }
+        for (i in 1..hyphen_num) {
+            hyphen.append("-")
+        }
+
         orderAdapter.setOnPayClickListener(object: ItemClickListener{
             override fun onItemClick(position: Int) {
                 Log.d(TAG, "결제 버튼 클릭")
@@ -71,10 +112,14 @@ class OrderListActivity : BaseActivity() {
                 payOrder()
             }
         })
-
-        orderAdapter.setOnDeleteListener(object: ItemClickListener{
-            override fun onItemClick(position: Int) { delete(position) }
+        orderAdapter.setOnDeleteListener(object:ItemClickListener{
+            override fun onItemClick(position: Int) {delete(position)}
         })
+
+        orderAdapter.setOnPrintClickListener(object:ItemClickListener{
+            override fun onItemClick(position: Int) {print(position)}
+        })
+
 
         binding.rv.layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false)
         binding.rv.adapter = orderAdapter
@@ -93,28 +138,6 @@ class OrderListActivity : BaseActivity() {
         })
         val filter = IntentFilter("kr.co.kicc.ectablet.broadcast")
         this.registerReceiver(receiver, filter)
-    }
-
-    override fun onResume() {
-        super.onResume()
-//        timer = Timer()
-//        val timerTask = object : TimerTask(){
-//            override fun run() {
-//                getOrdStatus()
-//            }
-//        }
-//        timer.schedule(timerTask, 0, 3000)
-    }
-
-    override fun onPause() {
-        super.onPause()
-//        timer.cancel()
-    }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-        unregisterReceiver(receiver)
     }
 
     // 새로운 주문 유무 확인 > 3초마다 한번씩 태우기
@@ -225,7 +248,7 @@ class OrderListActivity : BaseActivity() {
         goKICC.launch(intent)
     }
 
-    // 주문 완료 처리 (결제)
+    // 주문 완료 처리
     fun complete() {
         ApiClient.service.payOrder(storeidx, orderList[payPosition].idx ,"Y").enqueue(object:Callback<ResultDTO>{
             override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
@@ -279,6 +302,91 @@ class OrderListActivity : BaseActivity() {
 
     // 주문 프린트
     fun print(position: Int) {
+        val pOrderDt = orderList[position].regdt
+        val pTableNo = orderList[position].tableNo
+        val pOrderNo = orderList[position].ordcode
 
+        escposPrinter.printAndroidFont(store.name, FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+        escposPrinter.printAndroidFont("주문날짜 : $pOrderDt", FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+        escposPrinter.printAndroidFont("주문번호 : $pOrderNo", FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+        escposPrinter.printAndroidFont("테이블번호 : $pTableNo", FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+        escposPrinter.printAndroidFont(TITLE_MENU, FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+        escposPrinter.printAndroidFont(hyphen.toString(), FONT_WIDTH, font_size, ESCPOSConst.LK_ALIGNMENT_LEFT)
+
+        orderList[position].olist.forEach {
+            val pOrder = getPrint(it)
+            escposPrinter.printAndroidFont(pOrder, FONT_WIDTH, font_size, ESCPOSConst.LK_ALIGNMENT_LEFT)
+        }
+        escposPrinter.lineFeed(4)
+        escposPrinter.cutPaper()
+    }
+
+    fun getPrint(ord: OrderDTO) : String {
+        var total = 0.0
+
+        val result: StringBuilder = StringBuilder()
+        val underline1 = StringBuilder()
+        val underline2 = StringBuilder()
+
+        ord.name.forEach {
+            if(total < one_line)
+                result.append(it)
+            else if(total < (one_line * 2))
+                underline1.append(it)
+            else
+                underline2.append(it)
+
+            if(it == ' ') {
+                total++
+            }else
+                total += hangul_size
+        }
+
+        val mlength = result.toString().length
+        val mHangul = result.toString().replace(" ", "").length
+        val mSpace = mlength - mHangul
+        val mLine = mHangul * hangul_size + mSpace
+
+        var diff = (one_line - mLine + 0.5).toInt()
+
+        if(store.fontsize == 1) {
+            if(ord.gea < 10) {
+                diff += 1
+                space = 4
+            } else if (ord.gea >= 100) {
+                space = 1
+            }
+        }else if(store.fontsize == 2) {
+            if(ord.gea < 10) {
+                diff += 1
+                space += 2
+            } else if (ord.gea < 100) {
+                space += 1
+            }
+        }
+
+        for(i in 1..diff) {
+            result.append(" ")
+        }
+        result.append(ord.gea.toString())
+
+        for (i in 1..space) {
+            result.append(" ")
+        }
+
+        var togo = ""
+        when(ord.togotype) {
+            1-> togo = "신규"
+            2-> togo = "포장"
+        }
+        result.append(togo)
+
+        if(underline1.toString() != "")
+            result.append("\n$underline1")
+
+        if(underline2.toString() != "")
+            result.append("\n$underline2")
+
+        return result.toString()
     }
 }

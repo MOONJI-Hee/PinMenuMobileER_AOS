@@ -1,18 +1,26 @@
 package com.wooriyo.pinmenumobileer.fcm
 
-import android.annotation.SuppressLint
 import android.app.*
 import android.content.Intent
-import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
-import android.os.PowerManager
 import android.util.Log
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.sewoo.jpos.command.ESCPOSConst
 import com.wooriyo.pinmenumobileer.MyApplication
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.escposPrinter
 import com.wooriyo.pinmenumobileer.R
+import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.member.StartActivity
+import com.wooriyo.pinmenumobileer.model.ReceiptDTO
+import com.wooriyo.pinmenumobileer.util.ApiClient
+import com.wooriyo.pinmenumobileer.util.AppHelper
+import retrofit2.Call
+import retrofit2.Response
+
 
 class MyFirebaseService: FirebaseMessagingService() {
     val TAG = "MyFirebase"
@@ -25,44 +33,87 @@ class MyFirebaseService: FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-        if(message.notification != null) {
 
-            // 스크린 깨우기
-            val pm = this.getSystemService(POWER_SERVICE) as PowerManager
-            @SuppressLint("InvalidWakeLockTag") val sLock = pm.newWakeLock(
-                PowerManager.FULL_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP,
-                "pinmenuMobile"
-            )
-            sLock.acquire(5000)
+        Log.d(TAG, "message.data >> ${message.data}")
+        Log.d(TAG, "message.notification >> ${message.notification}")
 
-            val strPackage = "com.wooriyo.pinmenumobileer"
-            val am = getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        createNotification(message)
 
-            val proceses = am.runningAppProcesses
+        val ordCode = message.data["moredata"]
 
-            var isForeground = false
-            for (process: ActivityManager.RunningAppProcessInfo? in proceses) {
-                if (process?.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-                    if (process.processName == strPackage) {
-                        isForeground = true
+        ApiClient.service.getReceipt(ordCode.toString()).enqueue(object : retrofit2.Callback<ReceiptDTO>{
+            override fun onResponse(call: Call<ReceiptDTO>, response: Response<ReceiptDTO>) {
+                Log.d(TAG, "단건 주문 조회 URL : $response")
+                if(!response.isSuccessful) return
+
+                val result = response.body() ?: return
+
+                when(result.status) {
+                    1 -> {
+                        if(MyApplication.bluetoothPort.isConnected) {
+                            val pOrderDt = result.regdt
+                            val pTableNo = result.tableNo
+                            val pOrderNo = ordCode
+
+                            val hyphen_num = AppProperties.HYPHEN_NUM_BIG
+                            val font_size = AppProperties.FONT_BIG
+
+                            val hyphen = StringBuilder()    // 하이픈
+                            for (i in 1..hyphen_num) {
+                                hyphen.append("-")
+                            }
+
+                            escposPrinter.printAndroidFont(
+                                result.storenm,
+                                AppProperties.FONT_WIDTH,
+                                AppProperties.FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                            escposPrinter.printAndroidFont("주문날짜 : $pOrderDt",
+                                AppProperties.FONT_WIDTH,
+                                AppProperties.FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                            escposPrinter.printAndroidFont("주문번호 : $pOrderNo",
+                                AppProperties.FONT_WIDTH,
+                                AppProperties.FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                            escposPrinter.printAndroidFont("테이블번호 : $pTableNo",
+                                AppProperties.FONT_WIDTH,
+                                AppProperties.FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                            escposPrinter.printAndroidFont(
+                                AppProperties.TITLE_MENU,
+                                AppProperties.FONT_WIDTH, AppProperties.FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                            escposPrinter.printAndroidFont(hyphen.toString(),
+                                AppProperties.FONT_WIDTH, font_size, ESCPOSConst.LK_ALIGNMENT_LEFT)
+
+                            result.orderdata.forEach {
+                                val pOrder = AppHelper.getPrint(it)
+                                escposPrinter.printAndroidFont(pOrder,AppProperties.FONT_WIDTH, font_size, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                            }
+                            escposPrinter.lineFeed(4)
+                            escposPrinter.cutPaper()
+                        }else {
+                            Log.d(TAG, "프린트 연결 안됨")
+                        }
                     }
+                    else -> Toast.makeText(applicationContext, result.msg, Toast.LENGTH_SHORT).show()
                 }
             }
-            if (isForeground)
-                Log.d(TAG, "어플 활성화 + 알림")
-            else
-                createNotification(message)
-        }
+
+            override fun onFailure(call: Call<ReceiptDTO>, t: Throwable) {
+                Toast.makeText(applicationContext, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "단건 주문 조회 오류 >> $t")
+                Log.d(TAG, "단건 주문 조회 오류 >> ${call.request()}")
+            }
+        })
+
     }
 
     private fun createNotification(message: RemoteMessage) {
-        val channelId = "pinmenu_noti"
-
+        val channelId = "pinmenu_mobile_noti"
+        val uri: Uri = Uri.parse("android.resource://com.wooriyo.pinmenumobileer/raw/customnoti.wav")
         val builder = NotificationCompat.Builder(this, channelId)
-//            .setSmallIcon(R.drawable.icon_noti)
-            .setLargeIcon( BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
+            .setSmallIcon(Notification.DEFAULT_ALL)
             .setContentTitle(message.notification!!.title)
             .setContentText(message.notification!!.body)
+            .setSound(uri)
+            .setVibrate(longArrayOf(100L, 100L, 100L)) //알림시 진동 설정 : 1초 진동, 1초 쉬고, 1초 진동
             .setContentIntent(createPendingIntent())
             .setDefaults(Notification.DEFAULT_ALL)
 
@@ -70,8 +121,7 @@ class MyFirebaseService: FirebaseMessagingService() {
 
         // 오레오 버전 이후에는 채널이 필요하다.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel =
-                NotificationChannel(channelId, "Notice", NotificationManager.IMPORTANCE_DEFAULT)
+            val channel = NotificationChannel(channelId, "Notice", NotificationManager.IMPORTANCE_DEFAULT)
             notificationManager.createNotificationChannel(channel)
         }
         // 알림 생성

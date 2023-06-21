@@ -134,7 +134,7 @@ class StoreListActivity : BaseActivity() {
     }
 
     fun checkDeviceLimit(store: StoreDTO, intent: Intent) {
-        ApiClient.service.checkDeviceLimit(useridx, store.idx, androidId)
+        ApiClient.service.checkDeviceLimit(useridx, store.idx, pref.getToken().toString(), androidId)
             .enqueue(object : retrofit2.Callback<ResultDTO>{
                 override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                     Log.d(TAG, "이용자수 체크 url : $response")
@@ -167,7 +167,7 @@ class StoreListActivity : BaseActivity() {
                     if(result.status == 1){
                         store = storeList[0]
                         storeidx = storeList[0].idx
-                        MyApplication.bidx = result.idx
+                        MyApplication.bidx = result.bidx
                         startActivity(Intent(mActivity, PrinterMenuActivity::class.java))
                     }else
                         Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()

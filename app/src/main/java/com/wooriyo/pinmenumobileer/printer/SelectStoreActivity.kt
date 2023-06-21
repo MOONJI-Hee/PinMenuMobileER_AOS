@@ -68,7 +68,7 @@ class SelectStoreActivity : BaseActivity() {
                     if(result.status == 1){
                         MyApplication.store = storeList[position]
                         MyApplication.storeidx = storeList[position].idx
-                        MyApplication.bidx = result.idx
+                        MyApplication.bidx = result.bidx
                         startActivity(Intent(mActivity, PrinterMenuActivity::class.java))
                     }else
                         Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()

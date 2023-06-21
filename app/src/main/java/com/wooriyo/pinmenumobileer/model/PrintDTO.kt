@@ -8,5 +8,6 @@ data class PrintDTO (
     @SerializedName("storeidx") val storeidx : Int,
     @SerializedName("model") val model : String,
     @SerializedName("printType") val printType : Int,
-    @SerializedName("nick") var nick : String
+    @SerializedName("nick") var nick : String,
+    var connected : Boolean = false
 ):Serializable

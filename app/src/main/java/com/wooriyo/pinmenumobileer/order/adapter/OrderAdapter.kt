@@ -1,15 +1,16 @@
 package com.wooriyo.pinmenumobileer.order.adapter
 
-import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
+import com.wooriyo.pinmenumobileer.common.AlertDialog
 import com.wooriyo.pinmenumobileer.databinding.ListOrderBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.OrderHistoryDTO
@@ -18,6 +19,7 @@ import com.wooriyo.pinmenumobileer.util.AppHelper
 class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapter<OrderAdapter.ViewHolder>() {
     lateinit var payClickListener: ItemClickListener
     lateinit var deleteListener: ItemClickListener
+    lateinit var printClickListener: ItemClickListener
 
     fun setOnPayClickListener(payClickListener: ItemClickListener) {
         this.payClickListener = payClickListener
@@ -27,10 +29,13 @@ class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapte
         this.deleteListener = deleteListener
     }
 
+    fun setOnPrintClickListener(printClickListener: ItemClickListener) {
+        this.printClickListener = printClickListener
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ListOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         binding.rv.layoutManager = LinearLayoutManager(parent.context, LinearLayoutManager.VERTICAL, false)
-        return ViewHolder(binding, parent.context, payClickListener, deleteListener)
+        return ViewHolder(binding, parent.context, payClickListener, deleteListener, printClickListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -41,7 +46,7 @@ class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapte
         return dataSet.size
     }
 
-    class ViewHolder(val binding: ListOrderBinding, val context: Context, val payClickListener: ItemClickListener, val deleteListener: ItemClickListener): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(val binding: ListOrderBinding, val context: Context, val payClickListener: ItemClickListener, val deleteListener: ItemClickListener, val printClickListener: ItemClickListener): RecyclerView.ViewHolder(binding.root) {
         fun bind (data : OrderHistoryDTO) {
             binding.run {
                 rv.adapter = OrderDetailAdapter(data.olist)
@@ -62,7 +67,14 @@ class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapte
                 }
 
                 delete.setOnClickListener { deleteListener.onItemClick(adapterPosition) }
-                print.setOnClickListener {}
+                print.setOnClickListener {
+                    if(MyApplication.bluetoothPort.isConnected) {
+                        printClickListener.onItemClick(adapterPosition)
+                    }else {
+                        val fragmentActivity = context as FragmentActivity
+                        AlertDialog(context.getString(R.string.dialog_no_printer)).show(fragmentActivity.supportFragmentManager, "AlertDialog")
+                    }
+                }
                 payment.setOnClickListener { payClickListener.onItemClick(adapterPosition) }
             }
         }
