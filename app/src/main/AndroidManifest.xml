@@ -24,6 +24,15 @@
         android:theme="@style/Theme.PinmenuMobileER"
         tools:targetApi="31">
         <activity
+            android:name=".ReaderModelActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SetPayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PayCardActivity"
+            android:exported="false" />
+        <activity
             android:name=".printer.SelectCateActivity"
             android:exported="false" />
         <activity

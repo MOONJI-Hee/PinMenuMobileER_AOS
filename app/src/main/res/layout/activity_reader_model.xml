@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".payment.ReaderModelActivity">
+
+    <TextView
+        style="@style/title"
+        android:id="@+id/title"
+        android:text="@string/payment_usable_reader"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <LinearLayout
+        android:id="@+id/back"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_back_white" />
+    </LinearLayout>
+
+    <TextView
+        style="@style/text15"
+        android:id="@+id/tv1"
+        android:layout_marginTop="20dp"
+        android:text="@string/install_kicc_info"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"/>
+
+    <TextView
+        style="@style/subtext"
+        android:id="@+id/link"
+        android:text="@string/kicc_link"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv1"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl291"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="20dp"
+        android:paddingStart="25dp"
+        android:paddingVertical="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/link">
+        
+        <ImageView
+            android:id="@+id/iv291"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/et_291"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            style="@style/text17"
+            android:id="@+id/tv291"
+            android:text="@string/et_291"
+            android:layout_marginStart="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv291"/>
+
+        <TextView
+            style="@style/text15"
+            android:text="@string/et_291_info"
+            android:lineSpacingExtra="3dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv291"/>
+        
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl901"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="10dp"
+        android:paddingStart="25dp"
+        android:paddingVertical="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/cl291">
+
+        <ImageView
+            android:id="@+id/iv901"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/et_901"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            style="@style/text17"
+            android:id="@+id/tv901"
+            android:text="@string/et_901"
+            android:layout_marginStart="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv901"/>
+
+        <TextView
+            style="@style/text15"
+            android:text="@string/et_901_info"
+            android:lineSpacingExtra="3dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv901"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="10dp"
+        android:paddingStart="25dp"
+        android:paddingVertical="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/cl901">
+
+        <ImageView
+            android:id="@+id/iv977"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/et_977"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            style="@style/text17"
+            android:id="@+id/tv977"
+            android:text="@string/et_977"
+            android:layout_marginStart="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv977"/>
+
+        <TextView
+            style="@style/text15"
+            android:text="@string/et_977_info"
+            android:lineSpacingExtra="3dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv977"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

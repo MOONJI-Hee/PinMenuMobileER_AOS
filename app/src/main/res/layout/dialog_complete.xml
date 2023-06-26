@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_r6w"
+        android:paddingTop="40dp">
+
+        <TextView
+            style="@style/text20m"
+            android:id="@+id/title"
+            android:text="@string/dialog_information"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            style="@style/text17"
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:text="@string/order_complete_info"
+            app:layout_constraintTop_toBottomOf="@+id/title"/>
+
+        <CheckBox
+            style="@style/check"
+            android:id="@+id/visibility"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/sub_text"
+            android:text="@string/dialog_dont_show"
+            app:layout_constraintStart_toStartOf="@+id/content"
+            app:layout_constraintTop_toBottomOf="@+id/content"/>
+
+        <TextView
+            style="@style/btn_dialog_cancel"
+            android:id="@+id/cancel"
+            android:layout_width="0dp"
+            android:layout_marginTop="25dp"
+            android:text="@string/btn_cancel"
+            app:layout_constraintTop_toBottomOf="@+id/visibility"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/confirm"/>
+
+        <TextView
+            style="@style/btn_dialog_right"
+            android:id="@+id/confirm"
+            android:layout_width="0dp"
+            android:background="@drawable/bg_rbr6_grd"
+            android:text="@string/btn_complete"
+            app:layout_constraintTop_toTopOf="@+id/cancel"
+            app:layout_constraintBottom_toBottomOf="@+id/cancel"
+            app:layout_constraintStart_toEndOf="@+id/cancel"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

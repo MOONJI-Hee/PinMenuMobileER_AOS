@@ -20,7 +20,10 @@
         <entry key="app/src/main/res/drawable/bg_r6w10.xml" value="0.5325" />
         <entry key="app/src/main/res/drawable/bg_r6w90.xml" value="0.514" />
         <entry key="app/src/main/res/drawable/bg_r6y.xml" value="0.221" />
+        <entry key="app/src/main/res/drawable/bg_rb6_grd.xml" value="0.3355" />
+        <entry key="app/src/main/res/drawable/bg_rb6g.xml" value="0.257" />
         <entry key="app/src/main/res/drawable/bg_rbl6g.xml" value="0.2985" />
+        <entry key="app/src/main/res/drawable/bg_rbr6_grd.xml" value="0.259" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.3695" />
         <entry key="app/src/main/res/drawable/ic_plus.xml" value="0.2915" />
         <entry key="app/src/main/res/drawable/selector_arrow.xml" value="0.2675" />
@@ -37,19 +40,25 @@
         <entry key="app/src/main/res/layout/activity_more.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_new_conn.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_order_list.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/activity_pay_card.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_printer_menu.xml" value="0.46728577458843396" />
+        <entry key="app/src/main/res/layout/activity_reader_model.xml" value="0.47327917913638307" />
         <entry key="app/src/main/res/layout/activity_reg_store.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_select_cate.xml" value="0.46216331765711843" />
         <entry key="app/src/main/res/layout/activity_select_store.xml" value="0.47327917913638307" />
         <entry key="app/src/main/res/layout/activity_set_conn.xml" value="0.46216331765711843" />
+        <entry key="app/src/main/res/layout/activity_set_pay.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_signup.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_start.xml" value="0.5765625" />
         <entry key="app/src/main/res/layout/activity_store_list.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_support_printer.xml" value="0.46216331765711843" />
+        <entry key="app/src/main/res/layout/bg_rb6g.xml" value="0.47327917913638307" />
         <entry key="app/src/main/res/layout/dialog_alert.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/dialog_complete.xml" value="0.4724241128687473" />
         <entry key="app/src/main/res/layout/dialog_confirm.xml" value="0.5765625" />
         <entry key="app/src/main/res/layout/dialog_notice.xml" value="0.5765625" />
         <entry key="app/src/main/res/layout/dialog_printer_nick.xml" value="0.4724241128687473" />
+        <entry key="app/src/main/res/layout/dialog_select_pay.xml" value="0.375" />
         <entry key="app/src/main/res/layout/list.xml" value="0.5765625" />
         <entry key="app/src/main/res/layout/list_call.xml" value="0.590625" />
         <entry key="app/src/main/res/layout/list_call_detail.xml" value="0.5" />

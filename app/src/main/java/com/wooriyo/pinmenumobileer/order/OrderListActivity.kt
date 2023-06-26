@@ -245,7 +245,11 @@ class OrderListActivity : BaseActivity() {
         intent.addCategory(Intent.CATEGORY_LAUNCHER)
         intent.component = compName
 
-        goKICC.launch(intent)
+        try {
+            goKICC.launch(intent)
+        }catch (e: Exception) {
+            Toast.makeText(mActivity, R.string.msg_no_card_reader, Toast.LENGTH_SHORT).show()
+        }
     }
 
     // 주문 완료 처리

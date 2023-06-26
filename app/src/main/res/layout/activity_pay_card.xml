@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/f9"
+    tools:context=".order.PayCardActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/title"
+        style="@style/title_black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/btn_back_black" />
+        </LinearLayout>
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/done"
+            style="@style/btn_small"
+            android:layout_width="82dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/order_pay_finish"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/info1"
+        style="@style/text15"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/order_pay_info1"
+        android:textColor="#426493"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+
+    <TextView
+        style="@style/subtext"
+        android:id="@+id/info2"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/order_pay_info2"
+        app:layout_constraintStart_toStartOf="@+id/info1"
+        app:layout_constraintTop_toBottomOf="@+id/info1" />
+
+    <LinearLayout
+        android:id="@+id/reader"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/bg_r6w"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/info1">
+
+        <ImageView
+            android:id="@+id/ivReader"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/et_291" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/connDot"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="#49D300"
+        app:layout_constraintBottom_toBottomOf="@+id/connStatus"
+        app:layout_constraintEnd_toStartOf="@+id/connStatus"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/reader"
+        app:layout_constraintTop_toTopOf="@+id/connStatus" />
+
+    <TextView
+        android:id="@+id/connStatus"
+        style="@style/text17"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/reader"
+        app:layout_constraintStart_toEndOf="@+id/connDot"
+        app:layout_constraintTop_toBottomOf="@+id/reader"
+        tools:text="@string/good" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_order"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="10dp"
+        android:paddingHorizontal="10dp"
+        android:background="@drawable/bg_r6w"
+        app:layout_constraintTop_toBottomOf="@+id/info2">
+
+        <TextView
+            style="@style/text18"
+            android:text="@string/total_gea"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            style="@style/text_num"
+            android:id="@+id/totPrice"
+            android:textSize="22sp"
+            android:layout_marginEnd="3dp"
+            app:layout_constraintTop_toTopOf="@+id/won"
+            app:layout_constraintEnd_toStartOf="@+id/won"
+            app:layout_constraintBottom_toBottomOf="@+id/won"
+            tools:text = "35,300"/>
+
+        <TextView
+            style="@style/text18"
+            android:id="@+id/won"
+            android:text="@string/won"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_charge"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_r6w"
+        android:paddingHorizontal="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/payment"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_order">
+
+        <TextView
+            style="@style/text18b"
+            android:text="@string/order_pay_charge"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            style="@style/text_num_b"
+            android:id="@+id/chargePrice"
+            android:layout_marginEnd="3dp"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="@+id/won2"
+            app:layout_constraintEnd_toStartOf="@+id/won2"
+            app:layout_constraintTop_toTopOf="@+id/won2"
+            tools:text="18,000" />
+
+        <TextView
+            android:id="@+id/won2"
+            style="@style/text18"
+            android:text="@string/won"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        style="@style/btn_grd"
+        android:id="@+id/payment"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/btn_payment"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintTop_toTopOf="@+id/cl_charge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cl_charge"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_remain"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingHorizontal="10dp"
+        app:layout_constraintStart_toStartOf="@+id/cl_charge"
+        app:layout_constraintEnd_toEndOf="@+id/cl_charge"
+        app:layout_constraintTop_toBottomOf="@+id/cl_charge">
+        <TextView
+            style="@style/text18"
+            android:text="@string/order_pay_remain"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            style="@style/text_num"
+            android:id="@+id/remainPrice"
+            android:layout_marginEnd="3dp"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/won3"
+            app:layout_constraintTop_toTopOf="@+id/won3"
+            app:layout_constraintBottom_toBottomOf="@+id/won3"
+            tools:text="17,300" />
+
+        <TextView
+            android:id="@+id/won3"
+            style="@style/text18"
+            android:text="@string/won"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        style="@style/subtext"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:text="@string/order_pay_info3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_remain"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            style="@style/text_num_b"
+            android:id="@+id/orderNo"
+            android:textSize="20sp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/date"
+            tools:text="104"/>
+
+        <TextView
+            style="@style/text_num"
+            android:id="@+id/date"
+            android:textSize="18sp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintEnd_toStartOf="@+id/selectMenu"
+            app:layout_constraintTop_toTopOf="@+id/selectMenu"
+            app:layout_constraintBottom_toBottomOf="@+id/selectMenu"
+            tools:text="2023.6.30 18:08" />
+
+        <TextView
+            style="@style/btn_grd"
+            android:id="@+id/selectMenu"
+            android:layout_width="86dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/order_pay_sel_menu"
+            android:textSize="17sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

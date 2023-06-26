@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <TextView
-        style="@style/title"
+        style="@style/title_black"
         android:id="@+id/title"
         android:text="@string/order_mgmt"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +22,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/btn_back_white"/>
+            android:src="@drawable/btn_back_black"/>
     </LinearLayout>
 
     <TextView
