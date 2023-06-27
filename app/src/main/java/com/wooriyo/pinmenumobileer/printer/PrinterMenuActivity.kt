@@ -19,13 +19,16 @@ import com.wooriyo.pinmenumobileer.MyApplication.Companion.osver
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
+import com.wooriyo.pinmenumobileer.common.SelectStoreActivity
 import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.REQUEST_ENABLE_BT
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.REQUEST_LOCATION
 import com.wooriyo.pinmenumobileer.databinding.ActivityPrinterMenuBinding
 import com.wooriyo.pinmenumobileer.model.PrintDTO
 import com.wooriyo.pinmenumobileer.model.PrintListDTO
+import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.more.MoreActivity
+import com.wooriyo.pinmenumobileer.payment.SetPayActivity
 import com.wooriyo.pinmenumobileer.store.StoreListActivity
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import retrofit2.Call
@@ -67,7 +70,20 @@ class PrinterMenuActivity : BaseActivity() {
                 MyApplication.bidx = 0
                 startActivity(Intent(mActivity, StoreListActivity::class.java))
             }
-            binding.icPrinter.setOnClickListener {Toast.makeText(mActivity, R.string.msg_preparing, Toast.LENGTH_SHORT).show() }
+            binding.icPay.setOnClickListener {
+                MyApplication.setStoreDTO()
+                MyApplication.storeidx = 0
+                MyApplication.bidx = 0
+                when(MyApplication.storeList.size) {
+                    1 -> { insPaySetting() }
+                    else -> {
+                        val intent = Intent(mActivity, SelectStoreActivity::class.java)
+                        intent.putExtra("type", "pay")
+                        startActivity(intent)
+                    }
+                }
+            }
+            binding.icPrinter.setOnClickListener { }
             binding.icMore.setOnClickListener { startActivity(Intent(mActivity, MoreActivity::class.java)) }
 
             connSet.setOnClickListener {
@@ -209,5 +225,33 @@ class PrinterMenuActivity : BaseActivity() {
                 Log.d(TAG, "등록된 프린터 리스트 조회 오류 >> ${call.request()}")
             }
         })
+    }
+
+
+    // 추후에 따로 빼내기
+    fun insPaySetting() {
+        ApiClient.service.insPaySetting(MyApplication.useridx, MyApplication.storeList[0].idx, MyApplication.androidId)
+            .enqueue(object : Callback<ResultDTO> {
+                override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                    Log.d(TAG, "결제 설정 최초 진입 시 row 추가 url : $response")
+                    if(!response.isSuccessful) return
+
+                    val result = response.body() ?: return
+
+                    if(result.status == 1) {
+                        MyApplication.store = MyApplication.storeList[0]
+                        MyApplication.storeidx = MyApplication.storeList[0].idx
+                        MyApplication.bidx = result.bidx
+                        startActivity(Intent(mActivity, SetPayActivity::class.java))
+                    }else
+                        Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                    Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "결제 설정 최초 진입 시 row 추가 오류 >> $t")
+                    Log.d(TAG, "결제 설정 최초 진입 시 row 추가 오류 >> ${call.request()}")
+                }
+            })
     }
 }

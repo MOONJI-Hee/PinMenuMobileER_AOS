@@ -10,5 +10,7 @@ class ReaderModelActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityReaderModelBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.back.setOnClickListener { finish() }
     }
 }

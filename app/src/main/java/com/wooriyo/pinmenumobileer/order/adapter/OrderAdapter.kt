@@ -72,7 +72,7 @@ class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapte
                         printClickListener.onItemClick(adapterPosition)
                     }else {
                         val fragmentActivity = context as FragmentActivity
-                        AlertDialog(context.getString(R.string.dialog_no_printer)).show(fragmentActivity.supportFragmentManager, "AlertDialog")
+                        AlertDialog("", context.getString(R.string.dialog_no_printer), 0).show(fragmentActivity.supportFragmentManager, "AlertDialog")
                     }
                 }
                 payment.setOnClickListener { payClickListener.onItemClick(adapterPosition) }

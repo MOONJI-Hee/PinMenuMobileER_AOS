@@ -24,13 +24,16 @@
         android:theme="@style/Theme.PinmenuMobileER"
         tools:targetApi="31">
         <activity
-            android:name=".ReaderModelActivity"
+            android:name=".payment.SetNicepayActivity"
             android:exported="false" />
         <activity
-            android:name=".SetPayActivity"
+            android:name=".payment.ReaderModelActivity"
             android:exported="false" />
         <activity
-            android:name=".PayCardActivity"
+            android:name=".payment.SetPayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".order.PayCardActivity"
             android:exported="false" />
         <activity
             android:name=".printer.SelectCateActivity"
@@ -45,7 +48,7 @@
             android:name=".printer.DetailPrinterActivity"
             android:exported="false" />
         <activity
-            android:name=".printer.SelectStoreActivity"
+            android:name=".common.SelectStoreActivity"
             android:exported="false" />
         <activity
             android:name=".printer.SetConnActivity"

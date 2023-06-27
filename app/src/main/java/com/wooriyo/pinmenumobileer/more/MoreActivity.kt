@@ -13,6 +13,7 @@ import com.wooriyo.pinmenumobileer.common.ConfirmDialog
 import com.wooriyo.pinmenumobileer.databinding.ActivityMoreBinding
 import com.wooriyo.pinmenumobileer.member.LoginActivity
 import com.wooriyo.pinmenumobileer.model.ResultDTO
+import com.wooriyo.pinmenumobileer.store.StoreListActivity
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,11 +30,14 @@ class MoreActivity : BaseActivity() {
         setContentView(binding.root)
 
         binding.run {
-            back.setOnClickListener { finish() }
+            binding.back.setOnClickListener {
+                val intent = Intent(mActivity, StoreListActivity::class.java)
+                startActivity(intent)
+            }
             changePwd.setOnClickListener { startActivity(Intent(mActivity, ChangePwdActivity::class.java)) }
             versionInfo.setOnClickListener {
                 val content = getString(R.string.dialog_version).format(MyApplication.appver)
-                AlertDialog(content).show(supportFragmentManager, "VersionDialog")
+                AlertDialog("", content, 0).show(supportFragmentManager, "VersionDialog")
             }
             logout.setOnClickListener {
                 val onClickListener = View.OnClickListener {logout()}

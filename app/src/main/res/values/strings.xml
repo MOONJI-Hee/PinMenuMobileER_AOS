@@ -208,6 +208,14 @@
     <string name="et_901_info">・연결방식 : 블루투스4.0\n・결제방식 : 이지체크IC앱과 연동\n・특이사항 : 가장 저렴(C타입 충전)</string>
     <string name="et_977">ET-977</string>
     <string name="et_977_info">・연결방식 : 연결선\n・결제방식 : IC칩, MSR 양방향 결제\n・특이사항 : 키오스크로 사용 시 추천</string>
+    <string name="payment_title_set_nicepay">나이스페이먼츠 Key설정</string>
+    <string name="payment_set_nicepay_info">QR코드 결제를 이용하시기 위해서는 나이스페이먼츠 Key설정이 필요합니다.</string>
+    <string name="payment_set_nicepay_info2">MID와 Key를 정확하게 입력하지 않으면 결제가 원활하게 이루어지지 않을 수 있습니다.</string>
+    <string name="mid">MID</string>
+    <string name="mid_info">나이스페이먼츠 웹사이트 > 로그인 > 가맹점정보(상단)\n> Key관리(좌측) > MID 옆에 있는 ID 복사</string>
+    <string name="key">Key</string>
+    <string name="key_info">나이스페이먼츠 > 로그인 > 가맹점정보(상단)\n> Key관리(좌측) > MID 아래 있는 긴 문장(key) 복사</string>
+    <string name="btn_set_nicepay">Key설정 저장</string>
 
     <!--  프린터  -->
     <string name="printer_title_store">매장 선택</string>
@@ -356,6 +364,7 @@
     <!-- 주문 결제 -->
     <string name="order_select_pay">다음 중 하나를 선택해 주세요</string>
     <string name="order_pay_qr">QR코드 결제</string>
+    <string name="order_pay_qr_bank">국민, 신한, 삼성, 현대, 농협</string>
     <string name="order_pay_card">카드결제</string>
     <string name="order_complete">완료처리</string>
     <string name="order_pay_once">일괄결제</string>
@@ -377,14 +386,14 @@
     <string name="qr_nicepay_setting">나이스페이 Key설정 바로가기</string>
     <string name="qr_vat">수수료(VAT별도)</string>
     <string name="qr_join_way">가맹점 가입방법</string>
-    <string name="qr_">QR코드 카드결제를 이용하기 위한 절차</string>
-    <string name="">1. 나이스페이 가맹점 계약 신청 및 우편 발송</string>
-    <string name="">・자세한 사항은 핀메뉴 웹사이트에 있습니다.\n<font color="#006CFF">(경로 : www.pinmenu.biz > 하단 QR결제\n> 가맹점 계약)</font></string>
-    <string name="">・ 나이스페이먼츠와 가맹점 계약을 통해 핀메뉴\n결제 수수료가 정해집니다.\n(핀메뉴는 나이스페이의 정책에 따릅니다.)</string>
-    <string name="">2. 나이스페이 로그인 및 Key값 입력</string>
-    <string name="">・가맹점 계약이 완료된 후 핀메뉴에서\n나이스페이먼츠 로그인을 해주셔야 합니다.\n(나이스페이 로그아웃이 된 경우에는 QA코드\n카드결제를 이용할 수 없습니다.)</string>
-    <string name="">・PG상점 아이디(MID) 입력 (나이스페이먼츠 웹사이트 > 로그인 > 가맹점정보(상단) > Key관리(좌측) > MID 옆에 있는 ID 복사)</string>
-    <string name="">・Key값 입력 (나이스페이먼츠 > 로그인 > 가맹점정보(상단) > Key관리(좌측) > MID 아래 있는 긴 문장(key) 복사)</string>
+    <string name="qr_guide_title">QR코드 카드결제를 이용하기 위한 절차</string>
+    <string name="qr_guide_fir">1. 나이스페이 가맹점 계약 신청 및 우편 발송</string>
+    <string name="qr_guide_fir_1">・자세한 사항은 핀메뉴 웹사이트에 있습니다.\n<font color="#006CFF">(경로 : www.pinmenu.biz > 하단 QR결제\n> 가맹점 계약)</font></string>
+    <string name="qr_guide_fir_2">・ 나이스페이먼츠와 가맹점 계약을 통해 핀메뉴\n결제 수수료가 정해집니다.\n(핀메뉴는 나이스페이의 정책에 따릅니다.)</string>
+    <string name="qr_guide_sec">2. 나이스페이 로그인 및 Key값 입력</string>
+    <string name="qr_guide_sec_1">・가맹점 계약이 완료된 후 핀메뉴에서\n나이스페이먼츠 로그인을 해주셔야 합니다.\n(나이스페이 로그아웃이 된 경우에는 QA코드\n카드결제를 이용할 수 없습니다.)</string>
+    <string name="qr_guide_sec_2">・PG상점 아이디(MID) 입력 (나이스페이먼츠 웹사이트 > 로그인 > 가맹점정보(상단) > Key관리(좌측) > MID 옆에 있는 ID 복사)</string>
+    <string name="qr_guide_sec_3">・Key값 입력 (나이스페이먼츠 > 로그인 > 가맹점정보(상단) > Key관리(좌측) > MID 아래 있는 긴 문장(key) 복사)</string>
 
     <!-- 직원 호출 -->
     <string name="call_emp">직원호출</string>
@@ -456,6 +465,8 @@
     <string name="msg_no_store">매장 등록 후 이용할 수 있습니다.</string>
 
     <string name="msg_no_card_reader">연결된 카드리더기가 없습니다.</string>
+    <string name="msg_no_mid">MID를 입력해주세요.</string>
+    <string name="msg_no_key">Key를 입력해주세요.</string>
 
     <!--  테스트 인쇄 문구  -->
     <string name="print_test">오리지널 스마트 전자메뉴판 핀메뉴 테스트 인쇄 입니다.\n1234567890\n가나다라마바사아자차카타파하\nABCDEFGHIJKLMNOPQRSTUVWXYZ</string>

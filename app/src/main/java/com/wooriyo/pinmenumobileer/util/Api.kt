@@ -299,6 +299,45 @@ interface Api {
         @Query("blstatus") blstatus: String
     ): Call<ResultDTO>
 
+    // 결제 설정 관련 Api
+    // 결제 설정 최초 진입 시
+    @GET("m/ins_pay_setting.php")
+    fun insPaySetting(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("uuid") androidId : String
+    ): Call<ResultDTO>
+
+    // 결제 설정하기
+    @GET("m/udt_pay_setting.php")
+    fun udtPaySettting(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("uuid") androidId : String,
+        @Query("idx") idx: Int,             // sw_paysetting 테이블 idx
+        @Query("qrbuse") qrbuse: String,     // QR 사용 여부 (Y: 사용 , N :미사용 )
+        @Query("cardbuse") cardbuse: String // 카드결제 사용 여부 (Y: 사용 , N :미사용 )
+    ): Call<ResultDTO>
+
+    // 결제 설정 불러오기
+    @GET("m/getpayinfo.php")
+    fun getPayInfo(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("uuid") androidId : String
+    ): Call<PaySettingDTO>
+
+    //나이스페이먼츠 key 설정
+    @GET("m/ins_mid_setting.php")
+    fun insMidSetting(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("uuid") androidId : String,
+        @Query("idx") idx: Int,             // sw_paysetting 테이블 idx
+        @Query("mid") mid : String,         // mid (아이디)
+        @Query("sc_key") sc_key : String    // 키 값
+    ): Call<ResultDTO>
+
     // 카카오 지도 관련 api
     @GET("/v2/local/search/address.json")
     fun kakaoSearch(

@@ -46,7 +46,7 @@ class SelectCateActivity : BaseActivity() {
                         setTitle()
                     }else {
                         v.isChecked = false
-                        AlertDialog(getString(R.string.printer_category_info)).show(supportFragmentManager, "AlertDialog")
+                        AlertDialog("", getString(R.string.printer_category_info), 0).show(supportFragmentManager, "AlertDialog")
                     }
                 }else {
                     allCateList[position].checked = 0

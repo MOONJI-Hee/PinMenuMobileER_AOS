@@ -47,7 +47,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl291"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:paddingStart="25dp"
         android:paddingVertical="10dp"
@@ -73,7 +73,8 @@
             style="@style/text15"
             android:text="@string/et_291_info"
             android:lineSpacingExtra="3dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="6dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv291"
             app:layout_constraintStart_toStartOf="@+id/tv291"/>
         
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -81,7 +82,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl901"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:paddingStart="25dp"
         android:paddingVertical="10dp"
@@ -107,14 +108,15 @@
             style="@style/text15"
             android:text="@string/et_901_info"
             android:lineSpacingExtra="3dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="6dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv901"
             app:layout_constraintStart_toStartOf="@+id/tv901"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:paddingStart="25dp"
         android:paddingVertical="10dp"
@@ -140,7 +142,8 @@
             style="@style/text15"
             android:text="@string/et_977_info"
             android:lineSpacingExtra="3dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="6dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv977"
             app:layout_constraintStart_toStartOf="@+id/tv977"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

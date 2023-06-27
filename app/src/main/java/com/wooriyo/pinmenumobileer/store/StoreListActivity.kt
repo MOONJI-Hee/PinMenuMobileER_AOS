@@ -1,6 +1,5 @@
 package com.wooriyo.pinmenumobileer.store
 
-import android.content.ClipData
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,13 +11,12 @@ import com.wooriyo.pinmenumobileer.model.StoreDTO
 import com.wooriyo.pinmenumobileer.model.StoreListDTO
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.util.AppHelper
-import com.wooriyo.pinmenumobileer.util.AppHelper.Companion.getRoundedCornerLT
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.androidId
-import com.wooriyo.pinmenumobileer.MyApplication.Companion.density
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.pref
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.store
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeList
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
@@ -26,12 +24,12 @@ import com.wooriyo.pinmenumobileer.databinding.ActivityStoreListBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.more.MoreActivity
-import com.wooriyo.pinmenumobileer.order.OrderListActivity
 import com.wooriyo.pinmenumobileer.printer.PrinterMenuActivity
-import com.wooriyo.pinmenumobileer.printer.SelectStoreActivity
+import com.wooriyo.pinmenumobileer.common.SelectStoreActivity
+import com.wooriyo.pinmenumobileer.payment.SetPayActivity
 import com.wooriyo.pinmenumobileer.store.adapter.StoreAdapter
-import com.wooriyo.pinmenumobileer.util.Api
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 
 class StoreListActivity : BaseActivity() {
@@ -40,7 +38,6 @@ class StoreListActivity : BaseActivity() {
     val TAG = "StoreActivity"
     val mActivity = this
 
-    var storeList = ArrayList<StoreDTO>()
     var storeAdapter = StoreAdapter(storeList)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,6 +77,18 @@ class StoreListActivity : BaseActivity() {
         }
 
         binding.icMain.setOnClickListener { startActivity(intent)}
+        binding.icPay.setOnClickListener {
+            when(storeList.size) {
+                0 -> Toast.makeText(mActivity, R.string.msg_no_store, Toast.LENGTH_SHORT).show()
+                1 -> { insPaySetting() }
+                else -> {
+                    val intent = Intent(mActivity, SelectStoreActivity::class.java)
+                    intent.putExtra("storeList", storeList)
+                    intent.putExtra("type", "pay")
+                    startActivity(intent)
+                }
+            }
+        }
         binding.icPrinter.setOnClickListener {
             when(storeList.size) {
                 0 -> Toast.makeText(mActivity, R.string.msg_no_store, Toast.LENGTH_SHORT).show()
@@ -87,6 +96,7 @@ class StoreListActivity : BaseActivity() {
                 else -> {
                     val intent = Intent(mActivity, SelectStoreActivity::class.java)
                     intent.putExtra("storeList", storeList)
+                    intent.putExtra("type", "printer")
                     startActivity(intent)
                 }
             }
@@ -156,8 +166,34 @@ class StoreListActivity : BaseActivity() {
             })
     }
 
+    fun insPaySetting() {
+        ApiClient.service.insPaySetting(MyApplication.useridx, storeList[0].idx, MyApplication.androidId)
+            .enqueue(object : Callback<ResultDTO> {
+                override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                    Log.d(TAG, "결제 설정 최초 진입 시 row 추가 url : $response")
+                    if(!response.isSuccessful) return
+
+                    val result = response.body() ?: return
+
+                    if(result.status == 1) {
+                        MyApplication.store = storeList[0]
+                        MyApplication.storeidx = storeList[0].idx
+                        MyApplication.bidx = result.bidx
+                        startActivity(Intent(mActivity, SetPayActivity::class.java))
+                    }else
+                        Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                    Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "결제 설정 최초 진입 시 row 추가 오류 >> $t")
+                    Log.d(TAG, "결제 설정 최초 진입 시 row 추가 오류 >> ${call.request()}")
+                }
+            })
+    }
+
     fun insPrintSetting() {
-        ApiClient.service.insPrintSetting(useridx, storeidx, androidId)
+        ApiClient.service.insPrintSetting(useridx, storeList[0].idx, androidId)
             .enqueue(object : retrofit2.Callback<ResultDTO>{
                 override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                     Log.d(TAG, "프린터 설정 최초 진입 시 row 추가 url : $response")

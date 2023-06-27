@@ -6,9 +6,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wooriyo.pinmenumobileer.BaseActivity
-import com.wooriyo.pinmenumobileer.MyApplication
-import com.wooriyo.pinmenumobileer.MyApplication.Companion.androidId
-import com.wooriyo.pinmenumobileer.MyApplication.Companion.store
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
@@ -18,7 +15,6 @@ import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.CallHistoryDTO
 import com.wooriyo.pinmenumobileer.model.CallListDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
-import com.wooriyo.pinmenumobileer.model.StoreDTO
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.util.AppHelper
 import retrofit2.Call
@@ -44,7 +40,7 @@ class CallListActivity : BaseActivity() {
         setContentView(binding.root)
 
         // OrderList와 layout 같이 쓰기 때문에 Call에 맞게 뷰 변경
-        binding.title.text = getString(R.string.call_emp)
+        binding.tvTitle.text = getString(R.string.call_emp)
         binding.tv.visibility = View.GONE
         binding.today.visibility = View.GONE
         binding.empty.text = getString(R.string.no_call_list)

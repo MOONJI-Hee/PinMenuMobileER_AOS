@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/f9"
-    tools:context=".printer.SelectStoreActivity">
+    tools:context=".common.SelectStoreActivity">
 
     <TextView
         android:id="@+id/title"
@@ -87,11 +87,13 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
             <ImageView
+                android:id="@+id/ivPay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
                 android:src="@drawable/icon_card_n_black" />
             <TextView
+                android:id="@+id/tvPay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
@@ -110,14 +112,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
             <ImageView
+                android:id="@+id/ivPrinter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
-                android:src="@drawable/icon_print_p" />
+                android:src="@drawable/icon_print_n_black" />
             <TextView
+                android:id="@+id/tvPrinter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/main"
+                android:textColor="@color/black"
                 android:text="@string/printer"
                 android:textSize="12sp" />
         </LinearLayout>

@@ -4,12 +4,26 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <TextView
+    <LinearLayout
         style="@style/title_black"
         android:id="@+id/title"
-        android:text="@string/order_mgmt"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/icNew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            android:visibility="gone"
+            android:src="@drawable/ic_pay_new"/>
+
+        <TextView
+            style="@style/text22w"
+            android:id="@+id/tvTitle"
+            android:text="@string/order_mgmt"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/back"
@@ -29,7 +43,7 @@
         style="@style/text14w"
         android:id="@+id/tv"
         android:text="@string/today"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="6dp"
         app:layout_constraintEnd_toStartOf="@+id/today"
         app:layout_constraintTop_toTopOf="@+id/today"
         app:layout_constraintBottom_toBottomOf="@+id/today"/>
@@ -39,7 +53,18 @@
         android:text="@string/zero"
         android:textSize="17sp"
         android:textColor="@color/white"
-        android:layout_marginEnd="18dp"
+        android:layout_marginEnd="7dp"
+        app:layout_constraintEnd_toStartOf="@+id/btnClear"
+        app:layout_constraintTop_toTopOf="@+id/title"
+        app:layout_constraintBottom_toBottomOf="@+id/title"/>
+
+    <ImageView
+        android:id="@+id/btnClear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/btn_orderlist_info"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/title"
         app:layout_constraintTop_toTopOf="@+id/title"
         app:layout_constraintBottom_toBottomOf="@+id/title"/>
