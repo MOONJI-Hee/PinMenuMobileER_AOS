@@ -20,7 +20,6 @@ import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.common.SelectStoreActivity
-import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.REQUEST_ENABLE_BT
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.REQUEST_LOCATION
 import com.wooriyo.pinmenumobileer.databinding.ActivityPrinterMenuBinding
@@ -34,7 +33,7 @@ import com.wooriyo.pinmenumobileer.util.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
+import kotlin.collections.ArrayList
 
 class PrinterMenuActivity : BaseActivity() {
     lateinit var binding: ActivityPrinterMenuBinding
@@ -51,6 +50,11 @@ class PrinterMenuActivity : BaseActivity() {
     private val permissions = arrayOf(
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION
+    )
+
+    private val permissions_bt = arrayOf(
+        Manifest.permission.BLUETOOTH_CONNECT,
+        Manifest.permission.BLUETOOTH_SCAN
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -141,7 +145,7 @@ class PrinterMenuActivity : BaseActivity() {
                         .setMessage(R.string.pms_location_content)
                         .setPositiveButton(R.string.confirm) { dialog, _ ->
                             dialog.dismiss()
-                            deniedPms.add(pms)
+                            getLocationPms()
                         }
                         .setNegativeButton(R.string.cancel) {dialog, _ -> dialog.dismiss()}
                         .show()
@@ -162,20 +166,32 @@ class PrinterMenuActivity : BaseActivity() {
     }
 
     fun checkBluetoothPermission() {
-        if(ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
+        val deniedPms = ArrayList<String>()
+
+        for (pms in permissions_bt) {
+            if(ActivityCompat.checkSelfPermission(mActivity, pms) != PackageManager.PERMISSION_GRANTED) {
+                if(ActivityCompat.shouldShowRequestPermissionRationale(mActivity, pms)) {
+                    AlertDialog.Builder(mActivity)
+                        .setTitle(R.string.pms_bluetooth_title)
+                        .setMessage(R.string.pms_bluetooth_content)
+                        .setPositiveButton(R.string.confirm) { dialog, _ ->
+                            dialog.dismiss()
+                            getBluetoothPms()
+                        }
+                        .setNegativeButton(R.string.cancel) {dialog, _ ->
+                            dialog.dismiss()
+                            return@setNegativeButton
+                        }
+                        .show()
+                }else
+                    deniedPms.add(pms)
+            }
+        }
+
+        if(deniedPms.isEmpty() || deniedPms.size == 0) {
             checkBluetooth()
         }else {
-            if(ActivityCompat.shouldShowRequestPermissionRationale(mActivity, Manifest.permission.BLUETOOTH_CONNECT)) {
-                AlertDialog.Builder(mActivity)
-                    .setTitle(R.string.pms_bluetooth_title)
-                    .setMessage(R.string.pms_bluetooth_content)
-                    .setPositiveButton(R.string.confirm) { dialog, _ ->
-                        dialog.dismiss()
-                        getBluetoothPms()
-                    }
-                    .setNegativeButton(R.string.cancel) {dialog, _ -> dialog.dismiss()}
-                    .show()
-            }else getBluetoothPms()
+            getBluetoothPms()
         }
     }
 
@@ -198,7 +214,7 @@ class PrinterMenuActivity : BaseActivity() {
 
     @RequiresApi(Build.VERSION_CODES.S)
     fun getBluetoothPms() {
-        ActivityCompat.requestPermissions(mActivity, arrayOf(Manifest.permission.BLUETOOTH_CONNECT), REQUEST_ENABLE_BT)
+        ActivityCompat.requestPermissions(mActivity, permissions_bt, REQUEST_ENABLE_BT)
     }
 
     fun getConnPrintList() {

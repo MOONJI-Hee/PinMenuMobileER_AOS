@@ -46,11 +46,11 @@
             android:text="@string/btn_cancel"
             app:layout_constraintTop_toBottomOf="@+id/visibility"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/confirm"/>
+            app:layout_constraintEnd_toStartOf="@+id/complete"/>
 
         <TextView
             style="@style/btn_dialog_right"
-            android:id="@+id/confirm"
+            android:id="@+id/complete"
             android:layout_width="0dp"
             android:background="@drawable/bg_rbr6_grd"
             android:text="@string/btn_complete"
