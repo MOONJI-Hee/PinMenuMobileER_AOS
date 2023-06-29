@@ -254,7 +254,7 @@ class OrderListActivity : BaseActivity() {
 
     // 주문 완료 처리
     fun complete() {
-        ApiClient.service.payOrder(storeidx, orderList[payPosition].idx ,"Y").enqueue(object:Callback<ResultDTO>{
+        ApiClient.service.udtCompletedOrder(storeidx, orderList[payPosition].idx ,"Y").enqueue(object:Callback<ResultDTO>{
             override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                 Log.d(TAG, "주문 완료 url : $response")
                 if(!response.isSuccessful) return

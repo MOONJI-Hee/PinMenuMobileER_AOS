@@ -143,7 +143,7 @@ interface Api {
 
     // 주문 완료
     @GET("m/udtCompletedOrder.php")
-    fun payOrder(
+    fun udtCompletedOrder(
         @Query("storeidx") storeidx: Int,
         @Query("ordidx") ordidx: Int,
         @Query("iscompleted") iscompleted: String
