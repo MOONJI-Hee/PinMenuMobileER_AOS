@@ -1,5 +1,6 @@
 package com.wooriyo.pinmenumobileer.order.dialog
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,7 +17,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SelectPayDialog: BaseDialogFragment() {
+class SelectPayDialog(val position: Int): BaseDialogFragment() {
     lateinit var binding: DialogSelectPayBinding
 
     val TAG = context.toString()

@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@color/white"
@@ -22,24 +23,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/gea"/>
         <TextView
-            style="@style/text20"
+            style="@style/text_num_b"
             android:id="@+id/gea"
-            android:textStyle="bold"
             android:layout_marginEnd="3dp"
+            android:textSize="20sp"
             tools:text="1"
             app:layout_constraintBottom_toBottomOf="@+id/name"
+            app:layout_constraintStart_toEndOf="@+id/name"
             app:layout_constraintEnd_toStartOf="@+id/tv_gea"/>
         <TextView
             style="@style/text"
             android:id="@+id/tv_gea"
             android:textSize="16sp"
             android:text="@string/gea"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/gea"
+            app:layout_constraintEnd_toStartOf="@+id/select"
             app:layout_constraintBottom_toBottomOf="@+id/name" />
         <TextView
-            style="@style/text16"
+            style="@style/text_num"
             android:id="@+id/price"
             android:layout_marginTop="7dp"
+            android:textSize="17sp"
             tools:text="5,000"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/name"/>
@@ -57,6 +61,20 @@
             android:visibility="gone"
             tools:text="코코팜추가"
             app:layout_constraintTop_toBottomOf="@+id/price"/>
+        <CheckBox
+            android:id="@+id/select"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="13dp"
+            android:background="@drawable/selector_check_big"
+            android:button="@null"
+            android:checked="true"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/tv_gea"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <View
         android:layout_width="match_parent"

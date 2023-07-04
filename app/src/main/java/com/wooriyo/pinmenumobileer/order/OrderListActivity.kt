@@ -35,6 +35,8 @@ import com.wooriyo.pinmenumobileer.model.OrderHistoryDTO
 import com.wooriyo.pinmenumobileer.model.OrderListDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.order.adapter.OrderAdapter
+import com.wooriyo.pinmenumobileer.order.dialog.CompleteDialog
+import com.wooriyo.pinmenumobileer.order.dialog.SelectPayDialog
 import com.wooriyo.pinmenumobileer.receiver.EasyCheckReceiver
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.util.AppHelper
@@ -63,22 +65,13 @@ class OrderListActivity : BaseActivity() {
     var space = 0
 
     // 결제 관련 변수
-    lateinit var receiver : EasyCheckReceiver
     var payPosition = -1
-    var tran_type = "credit"
 
-    val goKICC = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == RESULT_OK) {
-            Log.d(TAG, "결제 성공")
-            //직전거래에 대한 취소거래필요정보를 받음
-            val cancelInfo: Intent = it.data ?: return@registerForActivityResult
-
-            val rtn = it.data
-            if(rtn != null) {
-                val data = rtn.data
-                Log.d(TAG, "return 값 >> $data")
-            }
-
+    val paymentCard = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if(result.resultCode == RESULT_OK) {
+            orderList[payPosition].iscompleted = 1
+            orderList.sortBy { it.iscompleted }
+            orderAdapter.notifyDataSetChanged()
         }
     }
 
@@ -107,9 +100,54 @@ class OrderListActivity : BaseActivity() {
 
         orderAdapter.setOnPayClickListener(object: ItemClickListener{
             override fun onItemClick(position: Int) {
-                Log.d(TAG, "결제 버튼 클릭")
-                payPosition = position
-                payOrder()
+                val selectPayDialog = SelectPayDialog(position)
+
+                selectPayDialog.setOnQrClickListener(object : ItemClickListener{
+                    override fun onItemClick(position: Int) {
+                        super.onItemClick(position)
+                        val intent = Intent(mActivity, QrActivity::class.java)
+                        intent.putExtra("ordcode", orderList[position].ordcode)
+                        startActivity(intent)
+                    }
+                })
+
+                selectPayDialog.setOnCardClickListener(object : ItemClickListener{
+                    override fun onItemClick(position: Int) {
+                        super.onItemClick(position)
+                        selectPayDialog.dismiss()
+                        payPosition = position
+
+                        val intent = Intent(mActivity, PayCardActivity::class.java)
+                        intent.putExtra("order", orderList[payPosition])
+                        paymentCard.launch(intent)
+                    }
+                })
+
+                selectPayDialog.setOnCompleteClickListener(object : ItemClickListener{
+                    override fun onItemClick(position: Int) {
+                        super.onItemClick(position)
+                        when(store.popup) {
+                            0 -> {
+                                val dialog = CompleteDialog()
+                                dialog.setOnCompleteListener(object : DialogListener{
+                                    override fun onComplete(popup: Int) {
+                                        super.onComplete(popup)
+                                        complete(position, popup)
+                                        dialog.dismiss()
+                                    }
+                                })
+                                selectPayDialog.dismiss()
+                                dialog.show()
+                            }
+                            1 ->  {
+                                complete(position, store.popup)
+                                selectPayDialog.dismiss()
+                            }
+                        }
+                    }
+                })
+
+                selectPayDialog.show(supportFragmentManager, "PayDialog")
             }
         })
         orderAdapter.setOnDeleteListener(object:ItemClickListener{
@@ -127,17 +165,6 @@ class OrderListActivity : BaseActivity() {
         binding.back.setOnClickListener { AppHelper.leaveStore(mActivity) }
 
         getOrderList()
-
-
-        receiver = EasyCheckReceiver()
-        receiver.setOnEasyCheckListener(object : EasyCheckListener {
-            override fun getIntent(intent: Intent?) {
-                //로그확인
-                Log.e("heykyul", "broadcast 들어옴")
-            }
-        })
-        val filter = IntentFilter("kr.co.kicc.ectablet.broadcast")
-        this.registerReceiver(receiver, filter)
     }
 
     // 새로운 주문 유무 확인 > 3초마다 한번씩 태우기
@@ -224,32 +251,6 @@ class OrderListActivity : BaseActivity() {
                 Log.d(TAG, "주문 목록 조회 오류 > ${call.request()}")
             }
         })
-    }
-
-    // 주문 결제 (KICC)
-    fun payOrder() {
-        val compName = ComponentName("kr.co.kicc.ectablet", "kr.co.kicc.ectablet.SmartCcmsMain")
-
-        val intent = Intent(Intent.ACTION_MAIN)
-
-        intent.putExtra("APPCALL_TRAN_NO", AppHelper.getAppCallNo())
-        intent.putExtra("TRAN_TYPE", tran_type)
-        intent.putExtra("TOTAL_AMOUNT", (orderList[payPosition].amount).toString())
-
-        val tax = (orderList[payPosition].amount * 0.1).toInt()
-        intent.putExtra("TAX", tax.toString())
-        intent.putExtra("TIP", "0")
-        intent.putExtra("INSTALLMENT", "0")
-        intent.putExtra("UI_SKIP_OPTION", "NNNNN")
-
-        intent.addCategory(Intent.CATEGORY_LAUNCHER)
-        intent.component = compName
-
-        try {
-            goKICC.launch(intent)
-        }catch (e: Exception) {
-            Toast.makeText(mActivity, R.string.msg_no_card_reader, Toast.LENGTH_SHORT).show()
-        }
     }
 
     // 주문 완료 처리

@@ -1,6 +1,7 @@
 package com.wooriyo.pinmenumobileer.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class OrderHistoryDTO(
     @SerializedName("ordidx") var idx : Int,                        // 주문 idx
@@ -13,4 +14,4 @@ data class OrderHistoryDTO(
     @SerializedName("amount") var amount : Int,                     // 총 금액
     @SerializedName("iscompleted") var iscompleted : Int,           // 완료 여부 (1 : 완료, 0 : 미완료)
     @SerializedName("complate_updt") var complate_updt : String     // 완료일시 (결제일시)
-)
+):Serializable

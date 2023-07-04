@@ -117,6 +117,7 @@
 
         <TextView
             style="@style/text18"
+            android:id="@+id/totGea"
             android:text="@string/total_gea"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -245,7 +246,7 @@
 
         <TextView
             style="@style/text_num_b"
-            android:id="@+id/orderNo"
+            android:id="@+id/tableNo"
             android:textSize="20sp"
             android:layout_marginStart="10dp"
             app:layout_constraintStart_toStartOf="parent"

@@ -149,6 +149,13 @@ interface Api {
         @Query("iscompleted") iscompleted: String
     ): Call<ResultDTO>
 
+    // 주문 결제 완료
+    @GET("payCardReader.php")
+    fun insPayCard(
+        @Query("storeidx") storeidx: Int,
+        @Query("JSON") JSON: String
+    ): Call<ResultDTO>
+
     // 주문 삭제
     @GET("m/delete_order.php")
     fun deleteOrder(
