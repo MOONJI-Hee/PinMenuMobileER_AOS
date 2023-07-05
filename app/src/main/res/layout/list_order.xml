@@ -8,22 +8,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        style="@style/text20"
+        style="@style/text_num_b"
         android:id="@+id/tableNo"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:paddingHorizontal="10dp"
         android:background="@color/main"
         android:gravity="center_vertical"
-        android:textStyle="bold"
+        android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="185" />
 
     <TextView
-        style="@style/text18"
+        style="@style/text_num"
         android:id="@+id/regdt"
         android:layout_marginEnd="10dp"
-        tools:text="2022.07.28.18:08"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tableNo"
         app:layout_constraintBottom_toBottomOf="@+id/tableNo"/>
@@ -46,13 +46,16 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/payment"
-            android:layout_width="match_parent"
+            android:id="@+id/cl_price"
+            android:layout_width="0dp"
             android:layout_height="48dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:paddingHorizontal="15dp"
             android:paddingBottom="11dp"
-            android:layout_marginBottom="10dp"
             android:background="@drawable/bg_r6y"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/payment"
             app:layout_constraintBottom_toTopOf="@+id/print">
 
             <TextView
@@ -64,10 +67,10 @@
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
-                style="@style/text20"
+                style="@style/text_num_b"
                 android:id="@+id/gea"
                 android:text="@string/zero"
-                android:textStyle="bold"
+                android:textSize="20sp"
                 android:layout_marginStart="3dp"
                 app:layout_constraintStart_toEndOf="@+id/tv_total"
                 app:layout_constraintBottom_toBottomOf="parent"/>
@@ -82,12 +85,12 @@
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
-                style="@style/text20"
+                style="@style/text_num_b"
                 android:id="@+id/price"
                 android:gravity="end"
                 android:text="@string/zero"
-                android:textStyle="bold"
-                android:layout_marginHorizontal="3dp"
+                android:textSize="20sp"
+                android:layout_marginEnd="3dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/won" />
 
@@ -96,18 +99,24 @@
                 android:id="@+id/won"
                 android:text="@string/won"
                 android:textSize="16sp"
-                android:layout_marginEnd="10dp"
-                app:layout_constraintEnd_toStartOf="@+id/tv_pay"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <TextView
-                style="@style/text18b"
-                android:id="@+id/tv_pay"
-                android:text="@string/btn_payment2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            style="@style/text18b"
+            android:id="@+id/payment"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@string/btn_payment2"
+            android:gravity="center"
+            android:paddingHorizontal="15dp"
+            android:background="@drawable/bg_r6y"
+            app:layout_constraintStart_toEndOf="@+id/cl_price"
+            app:layout_constraintTop_toTopOf="@+id/cl_price"
+            app:layout_constraintBottom_toBottomOf="@+id/cl_price"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <LinearLayout
             android:id="@+id/delete"
@@ -124,7 +133,7 @@
         </LinearLayout>
 
         <TextView
-            style="@style/btn"
+            style="@style/btn_sub"
             android:id="@+id/print"
             android:layout_width="0dp"
             android:layout_height="40dp"

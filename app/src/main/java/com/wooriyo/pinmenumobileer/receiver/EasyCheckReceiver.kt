@@ -10,7 +10,6 @@ import com.wooriyo.pinmenumobileer.listener.EasyCheckListener
 class EasyCheckReceiver: BroadcastReceiver() {
     lateinit var onListener : EasyCheckListener
 
-
     fun setOnEasyCheckListener(_onListener: EasyCheckListener) {
         onListener = _onListener
     }
@@ -23,8 +22,6 @@ class EasyCheckReceiver: BroadcastReceiver() {
             val value = b[key]
             Log.e("[BroadcastReceiver]", "[" + key + "] " + value.toString())
         }
-
-        if(onListener != null) onListener.getIntent(intent);
-
+        if(onListener != null) onListener.getIntent(intent)
     }
 }

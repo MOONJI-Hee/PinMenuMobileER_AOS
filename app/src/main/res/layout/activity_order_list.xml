@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="@+id/today"
         app:layout_constraintBottom_toBottomOf="@+id/today"/>
     <TextView
-        style="@style/text17"
+        style="@style/text_num_b"
         android:id="@+id/today"
         android:text="@string/zero"
         android:textSize="17sp"

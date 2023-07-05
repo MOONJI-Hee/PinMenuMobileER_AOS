@@ -143,14 +143,15 @@ interface Api {
 
     // 주문 완료
     @GET("m/udtCompletedOrder.php")
-    fun udtCompletedOrder(
+    fun udtComplete(
         @Query("storeidx") storeidx: Int,
         @Query("ordidx") ordidx: Int,
-        @Query("iscompleted") iscompleted: String
+        @Query("iscompleted") iscompleted: String,
+        @Query("popup") popup: Int                   // 1: 핍업 다시보지않기 클릭, 0 : 팝업 다시보지않기 미클릭
     ): Call<ResultDTO>
 
     // 주문 결제 완료
-    @GET("payCardReader.php")
+    @GET("m/payCardReader.php")
     fun insPayCard(
         @Query("storeidx") storeidx: Int,
         @Query("JSON") JSON: String

@@ -62,7 +62,7 @@
             app:layout_constraintEnd_toStartOf="@+id/btn_check_id" />
 
         <TextView
-            style="@style/btn"
+            style="@style/btn_sub"
             android:id="@+id/btn_check_id"
             android:layout_width="83dp"
             android:layout_marginStart="10dp"
@@ -118,11 +118,11 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_arpayo"/>
 
         <TextView
-            style="@style/btn"
+            style="@style/btn_sub"
             android:id="@+id/btn_arpayo"
             android:layout_width="83dp"
             android:layout_marginStart="10dp"
-            android:text="@string/link"
+            android:text="@string/btn_link"
             android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/et_arpayo"

@@ -44,7 +44,7 @@
             android:id="@+id/etId"
             style="@style/edittext"
             android:layout_marginTop="87dp"
-            android:hint="@string/id"
+            android:hint="@string/email"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:maxLines="1"
@@ -93,8 +93,8 @@
             app:layout_constraintTop_toTopOf="@id/line" />
 
         <TextView
-            android:id="@+id/login"
             style="@style/btn"
+            android:id="@+id/login"
             android:layout_width="match_parent"
             android:text="@string/btn_login"
             app:layout_constraintBottom_toBottomOf="parent" />

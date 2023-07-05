@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".payment.NicepayInfoActivity">
+
+    <TextView
+        style="@style/title_black"
+        android:id="@+id/title"
+        android:text="@string/title_qr"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <LinearLayout
+        android:id="@+id/back"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_back_black" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ivQr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/img_pay_qrcode_100"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"/>
+
+    <TextView
+        style="@style/text20"
+        android:layout_marginTop="20dp"
+        android:text="@string/order_pay_qr"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/ivQr"
+        app:layout_constraintEnd_toEndOf="@+id/ivQr"
+        app:layout_constraintTop_toBottomOf="@+id/ivQr"/>
+
+    <ImageView
+        android:id="@+id/table"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:src="@drawable/img_vat"
+        app:layout_constraintStart_toStartOf="@+id/btnNicepay"
+        app:layout_constraintEnd_toEndOf="@+id/btnNicepay"
+        app:layout_constraintBottom_toTopOf="@+id/btnNicepay"/>
+
+    <TextView
+        style="@style/subtext"
+        android:text="@string/qr_vat"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/table"
+        app:layout_constraintEnd_toEndOf="@+id/table"/>
+
+    <TextView
+        style="@style/btn_grd"
+        android:id="@+id/btnNicepay"
+        android:layout_width="0dp"
+        android:layout_margin="60dp"
+        android:text="@string/qr_nicepay_setting"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,6 +28,7 @@ import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.SPACE_BIG
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.SPACE_SMALL
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.TITLE_MENU
 import com.wooriyo.pinmenumobileer.databinding.ActivityOrderListBinding
+import com.wooriyo.pinmenumobileer.listener.DialogListener
 import com.wooriyo.pinmenumobileer.listener.EasyCheckListener
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.OrderDTO
@@ -37,6 +38,7 @@ import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.order.adapter.OrderAdapter
 import com.wooriyo.pinmenumobileer.order.dialog.CompleteDialog
 import com.wooriyo.pinmenumobileer.order.dialog.SelectPayDialog
+import com.wooriyo.pinmenumobileer.payment.QrActivity
 import com.wooriyo.pinmenumobileer.receiver.EasyCheckReceiver
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.util.AppHelper
@@ -129,7 +131,7 @@ class OrderListActivity : BaseActivity() {
                         when(store.popup) {
                             0 -> {
                                 val dialog = CompleteDialog()
-                                dialog.setOnCompleteListener(object : DialogListener{
+                                dialog.setOnCompleteListener(object : DialogListener {
                                     override fun onComplete(popup: Int) {
                                         super.onComplete(popup)
                                         complete(position, popup)
@@ -137,7 +139,7 @@ class OrderListActivity : BaseActivity() {
                                     }
                                 })
                                 selectPayDialog.dismiss()
-                                dialog.show()
+                                dialog.show(supportFragmentManager, "CompleteDailog")
                             }
                             1 ->  {
                                 complete(position, store.popup)
@@ -254,8 +256,9 @@ class OrderListActivity : BaseActivity() {
     }
 
     // 주문 완료 처리
-    fun complete() {
-        ApiClient.service.udtCompletedOrder(storeidx, orderList[payPosition].idx ,"Y").enqueue(object:Callback<ResultDTO>{
+    // 주문 완료 처리
+    fun complete(position: Int, popup: Int) {
+        ApiClient.service.udtComplete(storeidx, orderList[position].idx ,"Y", popup).enqueue(object:Callback<ResultDTO>{
             override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                 Log.d(TAG, "주문 완료 url : $response")
                 if(!response.isSuccessful) return
@@ -263,9 +266,10 @@ class OrderListActivity : BaseActivity() {
                 val result = response.body() ?: return
                 when(result.status){
                     1 -> {
-                        orderList[payPosition].iscompleted = 1
+                        Toast.makeText(mActivity, R.string.complete, Toast.LENGTH_SHORT).show()
+                        orderList[position].iscompleted = 1
                         orderList.sortBy { it.iscompleted }
-                        orderAdapter.notifyItemChanged(payPosition)
+                        orderAdapter.notifyItemChanged(position)
                     }
                     else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                 }

@@ -33,8 +33,11 @@ class SelMenuActivity : BaseActivity() {
         order = intent.getSerializableExtra("order") as OrderHistoryDTO
         olist = order.olist
         olist.forEach { it.isChecked = true }
-        adapter = OrderPayDetailAdapter(olist)
 
+        charge = order.amount
+        binding.chargePrice.text = AppHelper.price(charge)
+
+        adapter = OrderPayDetailAdapter(olist)
         adapter.setOnCheckListener(object : ItemClickListener {
             override fun onCheckClick(position: Int, v: CheckBox, isChecked: Boolean) {
                 val oPrice = olist[position].price * olist[position].gea
@@ -62,6 +65,10 @@ class SelMenuActivity : BaseActivity() {
         binding.rv.layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false)
         binding.rv.adapter = adapter
 
+        binding.tableNo.text = order.tableNo
+        binding.regdt.text = order.regdt
+
+        binding.back.setOnClickListener { finish() }
         binding.checkAll.setOnClickListener {
             it as CheckBox
             if(it.isChecked) {
@@ -76,6 +83,11 @@ class SelMenuActivity : BaseActivity() {
                 }
             }
             adapter.notifyDataSetChanged()
+        }
+        binding.select.setOnClickListener {
+            intent.putExtra("charge", charge)
+            setResult(RESULT_OK, intent)
+            finish()
         }
     }
 }

@@ -24,6 +24,12 @@
         android:theme="@style/Theme.PinmenuMobileER"
         tools:targetApi="31">
         <activity
+            android:name=".NicepayInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".payment.QrActivity"
+            android:exported="false" />
+        <activity
             android:name=".order.SelMenuActivity"
             android:exported="false" />
         <activity

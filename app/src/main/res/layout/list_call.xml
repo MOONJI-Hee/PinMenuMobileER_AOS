@@ -8,22 +8,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        style="@style/text20"
+        style="@style/text_num_b"
         android:id="@+id/tableNo"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:paddingHorizontal="10dp"
         android:background="@color/main"
         android:gravity="center_vertical"
-        android:textStyle="bold"
+        android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="185" />
 
     <TextView
-        style="@style/text18"
+        style="@style/text_num"
         android:id="@+id/regdt"
         android:layout_marginEnd="10dp"
-        tools:text="2022.07.28.18:08"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tableNo"
         app:layout_constraintBottom_toBottomOf="@+id/tableNo"/>
@@ -37,7 +37,7 @@
         app:layout_constraintBottom_toTopOf="@+id/complete" />
 
     <TextView
-        style="@style/btn"
+        style="@style/btn_sub"
         android:id="@+id/complete"
         android:layout_width="match_parent"
         android:layout_height="40dp"

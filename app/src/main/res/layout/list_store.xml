@@ -29,8 +29,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
             <TextView
-                style="@style/text22bw"
+                style="@style/text_num_b"
                 android:id="@+id/ordCnt"
+                android:textSize="22sp"
+                android:textColor="@color/white"
                 tools:text="2" />
             <TextView
                 style="@style/text15w"
@@ -60,7 +62,9 @@
             app:layout_constraintTop_toTopOf="@+id/view">
             <TextView
                 android:id="@+id/callCnt"
-                style="@style/text22bw"
+                style="@style/text_num_b"
+                android:textSize="22sp"
+                android:textColor="@color/white"
                 tools:text="2" />
             <TextView
                 style="@style/text15w"

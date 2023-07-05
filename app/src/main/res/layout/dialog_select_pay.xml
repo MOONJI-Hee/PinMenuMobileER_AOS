@@ -132,6 +132,7 @@
 
         <TextView
             style="@style/btn_dialog"
+            android:id="@+id/cancel"
             android:layout_width="match_parent"
             android:layout_marginTop="20dp"
             android:text="@string/btn_cancel"

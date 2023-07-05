@@ -215,11 +215,11 @@
             style="@style/text_num"
             android:id="@+id/remainPrice"
             android:layout_marginEnd="3dp"
+            android:text="@string/zero"
             android:textSize="18sp"
             app:layout_constraintEnd_toStartOf="@+id/won3"
             app:layout_constraintTop_toTopOf="@+id/won3"
-            app:layout_constraintBottom_toBottomOf="@+id/won3"
-            tools:text="17,300" />
+            app:layout_constraintBottom_toBottomOf="@+id/won3" />
 
         <TextView
             android:id="@+id/won3"

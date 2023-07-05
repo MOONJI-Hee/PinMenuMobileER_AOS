@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import com.google.firebase.auth.ktx.userProfileChangeRequest
+import com.google.gson.JsonObject
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
@@ -17,6 +19,7 @@ import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.receiver.EasyCheckReceiver
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.util.AppHelper
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,14 +43,18 @@ class PayCardActivity : BaseActivity() {
             Log.d(TAG, "결제 성공")
             //직전거래에 대한 취소거래필요정보를 받음
             val cancelInfo: Intent = it.data ?: return@registerForActivityResult
+//            val rtn = it.data
+//            if(rtn != null) {
+//            }
+        }
+    }
 
-            val rtn = it.data
-            if(rtn != null) {
-                val data = rtn.data
-                Log.d(TAG, "return 값 >> $data")
-
-                insPayCard(data.toString())
-            }
+    val selectMenu = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if(result.resultCode == RESULT_OK) {
+            charge = result.data?.getIntExtra("charge", charge) ?: charge
+            remain = totPrice - charge
+            binding.chargePrice.text = AppHelper.price(charge)
+            binding.remainPrice.text = AppHelper.price(remain)
         }
     }
 
@@ -62,20 +69,20 @@ class PayCardActivity : BaseActivity() {
         totPrice = order.amount
         charge = totPrice
 
+        binding.tableNo.text = order.tableNo
+        binding.date.text = order.regdt
+
         binding.totGea.text = String.format(getString(R.string.total_gea), totGea)
         binding.totPrice.text = AppHelper.price(totPrice)
         binding.chargePrice.text = AppHelper.price(charge)
 
-        Log.d(TAG, "totGea >> $totGea")
-        Log.d(TAG, "totPrice >> $totPrice")
-        Log.d(TAG, "chargePrice >> $charge")
-        Log.d(TAG, "remainPrice >> $remain")
-
-        binding.tableNo.text = order.tableNo
-        binding.date.text = order.regdt
-
         binding.back.setOnClickListener { finish() }
         binding.payment.setOnClickListener { payOrder() }
+        binding.selectMenu.setOnClickListener {
+            val intent = Intent(mActivity, SelMenuActivity::class.java)
+            intent.putExtra("order", order)
+            selectMenu.launch(intent)
+        }
         binding.done.setOnClickListener {
             setResult(RESULT_OK, intent)
             finish()
@@ -84,13 +91,23 @@ class PayCardActivity : BaseActivity() {
         receiver = EasyCheckReceiver()
         receiver.setOnEasyCheckListener(object : EasyCheckListener {
             override fun getIntent(intent: Intent?) {
-                //로그확인
-                Log.e("heykyul", "broadcast 들어옴")
+                val json = JSONObject()
+
+                val b = intent!!.extras
+                val iter: Iterator<String> = b!!.keySet().iterator()
+                while (iter.hasNext()) {
+                    val key = iter.next()
+                    val value = b[key]
+
+                    json.put(key, value)
+                }
+                insPayCard(json.toString())
             }
         })
         val filter = IntentFilter("kr.co.kicc.ectablet.broadcast")
         this.registerReceiver(receiver, filter)
     }
+
     // 카드 결제 처리 (KICC 앱으로 이동)
     fun payOrder() {
         val compName = ComponentName("kr.co.kicc.ectablet", "kr.co.kicc.ectablet.SmartCcmsMain")
@@ -111,7 +128,8 @@ class PayCardActivity : BaseActivity() {
         intent.component = compName
 
         try {
-            goKICC.launch(intent)
+            startActivity(intent)
+//            goKICC.launch(intent)
         }catch (e: Exception) {
             Toast.makeText(mActivity, R.string.msg_no_card_reader, Toast.LENGTH_SHORT).show()
         }

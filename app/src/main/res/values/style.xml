@@ -23,9 +23,19 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/bg_r6_grd</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="btn_sub">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:background">@drawable/bg_btn_r6</item>
         <item name="android:includeFontPadding">false</item>
     </style>
+
+
     <style name="btn_small">
         <item name="android:layout_height">36dp</item>
         <item name="android:gravity">center</item>
@@ -64,7 +74,7 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:background">@drawable/bg_btn_rb6</item>
+        <item name="android:background">@drawable/bg_r6_grd</item>
         <item name="android:includeFontPadding">false</item>
     </style>
     <style name="btn_dialog_cancel">
@@ -80,7 +90,7 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:background">@drawable/bg_btn_rbr6</item>
+        <item name="android:background">@drawable/bg_rbr6_grd</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
@@ -121,6 +131,16 @@
         <item name="android:elevation">6dp</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/bg_r6w</item>
+    </style>
+    <style name="more_menu">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:paddingHorizontal">30dp</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="edittext">
@@ -299,7 +319,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/selector_text_black</item>
         <item name="android:includeFontPadding">false</item>
     </style>
     <style name="text20m">

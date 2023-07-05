@@ -57,6 +57,7 @@
     <string name="btn_payment">결&#160;&#160;제</string>
     <string name="btn_payment2">결&#160;제</string>
     <string name="btn_choice">선&#160;&#160;택</string>
+    <string name="btn_link">연&#160;&#160;동</string>
 
     <string name="udt_info">정보변경</string>
 
@@ -379,6 +380,11 @@
 
     <string name="order_complete_info">결제 과정 없이 완료 상태로 변경합니다.\n완료 후 완료된 목록의 ‘복원’버튼을 누르면\n다시 결제할 수 있는 상태로 돌아갑니다.</string>
 
+    <!--  결제 비활성화 다이얼로그  -->
+    <string name="order_enable_qr">QR코드 결제를 사용하시려면\n‘결제방식 설정’에서 ‘후결제 사용’을\n활성화해 주시기 바랍니다.</string>
+    <string name="order_enable_card">카드 결제를 사용하시려면\n‘결제방식 설정’에서 ‘후결제 사용’을\n활성화해 주시기 바랍니다.</string>
+    <string name="title_card">카드 결제</string>
+
     <!-- 주문 결제 - QR -->
     <string name="title_qr">QR코드 카드결제</string>
     <string name="qr_info">QR코드 카드결제를 이용하기 위해서는\n나이스페이 가맹점 가입이 필요합니다.</string>
@@ -467,6 +473,8 @@
     <string name="msg_no_card_reader">연결된 카드리더기가 없습니다.</string>
     <string name="msg_no_mid">MID를 입력해주세요.</string>
     <string name="msg_no_key">Key를 입력해주세요.</string>
+
+    <string name="msg_payment_cancel">결제가 취소되었습니다.</string>
 
     <!--  테스트 인쇄 문구  -->
     <string name="print_test">오리지널 스마트 전자메뉴판 핀메뉴 테스트 인쇄 입니다.\n1234567890\n가나다라마바사아자차카타파하\nABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
