@@ -8,6 +8,7 @@ import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.ActivitySetNicepayBinding
 import com.wooriyo.pinmenumobileer.model.ResultDTO
+import com.wooriyo.pinmenumobileer.order.dialog.SetNicepayDialog
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,10 +20,14 @@ class SetNicepayActivity : BaseActivity() {
     val TAG = "SetNicepayActivity"
     val mActivity = this@SetNicepayActivity
 
+    var fromOrder = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySetNicepayBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        fromOrder = intent.getStringExtra("fromOrder") ?: ""
 
         binding.back.setOnClickListener { finish() }
         binding.save.setOnClickListener { save() }
@@ -47,7 +52,12 @@ class SetNicepayActivity : BaseActivity() {
                 val result = response.body() ?: return
 
                 when(result.status) {
-                    1 -> Toast.makeText(mActivity, R.string.msg_complete, Toast.LENGTH_SHORT).show()
+                    1 -> {
+                        if(fromOrder == "Y") {
+                            SetNicepayDialog().show(supportFragmentManager, "SetNicepayDialog")
+                        }else
+                            Toast.makeText(mActivity, R.string.msg_complete, Toast.LENGTH_SHORT).show()
+                    }
                     else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                 }
             }

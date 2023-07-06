@@ -8,6 +8,7 @@ import com.wooriyo.pinmenumobileer.model.StoreDTO
 interface ItemClickListener {
     fun onItemClick(position:Int) {}
     fun onItemMove(fromPos: Int, toPos: Int) {}
+    fun onQrClick(position: Int, status: Boolean) {}
     fun onStoreClick(storeDTO: StoreDTO, intent: Intent) {}
     fun onCheckClick(position: Int, v: CheckBox, isChecked : Boolean) {}
 }

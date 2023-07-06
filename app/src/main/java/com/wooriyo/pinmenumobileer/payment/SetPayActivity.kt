@@ -35,7 +35,7 @@ class SetPayActivity : BaseActivity() {
         getPayInfo()
 
         binding.back.setOnClickListener { finish() }
-        binding.setQR.setOnClickListener { startActivity(Intent(mActivity, SetNicepayActivity::class.java)) }
+
         binding.usableDevice.setOnClickListener { startActivity(Intent(mActivity, ReaderModelActivity::class.java)) }
 
         binding.infoQR.setOnClickListener{
@@ -75,6 +75,13 @@ class SetPayActivity : BaseActivity() {
 
         val stts = if(settingDTO.mid.isNotEmpty() && settingDTO.mid_key.isNotEmpty()) "연결완료" else "연결전"
         binding.statusQR.text = String.format(getString(R.string.payment_status), stts)
+
+        binding.setQR.setOnClickListener {
+            if(settingDTO.mid.isEmpty() || settingDTO.mid_key.isEmpty()) {
+                startActivity(Intent(mActivity, NicepayInfoActivity::class.java))
+            }else
+                startActivity(Intent(mActivity, SetNicepayActivity::class.java))
+        }
 
         // 처음 진입했을 때는 이벤트 발생하지 않도록 위치 조정
         binding.ckPostQR.setOnCheckedChangeListener { _, _ -> udtPaySetting() }

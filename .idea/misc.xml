@@ -42,6 +42,7 @@
         <entry key="app/src/main/res/layout/activity_more.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_new_conn.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_nicepay_info.xml" value="0.47327917913638307" />
+        <entry key="app/src/main/res/layout/activity_nicepay_join_way.xml" value="0.47327917913638307" />
         <entry key="app/src/main/res/layout/activity_order_list.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_pay_card.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_printer_menu.xml" value="0.46728577458843396" />
@@ -52,7 +53,7 @@
         <entry key="app/src/main/res/layout/activity_select_cate.xml" value="0.46216331765711843" />
         <entry key="app/src/main/res/layout/activity_select_store.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_set_conn.xml" value="0.46216331765711843" />
-        <entry key="app/src/main/res/layout/activity_set_nicepay.xml" value="0.48567764001710134" />
+        <entry key="app/src/main/res/layout/activity_set_nicepay.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_set_pay.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_signup.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_start.xml" value="0.5765625" />

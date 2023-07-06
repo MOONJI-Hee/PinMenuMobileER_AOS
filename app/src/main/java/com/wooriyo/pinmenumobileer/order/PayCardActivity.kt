@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.firebase.auth.ktx.userProfileChangeRequest
@@ -12,6 +13,7 @@ import com.google.gson.JsonObject
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
+import com.wooriyo.pinmenumobileer.common.ConfirmDialog
 import com.wooriyo.pinmenumobileer.databinding.ActivityPayCardBinding
 import com.wooriyo.pinmenumobileer.listener.EasyCheckListener
 import com.wooriyo.pinmenumobileer.model.OrderHistoryDTO
@@ -84,8 +86,12 @@ class PayCardActivity : BaseActivity() {
             selectMenu.launch(intent)
         }
         binding.done.setOnClickListener {
-            setResult(RESULT_OK, intent)
-            finish()
+            val clickListener = View.OnClickListener {
+                setResult(RESULT_OK, intent)
+                finish()
+            }
+            val confirmDialog = ConfirmDialog(getString(R.string.dialog_notice), getString(R.string.order_pay_finish_info), getString(R.string.btn_complete), clickListener)
+            confirmDialog.show(supportFragmentManager, "ConfirmDialog")
         }
 
         receiver = EasyCheckReceiver()

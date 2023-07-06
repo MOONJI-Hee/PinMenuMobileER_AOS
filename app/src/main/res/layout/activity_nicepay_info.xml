@@ -38,6 +38,7 @@
 
     <TextView
         style="@style/text20"
+        android:id="@+id/tvQr"
         android:layout_marginTop="20dp"
         android:text="@string/order_pay_qr"
         android:textStyle="bold"
@@ -45,28 +46,49 @@
         app:layout_constraintEnd_toEndOf="@+id/ivQr"
         app:layout_constraintTop_toBottomOf="@+id/ivQr"/>
 
+    <TextView
+        style="@style/text"
+        android:layout_marginBottom="6dp"
+        android:text="@string/qr_vat"
+        android:textSize="13sp"
+        android:fontFamily="@font/notosans_light"
+        app:layout_constraintBottom_toTopOf="@+id/table"
+        app:layout_constraintEnd_toEndOf="@+id/table"/>
+
     <ImageView
         android:id="@+id/table"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_marginTop="45dp"
         android:src="@drawable/img_vat"
-        app:layout_constraintStart_toStartOf="@+id/btnNicepay"
-        app:layout_constraintEnd_toEndOf="@+id/btnNicepay"
-        app:layout_constraintBottom_toTopOf="@+id/btnNicepay"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvQr"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
         style="@style/subtext"
-        android:text="@string/qr_vat"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/table"
-        app:layout_constraintEnd_toEndOf="@+id/table"/>
+        android:text="@string/qr_info"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/joinWay"/>
 
     <TextView
-        style="@style/btn_grd"
-        android:id="@+id/btnNicepay"
-        android:layout_width="0dp"
-        android:layout_margin="60dp"
+        style="@style/btn_sub"
+        android:id="@+id/joinWay"
+        android:layout_width="match_parent"
+        android:layout_margin="20dp"
+        android:textSize="17sp"
+        android:text="@string/qr_nicepay_join_way"
+        app:layout_constraintBottom_toTopOf="@+id/setting"/>
+    <TextView
+        style="@style/btn"
+        android:id="@+id/setting"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="30dp"
+        android:textSize="17sp"
         android:text="@string/qr_nicepay_setting"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

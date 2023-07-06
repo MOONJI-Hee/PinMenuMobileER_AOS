@@ -1,5 +1,6 @@
 package com.wooriyo.pinmenumobileer.payment
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -63,7 +64,11 @@ class QrActivity : AppCompatActivity() {
                         1 -> {
                             context.startActivity(Intent(context, OrderListActivity::class.java))
                         }
-                        2 -> Toast.makeText(context, R.string.msg_payment_cancel, Toast.LENGTH_SHORT).show()
+                        2 -> {
+                            Toast.makeText(context, R.string.msg_payment_cancel, Toast.LENGTH_SHORT).show()
+                            context as Activity
+                            context.finish()
+                        }
                     }
                 }
             }

@@ -45,11 +45,11 @@ class MoreActivity : BaseActivity() {
             }
             logout.setOnClickListener {
                 val onClickListener = View.OnClickListener {logout()}
-                ConfirmDialog(getString(R.string.dialog_logout), getString(R.string.btn_confirm), onClickListener).show(supportFragmentManager, "LogoutDialog")
+                ConfirmDialog("", getString(R.string.dialog_logout), getString(R.string.btn_confirm), onClickListener).show(supportFragmentManager, "LogoutDialog")
             }
             drop.setOnClickListener {
                 val onClickListener = View.OnClickListener {dropMbr()}
-                ConfirmDialog(getString(R.string.dialog_drop), getString(R.string.btn_confirm), onClickListener).show(supportFragmentManager, "DropDialog")
+                ConfirmDialog("", getString(R.string.dialog_drop), getString(R.string.btn_confirm), onClickListener).show(supportFragmentManager, "DropDialog")
             }
         }
 

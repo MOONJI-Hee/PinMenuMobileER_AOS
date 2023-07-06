@@ -38,6 +38,7 @@ import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.order.adapter.OrderAdapter
 import com.wooriyo.pinmenumobileer.order.dialog.CompleteDialog
 import com.wooriyo.pinmenumobileer.order.dialog.SelectPayDialog
+import com.wooriyo.pinmenumobileer.payment.NicepayInfoActivity
 import com.wooriyo.pinmenumobileer.payment.QrActivity
 import com.wooriyo.pinmenumobileer.receiver.EasyCheckReceiver
 import com.wooriyo.pinmenumobileer.util.ApiClient
@@ -105,11 +106,17 @@ class OrderListActivity : BaseActivity() {
                 val selectPayDialog = SelectPayDialog(position)
 
                 selectPayDialog.setOnQrClickListener(object : ItemClickListener{
-                    override fun onItemClick(position: Int) {
-                        super.onItemClick(position)
-                        val intent = Intent(mActivity, QrActivity::class.java)
-                        intent.putExtra("ordcode", orderList[position].ordcode)
-                        startActivity(intent)
+                    override fun onQrClick(position: Int, status: Boolean) {
+                        super.onQrClick(position, status)
+                        if(status) {
+                            val intent = Intent(mActivity, QrActivity::class.java)
+                            intent.putExtra("ordcode", orderList[position].ordcode)
+                            startActivity(intent)
+                        }else {
+                            val intent = Intent(mActivity, NicepayInfoActivity::class.java)
+                            intent.putExtra("fromOrder", "Y")
+                            startActivity(intent)
+                        }
                     }
                 })
 
@@ -167,28 +174,6 @@ class OrderListActivity : BaseActivity() {
         binding.back.setOnClickListener { AppHelper.leaveStore(mActivity) }
 
         getOrderList()
-    }
-
-    // 새로운 주문 유무 확인 > 3초마다 한번씩 태우기
-    fun getOrdStatus() {
-        ApiClient.service.getOrdStatus(useridx, storeidx).enqueue(object : Callback<ResultDTO>{
-            override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
-                Log.d(TAG, "새로운 주문 유무 확인 url : $response")
-                if(!response.isSuccessful) return
-
-                val result = response.body()
-                if(result != null && result.status == 1) {
-                    getOrderList()
-                    // 음악 재생
-                }
-            }
-
-            override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
-                Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
-                Log.d(TAG, "새로운 주문 유무 확인 실패 > $t")
-                Log.d(TAG, "새로운 주문 유무 확인 실패 > ${call.request()}")
-            }
-        })
     }
 
     // 주문 확인 처리 > 화면 터치하면
