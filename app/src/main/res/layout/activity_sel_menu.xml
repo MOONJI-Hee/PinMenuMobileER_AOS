@@ -147,7 +147,7 @@
             app:layout_constraintTop_toTopOf="@+id/select"
             app:layout_constraintBottom_toBottomOf="@+id/select"/>
         <TextView
-            style="@style/btn_grd"
+            style="@style/btn"
             android:id="@+id/select"
             android:layout_width="86dp"
             android:layout_marginTop="10dp"

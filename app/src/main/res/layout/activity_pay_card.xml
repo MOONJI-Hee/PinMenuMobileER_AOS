@@ -184,7 +184,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        style="@style/btn_grd"
+        style="@style/btn"
         android:id="@+id/payment"
         android:layout_width="0dp"
         android:layout_height="60dp"
@@ -264,7 +264,7 @@
             tools:text="2023.6.30 18:08" />
 
         <TextView
-            style="@style/btn_grd"
+            style="@style/btn"
             android:id="@+id/selectMenu"
             android:layout_width="86dp"
             android:layout_marginTop="10dp"

@@ -75,7 +75,7 @@
     </LinearLayout>
 
     <TextView
-        style="@style/btn_grd"
+        style="@style/btn"
         android:id="@+id/save"
         android:layout_width="match_parent"
         android:layout_marginBottom="30dp"
