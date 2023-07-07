@@ -2,8 +2,9 @@
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">app.pinmenu.biz</domain>
-        <domain includeSubdomains="true">49.247.20.125</domain>
         <domain includeSubdomains="true">pinmenu.biz</domain>
+        <domain includeSubdomains="true">49.247.20.125</domain>
+        <domain includeSubdomains="true">49.247.22.8</domain>
         <domain includeSubdomains="true">maps.daum-img.net</domain>
     </domain-config>
 </network-security-config>
