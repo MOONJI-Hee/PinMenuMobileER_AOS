@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wooriyo.pinmenumobileer.databinding.ListOrderDetailBinding
 import com.wooriyo.pinmenumobileer.model.OrderDTO
 import com.wooriyo.pinmenumobileer.util.AppHelper
+import com.wooriyo.pinmenumobileer.util.AppHelper.Companion.setHeight
 
 class OrderDetailAdapter(val dataSet: ArrayList<OrderDTO>): RecyclerView.Adapter<OrderDetailAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,12 +31,29 @@ class OrderDetailAdapter(val dataSet: ArrayList<OrderDTO>): RecyclerView.Adapter
                 price.text = AppHelper.price(data.price)
 
                 if(data.opt.isNotEmpty()) {
-                    option.text = data.opt.replace(" / ", "\n")
+                    var strOpt = ""
+
+                    data.opt.forEach {
+                        if(strOpt == "")
+                            strOpt = it
+                        else
+                            strOpt += "\n$it"
+                    }
+
+                    var height = 0
+                    if(data.opt.size == 1)
+                        height = 100
+                    else if (data.opt.size <= 5)
+                        height = 204
+                    else if (data.opt.size <= 9)
+                        height = 308
+                    setHeight(layout, height)
+
+                    option.text = strOpt
                     option.visibility = View.VISIBLE
-                    //TODO 옵션 개수에 따라 뷰 높이 지정
                 }else{
                     option.visibility = View.GONE
-                    //TODO 뷰 높이 100dp로 지정
+                    setHeight(layout, 100)
                 }
             }
         }

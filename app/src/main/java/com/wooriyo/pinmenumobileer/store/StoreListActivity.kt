@@ -129,7 +129,7 @@ class StoreListActivity : BaseActivity() {
                                 binding.empty.visibility = View.GONE
                                 binding.rvStore.visibility = View.VISIBLE
                                 storeAdapter.notifyDataSetChanged()
-                                AppHelper.setViewHeight(binding.rvStore, storeList.size, 200)
+                                AppHelper.setRvHeight(binding.rvStore, storeList.size, 200)
                             }
                         }else Toast.makeText(mActivity, storeListDTO.msg, Toast.LENGTH_SHORT).show()
                     }

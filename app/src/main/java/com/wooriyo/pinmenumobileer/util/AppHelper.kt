@@ -94,13 +94,21 @@ class AppHelper {
         }
 
         // 코드에서 리사이클러뷰 높이 지정
-        fun setViewHeight(rv: RecyclerView, size: Int, itemHeight: Int) {
+        fun setRvHeight(rv: RecyclerView, size: Int, itemHeight: Int) {
             val hdp = size * itemHeight
             val hpx = (hdp * MyApplication.density).toInt()
 
             val params = rv.layoutParams
             params.height = hpx
             rv.layoutParams = params
+        }
+
+        fun setHeight(v: View, height: Int) {
+            val hpx = (height * MyApplication.density).toInt()
+
+            val params = v.layoutParams
+            params.height = hpx
+            v.layoutParams = params
         }
 
         // 이미지뷰 일부만 corner radius 주기
