@@ -29,6 +29,17 @@ class SetNicepayActivity : BaseActivity() {
 
         fromOrder = intent.getStringExtra("fromOrder") ?: ""
 
+        val mid = intent.getStringExtra("mid")
+        val mid_key = intent.getStringExtra("mid_key")
+
+        if(mid != null) {
+            binding.etMid.setText(mid)
+        }
+
+        if(mid_key != null) {
+            binding.etKey.setText(mid_key)
+        }
+
         binding.back.setOnClickListener { finish() }
         binding.save.setOnClickListener { save() }
     }
