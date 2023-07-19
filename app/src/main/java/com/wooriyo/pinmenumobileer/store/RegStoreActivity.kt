@@ -62,9 +62,11 @@ class RegStoreActivity : BaseActivity() {
 
         if(store.name.isEmpty()) {
             Toast.makeText(mActivity, R.string.store_name_hint, Toast.LENGTH_SHORT).show()
-        }else if (store.address.isEmpty()) {
-            Toast.makeText(mActivity, R.string.msg_no_addr, Toast.LENGTH_SHORT).show()
-        } else {
+        }
+//        else if (store.address.isEmpty()) {
+//            Toast.makeText(mActivity, R.string.msg_no_addr, Toast.LENGTH_SHORT).show()
+//        }
+        else {
             ApiClient.service.regStore(useridx, store.name, store.address, store.long, store.lat)
                 .enqueue(object : Callback<ResultDTO> {
                     override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {

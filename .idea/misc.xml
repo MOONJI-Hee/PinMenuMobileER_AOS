@@ -62,7 +62,7 @@
         <entry key="app/src/main/res/layout/bg_rb6g.xml" value="0.47327917913638307" />
         <entry key="app/src/main/res/layout/dialog_alert.xml" value="0.5" />
         <entry key="app/src/main/res/layout/dialog_complete.xml" value="0.4724241128687473" />
-        <entry key="app/src/main/res/layout/dialog_confirm.xml" value="0.5765625" />
+        <entry key="app/src/main/res/layout/dialog_confirm.xml" value="0.375" />
         <entry key="app/src/main/res/layout/dialog_no_pay.xml" value="0.47327917913638307" />
         <entry key="app/src/main/res/layout/dialog_notice.xml" value="0.5765625" />
         <entry key="app/src/main/res/layout/dialog_printer_nick.xml" value="0.4724241128687473" />
