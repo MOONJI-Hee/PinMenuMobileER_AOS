@@ -31,6 +31,11 @@
         <entry key="app/src/main/res/drawable/selector_check.xml" value="0.1735" />
         <entry key="app/src/main/res/drawable/selector_check_big.xml" value="0.3195" />
         <entry key="app/src/main/res/drawable/selector_check_cart.xml" value="0.323" />
+        <entry key="app/src/main/res/drawable/selector_navi_main.xml" value="0.448" />
+        <entry key="app/src/main/res/drawable/selector_navi_more.xml" value="0.448" />
+        <entry key="app/src/main/res/drawable/selector_navi_pay.xml" value="0.448" />
+        <entry key="app/src/main/res/drawable/selector_navi_printer.xml" value="0.448" />
+        <entry key="app/src/main/res/drawable/selector_navi_qr.xml" value="0.448" />
         <entry key="app/src/main/res/drawable/selector_toggle.xml" value="0.2985" />
         <entry key="app/src/main/res/font/custom_font_family.xml" value="0.3067708333333333" />
         <entry key="app/src/main/res/layout/activity_change_pwd.xml" value="0.45" />
@@ -38,6 +43,7 @@
         <entry key="app/src/main/res/layout/activity_detail_printer.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_find_pw.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/activity_main_test.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_map.xml" value="0.5765625" />
         <entry key="app/src/main/res/layout/activity_more.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_new_conn.xml" value="0.45" />
@@ -78,6 +84,7 @@
         <entry key="app/src/main/res/layout/list_printer_plus.xml" value="0.4724241128687473" />
         <entry key="app/src/main/res/layout/list_printer_store.xml" value="0.4724241128687473" />
         <entry key="app/src/main/res/layout/list_store.xml" value="0.375" />
+        <entry key="app/src/main/res/menu/bottom_navi.xml" value="0.4724241128687473" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3695" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3695" />
       </map>

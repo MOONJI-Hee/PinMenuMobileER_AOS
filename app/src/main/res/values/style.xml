@@ -200,6 +200,12 @@
         <item name="android:textStyle">bold</item>
         <item name="android:includeFontPadding">false</item>
     </style>
+    <style name="text12d">
+        <item name="android:fontFamily">@font/notosans_demilight</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+    </style>
     <style name="text14">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

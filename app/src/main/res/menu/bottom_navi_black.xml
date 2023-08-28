@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/icMain"
+        android:title="@string/main"
+        android:icon="@drawable/ic_main_tabar_main_s"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/icPay"
+        android:title="@string/payment"
+        android:icon="@drawable/icon_card_n_white"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/icQr"
+        android:title="@string/qrcode"
+        android:icon="@drawable/icon_qr_n_white"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/icPrinter"
+        android:title="@string/printer"
+        android:icon="@drawable/icon_print_n_white"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/icMore"
+        android:title="@string/more"
+        android:icon="@drawable/ic_main_tabar_more_n"
+        app:showAsAction="always"/>
+
+</menu>

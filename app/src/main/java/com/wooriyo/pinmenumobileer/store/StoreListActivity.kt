@@ -1,10 +1,15 @@
 package com.wooriyo.pinmenumobileer.store
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wooriyo.pinmenumobileer.model.StoreDTO
@@ -14,6 +19,8 @@ import com.wooriyo.pinmenumobileer.util.AppHelper
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.androidId
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.appver
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.osver
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.pref
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.store
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeList
@@ -26,6 +33,7 @@ import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.more.MoreActivity
 import com.wooriyo.pinmenumobileer.printer.PrinterMenuActivity
 import com.wooriyo.pinmenumobileer.common.SelectStoreActivity
+import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.payment.SetPayActivity
 import com.wooriyo.pinmenumobileer.store.adapter.StoreAdapter
 import retrofit2.Call
@@ -37,6 +45,9 @@ class StoreListActivity : BaseActivity() {
 
     val TAG = "StoreActivity"
     val mActivity = this
+
+    @RequiresApi(33)
+    val pms_noti : String = Manifest.permission.POST_NOTIFICATIONS
 
     var storeAdapter = StoreAdapter(storeList)
 
@@ -76,6 +87,11 @@ class StoreListActivity : BaseActivity() {
                 binding.arpayo.text = getString(R.string.arpayo_dis_conn)
         }
 
+        // 알림 권한 확인
+        if(osver >= 33) {
+            checkNotiPms()
+        }
+
         binding.icMain.setOnClickListener { startActivity(intent)}
         binding.icPay.setOnClickListener {
             when(storeList.size) {
@@ -106,6 +122,31 @@ class StoreListActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+    }
+
+    // SDK 33 이상에서 알림 권한 확인
+    @RequiresApi(33)
+    fun checkNotiPms() {
+        when {
+            ActivityCompat.checkSelfPermission(mActivity, pms_noti) == PackageManager.PERMISSION_DENIED -> getNotiPms()
+
+            ActivityCompat.shouldShowRequestPermissionRationale(mActivity, pms_noti) -> {
+                AlertDialog.Builder(mActivity)
+                    .setTitle(R.string.pms_notification_title)
+                    .setMessage(R.string.pms_notification_content)
+                    .setPositiveButton(R.string.confirm) { dialog, _ ->
+                        dialog.dismiss()
+                        getNotiPms()
+                    }
+                    .setNegativeButton(R.string.cancel) {dialog, _ -> dialog.dismiss()}
+                    .show()
+            }
+        }
+    }
+
+    @RequiresApi(33)
+    fun getNotiPms() {
+        ActivityCompat.requestPermissions(mActivity, arrayOf(pms_noti), AppProperties.REQUEST_NOTIFICATION)
     }
 
     // 매장리스트 조회 Api

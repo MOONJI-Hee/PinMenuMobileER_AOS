@@ -20,6 +20,7 @@ class AppProperties {
         // 권한 관련
         const val REQUEST_LOCATION = 0
         const val REQUEST_ENABLE_BT = 1
+        const val REQUEST_NOTIFICATION = 2
 
         //프린트 관련
         const val FONT_BIG = 37

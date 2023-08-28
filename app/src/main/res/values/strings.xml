@@ -278,6 +278,15 @@
     <string name="printer_title_category_set">카테고리 선택하기(%d/10)</string>
     <string name="printer_category_info">최대 10개까지 선택이 가능합니다.</string>
 
+    <!--  QR 오더  -->
+    <string name="qrcode">QR코드</string>
+    <string name="qr_use_info">QR코드 사용안내</string>
+    <string name="qr_pg_first">핀메뉴 QR오더와 결제를 이용하기 위해서는\n나이스페이먼츠 PG 설정이 선행되어야 합니다.</string>
+    <string name="qr_nicepay_status">나이스페이 상태 : </string>
+    <string name="qr_insurance">결제금액 정산을 위한 이행보증보험은\n기본 월 200만원까지로, 이 이상 매출이 발생하면\n이행보증보험료가 발생합니다.</string>
+    <string name="qr_insurance_check">결제 관련 이행보증보험 결제관리를\n이해하였고 동의합니다.</string>
+    <string name="qr_setting_go">QR코드 설정 바로가기</string>
+
     <!--  더보기  -->
     <string name="more">더보기</string>
     <string name="change_pwd">비밀번호 변경</string>
@@ -286,70 +295,14 @@
     <string name="pwd_new_hint">새로운 비밀번호를 입력</string>
     <string name="version_info">버전 정보</string>
 
-    <!--  카테고리 설정  -->
-    <string name="category_info_seq"><b>카테고리 순서 변경</b>은\n변경하고자하는 카테고리를 누른 후 좌우 버튼을 눌러 순서를 변경합니다.\n변경 후에는 [ 저장 ] 버튼을 눌러주셔야 변경된 내용이 적용됩니다.</string>
-    <string name="category_info_udt"><b>카테고리 [ 수정 ] [ 삭제 ] [ 숨기기 ]를 할 경우</b> 에는\n변경하고자하는 카테고리를 누른 후 변경 팝업창이 나오면 텍스트 수정, 삭제, 카테고리 숨김을 진행하실 수 있습니다.</string>
-    <string name="category_name">카테고리 명칭</string>
-    <string name="category_name_hint">명칭을 입력해주세요.</string>
-    <string name="category_exp">카테고리 설명</string>
-    <string name="category_exp_hint">설명 혹은 영문을 입력해주세요.</string>
-    <string name="category_dialog_info1"><b>카테고리 순서 변경이 필요한 경우</b>에는\n우측 상단 [ 카테고리 순서 변경 ] 버튼을 누른 후\n변경하고자하는 카테고리를 선택하여 좌우로 이동시켜 순서를 변경합니다.\n변경 후에는 [ 저장 ] 버튼을 눌러주셔야 변경된 내용이 적용됩니다.</string>
-    <string name="category_dialog_info2"><b>카테고리 [ 숨김 ] 필요한 경우</b>에는\n우측 상단에 있는 [ 숨기기 ] 옆 Off 버튼을 On으로 변경 후 저장을 눌러주세요.\n삭제는 카테고리에 입력된 모든 메뉴 정보가 삭제되지만,\n[ 숨기기 ]는 고객에게 보여지지 않도록 설정됩니다.</string>
-    <string name="category_hide">숨기기</string>
-    <string name="category_set">카테고리\n설정</string>
-    <string name="category_add">카테고리 추가</string>
-    <string name="category_seq">카테고리 순서 변경</string>
-
-    <!--  메뉴 설정  -->
-    <string name="change_seq">순서변경</string>
-    <string name="menu_delete">메뉴삭제</string>
-    <string name="menu_delete_info">[ %s ]\n메뉴를 삭제하시겠습니까?\n삭제를 누르시면 입력한 모든 정보가 삭제되며,\n삭제 이후에는 복원하실 수 없습니다.</string>
-    <string name="menu_name_hint">상품명을 입력해주세요.</string>
-    <string name="menu_exp_hint">상품 설명을 입력해주세요.\n두 줄 이상으로 상품 설명을 입력하실 수 있습니다.\n외국어 설명이 필요한 경우 줄을 바꿔 입력하여 사용할 수 있습니다.</string>
-    <string name="cookingTime">조리시간</string>
-    <string name="menu_img_reg_info">동영상은 첫번째 사진등록에 해주십시오. (사진 크기 최대 5BM / 동영상 최대 10MB)</string>
-    <string name="menu_vid_reg">동영상 / 사진 등록</string>
-    <string name="menu_vid_reg_hint">동영상 / 이미지 없음</string>
-    <string name="menu_img_reg">사진 등록</string>
-    <string name="menu_img_reg_hint">이미지 없음</string>
-    <string name="menu_sleep">슬립 모드 때 상품 노출</string>
-    <string name="menu_status">메뉴 상태 사용</string>
-    <string name="none">None</string>
-    <string name="hide">Hide</string>
-    <string name="best">Best</string>
-    <string name="soldout">Sold Out</string>
-    <string name="New">New</string>
-
-    <string name="option">옵션</string>
-    <string name="option_require">필수 옵션</string>
-    <string name="option_choice">선택 옵션</string>
-
-    <!--  옵션 설정  -->
-    <string name="opt_num">옵션 %d</string>
-    <string name="opt_req_name">필수옵션명</string>
-    <string name="opt_chc_name">선택옵션명</string>
-    <string name="opt_name_hint">옵션 이름을 입력해주세요.</string>
-    <string name="opt_hint">옵션을 입력해주세요.</string>
-    <string name="opt_req_info1"><b>필수 옵션</b>은 사용자가 옵션을 하나만 선택할 수 있습니다.</string>
-    <string name="opt_req_info2"><b>다중 선택 옵션</b>이 필요하면 팝업을 닫고, [ + 선택 옵션 ] 버튼으로 옵션을 추가해주세요.</string>
-    <string name="opt_chc_info1"><b>선택 옵션</b>은 사용자가 옵션을 다중 선택할 수 있습니다.</string>
-    <string name="opt_chc_info2"><b>한가지 선택</b>만 가능한 옵션이 필요하면 팝업을 닫고, [ + 필수 옵션 ] 버튼으로 옵션을 추가해주세요.</string>
-
-    <!--  메뉴판 설정  -->
-    <string name="table_pass">테이블 비밀번호 설정</string>
-    <string name="table_pass_hint">예) 1234</string>
-    <string name="table_pass_info">비밀번호를 설정하지 않으시면\n누구나 테이블 번호를 변경할 수 있습니다.</string>
-    <string name="bg">배경 : %s</string>
-    <string name="sel_bg">배경 선택</string>
-    <string name="bg_dark">어두운 배경</string>
-    <string name="bg_silver">은색 배경</string>
-    <string name="bg_light">밝은 배경</string>
-    <string name="set_bg">배경 적용</string>
-    <string name="viewmode">뷰어 모드 : %s</string>
-    <string name="sel_viewmode">뷰어 모드 선택</string>
-    <string name="viewmode_basic">기본 모드</string>
-    <string name="viewmode_pic">사진 모드</string>
-    <string name="set_viewmode">뷰어 모드 적용</string>
+    <!-- 직원 호출 -->
+    <string name="call_emp">직원호출</string>
+    <string name="call_manage">호출목록 관리</string>
+    <string name="call_info"><b>호출 목록 추가</b>는 [ + ]버튼을 누른 후 목록을 추가합니다.\n수정이 필요한 경우 추가한 목록을 선택하면 수정이 가능합니다.</string>
+    <string name="call_add">호출목록 추가</string>
+    <string name="call_udt">호출목록 수정</string>
+    <string name="call_name">목록명</string>
+    <string name="call_name_hint">목록명을 입력해주세요.</string>
 
     <!-- 주문 정보 -->
     <string name="title_order">주문정보</string>
@@ -404,15 +357,6 @@
     <string name="qr_guide_sec_1">・가맹점 계약이 완료된 후 핀메뉴에서\n나이스페이먼츠 로그인을 해주셔야 합니다.\n&#160;&#160;&#160;&#160;(나이스페이 로그아웃이 된 경우에는 QA코드\n&#160;&#160;&#160;&#160;카드결제를 이용할 수 없습니다.)</string>
     <string name="qr_guide_sec_2">・PG상점 아이디(MID) 입력\n&#160;&#160;&#160;&#160;(나이스페이먼츠 웹사이트 > 로그인\n&#160;&#160;&#160;&#160;> 가맹점정보(상단) > Key관리(좌측)\n&#160;&#160;&#160;&#160;> MID 옆에 있는 ID 복사)</string>
     <string name="qr_guide_sec_3">・Key값 입력\n&#160;&#160;&#160;&#160;(나이스페이먼츠 > 로그인 > 가맹점정보(상단)\n&#160;&#160;&#160;&#160;> Key관리(좌측)\n&#160;&#160;&#160;&#160;> MID 아래 있는 긴 문장(key) 복사)</string>
-
-    <!-- 직원 호출 -->
-    <string name="call_emp">직원호출</string>
-    <string name="call_manage">호출목록 관리</string>
-    <string name="call_info"><b>호출 목록 추가</b>는 [ + ]버튼을 누른 후 목록을 추가합니다.\n수정이 필요한 경우 추가한 목록을 선택하면 수정이 가능합니다.</string>
-    <string name="call_add">호출목록 추가</string>
-    <string name="call_udt">호출목록 수정</string>
-    <string name="call_name">목록명</string>
-    <string name="call_name_hint">목록명을 입력해주세요.</string>
 
     <!--  타이틀  -->
     <string name="title_login">핀메뉴 로그인</string>
@@ -490,4 +434,6 @@
     <string name="pms_bluetooth_content">원활한 서비스 이용을 위해서는 블루투스 권한이 필요합니다.</string>
     <string name="pms_location_title">위치 권한 요청</string>
     <string name="pms_location_content">원활한 서비스 이용을 위해서는 위치 권한이 필요합니다.</string>
+    <string name="pms_notification_title">알림 권한 요청</string>
+    <string name="pms_notification_content">원활한 서비스 이용을 위해서는 알림 권한이 필요합니다.</string>
 </resources>
