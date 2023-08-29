@@ -286,6 +286,22 @@
     <string name="qr_insurance">결제금액 정산을 위한 이행보증보험은\n기본 월 200만원까지로, 이 이상 매출이 발생하면\n이행보증보험료가 발생합니다.</string>
     <string name="qr_insurance_check">결제 관련 이행보증보험 결제관리를\n이해하였고 동의합니다.</string>
     <string name="qr_setting_go">QR코드 설정 바로가기</string>
+    <string name="qr_setting">QR코드 설정</string>
+    <string name="qr_usable_cnt">사용 가능한 QR코드 수 : </string>
+    <string name="qr_store_name">Store Name</string>
+    <string name="only_eng">Only English</string>
+    <string name="qr_file_name_info">QR코드 저장시 파일명에 사용</string>
+    <string name="qr_down_all">전체 QR코드 사진첩에 저장하기</string>
+    <string name="qr_cnt">QR-%d</string>
+    <string name="table_no">Table No.</string>
+    <string name="qr_setting_info1">QR오더는 결제가 완료된 후 주문내역이 전송됩니다.\n(단, 결제를 하지 못하는 외국인 주문 제외)</string>
+    <string name="qr_setting_info2">이 페이지에서 QR코드를 생성한 후 테이블번호 저장과 변경이 가능하며 QR코드 삭제가 가능합니다.</string>
+
+    <string name="qr_detail_info1">생성된 QR코드는 변경할 수 없고, 삭제만 가능합니다.</string>
+    <string name="qr_detail_info2">삭제된 QR코드는 다시 사용할 수 없습니다.</string>
+    <string name="qr_detail_info3">입력된 테이블번호는 이 페이지에서 수정 가능합니다.</string>
+    <string name="qr_detail_info4">테이블번호가 중복되지 않도록 관리해주세요.</string>
+    <string name="qr_detail_info5">테이블번호를 영문과 숫자로 작성할 경우 QR코드 저장시 파일명으로 적용됩니다.\n단, 한글은 저장 파일명에 적용되지 않습니다.</string>
 
     <!--  더보기  -->
     <string name="more">더보기</string>
@@ -354,7 +370,7 @@
     <string name="qr_guide_fir_1">・자세한 사항은 핀메뉴 웹사이트에 있습니다.\n&#160;&#160;&#160;&#160;<font color="#006CFF">(경로 : www.pinmenu.biz > 하단 QR결제\n&#160;&#160;&#160;&#160;> 가맹점 계약)</font></string>
     <string name="qr_guide_fir_2">・ 나이스페이먼츠와 가맹점 계약을 통해 핀메뉴\n&#160;&#160;&#160;&#160;결제 수수료가 정해집니다.\n&#160;&#160;&#160;&#160;(핀메뉴는 나이스페이의 정책에 따릅니다.)</string>
     <string name="qr_guide_sec">2. 나이스페이 로그인 및 Key값 입력</string>
-    <string name="qr_guide_sec_1">・가맹점 계약이 완료된 후 핀메뉴에서\n나이스페이먼츠 로그인을 해주셔야 합니다.\n&#160;&#160;&#160;&#160;(나이스페이 로그아웃이 된 경우에는 QA코드\n&#160;&#160;&#160;&#160;카드결제를 이용할 수 없습니다.)</string>
+    <string name="qr_guide_sec_1">・가맹점 계약이 완료된 후 핀메뉴에서\n&#160;&#160;&#160;&#160;나이스페이먼츠 로그인을 해주셔야 합니다.\n&#160;&#160;&#160;&#160;(나이스페이 로그아웃이 된 경우에는 QA코드\n&#160;&#160;&#160;&#160;카드결제를 이용할 수 없습니다.)</string>
     <string name="qr_guide_sec_2">・PG상점 아이디(MID) 입력\n&#160;&#160;&#160;&#160;(나이스페이먼츠 웹사이트 > 로그인\n&#160;&#160;&#160;&#160;> 가맹점정보(상단) > Key관리(좌측)\n&#160;&#160;&#160;&#160;> MID 옆에 있는 ID 복사)</string>
     <string name="qr_guide_sec_3">・Key값 입력\n&#160;&#160;&#160;&#160;(나이스페이먼츠 > 로그인 > 가맹점정보(상단)\n&#160;&#160;&#160;&#160;> Key관리(좌측)\n&#160;&#160;&#160;&#160;> MID 아래 있는 긴 문장(key) 복사)</string>
 
@@ -436,4 +452,6 @@
     <string name="pms_location_content">원활한 서비스 이용을 위해서는 위치 권한이 필요합니다.</string>
     <string name="pms_notification_title">알림 권한 요청</string>
     <string name="pms_notification_content">원활한 서비스 이용을 위해서는 알림 권한이 필요합니다.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

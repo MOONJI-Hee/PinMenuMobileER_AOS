@@ -43,7 +43,7 @@
         <entry key="app/src/main/res/layout/activity_detail_printer.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_find_pw.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.375" />
-        <entry key="app/src/main/res/layout/activity_main_test.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/activity_main_test.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_map.xml" value="0.5765625" />
         <entry key="app/src/main/res/layout/activity_more.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_new_conn.xml" value="0.45" />
@@ -73,6 +73,7 @@
         <entry key="app/src/main/res/layout/dialog_notice.xml" value="0.5765625" />
         <entry key="app/src/main/res/layout/dialog_printer_nick.xml" value="0.4724241128687473" />
         <entry key="app/src/main/res/layout/dialog_select_pay.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/fragment_store_list.xml" value="0.48567764001710134" />
         <entry key="app/src/main/res/layout/list.xml" value="0.5765625" />
         <entry key="app/src/main/res/layout/list_call.xml" value="0.375" />
         <entry key="app/src/main/res/layout/list_call_detail.xml" value="0.375" />
