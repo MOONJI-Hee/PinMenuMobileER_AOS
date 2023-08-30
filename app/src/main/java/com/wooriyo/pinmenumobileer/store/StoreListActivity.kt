@@ -186,7 +186,7 @@ class StoreListActivity : BaseActivity() {
 
     fun checkDeviceLimit(store: StoreDTO, intent: Intent) {
         ApiClient.service.checkDeviceLimit(useridx, store.idx, pref.getToken().toString(), androidId)
-            .enqueue(object : retrofit2.Callback<ResultDTO>{
+            .enqueue(object : Callback<ResultDTO>{
                 override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                     Log.d(TAG, "이용자수 체크 url : $response")
                     if(!response.isSuccessful) return

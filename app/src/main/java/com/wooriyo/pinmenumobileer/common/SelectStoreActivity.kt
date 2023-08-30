@@ -68,7 +68,6 @@ class SelectStoreActivity : BaseActivity() {
         when(type) {
             "pay" -> {
                 binding.ivPay.setImageResource(R.drawable.icon_card_p)
-                binding.tvPay.setTextColor(getColor(R.color.main))
                 binding.icPrinter.setOnClickListener {
                     val intent = Intent(mActivity, SelectStoreActivity::class.java)
                     intent.putExtra("type", "printer")
@@ -77,7 +76,6 @@ class SelectStoreActivity : BaseActivity() {
             }
             "printer" -> {
                 binding.ivPrinter.setImageResource(R.drawable.icon_print_p)
-                binding.tvPrinter.setTextColor(getColor(R.color.main))
                 binding.icPay.setOnClickListener {
                     val intent = Intent(mActivity, SelectStoreActivity::class.java)
                     intent.putExtra("type", "pay")

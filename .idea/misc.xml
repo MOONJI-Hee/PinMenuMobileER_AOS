@@ -73,6 +73,10 @@
         <entry key="app/src/main/res/layout/dialog_notice.xml" value="0.5765625" />
         <entry key="app/src/main/res/layout/dialog_printer_nick.xml" value="0.4724241128687473" />
         <entry key="app/src/main/res/layout/dialog_select_pay.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/fragment_more.xml" value="0.47327917913638307" />
+        <entry key="app/src/main/res/layout/fragment_printer_menu.xml" value="0.46216331765711843" />
+        <entry key="app/src/main/res/layout/fragment_select_store.xml" value="0.47327917913638307" />
+        <entry key="app/src/main/res/layout/fragment_set_pay.xml" value="0.46216331765711843" />
         <entry key="app/src/main/res/layout/fragment_store_list.xml" value="0.48567764001710134" />
         <entry key="app/src/main/res/layout/list.xml" value="0.5765625" />
         <entry key="app/src/main/res/layout/list_call.xml" value="0.375" />

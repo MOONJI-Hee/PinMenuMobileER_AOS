@@ -1,13 +1,40 @@
 package com.wooriyo.pinmenumobileer
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.wooriyo.pinmenumobileer.common.SelectStoreActivity
+import com.wooriyo.pinmenumobileer.common.SelectStoreFragment
+import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.databinding.ActivityMainTestBinding
+import com.wooriyo.pinmenumobileer.model.ResultDTO
+import com.wooriyo.pinmenumobileer.model.StoreDTO
+import com.wooriyo.pinmenumobileer.more.MoreFragment
+import com.wooriyo.pinmenumobileer.payment.SetPayActivity
+import com.wooriyo.pinmenumobileer.payment.fragment.SetPayFragment
+import com.wooriyo.pinmenumobileer.printer.PrinterMenuActivity
+import com.wooriyo.pinmenumobileer.printer.PrinterMenuFragment
 import com.wooriyo.pinmenumobileer.store.StoreListFragment
+import com.wooriyo.pinmenumobileer.util.ApiClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainTestActivity : BaseActivity() {
     lateinit var binding: ActivityMainTestBinding
+    val TAG = "MainActivity"
+    val mActivity = this
+
+    @RequiresApi(33)
+    val pms_noti : String = Manifest.permission.POST_NOTIFICATIONS
 
     var isMain = true
 
@@ -15,6 +42,13 @@ class MainTestActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainTestBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        goMain()
+
+        // 알림 권한 확인
+        if(MyApplication.osver >= 33) {
+            checkNotiPms()
+        }
 
         binding.run {
             icMain.setOnClickListener { goMain() }
@@ -25,11 +59,36 @@ class MainTestActivity : BaseActivity() {
         }
     }
 
+    // SDK 33 이상에서 알림 권한 확인
+    @RequiresApi(33)
+    fun checkNotiPms() {
+        when {
+            ActivityCompat.checkSelfPermission(mActivity, pms_noti) == PackageManager.PERMISSION_DENIED -> getNotiPms()
+
+            ActivityCompat.shouldShowRequestPermissionRationale(mActivity, pms_noti) -> {
+                AlertDialog.Builder(mActivity)
+                    .setTitle(R.string.pms_notification_title)
+                    .setMessage(R.string.pms_notification_content)
+                    .setPositiveButton(R.string.confirm) { dialog, _ ->
+                        dialog.dismiss()
+                        getNotiPms()
+                    }
+                    .setNegativeButton(R.string.cancel) {dialog, _ -> dialog.dismiss()}
+                    .show()
+            }
+        }
+    }
+
+    @RequiresApi(33)
+    fun getNotiPms() {
+        ActivityCompat.requestPermissions(mActivity, arrayOf(pms_noti), AppProperties.REQUEST_NOTIFICATION)
+    }
+
     private fun replace(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.fragment, fragment).commit()
     }
 
-    fun goMain() {
+    private fun goMain() {
         if(!isMain) {
             binding.run{
                 bottomNav.setBackgroundResource(R.drawable.bg_main_tabbar)
@@ -49,15 +108,34 @@ class MainTestActivity : BaseActivity() {
         replace(StoreListFragment.newInstance())
     }
 
-    fun setNavi(id:Int) {
+    private fun goSelStore() {
+        replace(SelectStoreFragment.newInstance("pay"))
+    }
+
+    private fun goPay() {
+        binding.ivPay.setImageResource(R.drawable.icon_card_p)
+        replace(SetPayFragment.newInstance())
+    }
+
+    private fun goQr() {
+
+    }
+
+    private fun goPrint() {
+        binding.ivPrint.setImageResource(R.drawable.icon_print_p)
+        replace(PrinterMenuFragment.newInstance())
+    }
+
+    private fun goMore() {
+        binding.ivMore.setImageResource(R.drawable.ic_main_tabar_more_s)
+        replace(MoreFragment.newInstance())
+    }
+
+    private fun setNavi(id:Int) {
         if(isMain) {
             binding.run{
                 bottomNav.setBackgroundColor(getColor(R.color.white))
                 ivMain.setImageResource(R.drawable.ic_main_tabar_main_n_white)
-                ivPay.setImageResource(R.drawable.icon_card_n_black)
-                ivQr.setImageResource(R.drawable.icon_qr_n_black)
-                ivPrint.setImageResource(R.drawable.icon_print_n_black)
-                ivMore.setImageResource(R.drawable.ic_main_tabar_more_n_black)
                 setTxtBlack(tvMain)
                 setTxtBlack(tvPay)
                 setTxtBlack(tvQr)
@@ -67,22 +145,48 @@ class MainTestActivity : BaseActivity() {
         }
         isMain = false
 
+        binding.run {
+            ivPay.setImageResource(R.drawable.icon_card_n_black)
+            ivQr.setImageResource(R.drawable.icon_qr_n_black)
+            ivPrint.setImageResource(R.drawable.icon_print_n_black)
+            ivMore.setImageResource(R.drawable.ic_main_tabar_more_n_black)
+        }
+
         when(id) {
             R.id.icPay -> {
-                binding.ivPay.setImageResource(R.drawable.icon_card_p)
+                when(MyApplication.storeList.size) {
+                    0 -> Toast.makeText(mActivity, R.string.msg_no_store, Toast.LENGTH_SHORT).show()
+                    1 -> insPaySetting()
+                    else ->  {
+                        binding.ivPay.setImageResource(R.drawable.icon_card_p)
+                        goSelStore()
+                    }
+                }
             }
 
             R.id.icQr -> {
-                binding.ivQr.setImageResource(R.drawable.icon_qr_p)
+                when(MyApplication.storeList.size) {
+                    0 -> Toast.makeText(mActivity, R.string.msg_no_store, Toast.LENGTH_SHORT).show()
+                    1 -> goQr()
+                    else -> {
+                        binding.ivQr.setImageResource(R.drawable.icon_qr_p)
+                        goSelStore()
+                    }
+                }
             }
 
             R.id.icPrint -> {
-                binding.ivPrint.setImageResource(R.drawable.icon_print_p)
+                when(MyApplication.storeList.size) {
+                    0 -> Toast.makeText(mActivity, R.string.msg_no_store, Toast.LENGTH_SHORT).show()
+                    1 -> insPrintSetting()
+                    else -> {
+                        binding.ivPrint.setImageResource(R.drawable.icon_print_p)
+                        goSelStore()
+                    }
+                }
             }
 
-            R.id.icMore -> {
-                binding.ivMore.setImageResource(R.drawable.ic_main_tabar_more_s)
-            }
+            R.id.icMore -> goMore()
         }
     }
 
@@ -92,5 +196,58 @@ class MainTestActivity : BaseActivity() {
 
     fun setTxtWhite(tv:TextView) {
         tv.setTextColor(getColor(R.color.white))
+    }
+
+    fun insPaySetting() {
+        ApiClient.service.insPaySetting(MyApplication.useridx, MyApplication.storeList[0].idx, MyApplication.androidId)
+            .enqueue(object : Callback<ResultDTO> {
+                override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                    Log.d(TAG, "결제 설정 최초 진입 시 row 추가 url : $response")
+                    if(!response.isSuccessful) return
+
+                    val result = response.body() ?: return
+
+                    if(result.status == 1) {
+                        MyApplication.store = MyApplication.storeList[0]
+                        MyApplication.storeidx = MyApplication.storeList[0].idx
+                        MyApplication.bidx = result.bidx
+                        goPay()
+                    }else
+                        Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                    Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "결제 설정 최초 진입 시 row 추가 오류 >> $t")
+                    Log.d(TAG, "결제 설정 최초 진입 시 row 추가 오류 >> ${call.request()}")
+                }
+            })
+    }
+
+    fun insPrintSetting() {
+        ApiClient.service.insPrintSetting(
+            MyApplication.useridx, MyApplication.storeList[0].idx,
+            MyApplication.androidId
+        )
+            .enqueue(object : retrofit2.Callback<ResultDTO>{
+                override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                    Log.d(TAG, "프린터 설정 최초 진입 시 row 추가 url : $response")
+                    if(!response.isSuccessful) return
+
+                    val result = response.body() ?: return
+                    if(result.status == 1){
+                        MyApplication.store = MyApplication.storeList[0]
+                        MyApplication.storeidx = MyApplication.storeList[0].idx
+                        MyApplication.bidx = result.bidx
+                        goPrint()
+                    }else
+                        Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                }
+                override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                    Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "프린터 설정 최초 진입 시 row 추가 오류 >> $t")
+                    Log.d(TAG, "프린터 설정 최초 진입 시 row 추가 오류 >> ${call.request()}")
+                }
+            })
     }
 }
