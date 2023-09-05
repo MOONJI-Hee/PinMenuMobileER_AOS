@@ -376,6 +376,7 @@
 
     <!--  타이틀  -->
     <string name="title_login">핀메뉴 로그인</string>
+    <string name="title_master_login">핀메뉴 마스터 로그인</string>
     <string name="title_signup">핀메뉴 회원가입</string>
     <string name="title_udt_mbr">회원정보 수정</string>
     <string name="title_set_store">매장 설정</string>

@@ -21,6 +21,13 @@ interface Api {
         @Query("uuid") androidId : String
     ): Call<MemberDTO>
 
+    // 마스터 로그인
+    @GET("masterLogin.php")
+    fun masterLogin(
+        @Query("userid") id:String,
+        @Query("pass") pass:String
+    ): Call<MemberDTO>
+
     @GET("m/regmbr.php")
     fun regMember(
         @Query("userid") userid: String,
