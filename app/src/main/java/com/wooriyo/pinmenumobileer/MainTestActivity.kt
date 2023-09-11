@@ -108,8 +108,8 @@ class MainTestActivity : BaseActivity() {
         replace(StoreListFragment.newInstance())
     }
 
-    private fun goSelStore() {
-        replace(SelectStoreFragment.newInstance("pay"))
+    private fun goSelStore(type: String) {
+        replace(SelectStoreFragment.newInstance(type))
     }
 
     private fun goPay() {
@@ -159,7 +159,7 @@ class MainTestActivity : BaseActivity() {
                     1 -> insPaySetting()
                     else ->  {
                         binding.ivPay.setImageResource(R.drawable.icon_card_p)
-                        goSelStore()
+                        goSelStore("pay")
                     }
                 }
             }
@@ -170,7 +170,7 @@ class MainTestActivity : BaseActivity() {
                     1 -> goQr()
                     else -> {
                         binding.ivQr.setImageResource(R.drawable.icon_qr_p)
-                        goSelStore()
+                        goSelStore("qr")
                     }
                 }
             }
@@ -181,7 +181,7 @@ class MainTestActivity : BaseActivity() {
                     1 -> insPrintSetting()
                     else -> {
                         binding.ivPrint.setImageResource(R.drawable.icon_print_p)
-                        goSelStore()
+                        goSelStore("print")
                     }
                 }
             }
@@ -225,9 +225,7 @@ class MainTestActivity : BaseActivity() {
     }
 
     fun insPrintSetting() {
-        ApiClient.service.insPrintSetting(
-            MyApplication.useridx, MyApplication.storeList[0].idx,
-            MyApplication.androidId
+        ApiClient.service.insPrintSetting(MyApplication.useridx, MyApplication.storeList[0].idx, MyApplication.androidId
         )
             .enqueue(object : retrofit2.Callback<ResultDTO>{
                 override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
