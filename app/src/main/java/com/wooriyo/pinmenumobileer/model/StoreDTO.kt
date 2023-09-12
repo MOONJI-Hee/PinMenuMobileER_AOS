@@ -15,6 +15,9 @@ data class StoreDTO(
     @SerializedName("popup") var popup : Int,       // 카드리더기 관련 팝업 출력 여부 0 : 안보여줌 , 1 : 보여줌
     @SerializedName("ordCnt") var ordCnt: Int,
     @SerializedName("callCnt") var callCnt: Int,
+    @SerializedName("agree") var agree: String,     // QR오더 관련 이행보증보험 관련 동의 여부
+    @SerializedName("mid") var mid : String,
+    @SerializedName("mid_key") var mid_key : String,
     @SerializedName("address") var address : String,
     @SerializedName("Lclat") var lat : String,
     @SerializedName("Lclong") var long : String,
@@ -43,6 +46,6 @@ data class StoreDTO(
 //    @SerializedName("breakList")  var breaktime: BrkTimeDTO?,
 //    @SerializedName("holidayList")  var spcHoliday: ArrayList<SpcHolidayDTO>?
 ):Serializable {
-    constructor(useridx: Int) :  this(0, useridx, "", "", "", "N", "", 1, 0, 0, 0,"", "", "", "", "", "", "", null, null, null, null, null, null, null,
+    constructor(useridx: Int) :  this(0, useridx, "", "", "", "N", "", 1, 0, 0, 0, "N", "", "","", "", "", "", "", "", "", null, null, null, null, null, null, null,
         "d", "b", "N", "N", "N", "N", "N", "N", "N", "N")
 }

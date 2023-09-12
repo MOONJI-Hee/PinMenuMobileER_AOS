@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".qr.QrAgreeActivity">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/title"
+        android:text="@string/qr_use_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/back"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_back_white" />
+    </LinearLayout>
+
+    <TextView
+        style="@style/text15"
+        android:id="@+id/tv1"
+        android:text="@string/qr_pg_first"
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"/>
+
+    <TextView
+        style="@style/text15"
+        android:id="@+id/tv2"
+        android:text="@string/qr_nicepay_status"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="@+id/tv1"
+        app:layout_constraintTop_toBottomOf="@+id/tv1"/>
+
+    <TextView
+        style="@style/text15"
+        android:id="@+id/niceStatus"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/tv2"
+        app:layout_constraintTop_toTopOf="@+id/tv2"
+        app:layout_constraintBottom_toBottomOf="@+id/tv2"/>
+
+    <TextView
+        style="@style/btn_sub"
+        android:id="@+id/btnNicePay"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="20dp"
+        android:textSize="17sp"
+        android:text="@string/qr_nicepay_setting2"
+        app:layout_constraintTop_toBottomOf="@+id/tv2"/>
+
+    <TextView
+        style="@style/subtext"
+        android:id="@+id/tv3"
+        android:text="@string/qr_insurance"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="@+id/btnNicePay"
+        app:layout_constraintTop_toBottomOf="@+id/btnNicePay"/>
+
+    <TextView
+        style="@style/text15"
+        android:id="@+id/tv4"
+        android:text="@string/qr_insurance_check"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="@+id/tv3"
+        app:layout_constraintTop_toBottomOf="@+id/tv3"/>
+
+    <CheckBox
+        android:id="@+id/checkAgree"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/selector_check_big"
+        android:button="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv4"
+        app:layout_constraintBottom_toBottomOf="@+id/tv4"/>
+
+    <TextView
+        style="@style/btn"
+        android:id="@+id/btnQrSet"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="30dp"
+        android:layout_marginHorizontal="20dp"
+        android:textSize="17sp"
+        android:text="@string/qr_setting_go"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

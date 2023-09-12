@@ -7,10 +7,12 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeList
 import com.wooriyo.pinmenumobileer.common.SelectStoreActivity
 import com.wooriyo.pinmenumobileer.common.SelectStoreFragment
 import com.wooriyo.pinmenumobileer.config.AppProperties
@@ -22,6 +24,7 @@ import com.wooriyo.pinmenumobileer.payment.SetPayActivity
 import com.wooriyo.pinmenumobileer.payment.fragment.SetPayFragment
 import com.wooriyo.pinmenumobileer.printer.PrinterMenuActivity
 import com.wooriyo.pinmenumobileer.printer.PrinterMenuFragment
+import com.wooriyo.pinmenumobileer.qr.SetQrcodeFragment
 import com.wooriyo.pinmenumobileer.store.StoreListFragment
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import retrofit2.Call
@@ -37,6 +40,12 @@ class MainTestActivity : BaseActivity() {
     val pms_noti : String = Manifest.permission.POST_NOTIFICATIONS
 
     var isMain = true
+
+    val goQrAgree = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == RESULT_OK) {
+            goQr()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,7 +127,8 @@ class MainTestActivity : BaseActivity() {
     }
 
     private fun goQr() {
-
+        binding.ivPay.setImageResource(R.drawable.icon_qr_p)
+        replace(SetQrcodeFragment.newInstance())
     }
 
     private fun goPrint() {
@@ -156,7 +166,7 @@ class MainTestActivity : BaseActivity() {
             R.id.icPay -> {
                 when(MyApplication.storeList.size) {
                     0 -> Toast.makeText(mActivity, R.string.msg_no_store, Toast.LENGTH_SHORT).show()
-                    1 -> insPaySetting()
+                    1 -> insPaySetting(0)
                     else ->  {
                         binding.ivPay.setImageResource(R.drawable.icon_card_p)
                         goSelStore("pay")
@@ -167,7 +177,14 @@ class MainTestActivity : BaseActivity() {
             R.id.icQr -> {
                 when(MyApplication.storeList.size) {
                     0 -> Toast.makeText(mActivity, R.string.msg_no_store, Toast.LENGTH_SHORT).show()
-                    1 -> goQr()
+                    1 -> {
+                        MyApplication.store = storeList[0]
+                        MyApplication.storeidx = storeList[0].idx
+                        if(storeList[0].agree == "Y")
+                            goQr()
+                        else
+                            goQrAgree.launch(intent)
+                    }
                     else -> {
                         binding.ivQr.setImageResource(R.drawable.icon_qr_p)
                         goSelStore("qr")
@@ -178,7 +195,7 @@ class MainTestActivity : BaseActivity() {
             R.id.icPrint -> {
                 when(MyApplication.storeList.size) {
                     0 -> Toast.makeText(mActivity, R.string.msg_no_store, Toast.LENGTH_SHORT).show()
-                    1 -> insPrintSetting()
+                    1 -> insPrintSetting(0)
                     else -> {
                         binding.ivPrint.setImageResource(R.drawable.icon_print_p)
                         goSelStore("print")
@@ -198,9 +215,9 @@ class MainTestActivity : BaseActivity() {
         tv.setTextColor(getColor(R.color.white))
     }
 
-    fun insPaySetting() {
-        ApiClient.service.insPaySetting(MyApplication.useridx, MyApplication.storeList[0].idx, MyApplication.androidId)
-            .enqueue(object : Callback<ResultDTO> {
+    fun insPaySetting(position: Int) {
+        ApiClient.service.insPaySetting(MyApplication.useridx, MyApplication.storeList[position].idx, MyApplication.androidId)
+            .enqueue(object : Callback<ResultDTO>{
                 override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                     Log.d(TAG, "결제 설정 최초 진입 시 row 추가 url : $response")
                     if(!response.isSuccessful) return
@@ -208,8 +225,8 @@ class MainTestActivity : BaseActivity() {
                     val result = response.body() ?: return
 
                     if(result.status == 1) {
-                        MyApplication.store = MyApplication.storeList[0]
-                        MyApplication.storeidx = MyApplication.storeList[0].idx
+                        MyApplication.store = MyApplication.storeList[position]
+                        MyApplication.storeidx = MyApplication.storeList[position].idx
                         MyApplication.bidx = result.bidx
                         goPay()
                     }else
@@ -224,18 +241,18 @@ class MainTestActivity : BaseActivity() {
             })
     }
 
-    fun insPrintSetting() {
-        ApiClient.service.insPrintSetting(MyApplication.useridx, MyApplication.storeList[0].idx, MyApplication.androidId
-        )
+    fun insPrintSetting(position: Int) {
+        ApiClient.service.insPrintSetting(MyApplication.useridx, MyApplication.storeList[position].idx, MyApplication.androidId)
             .enqueue(object : retrofit2.Callback<ResultDTO>{
                 override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                     Log.d(TAG, "프린터 설정 최초 진입 시 row 추가 url : $response")
                     if(!response.isSuccessful) return
 
                     val result = response.body() ?: return
+
                     if(result.status == 1){
-                        MyApplication.store = MyApplication.storeList[0]
-                        MyApplication.storeidx = MyApplication.storeList[0].idx
+                        MyApplication.store = MyApplication.storeList[position]
+                        MyApplication.storeidx = MyApplication.storeList[position].idx
                         MyApplication.bidx = result.bidx
                         goPrint()
                     }else

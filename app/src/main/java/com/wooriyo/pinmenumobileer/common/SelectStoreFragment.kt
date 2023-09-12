@@ -1,15 +1,14 @@
 package com.wooriyo.pinmenumobileer.common
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wooriyo.pinmenumobileer.MainTestActivity
 import com.wooriyo.pinmenumobileer.MyApplication
-import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.FragmentSelectStoreBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.printer.adapter.StoreAdapter
@@ -38,11 +37,11 @@ class SelectStoreFragment : Fragment() {
             override fun onItemClick(position: Int) {
                 super.onItemClick(position)
                 if(type == "pay")
-//                    insPaySetting(position)
+                    (activity as MainTestActivity).insPaySetting(position)
                 else if (type == "print")
-//                    insPrintSetting(position)
+                    (activity as MainTestActivity).insPrintSetting(position)
                 else if (type == "qr") {
-
+                    //TODO agree 판별해서 동의 페이지나 설정으로 가기
                 }
             }
         })

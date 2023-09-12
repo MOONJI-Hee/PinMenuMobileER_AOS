@@ -282,12 +282,12 @@
     <string name="qrcode">QR코드</string>
     <string name="qr_use_info">QR코드 사용안내</string>
     <string name="qr_pg_first">핀메뉴 QR오더와 결제를 이용하기 위해서는\n나이스페이먼츠 PG 설정이 선행되어야 합니다.</string>
-    <string name="qr_nicepay_status">나이스페이 상태 : </string>
+    <string name="qr_nicepay_status">나이스페이 상태&#160;:&#160;</string>
     <string name="qr_insurance">결제금액 정산을 위한 이행보증보험은\n기본 월 200만원까지로, 이 이상 매출이 발생하면\n이행보증보험료가 발생합니다.</string>
     <string name="qr_insurance_check">결제 관련 이행보증보험 결제관리를\n이해하였고 동의합니다.</string>
     <string name="qr_setting_go">QR코드 설정 바로가기</string>
     <string name="qr_setting">QR코드 설정</string>
-    <string name="qr_usable_cnt">사용 가능한 QR코드 수 : </string>
+    <string name="qr_usable_cnt">사용 가능한 QR코드 수&#160;:&#160;</string>
     <string name="qr_store_name">Store Name</string>
     <string name="only_eng">Only English</string>
     <string name="qr_file_name_info">QR코드 저장시 파일명에 사용</string>
@@ -361,6 +361,7 @@
     <string name="qr_info">QR코드 카드결제를 이용하기 위해서는\n나이스페이 가맹점 가입이 필요합니다.</string>
     <string name="qr_nicepay_join_way">QR코드 카드결제 가맹점 가입방법</string>
     <string name="qr_nicepay_setting">나이스페이 Key설정 바로가기</string>
+    <string name="qr_nicepay_setting2">나이스페이먼츠 Key설정 바로가기</string>
     <string name="qr_nicepay_join_done">나이스페이먼츠 Key설정 완료</string>
     <string name="qr_nicepay_join_done_info">핀메뉴 QR코드 결제를 이용할 수 있습니다.\n기본적으로 QR코드 결제는 식사 후\n정산하는 ‘후불’입니다.\n\n돌아가기를 누르시면 ‘주문정보’ 페이지로 이동합니다.</string>
     <string name="qr_vat">수수료(VAT별도)</string>
@@ -417,6 +418,7 @@
     <string name="msg_typemiss_id">이메일 형식이 아닙니다.</string>
     <string name="msg_no_checked">아이디 중복체크클 해주세요.</string>
     <string name="msg_no_linked">알파요 아이디를 연동해 주세요.</string>
+    <string name="msg_do_agree">이행보증보험 결제관리에 동의해주시기 바랍니다.</string>
     <string name="backpress">뒤로 가기 버튼을 한 번 더 누르시면 종료됩니다.</string>
 
     <string name="msg_no_addr">주소를 입력해주세요.</string>
@@ -453,6 +455,4 @@
     <string name="pms_location_content">원활한 서비스 이용을 위해서는 위치 권한이 필요합니다.</string>
     <string name="pms_notification_title">알림 권한 요청</string>
     <string name="pms_notification_content">원활한 서비스 이용을 위해서는 알림 권한이 필요합니다.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

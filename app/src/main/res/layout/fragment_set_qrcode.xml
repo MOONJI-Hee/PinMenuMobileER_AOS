@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".qr.SetQrcodeFragment">
+
+    <TextView
+        style="@style/title"
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:text="@string/qr_setting"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        style="@style/text22b"
+        android:id="@+id/tv1"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:text="@string/qr_usable_cnt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"/>
+
+    <TextView
+        style="@style/text22b"
+        android:id="@+id/qrCnt"
+        app:layout_constraintStart_toEndOf="@+id/tv1"
+        app:layout_constraintTop_toTopOf="@+id/tv1"
+        app:layout_constraintBottom_toBottomOf="@+id/tv1"
+        tools:text="5"/>
+
+    <TextView
+        style="@style/text22b"
+        android:text="@string/gea"
+        app:layout_constraintStart_toEndOf="@+id/qrCnt"
+        app:layout_constraintTop_toTopOf="@+id/tv1"
+        app:layout_constraintBottom_toBottomOf="@+id/tv1"/>
+    
+    <TextView
+        style="@style/text15d"
+        android:id="@+id/tv2"
+        android:layout_marginTop="10dp"
+        android:text="@string/qr_store_name"
+        app:layout_constraintStart_toStartOf="@+id/tv1"
+        app:layout_constraintTop_toBottomOf="@+id/tv1"/>
+
+    <EditText
+        style="@style/edittext"
+        android:id="@+id/etStoreName"
+        android:layout_width="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:hint="@string/only_eng"
+        app:layout_constraintStart_toStartOf="@+id/tv2"
+        app:layout_constraintTop_toBottomOf="@+id/tv2"
+        app:layout_constraintEnd_toStartOf="@+id/saveName"/>
+    
+    <TextView
+        style="@style/btn_sub"
+        android:id="@+id/saveName"
+        android:layout_width="83dp"
+        android:layout_marginEnd="20dp"
+        android:textSize="17sp"
+        android:text="@string/btn_save2"
+        app:layout_constraintTop_toTopOf="@+id/etStoreName"
+        app:layout_constraintBottom_toBottomOf="@+id/etStoreName"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        style="@style/text15"
+        android:text="@string/essential"
+        android:textColor="#FF6200"
+        android:layout_marginBottom="9dp"
+        app:layout_constraintEnd_toEndOf="@+id/saveName"
+        app:layout_constraintBottom_toTopOf="@+id/saveName"/>
+
+    <TextView
+        style="@style/subtext"
+        android:layout_width="wrap_content"
+        android:text="@string/qr_file_name_info"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/etStoreName"
+        app:layout_constraintTop_toBottomOf="@+id/etStoreName"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -330,7 +330,7 @@ interface Api {
         @Query("storeidx") storeidx: Int,
         @Query("uuid") androidId : String,
         @Query("idx") idx: Int,             // sw_paysetting 테이블 idx
-        @Query("qrbuse") qrbuse: String,     // QR 사용 여부 (Y: 사용 , N :미사용 )
+        @Query("qrbuse") qrbuse: String,    // QR 사용 여부 (Y: 사용 , N :미사용 )
         @Query("cardbuse") cardbuse: String // 카드결제 사용 여부 (Y: 사용 , N :미사용 )
     ): Call<ResultDTO>
 
@@ -351,6 +351,42 @@ interface Api {
         @Query("idx") idx: Int,             // sw_paysetting 테이블 idx
         @Query("mid") mid : String,         // mid (아이디)
         @Query("sc_key") sc_key : String    // 키 값
+    ): Call<ResultDTO>
+
+    // QR오더 관련
+    // QR 리스트 조회
+    @GET("m/qr.list.php")
+    fun getQrList(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int
+    ): Call<QrListDTO>
+
+    // QR 생성
+    @GET("m/create_qr.php")
+    fun createQr(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int
+    ): Call<QrListDTO>
+
+    // QR 등록
+    @GET("m/udt_qrcode.php")
+    fun udtQr(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int
+    ): Call<ResultDTO>
+
+    // QR 삭제
+    @GET("m/del_qrcode.php")
+    fun delQr(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int
+    ): Call<ResultDTO>
+
+    // 영문매장명 등록
+    @GET("m/udt_storenm.php")
+    fun udtStoreName(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int
     ): Call<ResultDTO>
 
     // 카카오 지도 관련 api
