@@ -27,6 +27,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PinmenuMobileER">
         <activity
+            android:name=".common.WebViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".qr.QrDetailActivity"
             android:exported="false" />
         <activity
