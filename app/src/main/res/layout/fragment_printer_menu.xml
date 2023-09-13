@@ -1,14 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".printer.PrinterMenuFragment">
+    android:background="@color/f9"
+    tools:context=".printer.PrinterMenuActivity">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/title"
+        style="@style/title"
+        android:text="@string/printer_title_set"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <LinearLayout
+        style="@style/menu"
+        android:id="@+id/connSet"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toStartOf="@+id/support"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:src="@drawable/icon_print_connection"/>
+        <TextView
+            style="@style/text17"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="@string/printer_menu_conn"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/menu"
+        android:id="@+id/support"
+        android:layout_marginStart="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/connSet"
+        app:layout_constraintTop_toTopOf="@+id/connSet">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:src="@drawable/icon_print_view"/>
+        <TextView
+            style="@style/text17"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="@string/printer_menu_support"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/menu"
+        android:id="@+id/contentSet"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/connSet"
+        app:layout_constraintTop_toBottomOf="@+id/connSet">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:src="@drawable/icon_print_set"/>
+        <TextView
+            style="@style/text17"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="@string/printer_menu_contents"/>
+    </LinearLayout>
+
+    <TextView
+        style="@style/subtext"
+        android:layout_width="0dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/printer_menu_info"
+        app:layout_constraintEnd_toEndOf="@+id/support"
+        app:layout_constraintStart_toStartOf="@+id/contentSet"
+        app:layout_constraintTop_toBottomOf="@+id/contentSet" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

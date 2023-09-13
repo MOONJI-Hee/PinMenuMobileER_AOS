@@ -7,11 +7,11 @@ import android.widget.Toast
 import com.wooriyo.pinmenumobileer.model.MemberDTO
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.BaseActivity
+import com.wooriyo.pinmenumobileer.MainActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.androidId
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.pref
 import com.wooriyo.pinmenumobileer.R
-import com.wooriyo.pinmenumobileer.store.StoreListActivity
 import retrofit2.Call
 import retrofit2.Response
 
@@ -57,7 +57,7 @@ class StartActivity : BaseActivity() {
                             pref.setMbrDTO(memberDTO)
                             pref.setUserIdx(memberDTO.useridx)
 
-                            startActivity(Intent(mActivity, StoreListActivity::class.java))
+                            startActivity(Intent(mActivity, MainActivity::class.java))
                         }else {
                             Toast.makeText(mActivity, memberDTO.msg, Toast.LENGTH_SHORT).show()
                             // status != 1일 때 (아이디 비번 오류, 필수정보 부족 등) 로그인 화면으로 이동

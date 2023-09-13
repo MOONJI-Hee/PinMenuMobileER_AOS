@@ -7,11 +7,11 @@ import android.widget.Toast
 import com.wooriyo.pinmenumobileer.model.MemberDTO
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.BaseActivity
+import com.wooriyo.pinmenumobileer.MainActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.androidId
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.ActivityLoginBinding
-import com.wooriyo.pinmenumobileer.store.StoreListActivity
 import com.wooriyo.pinmenumobileer.util.AppHelper.Companion.verifyEmail
 import com.wooriyo.pinmenumobileer.util.AppHelper.Companion.verifyPw
 import retrofit2.Call
@@ -82,7 +82,7 @@ class LoginActivity: BaseActivity() {
                             MyApplication.pref.setUserIdx(memberDTO.useridx)
                             MyApplication.pref.setPw(pw)
 
-                            startActivity(Intent(mActivity, StoreListActivity::class.java))
+                            startActivity(Intent(mActivity, MainActivity::class.java))
                         }else {
                             Toast.makeText(this@LoginActivity, memberDTO.msg, Toast.LENGTH_SHORT).show()
                         }

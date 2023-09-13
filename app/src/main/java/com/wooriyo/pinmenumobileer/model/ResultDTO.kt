@@ -6,5 +6,7 @@ data class ResultDTO(
     @SerializedName("status") var status : Int,
     @SerializedName("msg") var msg : String,
     @SerializedName("idx") var idx : Int,
-    @SerializedName("bidx") var bidx : Int
+    @SerializedName("bidx") var bidx : Int,
+    @SerializedName("qidx") var qidx : Int,
+    @SerializedName("filepath") var filePath: String
 )

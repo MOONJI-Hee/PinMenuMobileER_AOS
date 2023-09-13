@@ -13,17 +13,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeList
-import com.wooriyo.pinmenumobileer.common.SelectStoreActivity
 import com.wooriyo.pinmenumobileer.common.SelectStoreFragment
 import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.databinding.ActivityMainTestBinding
 import com.wooriyo.pinmenumobileer.model.ResultDTO
-import com.wooriyo.pinmenumobileer.model.StoreDTO
 import com.wooriyo.pinmenumobileer.more.MoreFragment
-import com.wooriyo.pinmenumobileer.payment.SetPayActivity
 import com.wooriyo.pinmenumobileer.payment.fragment.SetPayFragment
-import com.wooriyo.pinmenumobileer.printer.PrinterMenuActivity
 import com.wooriyo.pinmenumobileer.printer.PrinterMenuFragment
+import com.wooriyo.pinmenumobileer.qr.QrAgreeActivity
 import com.wooriyo.pinmenumobileer.qr.SetQrcodeFragment
 import com.wooriyo.pinmenumobileer.store.StoreListFragment
 import com.wooriyo.pinmenumobileer.util.ApiClient
@@ -31,7 +28,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainTestActivity : BaseActivity() {
+class MainActivity : BaseActivity() {
     lateinit var binding: ActivityMainTestBinding
     val TAG = "MainActivity"
     val mActivity = this
@@ -122,23 +119,32 @@ class MainTestActivity : BaseActivity() {
     }
 
     private fun goPay() {
-        binding.ivPay.setImageResource(R.drawable.icon_card_p)
+//        binding.ivPay.setImageResource(R.drawable.icon_card_p)
         replace(SetPayFragment.newInstance())
     }
 
     private fun goQr() {
-        binding.ivPay.setImageResource(R.drawable.icon_qr_p)
+//        binding.ivQr.setImageResource(R.drawable.icon_qr_p)
         replace(SetQrcodeFragment.newInstance())
     }
 
     private fun goPrint() {
-        binding.ivPrint.setImageResource(R.drawable.icon_print_p)
+//        binding.ivPrint.setImageResource(R.drawable.icon_print_p)
         replace(PrinterMenuFragment.newInstance())
     }
 
     private fun goMore() {
-        binding.ivMore.setImageResource(R.drawable.ic_main_tabar_more_s)
+//        binding.ivMore.setImageResource(R.drawable.ic_main_tabar_more_s)
         replace(MoreFragment.newInstance())
+    }
+
+    fun checkQrAgree(position: Int) {
+        MyApplication.store = storeList[position]
+        MyApplication.storeidx = storeList[position].idx
+        if(storeList[position].agree == "Y")
+            goQr()
+        else
+            goQrAgree.launch(Intent(mActivity, QrAgreeActivity::class.java))
     }
 
     private fun setNavi(id:Int) {
@@ -177,14 +183,7 @@ class MainTestActivity : BaseActivity() {
             R.id.icQr -> {
                 when(MyApplication.storeList.size) {
                     0 -> Toast.makeText(mActivity, R.string.msg_no_store, Toast.LENGTH_SHORT).show()
-                    1 -> {
-                        MyApplication.store = storeList[0]
-                        MyApplication.storeidx = storeList[0].idx
-                        if(storeList[0].agree == "Y")
-                            goQr()
-                        else
-                            goQrAgree.launch(intent)
-                    }
+                    1 -> checkQrAgree(0)
                     else -> {
                         binding.ivQr.setImageResource(R.drawable.icon_qr_p)
                         goSelStore("qr")

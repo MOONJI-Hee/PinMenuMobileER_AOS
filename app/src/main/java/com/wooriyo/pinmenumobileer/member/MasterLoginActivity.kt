@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.wooriyo.pinmenumobileer.BaseActivity
+import com.wooriyo.pinmenumobileer.MainActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.ActivityMasterLoginBinding
 import com.wooriyo.pinmenumobileer.model.MemberDTO
-import com.wooriyo.pinmenumobileer.store.StoreListActivity
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.util.AppHelper
 import retrofit2.Call
@@ -63,7 +63,7 @@ class MasterLoginActivity : BaseActivity() {
                             MyApplication.pref.setPw(pw)
                             MyApplication.useridx = memberDTO.useridx
 
-                            startActivity(Intent(mActivity, StoreListActivity::class.java))
+                            startActivity(Intent(mActivity, MainActivity::class.java))
                         }else {
                             Toast.makeText(mActivity, memberDTO.msg, Toast.LENGTH_SHORT).show()
                         }

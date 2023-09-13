@@ -3,10 +3,10 @@ package com.wooriyo.pinmenumobileer.store
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.wooriyo.pinmenumobileer.BaseActivity
+import com.wooriyo.pinmenumobileer.MainActivity
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.setStoreDTO
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.store
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
@@ -23,6 +23,8 @@ class RegStoreActivity : BaseActivity() {
     lateinit var binding: ActivityRegStoreBinding
     val mActivity = this@RegStoreActivity
     val TAG = "RegStoreActivity"
+
+    var pre = ""
 
     val setAddr = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if(it.resultCode == RESULT_OK) {
@@ -44,6 +46,7 @@ class RegStoreActivity : BaseActivity() {
         binding = ActivityRegStoreBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        pre = intent.getStringExtra("pre").toString()
         setStoreDTO()
 
         binding.save.setOnClickListener{ save() }
@@ -75,7 +78,9 @@ class RegStoreActivity : BaseActivity() {
                         if(resultDTO != null) {
                             if(resultDTO.status == 1) {
                                 Toast.makeText(mActivity, R.string.msg_complete, Toast.LENGTH_SHORT).show()
-                                startActivity(Intent(mActivity, StoreListActivity::class.java))
+                                if(pre == "signUp")
+                                    startActivity(Intent(mActivity, MainActivity::class.java))
+                                else finish()
                             }else {
                                 Toast.makeText(mActivity, resultDTO.msg, Toast.LENGTH_SHORT).show()
                             }

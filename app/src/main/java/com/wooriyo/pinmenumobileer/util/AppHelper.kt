@@ -9,6 +9,7 @@ import android.os.Build
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewDebug.IntToString
 import android.view.ViewOutlineProvider
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -121,6 +122,11 @@ class AppHelper {
             view.clipToOutline = true
         }
 
+        // 정수 > 00 형태의 문자열로 리턴
+        fun intToString(n: Int): String {
+            return if(n in 1..9) {"0$n"} else n.toString()
+        }
+
         // 현재 날짜와 비교
         fun dateNowCompare(dt: String?): Boolean {    // 과거 : false, 현재 혹은 미래 : true
             return if(dt.isNullOrEmpty()) {
@@ -135,6 +141,12 @@ class AppHelper {
 
                 cmp >= 0
             }
+        }
+
+        // 현재 일시 yyyy-mm-dd HH:mm:ss 형식으로 리턴
+        fun getToday(): String {
+            val now = LocalDateTime.now()
+            return datetimeFormat.format(now).toString()
         }
 
         // APPCALL 거래번호 생성

@@ -34,6 +34,7 @@ class MyApplication: Application() {
         lateinit var store: StoreDTO
         lateinit var androidId : String
         val storeList = ArrayList<StoreDTO>()
+        var engStoreName = ""
 
         // 블루투스 관련 변수
         lateinit var bluetoothManager: BluetoothManager
