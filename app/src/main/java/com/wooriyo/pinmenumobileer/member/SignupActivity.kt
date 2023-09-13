@@ -111,7 +111,9 @@ class SignupActivity : BaseActivity() {
                             MyApplication.pref.setPw(pass)
                             MyApplication.useridx = useridx
 
-                            startActivity(Intent(mActivity, RegStoreActivity::class.java))
+                            val intent = Intent(mActivity, RegStoreActivity::class.java)
+                            intent.putExtra("pre", "signUp")
+                            startActivity(intent)
                         }else {
                             Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                         }

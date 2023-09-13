@@ -60,10 +60,10 @@ interface Api {
         @Query("storeidx") storeidx: Int
     ): Call<ResultDTO>
 
-    // 비밀번호 찾기
-    @GET()
-    fun findPwd(
-
+    //비밀번호 찾기
+    @GET("u/find_pwd.php")
+    fun findPwd (
+        @Query("userid") userid: String
     ): Call<ResultDTO>
 
     // 비밀번호 변경
@@ -353,6 +353,13 @@ interface Api {
         @Query("sc_key") sc_key : String    // 키 값
     ): Call<ResultDTO>
 
+    // 이행보증보험 동의
+    @GET("m/agreeQR.php")
+    fun setNiceAgree(
+        @Query("storeidx") storeidx: Int,
+        @Query("uuid") androidId : String
+    ): Call<ResultDTO>
+
     // QR오더 관련
     // QR 리스트 조회
     @GET("m/qr.list.php")
@@ -362,31 +369,36 @@ interface Api {
     ): Call<QrListDTO>
 
     // QR 생성
-    @GET("m/create_qr.php")
+    @GET("m/create_qrcode.php")
     fun createQr(
         @Query("useridx") useridx: Int,
-        @Query("storeidx") storeidx: Int
-    ): Call<QrListDTO>
+        @Query("storeidx") storeidx: Int,
+        @Query("seq") seq: Int
+    ): Call<ResultDTO>
 
     // QR 등록
     @GET("m/udt_qrcode.php")
     fun udtQr(
         @Query("useridx") useridx: Int,
-        @Query("storeidx") storeidx: Int
+        @Query("storeidx") storeidx: Int,
+        @Query("qidx") qidx: Int,
+        @Query("tableNo") tableNo: String
     ): Call<ResultDTO>
 
     // QR 삭제
     @GET("m/del_qrcode.php")
     fun delQr(
         @Query("useridx") useridx: Int,
-        @Query("storeidx") storeidx: Int
+        @Query("storeidx") storeidx: Int,
+        @Query("qidx") qidx: Int,
     ): Call<ResultDTO>
 
     // 영문매장명 등록
     @GET("m/udt_storenm.php")
     fun udtStoreName(
         @Query("useridx") useridx: Int,
-        @Query("storeidx") storeidx: Int
+        @Query("storeidx") storeidx: Int,
+        @Query("name") storeName: String
     ): Call<ResultDTO>
 
     // 카카오 지도 관련 api

@@ -53,7 +53,7 @@ class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapte
 
                 tableNo.text = data.tableNo
                 regdt.text = data.regdt
-                gea.text = data.olist.size.toString()   //TODO api 확인 후 변경
+                gea.text = data.total.toString()
                 price.text = AppHelper.price(data.amount)
 
                 if(data.iscompleted == 1) {

@@ -77,11 +77,48 @@
 
     <TextView
         style="@style/subtext"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv3"
         android:text="@string/qr_file_name_info"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="@+id/etStoreName"
         app:layout_constraintTop_toBottomOf="@+id/etStoreName"/>
 
+    <TextView
+        style="@style/btn"
+        android:id="@+id/downAll"
+        android:layout_width="0dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/qr_down_all"
+        app:layout_constraintStart_toStartOf="@+id/tv2"
+        app:layout_constraintEnd_toEndOf="@+id/saveName"
+        app:layout_constraintTop_toBottomOf="@+id/tv3"/>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:paddingHorizontal="12.5dp"
+        android:background="@color/f9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/downAll">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvQr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp" />
+            <TextView
+                style="@style/subtext"
+                android:layout_marginTop="15dp"
+                android:text="@string/qr_setting_info1"/>
+            <TextView
+                style="@style/subtext"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"
+                android:text="@string/qr_setting_info2"/>
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

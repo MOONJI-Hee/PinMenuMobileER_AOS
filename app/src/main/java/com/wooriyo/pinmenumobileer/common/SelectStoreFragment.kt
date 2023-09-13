@@ -7,17 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.wooriyo.pinmenumobileer.MainTestActivity
+import com.wooriyo.pinmenumobileer.MainActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.databinding.FragmentSelectStoreBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.printer.adapter.StoreAdapter
 
-private const val arg_type = "type"
-
 class SelectStoreFragment : Fragment() {
     lateinit var binding: FragmentSelectStoreBinding
     private var type: String? = null
+
+    private val arg_type = "type"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,11 +37,11 @@ class SelectStoreFragment : Fragment() {
             override fun onItemClick(position: Int) {
                 super.onItemClick(position)
                 if(type == "pay")
-                    (activity as MainTestActivity).insPaySetting(position)
+                    (activity as MainActivity).insPaySetting(position)
                 else if (type == "print")
-                    (activity as MainTestActivity).insPrintSetting(position)
+                    (activity as MainActivity).insPrintSetting(position)
                 else if (type == "qr") {
-                    //TODO agree 판별해서 동의 페이지나 설정으로 가기
+                    (activity as MainActivity).checkQrAgree(position)
                 }
             }
         })

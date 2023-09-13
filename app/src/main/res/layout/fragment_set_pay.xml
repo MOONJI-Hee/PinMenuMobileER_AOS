@@ -14,18 +14,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-    <LinearLayout
-        android:id="@+id/back"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/btn_back_white" />
-    </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/qr"
@@ -194,9 +182,10 @@
     <TextView
         style="@style/subtext"
         android:text="@string/payment_info"
+        android:layout_width="0dp"
         android:layout_marginTop="30dp"
-        android:layout_marginHorizontal="20dp"
         app:layout_constraintStart_toStartOf="@+id/card"
+        app:layout_constraintEnd_toEndOf="@+id/card"
         app:layout_constraintTop_toBottomOf="@+id/card"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

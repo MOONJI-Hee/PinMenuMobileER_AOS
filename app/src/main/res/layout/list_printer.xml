@@ -72,7 +72,6 @@
     <TextView
         style="@style/subtext"
         android:id="@+id/connNo"
-        android:layout_width="wrap_content"
         android:layout_marginBottom="22dp"
         android:text="@string/printer_not_conn"
         android:lineSpacingExtra="0dp"

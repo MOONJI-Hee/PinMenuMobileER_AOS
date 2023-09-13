@@ -101,7 +101,9 @@ class StoreListFragment : Fragment() {
                                 binding.empty.visibility = View.VISIBLE
                                 binding.rvStore.visibility = View.GONE
 
-                                startActivity(Intent(context, RegStoreActivity::class.java))
+                                val intent = Intent(context, RegStoreActivity::class.java)
+                                intent.putExtra("pre", "Main")
+                                startActivity(intent)
                             }else {
                                 binding.empty.visibility = View.GONE
                                 binding.rvStore.visibility = View.VISIBLE

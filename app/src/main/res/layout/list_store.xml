@@ -32,7 +32,7 @@
                 style="@style/text_num_b"
                 android:id="@+id/ordCnt"
                 android:textSize="22sp"
-                android:textColor="@color/white"
+                android:textColor="@color/selector_text_white"
                 tools:text="2" />
             <TextView
                 style="@style/text15w"
@@ -64,7 +64,7 @@
                 android:id="@+id/callCnt"
                 style="@style/text_num_b"
                 android:textSize="22sp"
-                android:textColor="@color/white"
+                android:textColor="@color/selector_text_white"
                 tools:text="2" />
             <TextView
                 style="@style/text15w"

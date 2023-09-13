@@ -53,14 +53,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_name"/>
 
-        <TextView
-            style="@style/text15"
-            android:layout_marginBottom="9dp"
-            android:layout_marginEnd="27dp"
-            android:textColor="#FF6200"
-            android:text="@string/essential"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/btn_map"/>
+<!--        <TextView-->
+<!--            style="@style/text15"-->
+<!--            android:layout_marginBottom="9dp"-->
+<!--            android:layout_marginEnd="27dp"-->
+<!--            android:textColor="#FF6200"-->
+<!--            android:text="@string/essential"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/btn_map"/>-->
 
         <EditText
             style="@style/edittext"

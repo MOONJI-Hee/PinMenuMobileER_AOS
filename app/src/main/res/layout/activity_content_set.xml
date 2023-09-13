@@ -62,7 +62,6 @@
 
     <TextView
         style="@style/subtext"
-        android:layout_width="wrap_content"
         android:layout_marginBottom="6dp"
         android:text="@string/font"
         app:layout_constraintBottom_toTopOf="@+id/radio"
@@ -175,6 +174,7 @@
         style="@style/subtext"
         android:id="@+id/cl_customer"
         android:padding="20dp"
+        android:layout_width="match_parent"
         android:layout_marginTop="5dp"
         android:background="@color/white"
         android:text="@string/printer_customer_info"
@@ -198,6 +198,7 @@
     <TextView
         style="@style/subtext"
         android:padding="20dp"
+        android:layout_width="match_parent"
         android:layout_marginTop="5dp"
         android:background="@color/white"
         android:text="@string/printer_order_no_info"
