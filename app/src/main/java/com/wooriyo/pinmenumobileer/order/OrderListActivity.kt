@@ -172,34 +172,11 @@ class OrderListActivity : BaseActivity() {
         binding.rv.adapter = orderAdapter
 
         binding.back.setOnClickListener { AppHelper.leaveStore(mActivity) }
-
-        getOrderList()
     }
 
-    // 주문 확인 처리 > 화면 터치하면
-    fun udtOrdStatus() {
-        ApiClient.service.udtOrdStatus(useridx, storeidx).enqueue(object: Callback<ResultDTO>{
-            override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
-                Log.d(TAG, "주문 확인 처리(상태 업데이트) url : $response")
-                if(!response.isSuccessful) return
-
-                val result = response.body()
-                if(result != null) {
-                    when(result.status) {
-                        1 -> {
-                            // 알림음 종료 등등
-                        }
-                        else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
-                Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
-                Log.d(TAG, "주문 확인 처리(상태 업데이트) 실패 > $t")
-                Log.d(TAG, "주문 확인 처리(상태 업데이트) 실패 > ${call.request()}")
-            }
-        })
+    override fun onResume() {
+        super.onResume()
+        getOrderList()
     }
 
     // 주문 목록 조회
@@ -221,7 +198,7 @@ class OrderListActivity : BaseActivity() {
                                 binding.rv.visibility = View.GONE
                             }else {
                                 orderList.sortBy { it.iscompleted }
-                                binding.today.text = store.ordCnt.toString()
+                                binding.total.text = result.totalCnt.toString()
                                 binding.empty.visibility = View.GONE
                                 binding.rv.visibility = View.VISIBLE
                                 orderAdapter.notifyDataSetChanged()
@@ -240,7 +217,6 @@ class OrderListActivity : BaseActivity() {
         })
     }
 
-    // 주문 완료 처리
     // 주문 완료 처리
     fun complete(position: Int, popup: Int) {
         ApiClient.service.udtComplete(storeidx, orderList[position].idx ,"Y", popup).enqueue(object:Callback<ResultDTO>{

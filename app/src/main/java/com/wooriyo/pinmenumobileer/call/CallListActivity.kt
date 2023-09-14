@@ -42,7 +42,7 @@ class CallListActivity : BaseActivity() {
         // OrderList와 layout 같이 쓰기 때문에 Call에 맞게 뷰 변경
         binding.tvTitle.text = getString(R.string.call_emp)
         binding.tv.visibility = View.GONE
-        binding.today.visibility = View.GONE
+        binding.total.visibility = View.GONE
         binding.empty.text = getString(R.string.no_call_list)
 
         // 호출어댑터 리스너 설정 (완료 버튼 눌렀을 때 position 가져오기)

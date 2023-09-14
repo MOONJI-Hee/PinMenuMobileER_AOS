@@ -2,6 +2,7 @@ package com.wooriyo.pinmenumobileer.fcm
 
 import android.app.*
 import android.content.Intent
+import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.util.Log
@@ -14,6 +15,7 @@ import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.escposPrinter
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.config.AppProperties
+import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.CHANNEL_ID_ORDER
 import com.wooriyo.pinmenumobileer.member.StartActivity
 import com.wooriyo.pinmenumobileer.model.ReceiptDTO
 import com.wooriyo.pinmenumobileer.util.ApiClient
@@ -35,7 +37,7 @@ class MyFirebaseService: FirebaseMessagingService() {
         super.onMessageReceived(message)
 
         Log.d(TAG, "message.data >> ${message.data}")
-        Log.d(TAG, "message.notification >> ${message.notification}")
+        Log.d(TAG, "message.notification >> ${message.notification?.sound}")
 
         createNotification(message)
 
@@ -106,31 +108,37 @@ class MyFirebaseService: FirebaseMessagingService() {
     }
 
     private fun createNotification(message: RemoteMessage) {
-        val channelId = "pinmenu_mobile_noti"
-        val uri: Uri = Uri.parse("android.resource://com.wooriyo.pinmenumobileer/raw/customnoti.wav")
-        val builder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(Notification.DEFAULT_ALL)
-            .setContentTitle(message.notification!!.title)
-            .setContentText(message.notification!!.body)
-            .setSound(uri)
-            .setVibrate(longArrayOf(100L, 100L, 100L)) //알림시 진동 설정 : 1초 진동, 1초 쉬고, 1초 진동
-            .setContentIntent(createPendingIntent())
-            .setDefaults(Notification.DEFAULT_ALL)
-
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
-        // 오레오 버전 이후에는 채널이 필요하다.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(channelId, "Notice", NotificationManager.IMPORTANCE_DEFAULT)
-            notificationManager.createNotificationChannel(channel)
-        }
+        // 알림 채널 생성
+        val ordChannel = NotificationChannel(CHANNEL_ID_ORDER, "새 주문 알림", NotificationManager.IMPORTANCE_DEFAULT)
+        ordChannel.enableLights(true)
+        ordChannel.enableVibration(true)
+        notificationManager.createNotificationChannel(ordChannel)
+
+        val delete_id: String = "pinmenu_mobile_noti"
+        notificationManager.deleteNotificationChannel(delete_id)
+
+
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID_ORDER)
+            .setSmallIcon(R.drawable.ic_noti)
+            .setContentTitle(message.notification?.title)
+            .setContentText(message.notification?.body)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+//            .setContentIntent(createPendingIntent())
+            .setAutoCancel(true)
+
+
+
+
+
+
         // 알림 생성
         notificationManager.notify(1, builder.build())
     }
 
     private fun createPendingIntent () : PendingIntent {
         val intent = Intent(this, StartActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
         val stackBuilder = TaskStackBuilder.create(this)
         stackBuilder.addParentStack(StartActivity::class.java)

@@ -42,14 +42,14 @@
     <TextView
         style="@style/text14w"
         android:id="@+id/tv"
-        android:text="@string/today"
+        android:text="@string/order_total"
         android:layout_marginEnd="6dp"
-        app:layout_constraintEnd_toStartOf="@+id/today"
-        app:layout_constraintTop_toTopOf="@+id/today"
-        app:layout_constraintBottom_toBottomOf="@+id/today"/>
+        app:layout_constraintEnd_toStartOf="@+id/total"
+        app:layout_constraintTop_toTopOf="@+id/total"
+        app:layout_constraintBottom_toBottomOf="@+id/total"/>
     <TextView
         style="@style/text_num_b"
-        android:id="@+id/today"
+        android:id="@+id/total"
         android:text="@string/zero"
         android:textSize="17sp"
         android:textColor="@color/white"
