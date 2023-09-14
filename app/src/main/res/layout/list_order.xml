@@ -109,7 +109,7 @@
             android:id="@+id/payment"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:text="@string/btn_payment2"
+            android:text="@string/payment"
             android:gravity="center"
             android:paddingHorizontal="15dp"
             android:background="@drawable/bg_r6y"
@@ -146,7 +146,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/done"
+        android:id="@+id/complete"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/white70"
@@ -160,6 +160,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/completeQr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_complete_qr"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom"/>
 
     <LinearLayout
         android:id="@+id/arrowUp"

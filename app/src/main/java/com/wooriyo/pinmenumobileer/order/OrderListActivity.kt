@@ -73,8 +73,9 @@ class OrderListActivity : BaseActivity() {
     val paymentCard = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if(result.resultCode == RESULT_OK) {
             orderList[payPosition].iscompleted = 1
-            orderList.sortBy { it.iscompleted }
-            orderAdapter.notifyDataSetChanged()
+            orderAdapter.notifyItemChanged(payPosition)
+//            orderList.sortBy { it.iscompleted }
+//            orderAdapter.notifyDataSetChanged()
         }
     }
 
@@ -103,6 +104,13 @@ class OrderListActivity : BaseActivity() {
 
         orderAdapter.setOnPayClickListener(object: ItemClickListener{
             override fun onItemClick(position: Int) {
+                if(orderList[position].iscompleted == 1) {
+                    complete(position, 0, store.popup)
+                }else if(orderList[position].paytype == 3) {
+
+                }
+
+
                 val selectPayDialog = SelectPayDialog(position)
 
                 selectPayDialog.setOnQrClickListener(object : ItemClickListener{
@@ -135,24 +143,8 @@ class OrderListActivity : BaseActivity() {
                 selectPayDialog.setOnCompleteClickListener(object : ItemClickListener{
                     override fun onItemClick(position: Int) {
                         super.onItemClick(position)
-                        when(store.popup) {
-                            0 -> {
-                                val dialog = CompleteDialog()
-                                dialog.setOnCompleteListener(object : DialogListener {
-                                    override fun onComplete(popup: Int) {
-                                        super.onComplete(popup)
-                                        complete(position, popup)
-                                        dialog.dismiss()
-                                    }
-                                })
-                                selectPayDialog.dismiss()
-                                dialog.show(supportFragmentManager, "CompleteDailog")
-                            }
-                            1 ->  {
-                                complete(position, store.popup)
-                                selectPayDialog.dismiss()
-                            }
-                        }
+                        completeInfoDialog(position)
+                        selectPayDialog.dismiss()
                     }
                 })
 
@@ -179,6 +171,26 @@ class OrderListActivity : BaseActivity() {
         getOrderList()
     }
 
+    // 완료 처리 안내 다이얼로그
+    fun completeInfoDialog(position: Int) {
+        when(store.popup) {
+            0 -> {
+                val dialog = CompleteDialog()
+                dialog.setOnCompleteListener(object : DialogListener {
+                    override fun onComplete(popup: Int) {
+                        super.onComplete(popup)
+                        complete(position, popup)
+                        dialog.dismiss()
+                    }
+                })
+                dialog.show(supportFragmentManager, "CompleteDialog")
+            }
+            1 ->  {
+                complete(position, store.popup)
+            }
+        }
+    }
+
     // 주문 목록 조회
     fun getOrderList() {
         ApiClient.service.getOrderList(useridx, storeidx).enqueue(object : Callback<OrderListDTO>{
@@ -197,7 +209,7 @@ class OrderListActivity : BaseActivity() {
                                 binding.empty.visibility = View.VISIBLE
                                 binding.rv.visibility = View.GONE
                             }else {
-                                orderList.sortBy { it.iscompleted }
+//                                orderList.sortBy { it.iscompleted }
                                 binding.total.text = result.totalCnt.toString()
                                 binding.empty.visibility = View.GONE
                                 binding.rv.visibility = View.VISIBLE
@@ -208,7 +220,6 @@ class OrderListActivity : BaseActivity() {
                     }
                 }
             }
-
             override fun onFailure(call: Call<OrderListDTO>, t: Throwable) {
                 Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "주문 목록 조회 오류 > $t")
@@ -218,29 +229,31 @@ class OrderListActivity : BaseActivity() {
     }
 
     // 주문 완료 처리
-    fun complete(position: Int, popup: Int) {
-        ApiClient.service.udtComplete(storeidx, orderList[position].idx ,"Y", popup).enqueue(object:Callback<ResultDTO>{
-            override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
-                Log.d(TAG, "주문 완료 url : $response")
-                if(!response.isSuccessful) return
+    fun complete(position: Int, isCompleted: Int, popup: Int) {
+        val status = if(isCompleted == 1) "Y" else "N"
+        ApiClient.service.udtComplete(storeidx, orderList[position].idx, status, popup)
+            .enqueue(object:Callback<ResultDTO>{
+                override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                    Log.d(TAG, "주문 완료 url : $response")
+                    if(!response.isSuccessful) return
 
-                val result = response.body() ?: return
-                when(result.status){
-                    1 -> {
-                        Toast.makeText(mActivity, R.string.complete, Toast.LENGTH_SHORT).show()
-                        orderList[position].iscompleted = 1
-                        orderList.sortBy { it.iscompleted }
-                        orderAdapter.notifyItemChanged(position)
+                    val result = response.body() ?: return
+                    when(result.status){
+                        1 -> {
+                            Toast.makeText(mActivity, R.string.complete, Toast.LENGTH_SHORT).show()
+                            orderList[position].iscompleted = isCompleted
+    //                        orderList.sortBy { it.iscompleted }
+                            orderAdapter.notifyItemChanged(position)
+                        }
+                        else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                     }
-                    else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
-                Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
-                Log.d(TAG, "주문 완료 실패 > $t")
-                Log.d(TAG, "주문 완료 실패 > ${call.request()}")
-            }
+                override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                    Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "주문 완료 실패 > $t")
+                    Log.d(TAG, "주문 완료 실패 > ${call.request()}")
+                }
         })
     }
 
@@ -261,7 +274,6 @@ class OrderListActivity : BaseActivity() {
                     else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                 }
             }
-
             override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
                 Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "주문 삭제 실패 > $t")

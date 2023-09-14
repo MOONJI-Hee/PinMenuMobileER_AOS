@@ -58,12 +58,25 @@ class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapte
 
                 if(data.iscompleted == 1) {
                     tableNo.setBackgroundColor(Color.parseColor("#E0E0E0"))
-                    done.visibility = View.VISIBLE
-                    payment.isEnabled = false
-                }else {
+                    clPrice.setBackgroundResource(R.drawable.bg_r6g)
+                    payment.setBackgroundResource(R.drawable.bg_r6g)
+                    payment.text = "복원"
+                    complete.visibility = View.VISIBLE
+                    completeQr.visibility = View.GONE
+                } else if (data.paytype == 3) { // QR오더에서 들어온 주문 > 결제 완료
                     tableNo.setBackgroundResource(R.color.main)
-                    done.visibility = View.GONE
-                    payment.isEnabled = true
+                    clPrice.setBackgroundResource(R.drawable.bg_r6g)
+                    payment.setBackgroundResource(R.drawable.bg_r6y)
+                    payment.text = "확인"
+                    complete.visibility = View.GONE
+                    completeQr.visibility = View.VISIBLE
+                } else {
+                    tableNo.setBackgroundResource(R.color.main)
+                    clPrice.setBackgroundResource(R.drawable.bg_r6y)
+                    payment.setBackgroundResource(R.drawable.bg_r6y)
+                    payment.text = "결제"
+                    complete.visibility = View.GONE
+                    completeQr.visibility = View.GONE
                 }
 
                 delete.setOnClickListener { deleteListener.onItemClick(adapterPosition) }
