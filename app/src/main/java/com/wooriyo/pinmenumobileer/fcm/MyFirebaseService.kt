@@ -2,12 +2,14 @@ package com.wooriyo.pinmenumobileer.fcm
 
 import android.app.*
 import android.content.Intent
+import android.media.AudioManager
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.sewoo.jpos.command.ESCPOSConst
@@ -16,6 +18,7 @@ import com.wooriyo.pinmenumobileer.MyApplication.Companion.escposPrinter
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.CHANNEL_ID_ORDER
+import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.NOTIFICATION_ID_ORDER
 import com.wooriyo.pinmenumobileer.member.StartActivity
 import com.wooriyo.pinmenumobileer.model.ReceiptDTO
 import com.wooriyo.pinmenumobileer.util.ApiClient
@@ -108,6 +111,24 @@ class MyFirebaseService: FirebaseMessagingService() {
     }
 
     private fun createNotification(message: RemoteMessage) {
+        val sound = R.raw.customnoti
+        val uri: Uri = Uri.parse("android.resource://com.wooriyo.pinmenuer/$sound")
+
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID_ORDER)
+            .setSmallIcon(R.drawable.ic_noti)
+            .setContentTitle(message.notification?.title)
+            .setContentText(message.notification?.body)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setSound(uri, AudioManager.STREAM_NOTIFICATION)
+//            .setContentIntent(createPendingIntent())
+            .setAutoCancel(true)
+
+        // 알림 생성
+        val notificationManager = NotificationManagerCompat.from(this)
+        notificationManager.notify(NOTIFICATION_ID_ORDER, builder.build())
+    }
+
+    fun createNotificationChannel() {
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
         // 알림 채널 생성
@@ -118,23 +139,6 @@ class MyFirebaseService: FirebaseMessagingService() {
 
         val delete_id: String = "pinmenu_mobile_noti"
         notificationManager.deleteNotificationChannel(delete_id)
-
-
-        val builder = NotificationCompat.Builder(this, CHANNEL_ID_ORDER)
-            .setSmallIcon(R.drawable.ic_noti)
-            .setContentTitle(message.notification?.title)
-            .setContentText(message.notification?.body)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-//            .setContentIntent(createPendingIntent())
-            .setAutoCancel(true)
-
-
-
-
-
-
-        // 알림 생성
-        notificationManager.notify(1, builder.build())
     }
 
     private fun createPendingIntent () : PendingIntent {

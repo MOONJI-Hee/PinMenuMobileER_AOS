@@ -13,6 +13,9 @@ class AppProperties {
 
         const val KAKAO_URL : String = "https://dapi.kakao.com"
 
+        // 푸시 알림 아이디
+        const val NOTIFICATION_ID_ORDER = 1
+
         // 푸시 알림 채널
         const val CHANNEL_ID_ORDER = "pinmenuer_mobile_order"
         const val CHANNEL_ID_CALL = "pinmenuer_mobile_call"

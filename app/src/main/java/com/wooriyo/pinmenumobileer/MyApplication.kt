@@ -1,19 +1,25 @@
 package com.wooriyo.pinmenumobileer
 
-import android.annotation.SuppressLint
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.graphics.Point
+import android.media.AudioAttributes
+import android.media.AudioManager.STREAM_NOTIFICATION
+import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.view.WindowManager
 import com.sewoo.jpos.printer.ESCPOSPrinter
 import com.sewoo.port.android.BluetoothPort
-import com.wooriyo.pinmenumobileer.model.StoreDTO
+import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.model.SharedDTO
+import com.wooriyo.pinmenumobileer.model.StoreDTO
+
 
 class MyApplication: Application() {
     companion object {
@@ -93,6 +99,29 @@ class MyApplication: Application() {
 
         escposPrinter = ESCPOSPrinter()
 
+        createNotificationChannel()
+
         super.onCreate()
+    }
+
+    fun createNotificationChannel() {
+        val sound = R.raw.customnoti
+        val uri: Uri = Uri.parse("android.resource://com.wooriyo.pinmenuer/$sound")
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+        val audioAttributes = AudioAttributes.Builder()
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+            .build()
+
+        // 알림 채널 생성
+        val ordChannel = NotificationChannel(AppProperties.CHANNEL_ID_ORDER, "새 주문 알림", NotificationManager.IMPORTANCE_DEFAULT)
+        ordChannel.enableLights(true)
+        ordChannel.enableVibration(true)
+        ordChannel.setSound(uri, audioAttributes)
+        notificationManager.createNotificationChannel(ordChannel)
+
+        val delete_id: String = "pinmenu_mobile_noti"
+        notificationManager.deleteNotificationChannel(delete_id)
     }
 }

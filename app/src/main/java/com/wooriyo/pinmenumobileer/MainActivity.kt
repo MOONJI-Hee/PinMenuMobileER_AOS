@@ -119,22 +119,22 @@ class MainActivity : BaseActivity() {
     }
 
     private fun goPay() {
-//        binding.ivPay.setImageResource(R.drawable.icon_card_p)
+        binding.ivPay.setImageResource(R.drawable.icon_card_p)
         replace(SetPayFragment.newInstance())
     }
 
     private fun goQr() {
-//        binding.ivQr.setImageResource(R.drawable.icon_qr_p)
+        binding.ivQr.setImageResource(R.drawable.icon_qr_p)
         replace(SetQrcodeFragment.newInstance())
     }
 
     private fun goPrint() {
-//        binding.ivPrint.setImageResource(R.drawable.icon_print_p)
+        binding.ivPrint.setImageResource(R.drawable.icon_print_p)
         replace(PrinterMenuFragment.newInstance())
     }
 
     private fun goMore() {
-//        binding.ivMore.setImageResource(R.drawable.ic_main_tabar_more_s)
+        binding.ivMore.setImageResource(R.drawable.ic_main_tabar_more_s)
         replace(MoreFragment.newInstance())
     }
 

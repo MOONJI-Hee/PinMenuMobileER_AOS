@@ -288,7 +288,7 @@
     <string name="qrcode">QR코드</string>
     <string name="qr_use_info">QR코드 사용안내</string>
     <string name="qr_pg_first">핀메뉴 QR오더와 결제를 이용하기 위해서는\n나이스페이먼츠 PG 설정이 선행되어야 합니다.</string>
-    <string name="qr_nicepay_status">나이스페이 상태&#160;:&#160;</string>
+    <string name="qr_nicepay_status">나이스페이먼츠 상태&#160;:&#160;</string>
     <string name="qr_insurance">결제금액 정산을 위한 이행보증보험은\n기본 월 200만원까지로, 이 이상 매출이 발생하면\n이행보증보험료가 발생합니다.</string>
     <string name="qr_insurance_check">결제 관련 이행보증보험 결제관리를\n이해하였고 동의합니다.</string>
     <string name="qr_setting_go">QR코드 설정 바로가기</string>
@@ -366,20 +366,19 @@
 
     <!-- 주문 결제 - QR -->
     <string name="title_qr">QR코드 카드결제</string>
-    <string name="qr_info">QR코드 카드결제를 이용하기 위해서는\n나이스페이 가맹점 가입이 필요합니다.</string>
+    <string name="qr_info">QR코드 카드결제를 이용하기 위해서는\n나이스페이먼츠 가맹점 가입이 필요합니다.</string>
     <string name="qr_nicepay_join_way">QR코드 카드결제 가맹점 가입방법</string>
-    <string name="qr_nicepay_setting">나이스페이 Key설정 바로가기</string>
-    <string name="qr_nicepay_setting2">나이스페이먼츠 Key설정 바로가기</string>
+    <string name="qr_nicepay_setting">나이스페이먼츠 Key설정 바로가기</string>
     <string name="qr_nicepay_join_done">나이스페이먼츠 Key설정 완료</string>
     <string name="qr_nicepay_join_done_info">핀메뉴 QR코드 결제를 이용할 수 있습니다.\n기본적으로 QR코드 결제는 식사 후\n정산하는 ‘후불’입니다.\n\n돌아가기를 누르시면 ‘주문정보’ 페이지로 이동합니다.</string>
     <string name="qr_vat">수수료(VAT별도)</string>
     <string name="qr_join_way">가맹점 가입방법</string>
     <string name="qr_guide_title">QR코드 카드결제를 이용하기 위한 절차</string>
-    <string name="qr_guide_fir">1. 나이스페이 가맹점 계약 신청 및 우편 발송</string>
+    <string name="qr_guide_fir">1. 나이스페이먼츠 가맹점 계약 신청 및 우편 발송</string>
     <string name="qr_guide_fir_1">・자세한 사항은 핀메뉴 웹사이트에 있습니다.\n&#160;&#160;&#160;&#160;<font color="#006CFF">(경로 : www.pinmenu.biz > 하단 QR결제\n&#160;&#160;&#160;&#160;> 가맹점 계약)</font></string>
-    <string name="qr_guide_fir_2">・ 나이스페이먼츠와 가맹점 계약을 통해 핀메뉴\n&#160;&#160;&#160;&#160;결제 수수료가 정해집니다.\n&#160;&#160;&#160;&#160;(핀메뉴는 나이스페이의 정책에 따릅니다.)</string>
-    <string name="qr_guide_sec">2. 나이스페이 로그인 및 Key값 입력</string>
-    <string name="qr_guide_sec_1">・가맹점 계약이 완료된 후 핀메뉴에서\n&#160;&#160;&#160;&#160;나이스페이먼츠 로그인을 해주셔야 합니다.\n&#160;&#160;&#160;&#160;(나이스페이 로그아웃이 된 경우에는 QA코드\n&#160;&#160;&#160;&#160;카드결제를 이용할 수 없습니다.)</string>
+    <string name="qr_guide_fir_2">・ 나이스페이먼츠와 가맹점 계약을 통해 핀메뉴\n&#160;&#160;&#160;&#160;결제 수수료가 정해집니다.\n&#160;&#160;&#160;&#160;(핀메뉴는 나이스페이먼츠의 정책에 따릅니다.)</string>
+    <string name="qr_guide_sec">2. 나이스페이먼츠 로그인 및 Key값 입력</string>
+    <string name="qr_guide_sec_1">・가맹점 계약이 완료된 후 핀메뉴에서\n&#160;&#160;&#160;&#160;나이스페이먼츠 로그인을 해주셔야 합니다.\n&#160;&#160;&#160;&#160;(나이스페이먼츠 로그아웃이 된 경우에는 QA코드\n&#160;&#160;&#160;&#160;카드결제를 이용할 수 없습니다.)</string>
     <string name="qr_guide_sec_2">・PG상점 아이디(MID) 입력\n&#160;&#160;&#160;&#160;(나이스페이먼츠 웹사이트 > 로그인\n&#160;&#160;&#160;&#160;> 가맹점정보(상단) > Key관리(좌측)\n&#160;&#160;&#160;&#160;> MID 옆에 있는 ID 복사)</string>
     <string name="qr_guide_sec_3">・Key값 입력\n&#160;&#160;&#160;&#160;(나이스페이먼츠 > 로그인 > 가맹점정보(상단)\n&#160;&#160;&#160;&#160;> Key관리(좌측)\n&#160;&#160;&#160;&#160;> MID 아래 있는 긴 문장(key) 복사)</string>
 

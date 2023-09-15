@@ -13,6 +13,7 @@ import com.sewoo.jpos.command.ESCPOSConst
 import com.sewoo.jpos.printer.ESCPOSPrinter
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.store
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeList
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
@@ -107,48 +108,47 @@ class OrderListActivity : BaseActivity() {
                 if(orderList[position].iscompleted == 1) {
                     complete(position, 0, store.popup)
                 }else if(orderList[position].paytype == 3) {
+                    completeInfoDialog(position)
+                }else {
+                    val selectPayDialog = SelectPayDialog(position)
 
-                }
-
-
-                val selectPayDialog = SelectPayDialog(position)
-
-                selectPayDialog.setOnQrClickListener(object : ItemClickListener{
-                    override fun onQrClick(position: Int, status: Boolean) {
-                        super.onQrClick(position, status)
-                        if(status) {
-                            val intent = Intent(mActivity, QrActivity::class.java)
-                            intent.putExtra("ordcode", orderList[position].ordcode)
-                            startActivity(intent)
-                        }else {
-                            val intent = Intent(mActivity, NicepayInfoActivity::class.java)
-                            intent.putExtra("fromOrder", "Y")
-                            startActivity(intent)
+                    selectPayDialog.setOnQrClickListener(object : ItemClickListener{
+                        override fun onQrClick(position: Int, status: Boolean) {
+                            super.onQrClick(position, status)
+                            if(status) {
+                                val intent = Intent(mActivity, QrActivity::class.java)
+                                intent.putExtra("ordcode", orderList[position].ordcode)
+                                startActivity(intent)
+                            }else {
+                                val intent = Intent(mActivity, NicepayInfoActivity::class.java)
+                                intent.putExtra("fromOrder", "Y")
+                                startActivity(intent)
+                            }
                         }
-                    }
-                })
+                    })
 
-                selectPayDialog.setOnCardClickListener(object : ItemClickListener{
-                    override fun onItemClick(position: Int) {
-                        super.onItemClick(position)
-                        selectPayDialog.dismiss()
-                        payPosition = position
+                    selectPayDialog.setOnCardClickListener(object : ItemClickListener{
+                        override fun onItemClick(position: Int) {
+                            super.onItemClick(position)
+                            selectPayDialog.dismiss()
+                            payPosition = position
 
-                        val intent = Intent(mActivity, PayCardActivity::class.java)
-                        intent.putExtra("order", orderList[payPosition])
-                        paymentCard.launch(intent)
-                    }
-                })
+                            val intent = Intent(mActivity, PayCardActivity::class.java)
+                            intent.putExtra("order", orderList[payPosition])
+                            paymentCard.launch(intent)
+                        }
+                    })
 
-                selectPayDialog.setOnCompleteClickListener(object : ItemClickListener{
-                    override fun onItemClick(position: Int) {
-                        super.onItemClick(position)
-                        completeInfoDialog(position)
-                        selectPayDialog.dismiss()
-                    }
-                })
+                    selectPayDialog.setOnCompleteClickListener(object : ItemClickListener{
+                        override fun onItemClick(position: Int) {
+                            super.onItemClick(position)
+                            completeInfoDialog(position)
+                            selectPayDialog.dismiss()
+                        }
+                    })
 
-                selectPayDialog.show(supportFragmentManager, "PayDialog")
+                    selectPayDialog.show(supportFragmentManager, "PayDialog")
+                }
             }
         })
         orderAdapter.setOnDeleteListener(object:ItemClickListener{
@@ -179,14 +179,14 @@ class OrderListActivity : BaseActivity() {
                 dialog.setOnCompleteListener(object : DialogListener {
                     override fun onComplete(popup: Int) {
                         super.onComplete(popup)
-                        complete(position, popup)
+                        complete(position, 1, popup)
                         dialog.dismiss()
                     }
                 })
                 dialog.show(supportFragmentManager, "CompleteDialog")
             }
             1 ->  {
-                complete(position, store.popup)
+                complete(position, 1, store.popup)
             }
         }
     }
@@ -244,6 +244,7 @@ class OrderListActivity : BaseActivity() {
                             orderList[position].iscompleted = isCompleted
     //                        orderList.sortBy { it.iscompleted }
                             orderAdapter.notifyItemChanged(position)
+                            store.popup = popup
                         }
                         else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                     }
