@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/title_black"
         android:id="@+id/title"
         app:layout_constraintStart_toStartOf="parent"
@@ -16,14 +16,21 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="6dp"
             android:visibility="gone"
-            android:src="@drawable/ic_pay_new"/>
+            android:src="@drawable/ic_pay_new"
+            app:layout_constraintTop_toTopOf="@+id/tvTitle"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
+            app:layout_constraintEnd_toStartOf="@+id/tvTitle"/>
 
         <TextView
             style="@style/text22w"
             android:id="@+id/tvTitle"
-            android:text="@string/order_mgmt"/>
+            android:text="@string/order_mgmt"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/back"
@@ -64,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:src="@drawable/btn_orderlist_info"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/title"
         app:layout_constraintTop_toTopOf="@+id/title"
         app:layout_constraintBottom_toBottomOf="@+id/title"/>
@@ -73,6 +80,7 @@
         style="@style/text17"
         android:id="@+id/empty"
         android:text="@string/no_order_list"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title"

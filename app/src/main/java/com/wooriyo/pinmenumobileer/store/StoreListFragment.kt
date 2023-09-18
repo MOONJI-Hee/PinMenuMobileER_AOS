@@ -68,7 +68,7 @@ class StoreListFragment : Fragment() {
         binding.rvStore.adapter = storeAdapter
 
         // 매장리스트 배경 최소 높이 지정 (최소 화면을 덮을 정도로)
-        binding.storeArea.minHeight = MyApplication.height
+        binding.storeArea.minHeight = MyApplication.height - (84 * MyApplication.density).toInt()
 
         // 매장리스트 조회
         getStoreList()
@@ -124,9 +124,7 @@ class StoreListFragment : Fragment() {
 
     fun checkDeviceLimit(store: StoreDTO, intent: Intent) {
         ApiClient.service.checkDeviceLimit(
-            MyApplication.useridx, store.idx, MyApplication.pref.getToken().toString(),
-            MyApplication.androidId
-        )
+            MyApplication.useridx, store.idx, MyApplication.pref.getToken().toString(), MyApplication.androidId, 0)
             .enqueue(object : Callback<ResultDTO> {
                 override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                     Log.d(TAG, "이용자수 체크 url : $response")

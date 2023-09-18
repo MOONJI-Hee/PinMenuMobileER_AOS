@@ -10,6 +10,8 @@ import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.call.adapter.CallListAdapter
+import com.wooriyo.pinmenumobileer.common.ClearDialog
+import com.wooriyo.pinmenumobileer.common.ConfirmDialog
 import com.wooriyo.pinmenumobileer.databinding.ActivityOrderListBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.CallHistoryDTO
@@ -26,7 +28,8 @@ import kotlin.collections.ArrayList
 // 호출 목록 확인 페이지 ( 주문 목록 페이지와 레이아웃 같이 사용)
 class CallListActivity : BaseActivity() {
     lateinit var binding: ActivityOrderListBinding
-//    lateinit var timer: Timer
+    lateinit var clearDialog: ClearDialog
+    lateinit var clearConfirmDialog: ConfirmDialog
 
     val TAG = "CallListActivity"
     val mActivity = this@CallListActivity
@@ -53,77 +56,39 @@ class CallListActivity : BaseActivity() {
         binding.rv.layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false)
         binding.rv.adapter = callListAdapter
 
+        setClearDialog()
+
         // 클릭 이벤트
         binding.back.setOnClickListener{ // 뒤로가기 > 매장 밖으로 나가기 때문에 이용자수 차감 Api 태움
             AppHelper.leaveStore(mActivity)
         }
-
-        getCallList()
+        binding.icNew.setOnClickListener {
+            getCallList()
+            it.visibility = View.GONE
+        }
+        binding.btnClear.setOnClickListener { clearDialog.show(supportFragmentManager, "ClearDialog") }
     }
 
     override fun onResume() {
         super.onResume()
-//        timer = Timer()
-//        val timerTask: TimerTask = object : TimerTask() {
-//            override fun run() {
-//                getCallStatus()
-//            }
-//        }
-//        timer.schedule(timerTask, 0, 3000)
+        getCallList()
     }
 
-    override fun onPause() {
-        super.onPause()
-//        timer.cancel()
-    }
-
-
-    // 새로운 호출 유무 확인 > 3초마다 한번씩 태우기
-    fun getCallStatus() {
-        ApiClient.service.getCallStatus(useridx, storeidx).enqueue(object : Callback<ResultDTO>{
-            override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
-                Log.d(TAG, "새로운 호출 유무 확인 url : $response")
-                if(!response.isSuccessful) return
-
-                val result = response.body()
-                if(result != null && result.status == 1) {
-                    getCallList()
-                    // 음악 재생
-                }
-            }
-
-            override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
-                Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
-                Log.d(TAG, "새로운 호출 유무 확인 실패 > $t")
-                Log.d(TAG, "새로운 호출 유무 확인 실패 > ${call.request()}")
-            }
+    // 초기화 / 초기화 확인 다이얼로그 초기화
+    fun setClearDialog() {
+        clearDialog = ClearDialog(View.OnClickListener {
+            clearDialog.dismiss()
+            clearConfirmDialog.show(supportFragmentManager, "ClearConfirmDialog")
         })
-    }
-
-    // 호출 확인 처리 > 화면 터치하면
-    fun udtCallStatus() {
-        ApiClient.service.udtCallStatus(useridx, storeidx).enqueue(object: Callback<ResultDTO>{
-            override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
-                Log.d(TAG, "호출 확인 처리(상태 업데이트) url : $response")
-                if(!response.isSuccessful) return
-
-                val result = response.body()
-                if(result != null) {
-                    when(result.status) {
-                        1 -> {
-                            // 알림음 종료 등등
-                        }
-                        else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
-                    }
-                }
+        clearConfirmDialog = ConfirmDialog(
+            getString(R.string.dialog_call_clear_title),
+            getString(R.string.dialog_confrim_clear),
+            getString(R.string.btn_confirm),
+            View.OnClickListener {
+                clearConfirmDialog.dismiss()
+                clear()
             }
-
-            override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
-                Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
-                Log.d(TAG, "호출 확인 처리(상태 업데이트) 실패 > $t")
-                Log.d(TAG, "호출 확인 처리(상태 업데이트) 실패 > ${call.request()}")
-            }
-        })
+        )
     }
 
     // 호출 리스트 (히스토리) 조회
@@ -144,7 +109,7 @@ class CallListActivity : BaseActivity() {
                                 binding.empty.visibility = View.VISIBLE
                                 binding.rv.visibility = View.GONE
                             }else {
-                                callHistory.sortBy { it.iscompleted }
+//                                callHistory.sortBy { it.iscompleted }
                                 binding.empty.visibility = View.GONE
                                 binding.rv.visibility = View.VISIBLE
                                 callListAdapter.notifyDataSetChanged()
@@ -174,7 +139,7 @@ class CallListActivity : BaseActivity() {
                     when (result.status) {
                         1 -> {
                             callHistory[position].iscompleted = 1
-                            callHistory.sortBy { it.iscompleted }
+//                            callHistory.sortBy { it.iscompleted }
 
                             callListAdapter.notifyItemChanged(position)
                         }
@@ -188,5 +153,26 @@ class CallListActivity : BaseActivity() {
                     Log.d(TAG, "호출 완료 실패 오류 > ${call.request()}")
                 }
             })
+    }
+
+    // 주문 초기화
+    fun clear() {
+        ApiClient.service.clearOrder(useridx, storeidx).enqueue(object:Callback<ResultDTO>{
+            override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                Log.d(TAG, "직원호출 초기화 url : $response")
+                if(!response.isSuccessful) return
+
+                val result = response.body() ?: return
+                Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                if(result.status == 1){
+                    getCallList()
+                }
+            }
+            override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "직원호출 초기화 실패 > $t")
+                Log.d(TAG, "직원호출 초기화 실패 > ${call.request()}")
+            }
+        })
     }
 }

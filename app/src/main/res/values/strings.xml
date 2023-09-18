@@ -61,6 +61,7 @@
     <string name="btn_payment2">결&#160;제</string>
     <string name="btn_choice">선&#160;&#160;택</string>
     <string name="btn_link">연&#160;&#160;동</string>
+    <string name="btn_clear">초&#160;기&#160;화</string>
 
     <string name="udt_info">정보변경</string>
     <string name="back">돌아가기</string>
@@ -101,7 +102,7 @@
     <string name="link_before">연동전</string>
     <string name="link_after">연동됨</string>
     <string name="link_fail">연동불가</string>
-    <string name="arpayo_id">알파요 아이디</string>
+    <string name="arpayo_id">알파요 아이디(이메일)</string>
     <string name="arpayo_id_hint">알파요 ID(이메일) 입력해 주세요.</string>
     <string name="signup_info1">아이디(이메일)는\n비밀번호 찾기를 할 때 필요한 정보입니다.\n사용 가능한 이메일로 가입해 주세요.</string>
     <string name="signup_info2">알파요 앱 아이디를 연동해주시면\n자동시급계산 앱 알파요를 사용 중인 사장님들에게\n추가 보상을 드립니다.</string>
@@ -339,6 +340,7 @@
     <string name="order_merge">주문항목 합치기</string>
     <string name="order_merge_info">해당 항목으로 선택된 주문 정보를 합칩니다.\n합쳐진 이후에는 복구가 불가능합니다.</string>
     <string name="merge">합치기</string>
+    <string name="order_dialog_clear">주문정보는 3일간 보관되며,\n\'초기화\'버튼을 누르면 모든 주문정보가\n삭제됩니다.</string>
 
     <!-- 주문 결제 -->
     <string name="order_select_pay">다음 중 하나를 선택해 주세요</string>
@@ -405,6 +407,10 @@
     <!--  확인 다이얼로그  -->
     <string name="dialog_logout">로그아웃 하시겠습니까?</string>
     <string name="dialog_drop">탈퇴 시 등록한 모든 정보가 사라집니다.\n정말 탈퇴하시겠습니까?</string>
+    <string name="dialog_order_clear_title">주문정보 초기화</string>
+    <string name="dialog_call_clear_title">직원호출 초기화</string>
+    <string name="dialog_confrim_clear">한번 초기화 된 내역은 복원되지 않습니다.\n그래도 초기화를 진행하시겠습니까?</string>
+    <string name="dialog_delete">한번 삭제된 내역은 복원되지 않습니다.\n그래도 삭제를 진행하시겠습니까?</string>
 
     <!--  알림 다이얼로그  -->
     <string name="dialog_notice">알림</string>

@@ -53,6 +53,14 @@ interface Api {
         @Query("userid") arpayoId: String
     ): Call<ResultDTO>
 
+    //회원정보 수정
+    @GET("m/udtmbr.php")
+    fun udtMbr (
+        @Query("useridx") useridx : Int,
+        @Query("pass") pass : String,
+        @Query("emplyr_id") arpayo_id: String
+    ): Call<ResultDTO>
+
     // 로그아웃
     @GET("checkLogout.php")
     fun logout(
@@ -103,7 +111,8 @@ interface Api {
         @Query("useridx") useridx: Int,
         @Query("storeidx") storeidx: Int,
         @Query("token") token: String,
-        @Query("uuid") androidId : String
+        @Query("uuid") androidId : String,
+        @Query("device_type") device_type: Int  // 0 : 모바일, 1 : 태블릿 (default 0)
     ): Call<ResultDTO>
 
     // 매장 나갈 때 이용자수 차감
@@ -120,20 +129,6 @@ interface Api {
         @Query("useridx") useridx: Int,
         @Query("storeidx") storeidx: Int,
     ): Call<CateListDTO>
-
-    // 새로운 주문 유무 확인 (status == 1 : 새로운 주문 있음)
-    @GET("m/udtOrdStatus.php")
-    fun getOrdStatus(
-        @Query("useridx") useridx: Int,
-        @Query("storeidx") storeidx: Int
-    ): Call<ResultDTO>
-
-    // 주문 확인 처리
-    @GET("m/udtOrdUpdate.php")
-    fun udtOrdStatus(
-        @Query("useridx") useridx: Int,
-        @Query("storeidx") storeidx: Int
-    ): Call<ResultDTO>
 
     // 주문 목록(히스토리) 조회
     @GET("m/order.list.php")
@@ -171,6 +166,13 @@ interface Api {
         @Query("ordidx") ordidx: Int
     ): Call<ResultDTO>
 
+    // 주문 목록 초기화
+    @GET("m/del_order.php")
+    fun clearOrder(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int
+    ): Call<ResultDTO>
+
     // 새로운 직원 호출 유무 확인
     @GET("m/udtCallStatus.php")
     fun getCallStatus(
@@ -192,14 +194,20 @@ interface Api {
         @Query("storeidx") storeidx: Int
     ): Call<CallListDTO>
 
-    // 직원 호출 완료 처리 (확인과 다름)
-    // 확인 : 새로운 호출이 있을 때 알림음을 끄고 확인했다는 것을 알리기 위한 Api
+    // 직원 호출 완료 처리
     // 완료 : 주문/호출 목록이 고객에게 완전히 다 제공되었다는 것을 알리기 위한 Api
     @GET("m/udtCompletedCall.php")
     fun completeCall(
         @Query("storeidx") storeidx: Int,
         @Query("ordidx") ordidx: Int,
         @Query("iscompleted") iscompleted: String
+    ): Call<ResultDTO>
+
+    // 직원 호출 목록 초기화
+    @GET("m/del_callHistory.php")
+    fun clearCall(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int
     ): Call<ResultDTO>
 
     // 직원 호출 등록된 목록 조회 >> (고객이 호출한 내역 아님!! 관리자가 등록했던 리스트 전체)

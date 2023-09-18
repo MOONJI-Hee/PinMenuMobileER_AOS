@@ -7,6 +7,6 @@ data class MemberDTO (
     var msg : String,
     @SerializedName("useridx") var useridx : Int,
     @SerializedName("userid") var userid : String,
-//    @SerializedName("name")  var name : String,
+    @SerializedName("isAlpha") var isAlpha : String, // 알파요 연동 여부 - Y:연동, N:미연동
     @SerializedName("emplyr_id") var arpayoid: String ? = ""
 )

@@ -33,7 +33,7 @@
             android:layout_marginEnd="27dp"
             android:textColor="#FF6200"
             android:text="@string/essential"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/et_name"
             app:layout_constraintBottom_toTopOf="@+id/et_name"/>
 
         <EditText
@@ -59,7 +59,7 @@
 <!--            android:layout_marginEnd="27dp"-->
 <!--            android:textColor="#FF6200"-->
 <!--            android:text="@string/essential"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/btn_map"-->
 <!--            app:layout_constraintBottom_toTopOf="@+id/btn_map"/>-->
 
         <EditText

@@ -39,7 +39,7 @@
         <TextView
             style="@style/text15"
             android:id="@+id/tv1"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:text="@string/email"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>

@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeList
 import com.wooriyo.pinmenumobileer.common.SelectStoreFragment
 import com.wooriyo.pinmenumobileer.config.AppProperties
-import com.wooriyo.pinmenumobileer.databinding.ActivityMainTestBinding
+import com.wooriyo.pinmenumobileer.databinding.ActivityMainBinding
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.more.MoreFragment
 import com.wooriyo.pinmenumobileer.payment.fragment.SetPayFragment
@@ -29,7 +29,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : BaseActivity() {
-    lateinit var binding: ActivityMainTestBinding
+    lateinit var binding: ActivityMainBinding
     val TAG = "MainActivity"
     val mActivity = this
 
@@ -46,7 +46,7 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainTestBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         goMain()

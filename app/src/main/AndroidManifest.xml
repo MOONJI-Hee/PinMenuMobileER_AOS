@@ -124,7 +124,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".more.ChangePwdActivity"
+            android:name=".more.MemberSetActivity"
             android:exported="false" />
         <activity
             android:name=".more.MoreActivity"

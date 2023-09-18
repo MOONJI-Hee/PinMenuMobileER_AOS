@@ -37,7 +37,7 @@ class MoreFragment : Fragment() {
         binding = FragmentMoreBinding.inflate(layoutInflater)
 
         binding.run {
-            changePwd.setOnClickListener { startActivity(Intent(context, ChangePwdActivity::class.java)) }
+            udtMbr.setOnClickListener { startActivity(Intent(context, MemberSetActivity::class.java)) }
             versionInfo.setOnClickListener {
                 val content = getString(R.string.dialog_version).format(MyApplication.appver)
                 AlertDialog("", content, 0).show((activity as MainActivity).supportFragmentManager, "VersionDialog")
