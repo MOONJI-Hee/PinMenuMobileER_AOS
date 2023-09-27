@@ -51,9 +51,6 @@ class SetConnActivity : BaseActivity() {
         // 디바이스, 프린터 정보 조회
         getPrintSetting()
 
-        // 연결 프린터 리스트 조회 api
-        getConnPrintList()
-
         // 페어링된 프린터 리스트 조회
 //        getPairedDevice()
 
@@ -130,6 +127,7 @@ class SetConnActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+        // 연결 프린터 리스트 조회 api
         getConnPrintList()
     }
 
