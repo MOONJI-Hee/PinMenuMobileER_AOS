@@ -66,18 +66,6 @@
             android:layout_marginStart="14dp"
             android:text="@string/qr_guide_sec_1"/>
 
-        <TextView
-            style="@style/subtext"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="14dp"
-            android:text="@string/qr_guide_sec_2"/>
-
-        <TextView
-            style="@style/subtext"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="14dp"
-            android:text="@string/qr_guide_sec_3"/>
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

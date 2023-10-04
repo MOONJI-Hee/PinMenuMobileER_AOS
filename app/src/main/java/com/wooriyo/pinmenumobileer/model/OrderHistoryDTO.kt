@@ -7,7 +7,8 @@ data class OrderHistoryDTO(
     @SerializedName("ordidx") var idx : Int,                        // 주문 idx
     @SerializedName("storeidx") var storeidx : Int,                 // 매장 idx
     @SerializedName("tableNo") var tableNo : String,                // 테이블 번호
-    @SerializedName("ordcode") var ordcode : String,                // 주문 코드
+    @SerializedName("ordcode") var ordcode : String,                // 주문 번호 (매일 갱신)
+    @SerializedName("ordcode_key") var ordcode_key : String,        // 주문 코드
     @SerializedName("glist") var olist : ArrayList<OrderDTO>,       // 주문 상세 리스트
     @SerializedName("amount") var amount : Int,                     // 총 금액
     @SerializedName("paytype") var paytype : Int,                   // 3: 큐알 결제 완료, 0: 그 외

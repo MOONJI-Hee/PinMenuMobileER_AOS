@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
         style="@style/title"
         android:id="@+id/title"
-        android:text="@string/payment_title_set_nicepay"
+        android:text="@string/payment_title_pg_info"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -36,41 +35,67 @@
         <TextView
             style="@style/text15"
             android:layout_marginTop="25dp"
-            android:text="@string/payment_set_nicepay_info"/>
+            android:text="@string/payment_set_pg_info"/>
 
         <TextView
             style="@style/text15d"
-            android:text="@string/mid"
+            android:text="@string/payment_set_pg_reg_number"
             android:layout_marginTop="30dp"/>
 
         <EditText
-            android:id="@+id/etMid"
+            android:id="@+id/etRegNum"
             style="@style/edittext"
-            android:layout_marginVertical="10dp"/>
-
-        <TextView
-            style="@style/subtext"
-            android:text="@string/mid_info"/>
+            android:inputType="number"
+            android:hint="@string/payment_set_pg_reg_number_hint"
+            android:layout_marginTop="10dp"/>
 
         <TextView
             style="@style/text15d"
-            android:text="@string/key"
+            android:text="@string/payment_set_pg_store_name"
             android:layout_marginTop="20dp"/>
 
         <EditText
-            android:id="@+id/etKey"
+            android:id="@+id/etStoreName"
             style="@style/edittext"
-            android:inputType="textPassword"
-            android:layout_marginVertical="10dp"/>
+            android:hint="@string/payment_set_pg_store_name_hint"
+            android:layout_marginTop="10dp"/>
 
         <TextView
-            style="@style/subtext"
-            android:text="@string/key_info"/>
-
-        <TextView
-            style="@style/subtext"
-            android:text="@string/payment_set_nicepay_info2"
+            style="@style/text15d"
+            android:text="@string/payment_set_pg_owner_name"
             android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:id="@+id/etOwnerName"
+            style="@style/edittext"
+            android:inputType="text"
+            android:hint="@string/payment_set_pg_owner_name_hint"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            style="@style/text15d"
+            android:text="@string/payment_set_pg_store_tel"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:id="@+id/etStoreTel"
+            style="@style/edittext"
+            android:inputType="phone"
+            android:hint="@string/payment_set_pg_store_tel_hint"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            style="@style/text15d"
+            android:text="@string/payment_set_pg_store_addr"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:id="@+id/etStoreAddr"
+            style="@style/edittext"
+            android:inputType="text"
+            android:hint="@string/payment_set_pg_store_addr_hint"
+            android:layout_marginTop="10dp"/>
+
     </LinearLayout>
 
     <TextView
@@ -79,8 +104,7 @@
         android:layout_width="match_parent"
         android:layout_marginBottom="30dp"
         android:layout_marginHorizontal="20dp"
-        android:text="@string/btn_set_nicepay"
-        android:textSize="17sp"
+        android:text="@string/btn_save"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

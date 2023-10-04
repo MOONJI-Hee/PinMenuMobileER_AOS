@@ -17,7 +17,7 @@ import com.wooriyo.pinmenumobileer.model.PaySettingDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.payment.NicepayInfoActivity
 import com.wooriyo.pinmenumobileer.payment.ReaderModelActivity
-import com.wooriyo.pinmenumobileer.payment.SetNicepayActivity
+import com.wooriyo.pinmenumobileer.payment.SetPgInfoActivity
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -55,16 +55,15 @@ class SetPayFragment : Fragment() {
         binding.ckPostQR.isChecked = settingDTO.qrbuse == "Y"
         binding.ckPostCard.isChecked = settingDTO.cardbuse == "Y"
 
-        val stts = if(settingDTO.mid.isNotEmpty() && settingDTO.mid_key.isNotEmpty()) "연결완료" else "연결전"
+        val stts = if(settingDTO.mid.isNotEmpty() && settingDTO.mid_key.isNotEmpty()) "사용가능" else "연결전"
         binding.statusQR.text = String.format(getString(R.string.payment_status), stts)
 
         binding.setQR.setOnClickListener {
             if(settingDTO.mid.isEmpty() || settingDTO.mid_key.isEmpty()) {
                 startActivity(Intent(context, NicepayInfoActivity::class.java))
             }else{
-                val intent = Intent(context, SetNicepayActivity::class.java)
-                intent.putExtra("mid", settingDTO.mid)
-                intent.putExtra("mid_key", settingDTO.mid_key)
+                //수정 필요
+                val intent = Intent(context, SetPgInfoActivity::class.java)
                 startActivity(intent)
             }
         }

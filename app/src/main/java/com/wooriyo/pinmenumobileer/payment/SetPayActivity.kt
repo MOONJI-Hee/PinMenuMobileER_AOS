@@ -73,16 +73,15 @@ class SetPayActivity : BaseActivity() {
         binding.ckPostQR.isChecked = settingDTO.qrbuse == "Y"
         binding.ckPostCard.isChecked = settingDTO.cardbuse == "Y"
 
-        val stts = if(settingDTO.mid.isNotEmpty() && settingDTO.mid_key.isNotEmpty()) "연결완료" else "연결전"
+        val stts = if(settingDTO.mid.isNotEmpty() && settingDTO.mid_key.isNotEmpty()) "사용가능" else "연결전"
         binding.statusQR.text = String.format(getString(R.string.payment_status), stts)
 
         binding.setQR.setOnClickListener {
             if(settingDTO.mid.isEmpty() || settingDTO.mid_key.isEmpty()) {
                 startActivity(Intent(mActivity, NicepayInfoActivity::class.java))
             }else{
-                val intent = Intent(mActivity, SetNicepayActivity::class.java)
-                intent.putExtra("mid", settingDTO.mid)
-                intent.putExtra("mid_key", settingDTO.mid_key)
+                //수정 필요
+                val intent = Intent(mActivity, SetPgInfoActivity::class.java)
                 startActivity(intent)
             }
         }

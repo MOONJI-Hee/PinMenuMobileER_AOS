@@ -9,7 +9,7 @@ import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.ActivityQrAgreeBinding
 import com.wooriyo.pinmenumobileer.model.ResultDTO
-import com.wooriyo.pinmenumobileer.payment.SetNicepayActivity
+import com.wooriyo.pinmenumobileer.payment.SetPgInfoActivity
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,9 +25,16 @@ class QrAgreeActivity : BaseActivity() {
         binding = ActivityQrAgreeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if(MyApplication.store.mid.isNullOrEmpty() || MyApplication.store.mid_key.isNullOrEmpty()) {
+            binding.niceStatus.text = "연결전"
+        }else {
+            binding.niceStatus.text = "사용가능"
+        }
+
         binding.run {
             back.setOnClickListener { finish() }
-            btnNicePay.setOnClickListener { startActivity(Intent(mActivity, SetNicepayActivity::class.java)) }
+            // 수정 필요
+            btnNicePay.setOnClickListener { startActivity(Intent(mActivity, SetPgInfoActivity::class.java)) }
             btnQrSet.setOnClickListener { goQrSetting() }
         }
     }

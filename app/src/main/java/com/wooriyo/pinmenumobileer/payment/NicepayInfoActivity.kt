@@ -18,7 +18,8 @@ class NicepayInfoActivity : BaseActivity() {
         binding.back.setOnClickListener { finish() }
         binding.joinWay.setOnClickListener { startActivity(Intent(this@NicepayInfoActivity, NicepayJoinWayActivity::class.java)) }
         binding.setting.setOnClickListener {
-            val intent = Intent(this@NicepayInfoActivity, SetNicepayActivity::class.java)
+            // 수정 필요
+            val intent = Intent(this@NicepayInfoActivity, SetPgInfoActivity::class.java)
             intent.putExtra("fromOrder", fromOrder)
             startActivity(intent)
         }

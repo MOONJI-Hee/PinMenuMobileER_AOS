@@ -116,7 +116,7 @@ class OrderListActivity : BaseActivity() {
                             super.onQrClick(position, status)
                             if(status) {
                                 val intent = Intent(mActivity, QrActivity::class.java)
-                                intent.putExtra("ordcode", orderList[position].ordcode)
+                                intent.putExtra("ordcode_key", orderList[position].ordcode_key)
                                 startActivity(intent)
                             }else {
                                 val intent = Intent(mActivity, NicepayInfoActivity::class.java)
