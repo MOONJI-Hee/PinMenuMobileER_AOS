@@ -27,6 +27,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PinmenuMobileER">
         <activity
+            android:name=".pg.PgCancelActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pg.PgHistoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".payment.SetPgInfoActivity"
             android:exported="false" />
         <activity

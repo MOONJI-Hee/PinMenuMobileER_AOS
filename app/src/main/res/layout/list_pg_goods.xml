@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="110dp"
+    android:layout_marginTop="4dp"
+    android:paddingVertical="15dp"
+    android:paddingHorizontal="20dp"
+    android:background="@color/white">
+
+    <TextView
+        style="@style/text17b"
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:maxLines="1"
+        android:ellipsize="marquee"/>
+
+    <TextView
+        style="@style/subtext"
+        android:id="@+id/option"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:ellipsize="marquee"
+        android:maxLines="1"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+        <TextView
+            style="@style/text_num_b"
+            android:id="@+id/cnt"
+            android:textSize="17sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+        <TextView
+            style="@style/text15"
+            android:id="@+id/gea"
+            android:text="@string/gea"
+            android:layout_marginStart="4dp"
+            app:layout_constraintStart_toEndOf="@+id/cnt"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            style="@style/text_num_b"
+            android:id="@+id/price"
+            android:text="@string/zero"
+            android:textSize="17sp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/won"/>
+        <TextView
+            style="@style/text15"
+            android:id="@+id/won"
+            android:text="@string/won"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

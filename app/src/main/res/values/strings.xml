@@ -71,6 +71,7 @@
     <string name="day">일</string>
     <string name="tilde">~</string>
     <string name="colon">:</string>
+    <string name="right_angle">\></string>
     <string name="zero">0</string>
     <string name="zero2">00</string>
     <string name="min">분</string>
@@ -238,7 +239,6 @@
     <string name="payment_set_pg_owner_name">대표자명</string>
     <string name="payment_set_pg_owner_name_hint">사업자등록증의 대표자명을 작성해 주세요.</string>
     <string name="payment_set_pg_dialog_blink">모든 정보가 입력되어야 합니다.\n하나의 정보도 누락없이 작성해 주세요.</string>
-    <string name="payment_dialog_back">돌아가기</string>
 
     <!--  프린터  -->
     <string name="printer_title_store">매장 선택</string>
@@ -355,6 +355,18 @@
     <string name="order_merge_info">해당 항목으로 선택된 주문 정보를 합칩니다.\n합쳐진 이후에는 복구가 불가능합니다.</string>
     <string name="merge">합치기</string>
     <string name="order_dialog_clear">주문정보는 3일간 보관되며,\n\'초기화\'버튼을 누르면 모든 주문정보가\n삭제됩니다.</string>
+
+    <!--  결제 내역  -->
+    <string name="payment_history">결제내역</string>
+    <string name="payment_cancel">결제취소</string>
+    <string name="pg_history">PG결제 내역</string>
+    <string name="pg_cancel">PG결제 취소</string>
+    <string name="pg_history_search_hint">금액(원)</string>
+    <string name="dialog_no_pg_info1">핀메뉴 QR코드 주문&amp;결제가 활성화되지 않았습니다.</string>
+    <string name="dialog_no_pg_info2">신청방법</string>
+    <string name="dialog_no_pg_info3">핀메뉴 웹사이트 > 햄버거버튼</string>
+    <string name="dialog_no_pg_info4">PG(나이스페이먼츠) 신청/관리</string>
+    <string name="dialog_pg_cancel_info">결제취소가 진행되면 복구할 수 없습니다.\n(취소처리는 카드사에 따라 다를 수 있음)</string>
 
     <!-- 주문 결제 -->
     <string name="order_select_pay">다음 중 하나를 선택해 주세요</string>

@@ -16,6 +16,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:paddingHorizontal="28dp"
         android:background="@drawable/bg_r6w10">
 
         <LinearLayout
@@ -25,30 +26,24 @@
             android:gravity="center"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/view"
+            app:layout_constraintEnd_toStartOf="@+id/btnCall"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
             <TextView
-                style="@style/text_num_b"
                 android:id="@+id/ordCnt"
-                android:textSize="22sp"
+                style="@style/text_num_b"
                 android:textColor="@color/selector_text_white"
+                android:textSize="22sp"
                 tools:text="2" />
+
             <TextView
-                style="@style/text15w"
                 android:id="@+id/ordTxt"
+                style="@style/text15w"
                 android:layout_marginTop="10dp"
                 android:text="@string/order_history" />
         </LinearLayout>
-
-        <View
-            android:id="@+id/view"
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnCall"
-            app:layout_constraintStart_toEndOf="@+id/btnOrder"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/btnCall"
@@ -56,21 +51,48 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/view"
-            app:layout_constraintTop_toTopOf="@+id/view">
+            app:layout_constraintBottom_toTopOf="@+id/btnOrder"
+            app:layout_constraintEnd_toStartOf="@+id/btnPayHistory"
+            app:layout_constraintStart_toEndOf="@+id/btnOrder"
+            app:layout_constraintTop_toTopOf="@+id/btnOrder">
+
             <TextView
                 android:id="@+id/callCnt"
                 style="@style/text_num_b"
-                android:textSize="22sp"
                 android:textColor="@color/selector_text_white"
+                android:textSize="22sp"
                 tools:text="2" />
+
             <TextView
-                style="@style/text15w"
                 android:id="@+id/callTxt"
+                style="@style/text15w"
                 android:layout_marginTop="10dp"
                 android:text="@string/call_emp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnPayHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/btnOrder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnCall"
+            app:layout_constraintTop_toTopOf="@+id/btnOrder">
+
+            <TextView
+                android:id="@+id/payCnt"
+                style="@style/text_num_b"
+                android:textColor="@color/selector_text_white"
+                android:textSize="22sp"
+                tools:text="2" />
+
+            <TextView
+                android:id="@+id/payTxt"
+                style="@style/text15w"
+                android:layout_marginTop="10dp"
+                android:text="@string/payment_history" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
