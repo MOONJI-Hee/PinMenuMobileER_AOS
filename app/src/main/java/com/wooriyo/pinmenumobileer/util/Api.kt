@@ -421,6 +421,41 @@ interface Api {
         @Query("name") storeName: String
     ): Call<ResultDTO>
 
+    // pg 결제 고객 정보 받기 설정
+    @GET("m/set_qrcustominfo.php")
+    fun setQrCustomInfo(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("blnm") name: String,
+        @Query("blph") phone: String,
+        @Query("bladr") addr: String,
+        @Query("bletc") etc: String,
+        @Query("strMemo") strMemo: String
+    ): Call<PgResultDTO>
+
+    // pg 결제 내역
+    @GET("m/pg.list.php")
+    fun getPgList(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int
+    ): Call<PgResultDTO>
+
+    // pg 결제 내역 상세
+    @GET("m/pgDetail.php")
+    fun getPgDetail(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("ordcode") ordcode: String
+    ): Call<PgDetailResultDTO>
+
+    // pg 결제 취소
+    @GET("m/pg.cancel.php")
+    fun cancelPG(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("tid") tid: String
+    ): Call<ResultDTO>
+
     // 카카오 지도 관련 api
     @GET("/v2/local/search/address.json")
     fun kakaoSearch(
