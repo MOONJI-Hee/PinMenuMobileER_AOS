@@ -64,14 +64,16 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
-            style="@style/text17"
+            style="@style/text_num"
             android:text="Table "
+            android:textSize="17dp"
             app:layout_constraintBottom_toBottomOf="@+id/regdt"
             app:layout_constraintEnd_toStartOf="@+id/tableNo"/>
 
         <TextView
-            style="@style/text17b"
+            style="@style/text_num_b"
             android:id="@+id/tableNo"
+            android:textSize="17dp"
             app:layout_constraintBottom_toBottomOf="@+id/regdt"
             app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -96,6 +98,5 @@
         android:text="@string/payment_cancel"
         app:layout_constraintTop_toBottomOf="@+id/rvGoods"
         app:layout_constraintBottom_toBottomOf="parent"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

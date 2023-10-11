@@ -70,9 +70,6 @@ class StoreListFragment : Fragment() {
         // 매장리스트 배경 최소 높이 지정 (최소 화면을 덮을 정도로)
         binding.storeArea.minHeight = MyApplication.height - (84 * MyApplication.density).toInt()
 
-        // 매장리스트 조회
-        getStoreList()
-
         // 우측 상단에 userid, 알파요 연동여부 출력
         val member = MyApplication.pref.getMbrDTO()
         if(member != null) {
@@ -83,6 +80,11 @@ class StoreListFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getStoreList()
     }
 
     // 매장리스트 조회 Api

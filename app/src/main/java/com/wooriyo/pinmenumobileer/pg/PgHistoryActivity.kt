@@ -61,6 +61,8 @@ class PgHistoryActivity : BaseActivity() {
 
                 when(result.status) {
                     1 -> {
+                        result.pgHistoryList.removeIf { it.title.isEmpty() }
+
                         pgHistoryList.clear()
                         pgHistoryList.addAll(result.pgHistoryList)
                         pgHistoryAdapter.notifyDataSetChanged()

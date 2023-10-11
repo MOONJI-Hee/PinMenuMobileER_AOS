@@ -26,7 +26,9 @@ class PgHistoryAdapter(val dataSet: ArrayList<PgHistoryDTO>): RecyclerView.Adapt
         fun bind(data: PgHistoryDTO) {
             binding.title.text = data.title
 
-            binding.rvPg.adapter = PgAdapter(data.pgDetailList)
+            if(data.pgDetailList.isNotEmpty()) {
+                binding.rvPg.adapter = PgAdapter(data.pgDetailList)
+            }
         }
     }
 }

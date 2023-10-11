@@ -42,9 +42,10 @@ class MemberSetActivity: BaseActivity(), View.OnClickListener {
             arpayoId = memberDTO!!.arpayoid?:""
         }
 
-
         binding.title.text = getString(R.string.title_udt_mbr)
         binding.tvId.text = userid
+        binding.etPwd.setText(MyApplication.pref.getPw())
+
         if(memberDTO?.isAlpha == "Y" && arpayoId.isNotEmpty()) {
             binding.etArpayo.setText(arpayoId)
             arpaLinked = true

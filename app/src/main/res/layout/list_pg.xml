@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="130dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:padding="20dp">
 
     <TextView
@@ -30,7 +31,8 @@
         android:textSize="20dp"
         android:layout_marginEnd="3dp"
         app:layout_constraintBottom_toBottomOf="@+id/cardInfo"
-        app:layout_constraintEnd_toStartOf="@+id/won"/>
+        app:layout_constraintEnd_toStartOf="@+id/won"
+        tools:text="5,000"/>
 
     <TextView
         style="@style/text15"
@@ -54,7 +56,7 @@
         android:id="@+id/cancelComplete"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white25"
+        android:background="#BFFFFFFF"
         android:visibility="gone">
         <ImageView
             android:layout_width="88dp"

@@ -403,10 +403,10 @@
     <string name="qr_join_way">가맹점 가입방법</string>
     <string name="qr_guide_title">QR코드 카드결제를 이용하기 위한 절차</string>
     <string name="qr_guide_fir">1. 나이스페이먼츠 가맹점 계약 신청 및 우편 발송</string>
-    <string name="qr_guide_fir_1">・자세한 사항은 핀메뉴 웹사이트에 있습니다.\n&#160;&#160;&#160;&#160;<font color="#006CFF">(경로 : www.pinmenu.biz > 하단 QR결제\n&#160;&#160;&#160;&#160;> 가맹점 계약)</font></string>
-    <string name="qr_guide_fir_2">・ 나이스페이먼츠와 가맹점 계약을 통해 핀메뉴\n&#160;&#160;&#160;&#160;결제 수수료가 정해집니다.\n&#160;&#160;&#160;&#160;(핀메뉴는 나이스페이먼츠의 정책에 따릅니다.)</string>
+    <string name="qr_guide_fir_1">・자세한 사항은 핀메뉴 웹사이트에 있습니다.\n&#160;&#160;&#160;&#160;<font color="#006CFF">(경로 : www.pinmenu.biz > 로그인 >\n&#160;&#160;&#160;&#160;상단 햄버거 버튼 > PG 신청/관리)</font></string>
+    <string name="qr_guide_fir_2">・나이스페이먼츠와 가맹점 계약을 통해 핀메뉴\n&#160;&#160;&#160;&#160;결제 수수료가 정해집니다.\n&#160;&#160;&#160;&#160;(핀메뉴는 나이스페이먼츠의 정책에 따릅니다.)</string>
     <string name="qr_guide_sec">2. PG 카드 심사 정보 작성</string>
-    <string name="qr_guide_sec_1">・사업자번호, 상호, 대표자명, 연락처, 사업장주소를\n&#160;&#160;&#160;&#160;누락없이 작성</string>
+    <string name="qr_guide_sec_1">・사업자정보, 상호, 대표자명, 연락처, 사업장주소를\n&#160;&#160;&#160;&#160;사업자등록증에 기재된 내용대로 누락없이 작성</string>
 
     <!--  타이틀  -->
     <string name="title_login">핀메뉴 로그인</string>
@@ -424,8 +424,8 @@
     <string name="title_map">지도 검색</string>
 
     <!--  비어있는 목록  -->
-    <string name="no_order_list">주문정보가 없습니다.</string>
-    <string name="no_call_list">호출정보가 없습니다.</string>
+    <string name="no_order_list">주문내역이 없습니다.</string>
+    <string name="no_call_list">호출내역이 없습니다.</string>
     <string name="no_store_list">등록된 매장이 없습니다.</string>
 
     <!--  확인 다이얼로그  -->
