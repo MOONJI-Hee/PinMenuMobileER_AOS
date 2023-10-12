@@ -430,8 +430,9 @@ interface Api {
         @Query("blph") phone: String,
         @Query("bladr") addr: String,
         @Query("bletc") etc: String,
-        @Query("strMemo") strMemo: String
-    ): Call<PgResultDTO>
+        @Query("blmemo") memo: String,
+        @Query("memo") strMemo: String
+    ): Call<ResultDTO>
 
     // pg 결제 내역
     @GET("m/pg.list.php")

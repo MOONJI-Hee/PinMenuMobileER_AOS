@@ -368,6 +368,20 @@
     <string name="dialog_no_pg_info4">PG(나이스페이먼츠) 신청/관리</string>
     <string name="dialog_pg_cancel_info">결제취소가 진행되면 복구할 수 없습니다.\n(취소처리는 카드사에 따라 다를 수 있음)</string>
 
+    <!--  QR코드 결제고객 정보  -->
+    <string name="qr_customer_info_title">QR코드 결제고객정보</string>
+    <string name="qr_select_info">정보 선택</string>
+    <string name="qr_select_info_info">핀메뉴를 통해 확보된 고객의 개인정보는 저장 후\n3개월이 지나면 자동 삭제됩니다.</string>
+    <string name="qr_customer_info_name">성명</string>
+    <string name="qr_customer_info_phone">휴대폰 번호</string>
+    <string name="qr_customer_info_addr">배송지 주소</string>
+    <string name="qr_customer_info_etc">기타 입력 (30자)</string>
+    <string name="qr_customer_info_noti">안내문</string>
+    <string name="qr_customer_info_noti_hint">개인정보를 어떤 용도로 사용하는지 고객에게 안내 할 수 있습니다.\n사용을 원하지 않으시면 OFF 하세요.</string>
+    <string name="qr_select_table">테이블 선택</string>
+    <string name="qr_select_all">전체</string>
+    <string name="dialog_no_business">본 기능은 비즈니스 상품 이용 고객에게 제공됩니다. 이용을 위해서는 비즈니스 상품으로 변경해주세요.</string>
+
     <!-- 주문 결제 -->
     <string name="order_select_pay">다음 중 하나를 선택해 주세요</string>
     <string name="order_pay_qr">QR코드 결제</string>

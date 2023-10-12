@@ -21,10 +21,25 @@
 
         <TextView
             style="@style/more_menu"
+            android:id="@+id/qrCustomerInfo"
+            android:text="@string/qr_customer_info_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_list_arrow_right"
+            app:layout_constraintTop_toTopOf="@+id/qrCustomerInfo"
+            app:layout_constraintBottom_toBottomOf="@+id/qrCustomerInfo"
+            app:layout_constraintEnd_toEndOf="@+id/qrCustomerInfo"/>
+
+        <TextView
+            style="@style/more_menu"
             android:id="@+id/udtMbr"
             android:text="@string/title_udt_mbr"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/qrCustomerInfo"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

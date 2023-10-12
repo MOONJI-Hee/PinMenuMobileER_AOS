@@ -13,10 +13,11 @@ import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.common.AlertDialog
 import com.wooriyo.pinmenumobileer.common.ConfirmDialog
+import com.wooriyo.pinmenumobileer.common.SelectStoreActivity
 import com.wooriyo.pinmenumobileer.databinding.FragmentMoreBinding
 import com.wooriyo.pinmenumobileer.member.LoginActivity
 import com.wooriyo.pinmenumobileer.model.ResultDTO
-import com.wooriyo.pinmenumobileer.store.StoreListActivity
+import com.wooriyo.pinmenumobileer.pg.SetCustomerInfoActivity
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,6 +38,23 @@ class MoreFragment : Fragment() {
         binding = FragmentMoreBinding.inflate(layoutInflater)
 
         binding.run {
+            qrCustomerInfo.setOnClickListener {
+                when(MyApplication.storeList.size) {
+                    0 -> Toast.makeText(context, R.string.msg_no_store, Toast.LENGTH_SHORT).show()
+                    1 -> {
+                        if(MyApplication.storeList[0].paytype == 2) {
+                            MyApplication.store = MyApplication.storeList[0]
+                            MyApplication.storeidx = MyApplication.storeList[0].idx
+                            startActivity(Intent(context, SetCustomerInfoActivity::class.java))
+                        }else {
+                            AlertDialog("", getString(R.string.dialog_no_business), 1).show((activity as MainActivity).supportFragmentManager, "NoBusinessDialog")
+                        }
+                    }
+                    else ->  {
+                        startActivity(Intent(context, SelectStoreActivity::class.java))
+                    }
+                }
+            }
             udtMbr.setOnClickListener { startActivity(Intent(context, MemberSetActivity::class.java)) }
             versionInfo.setOnClickListener {
                 val content = getString(R.string.dialog_version).format(MyApplication.appver)

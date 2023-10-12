@@ -33,6 +33,9 @@
             android:name=".pg.PgHistoryActivity"
             android:exported="false" />
         <activity
+            android:name=".pg.SetCustomerInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".payment.SetPgInfoActivity"
             android:exported="false" />
         <activity
