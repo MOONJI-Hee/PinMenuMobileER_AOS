@@ -76,7 +76,7 @@ class CallListActivity : BaseActivity() {
 
     // 초기화 / 초기화 확인 다이얼로그 초기화
     fun setClearDialog() {
-        clearDialog = ClearDialog(View.OnClickListener {
+        clearDialog = ClearDialog("call", View.OnClickListener {
             clearDialog.dismiss()
             clearConfirmDialog.show(supportFragmentManager, "ClearConfirmDialog")
         })
@@ -155,9 +155,9 @@ class CallListActivity : BaseActivity() {
             })
     }
 
-    // 주문 초기화
+    // 호출 초기화
     fun clear() {
-        ApiClient.service.clearOrder(useridx, storeidx).enqueue(object:Callback<ResultDTO>{
+        ApiClient.service.clearCall(useridx, storeidx).enqueue(object:Callback<ResultDTO>{
             override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                 Log.d(TAG, "직원호출 초기화 url : $response")
                 if(!response.isSuccessful) return

@@ -342,6 +342,7 @@
     <string name="call_udt">호출목록 수정</string>
     <string name="call_name">목록명</string>
     <string name="call_name_hint">목록명을 입력해주세요.</string>
+    <string name="call_dialog_clear">직원호출 목록은 3일간 보관되며,\n\'초기화\'버튼을 누르면 모든 호출정보가\n삭제됩니다.</string>
 
     <!-- 주문 정보 -->
     <string name="title_order">주문정보</string>

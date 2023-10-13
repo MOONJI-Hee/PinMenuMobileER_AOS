@@ -210,7 +210,7 @@ class OrderListActivity : BaseActivity() {
 
     // 초기화 / 초기화 확인 다이얼로그 초기화
     fun setClearDialog() {
-        clearDialog = ClearDialog(View.OnClickListener {
+        clearDialog = ClearDialog("order", View.OnClickListener {
             clearDialog.dismiss()
             clearConfirmDialog.show(supportFragmentManager, "ClearConfirmDialog")
         })
