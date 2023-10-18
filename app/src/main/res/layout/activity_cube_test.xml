@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CubeTestActivity">
+
+    <TextView
+        android:id="@+id/status"
+        style="@style/text18"
+        android:text="상태" />
+
+    <TextView
+        android:id="@+id/find"
+        style="@style/btn"
+        android:layout_width="150dp"
+        android:layout_marginTop="10dp"
+        android:text="프린터 찾기"/>
+
+    <TextView
+        style="@style/btn"
+        android:id="@+id/print"
+        android:layout_width="150dp"
+        android:layout_marginTop="10dp"
+        android:text="인쇄"/>
+
+    <TextView
+        style="@style/btn_sub"
+        android:id="@+id/back"
+        android:layout_width="150dp"
+        android:layout_marginTop="30dp"
+        android:text="돌아가기"/>
+
+</LinearLayout>

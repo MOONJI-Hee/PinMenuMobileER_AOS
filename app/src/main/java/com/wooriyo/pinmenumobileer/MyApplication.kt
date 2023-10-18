@@ -1,5 +1,6 @@
 package com.wooriyo.pinmenumobileer
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -14,15 +15,35 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.view.WindowManager
+import com.sam4s.printer.Sam4sPrint
 import com.sewoo.jpos.printer.ESCPOSPrinter
 import com.sewoo.port.android.BluetoothPort
 import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.model.SharedDTO
 import com.wooriyo.pinmenumobileer.model.StoreDTO
+import com.wooriyo.pinmenumobileer.printer.PrinterConnection
 
 
 class MyApplication: Application() {
+
+    //Sam4s 프린터 관련
+    lateinit var mPrinterConnection: PrinterConnection
+
+    init {
+        INSTANCE = this
+    }
+
+    fun  getPrinterConnection():PrinterConnection?{
+        return mPrinterConnection
+    }
+
+    fun setPrinterConnection(connection:PrinterConnection) {
+        mPrinterConnection = connection
+    }
+
     companion object {
+        lateinit var INSTANCE: MyApplication
+
         lateinit var pref: SharedDTO
 //        lateinit var db : AppDatabase
 
@@ -100,6 +121,12 @@ class MyApplication: Application() {
         escposPrinter = ESCPOSPrinter()
 
         createNotificationChannel()
+
+
+
+
+        mPrinterConnection = PrinterConnection(applicationContext, 0)
+
 
         super.onCreate()
     }

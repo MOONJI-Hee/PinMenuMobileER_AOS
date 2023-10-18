@@ -48,5 +48,6 @@ class AppProperties {
         const val SPACE_SMALL = 5
 
         const val TITLE_MENU = "메     뉴     명                                수량     구분"
+        const val TITLE_MENU_CUBE = "메   뉴   명                   수량   구분"
     }
 }
