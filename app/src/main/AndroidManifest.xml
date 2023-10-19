@@ -31,13 +31,7 @@
         android:theme="@style/Theme.PinmenuMobileER">
         <activity
             android:name=".CubeTestActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false"/>
         <activity
             android:name=".pg.PgCancelActivity"
             android:exported="false" />
@@ -68,7 +62,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".payment.NicepayJoinWayActivity"
             android:exported="false" />
@@ -86,9 +80,6 @@
             android:exported="false" />
         <activity
             android:name=".payment.ReaderModelActivity"
-            android:exported="false" />
-        <activity
-            android:name=".payment.SetPayActivity"
             android:exported="false" />
         <activity
             android:name=".order.PayCardActivity"
@@ -118,9 +109,6 @@
             android:name=".printer.NewConnActivity"
             android:exported="false" />
         <activity
-            android:name=".printer.PrinterMenuActivity"
-            android:exported="false" />
-        <activity
             android:name=".common.MapActivity"
             android:exported="false" />
         <activity
@@ -141,19 +129,17 @@
         <activity
             android:name=".member.StartActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".more.MemberSetActivity"
             android:exported="false" />
         <activity
-            android:name=".more.MoreActivity"
-            android:exported="false" />
-        <activity
             android:name=".order.OrderListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".store.StoreListActivity"
             android:exported="false" />
 
         <meta-data

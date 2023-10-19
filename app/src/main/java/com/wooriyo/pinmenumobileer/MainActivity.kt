@@ -1,8 +1,10 @@
 package com.wooriyo.pinmenumobileer
 
 import android.Manifest
+import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
@@ -10,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeList
@@ -33,10 +36,20 @@ class MainActivity : BaseActivity() {
     val TAG = "MainActivity"
     val mActivity = this
 
+    var isMain = true
+
     @RequiresApi(33)
     val pms_noti : String = Manifest.permission.POST_NOTIFICATIONS
 
-    var isMain = true
+    private val permissions = arrayOf(
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    )
+
+    private val permissions_bt = arrayOf(
+        Manifest.permission.BLUETOOTH_CONNECT,
+        Manifest.permission.BLUETOOTH_SCAN
+    )
 
     val goQrAgree = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
@@ -44,17 +57,29 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    private val turnOnBluetoothResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if(it.resultCode == RESULT_OK) { }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        goMain()
+        val type : Int = intent.getIntExtra("type", 0)
+
+        if(type == null || type == 0) {
+            goMain()
+        }else if(type == 1) {
+            setNavi(binding.icPay.id)
+        }
 
         // 알림 권한 확인
         if(MyApplication.osver >= 33) {
             checkNotiPms()
         }
+        // 위치 권한 확인
+        checkPermissions()
 
         binding.run {
             icMain.setOnClickListener { goMain() }
@@ -63,6 +88,103 @@ class MainActivity : BaseActivity() {
             icPrint.setOnClickListener { setNavi(it.id) }
             icMore.setOnClickListener { setNavi(it.id) }
         }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        when(requestCode) {
+            AppProperties.REQUEST_ENABLE_BT -> {
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    checkBluetooth()
+                }
+            }
+            AppProperties.REQUEST_LOCATION -> {
+                grantResults.forEach {
+                    if(it == PackageManager.PERMISSION_DENIED) {
+                        getLocationPms()
+                        return
+                    }
+                }
+                if (MyApplication.osver >= Build.VERSION_CODES.S)
+                    checkBluetoothPermission()
+                else
+                    checkBluetooth()
+            }
+        }
+    }
+
+    // 위치 권한 확인하기
+    fun checkPermissions() {
+        val deniedPms = ArrayList<String>()
+
+        for (pms in permissions) {
+            if(ActivityCompat.checkSelfPermission(mActivity, pms) != PackageManager.PERMISSION_GRANTED) {
+                if(ActivityCompat.shouldShowRequestPermissionRationale(mActivity, pms)) {
+                    AlertDialog.Builder(mActivity)
+                        .setTitle(R.string.pms_location_content)
+                        .setMessage(R.string.pms_location_content)
+                        .setPositiveButton(R.string.confirm) { dialog, _ ->
+                            dialog.dismiss()
+                            getLocationPms()
+                        }
+                        .setNegativeButton(R.string.cancel) {dialog, _ -> dialog.dismiss()}
+                        .show()
+                }else {
+                    deniedPms.add(pms)
+                }
+            }
+        }
+
+        if(deniedPms.isEmpty()) {
+            if (MyApplication.osver >= Build.VERSION_CODES.S)
+                checkBluetoothPermission()
+            else
+                checkBluetooth()
+        }else {
+            getLocationPms()
+        }
+    }
+
+    //권한 받아오기
+    fun getLocationPms() {
+        ActivityCompat.requestPermissions(mActivity, permissions, AppProperties.REQUEST_LOCATION)
+    }
+
+    fun checkBluetoothPermission() {
+        val deniedPms = ArrayList<String>()
+
+        for (pms in permissions_bt) {
+            if(ActivityCompat.checkSelfPermission(mActivity, pms) != PackageManager.PERMISSION_GRANTED) {
+                if(ActivityCompat.shouldShowRequestPermissionRationale(mActivity, pms)) {
+                    AlertDialog.Builder(mActivity)
+                        .setTitle(R.string.pms_bluetooth_title)
+                        .setMessage(R.string.pms_bluetooth_content)
+                        .setPositiveButton(R.string.confirm) { dialog, _ ->
+                            dialog.dismiss()
+                            getBluetoothPms()
+                            return@setPositiveButton
+                        }
+                        .setNegativeButton(R.string.cancel) {dialog, _ ->
+                            dialog.dismiss()
+                            return@setNegativeButton
+                        }
+                        .show()
+                }else
+                    deniedPms.add(pms)
+            }
+        }
+
+        if(deniedPms.isEmpty() || deniedPms.size == 0) {
+            checkBluetooth()
+        }else {
+            getBluetoothPms()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.S)
+    fun getBluetoothPms() {
+        ActivityCompat.requestPermissions(mActivity, permissions_bt, AppProperties.REQUEST_ENABLE_BT)
     }
 
     // SDK 33 이상에서 알림 권한 확인
@@ -88,6 +210,18 @@ class MainActivity : BaseActivity() {
     @RequiresApi(33)
     fun getNotiPms() {
         ActivityCompat.requestPermissions(mActivity, arrayOf(pms_noti), AppProperties.REQUEST_NOTIFICATION)
+    }
+
+    // 블루투스 ON/OFF 확인
+    fun checkBluetooth() {
+        if(!MyApplication.bluetoothAdapter.isEnabled) {   // 블루투스 꺼져있음
+            turnOnBluetooth()
+        }
+    }
+
+    //블루투스 ON
+    private fun turnOnBluetooth() {
+        turnOnBluetoothResult.launch(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE))
     }
 
     private fun replace(fragment: Fragment) {

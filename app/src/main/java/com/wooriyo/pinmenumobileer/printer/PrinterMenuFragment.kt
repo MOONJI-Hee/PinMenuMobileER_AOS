@@ -20,14 +20,10 @@ import androidx.core.app.ActivityCompat
 import com.wooriyo.pinmenumobileer.MainActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
-import com.wooriyo.pinmenumobileer.common.SelectStoreActivity
 import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.databinding.FragmentPrinterMenuBinding
-import com.wooriyo.pinmenumobileer.databinding.FragmentSetPayBinding
 import com.wooriyo.pinmenumobileer.model.PrintDTO
 import com.wooriyo.pinmenumobileer.model.PrintListDTO
-import com.wooriyo.pinmenumobileer.more.MoreActivity
-import com.wooriyo.pinmenumobileer.store.StoreListActivity
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -52,10 +48,6 @@ class PrinterMenuFragment : Fragment() {
         Manifest.permission.BLUETOOTH_CONNECT,
         Manifest.permission.BLUETOOTH_SCAN
     )
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -193,9 +185,7 @@ class PrinterMenuFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.S)
     fun getBluetoothPms() {
-        ActivityCompat.requestPermissions(activity as MainActivity, permissions_bt,
-            AppProperties.REQUEST_ENABLE_BT
-        )
+        ActivityCompat.requestPermissions(activity as MainActivity, permissions_bt, AppProperties.REQUEST_ENABLE_BT)
     }
 
     fun getConnPrintList() {

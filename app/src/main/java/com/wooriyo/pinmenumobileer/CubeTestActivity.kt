@@ -43,8 +43,7 @@ class CubeTestActivity : BaseActivity(), Runnable {
 
         binding.find.setOnClickListener { search() }
         binding.print.setOnClickListener { cut() }
-
-        binding.status.text = check()
+        binding.check.setOnClickListener { binding.status.text = check() }
     }
 
     override fun onPause() {

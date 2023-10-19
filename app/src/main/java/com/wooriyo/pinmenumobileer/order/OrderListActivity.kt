@@ -7,9 +7,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sam4s.printer.Sam4sBuilder
 import com.sewoo.jpos.command.ESCPOSConst
 import com.sewoo.jpos.printer.ESCPOSPrinter
 import com.wooriyo.pinmenumobileer.BaseActivity
+import com.wooriyo.pinmenumobileer.MyApplication
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.escposPrinter
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.store
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
@@ -27,6 +30,7 @@ import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.ONE_LINE_SMALL
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.SPACE_BIG
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.SPACE_SMALL
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.TITLE_MENU
+import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.TITLE_MENU_SAM4S
 import com.wooriyo.pinmenumobileer.databinding.ActivityOrderListBinding
 import com.wooriyo.pinmenumobileer.listener.DialogListener
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
@@ -56,9 +60,6 @@ class OrderListActivity : BaseActivity() {
 
     val orderList = ArrayList<OrderHistoryDTO>()
     val orderAdapter = OrderAdapter(orderList)
-
-    // 프린트 관련 변수 > MyApplication에 선언함
-    val escposPrinter = ESCPOSPrinter()
 
     var hyphen = StringBuilder()    // 하이픈
     var hyphen_num = 0              // 하이픈 개수
@@ -98,6 +99,10 @@ class OrderListActivity : BaseActivity() {
             one_line = ONE_LINE_BIG
             space = SPACE_BIG
         }
+
+        //TODO
+        hyphen_num = AppProperties.HYPHEN_NUM_SAM4S
+
         for (i in 1..hyphen_num) {
             hyphen.append("-")
         }
@@ -351,19 +356,53 @@ class OrderListActivity : BaseActivity() {
         val pTableNo = orderList[position].tableNo
         val pOrderNo = orderList[position].ordcode
 
-        escposPrinter.printAndroidFont(store.name, FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
-        escposPrinter.printAndroidFont("주문날짜 : $pOrderDt", FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
-        escposPrinter.printAndroidFont("주문번호 : $pOrderNo", FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
-        escposPrinter.printAndroidFont("테이블번호 : $pTableNo", FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
-        escposPrinter.printAndroidFont(TITLE_MENU, FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
-        escposPrinter.printAndroidFont(hyphen.toString(), FONT_WIDTH, font_size, ESCPOSConst.LK_ALIGNMENT_LEFT)
+//        escposPrinter.printAndroidFont(store.name, FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+//        escposPrinter.printAndroidFont("주문날짜 : $pOrderDt", FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+//        escposPrinter.printAndroidFont("주문번호 : $pOrderNo", FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+//        escposPrinter.printAndroidFont("테이블번호 : $pTableNo", FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+//        escposPrinter.printAndroidFont(TITLE_MENU, FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+//        escposPrinter.printAndroidFont(hyphen.toString(), FONT_WIDTH, font_size, ESCPOSConst.LK_ALIGNMENT_LEFT)
+//
+//        orderList[position].olist.forEach {
+//            val pOrder = getPrint(it)
+//            escposPrinter.printAndroidFont(pOrder, FONT_WIDTH, font_size, ESCPOSConst.LK_ALIGNMENT_LEFT)
+//        }
+//        escposPrinter.lineFeed(4)
+//        escposPrinter.cutPaper()
+
+
+        //SAM4S
+        val builder = Sam4sBuilder("GCube-100", intent.getIntExtra("language", 0))
+
+        builder.addTextLang(Sam4sBuilder.LANG_KO)
+        builder.addTextSize(1, 1)
+        builder.addFeedLine(1)
+
+        //addTextStyle
+        builder.addTextStyle(false, false, false, Sam4sBuilder.COLOR_1)
+
+        builder.addText("${store.name}\n")
+        builder.addText("주문날짜 : $pOrderDt\n")
+        builder.addText("주문번호 : $pOrderNo\n")
+        builder.addText("테이블번호 : $pTableNo\n")
+        builder.addText(TITLE_MENU_SAM4S)
+        builder.addText(hyphen.toString())
 
         orderList[position].olist.forEach {
-            val pOrder = getPrint(it)
-            escposPrinter.printAndroidFont(pOrder, FONT_WIDTH, font_size, ESCPOSConst.LK_ALIGNMENT_LEFT)
+            val pOrder = AppHelper.getSam4sPrint(it)
+            builder.addText("$pOrder\n")
         }
-        escposPrinter.lineFeed(4)
-        escposPrinter.cutPaper()
+        builder.addFeedLine(4)
+        builder.addCut(Sam4sBuilder.CUT_NO_FEED)
+
+        //send builder data
+        try {
+            //cl_Menu.mPrinter.sendData(builder);
+            MyApplication.INSTANCE.mPrinterConnection?.sendData(builder)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
     fun getPrint(ord: OrderDTO) : String {

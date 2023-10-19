@@ -122,11 +122,7 @@ class MyApplication: Application() {
 
         createNotificationChannel()
 
-
-
-
         mPrinterConnection = PrinterConnection(applicationContext, 0)
-
 
         super.onCreate()
     }

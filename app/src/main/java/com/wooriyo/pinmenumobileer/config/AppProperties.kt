@@ -37,17 +37,22 @@ class AppProperties {
 
         const val HANGUL_SIZE_BIG = 3.6
         const val HANGUL_SIZE_SMALL = 3.5
+        const val HANGUL_SIZE_SAM4S = 2
 
         const val ONE_LINE_BIG = 41
         const val ONE_LINE_SMALL = 53
+        const val ONE_LINE_SAM4S = 31
 
         const val HYPHEN_NUM_BIG = 50
         const val HYPHEN_NUM_SMALL = 66
+        const val HYPHEN_NUM_SAM4S = 42
 
         const val SPACE_BIG = 3
         const val SPACE_SMALL = 5
+        const val SPACE_SAM4S = 2
 
         const val TITLE_MENU = "메     뉴     명                                수량     구분"
-        const val TITLE_MENU_CUBE = "메   뉴   명                   수량   구분"
+        const val TITLE_MENU_SAM4S = "메   뉴   명                   수량   구분"
+
     }
 }

@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.wooriyo.pinmenumobileer.BaseDialogFragment
+import com.wooriyo.pinmenumobileer.MainActivity
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.DialogNoPayBinding
 import com.wooriyo.pinmenumobileer.order.OrderListActivity
-import com.wooriyo.pinmenumobileer.payment.SetPayActivity
 
 class SetNicepayDialog: BaseDialogFragment() {
     lateinit var binding: DialogNoPayBinding
@@ -29,7 +29,10 @@ class SetNicepayDialog: BaseDialogFragment() {
             dismiss()
         }
         binding.go.setOnClickListener {
-            startActivity(Intent(context, SetPayActivity::class.java))
+            val intent = Intent(context, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            intent.putExtra("type", 1)
+            startActivity(intent)
             dismiss()
         }
 

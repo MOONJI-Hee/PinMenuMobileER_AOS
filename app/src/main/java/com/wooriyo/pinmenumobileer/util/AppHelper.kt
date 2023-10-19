@@ -258,9 +258,82 @@ class AppHelper {
             val underline2 = StringBuilder()
 
             ord.name.forEach {
-                if(total < one_line)
+                if (total < one_line)
                     result.append(it)
-                else if(total < (one_line * 2))
+                else if (total < (one_line * 2))
+                    underline1.append(it)
+                else
+                    underline2.append(it)
+
+                if (it == ' ') {
+                    total++
+                } else
+                    total += hangul_size
+            }
+
+            val mlength = result.toString().length
+            val mHangul = result.toString().replace(" ", "").length
+            val mSpace = mlength - mHangul
+            val mLine = mHangul * hangul_size + mSpace
+
+            var diff = (one_line - mLine + 0.5).toInt()
+
+            if (MyApplication.store.fontsize == 1) {
+                if (ord.gea < 10) {
+                    diff += 1
+                    space = 4
+                } else if (ord.gea >= 100) {
+                    space = 1
+                }
+            } else if (MyApplication.store.fontsize == 2) {
+                if (ord.gea < 10) {
+                    diff += 1
+                    space += 2
+                } else if (ord.gea < 100) {
+                    space += 1
+                }
+            }
+
+            for (i in 1..diff) {
+                result.append(" ")
+            }
+            result.append(ord.gea.toString())
+
+            for (i in 1..space) {
+                result.append(" ")
+            }
+
+            var togo = ""
+            when (ord.togotype) {
+                1 -> togo = "신규"
+                2 -> togo = "포장"
+            }
+            result.append(togo)
+
+            if (underline1.toString() != "")
+                result.append("\n$underline1")
+
+            if (underline2.toString() != "")
+                result.append("\n$underline2")
+
+            return result.toString()
+        }
+
+        fun getSam4sPrint(ord: OrderDTO) : String {
+            var hangul_size = AppProperties.HANGUL_SIZE_SAM4S
+            var one_line = AppProperties.ONE_LINE_SAM4S
+            var space = AppProperties.SPACE_SAM4S
+
+            var total = 0.0
+
+            val result: StringBuilder = StringBuilder()
+            val underline1 = StringBuilder()
+            val underline2 = StringBuilder()
+
+            ord.name.forEach {
+                if(total + hangul_size <= one_line)
+                    result.append(it)
+                else if(total + hangul_size <= (one_line * 2))
                     underline1.append(it)
                 else
                     underline2.append(it)
@@ -276,22 +349,12 @@ class AppHelper {
             val mSpace = mlength - mHangul
             val mLine = mHangul * hangul_size + mSpace
 
-            var diff = (one_line - mLine + 0.5).toInt()
+            val diff = one_line - mLine + 1
 
-            if(MyApplication.store.fontsize == 1) {
-                if(ord.gea < 10) {
-                    diff += 1
-                    space = 4
-                } else if (ord.gea >= 100) {
-                    space = 1
-                }
-            }else if(MyApplication.store.fontsize == 2) {
-                if(ord.gea < 10) {
-                    diff += 1
-                    space += 2
-                } else if (ord.gea < 100) {
-                    space += 1
-                }
+            if (ord.gea >= 100) {
+                space = 0
+            }else if(ord.gea >= 10) {
+                space = 1
             }
 
             for(i in 1..diff) {
