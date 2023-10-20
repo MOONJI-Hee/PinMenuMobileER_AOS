@@ -1,20 +1,15 @@
 package com.wooriyo.pinmenumobileer
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import com.sam4s.io.ethernet.SocketInfo
 import com.sam4s.printer.Sam4sBuilder
 import com.sam4s.printer.Sam4sFinder
-import com.sam4s.printer.Sam4sPrint
 import com.wooriyo.pinmenumobileer.databinding.ActivityCubeTestBinding
 import com.wooriyo.pinmenumobileer.member.StartActivity
-import com.wooriyo.pinmenumobileer.printer.EthernetConnection
-import com.wooriyo.pinmenumobileer.printer.NetworkPrinterInfo
-import com.wooriyo.pinmenumobileer.printer.PrinterInfo
+import com.wooriyo.pinmenumobileer.printer.sam4s.EthernetConnection
+import com.wooriyo.pinmenumobileer.printer.sam4s.NetworkPrinterInfo
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.ScheduledFuture

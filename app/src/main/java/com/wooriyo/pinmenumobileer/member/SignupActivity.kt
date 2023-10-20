@@ -133,7 +133,7 @@ class SignupActivity : BaseActivity(), View.OnClickListener {
                             if(result.status == 1) {
                                 Toast.makeText(mActivity, R.string.msg_complete, Toast.LENGTH_SHORT).show()
 
-                                val useridx = result.idx
+                                val useridx = result.useridx
                                 val memberDTO = MemberDTO(result.status, result.msg, useridx, userid, arpayoId)
 
                                 MyApplication.pref.setMbrDTO(memberDTO)

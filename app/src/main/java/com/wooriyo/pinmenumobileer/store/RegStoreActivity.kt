@@ -57,6 +57,10 @@ class RegStoreActivity : BaseActivity() {
             intent.putExtra("address", store.address)
             setAddr.launch(intent)
         }
+
+
+
+        Log.d(TAG, "store 생성 useridx >> $useridx")
     }
 
     fun save() {

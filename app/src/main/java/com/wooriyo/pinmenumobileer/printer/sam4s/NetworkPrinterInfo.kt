@@ -1,4 +1,4 @@
-package com.wooriyo.pinmenumobileer.printer
+package com.wooriyo.pinmenumobileer.printer.sam4s
 
 import com.sam4s.io.ethernet.SocketInfo
 

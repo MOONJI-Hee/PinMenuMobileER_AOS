@@ -81,22 +81,15 @@ class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapte
 
                 delete.setOnClickListener { deleteListener.onItemClick(adapterPosition) }
                 print.setOnClickListener {
-
-                    printClickListener.onItemClick(adapterPosition)
-
-
-
-
-//                    if(MyApplication.bluetoothPort.isConnected) {
-//                        printClickListener.onItemClick(adapterPosition)
-//                    }else {
-//                        val fragmentActivity = context as FragmentActivity
-//                        AlertDialog("", context.getString(R.string.dialog_no_printer), 0).show(fragmentActivity.supportFragmentManager, "AlertDialog")
-//                    }
+                    if(MyApplication.bluetoothPort.isConnected) {
+                        printClickListener.onItemClick(adapterPosition)
+                    }else {
+                        val fragmentActivity = context as FragmentActivity
+                        AlertDialog("", context.getString(R.string.dialog_no_printer), 0).show(fragmentActivity.supportFragmentManager, "AlertDialog")
+                    }
                 }
                 payment.setOnClickListener { payClickListener.onItemClick(adapterPosition) }
             }
         }
-
     }
 }

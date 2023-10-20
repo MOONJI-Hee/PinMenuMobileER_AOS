@@ -1,6 +1,5 @@
 package com.wooriyo.pinmenumobileer
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -10,18 +9,17 @@ import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.graphics.Point
 import android.media.AudioAttributes
-import android.media.AudioManager.STREAM_NOTIFICATION
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.view.WindowManager
-import com.sam4s.printer.Sam4sPrint
 import com.sewoo.jpos.printer.ESCPOSPrinter
 import com.sewoo.port.android.BluetoothPort
 import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.model.SharedDTO
 import com.wooriyo.pinmenumobileer.model.StoreDTO
-import com.wooriyo.pinmenumobileer.printer.PrinterConnection
+import com.wooriyo.pinmenumobileer.printer.sam4s.PrinterConnection
+import com.wooriyo.pinmenumobileer.util.AppHelper
 
 
 class MyApplication: Application() {
@@ -33,11 +31,11 @@ class MyApplication: Application() {
         INSTANCE = this
     }
 
-    fun  getPrinterConnection():PrinterConnection?{
+    fun  getPrinterConnection(): PrinterConnection?{
         return mPrinterConnection
     }
 
-    fun setPrinterConnection(connection:PrinterConnection) {
+    fun setPrinterConnection(connection: PrinterConnection) {
         mPrinterConnection = connection
     }
 
@@ -119,6 +117,7 @@ class MyApplication: Application() {
         bluetoothPort.SetMacFilter(false)
 
         escposPrinter = ESCPOSPrinter()
+        AppHelper.getPairedDevice()
 
         createNotificationChannel()
 

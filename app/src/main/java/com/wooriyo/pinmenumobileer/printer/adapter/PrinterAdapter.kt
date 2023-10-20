@@ -13,6 +13,7 @@ import com.google.gson.annotations.SerializedName
 import com.sewoo.jpos.command.ESCPOSConst
 import com.sewoo.jpos.printer.ESCPOSPrinter
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.bluetoothPort
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.escposPrinter
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.common.AlertDialog
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.FONT_BIG
@@ -63,7 +64,6 @@ class PrinterAdapter(val dataSet: ArrayList<PrintDTO>): RecyclerView.Adapter<Rec
     }
 
     class ViewHolder(val binding: ListPrinterBinding, val context: Context, val itemClickListener: ItemClickListener): RecyclerView.ViewHolder(binding.root) {
-        val escposPrinter = ESCPOSPrinter()
         fun bind(data: PrintDTO) {
             var cmp = ""
             var img = 0

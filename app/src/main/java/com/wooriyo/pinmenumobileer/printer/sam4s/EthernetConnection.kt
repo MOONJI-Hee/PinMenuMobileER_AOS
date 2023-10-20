@@ -1,11 +1,11 @@
-package com.wooriyo.pinmenumobileer.printer
+package com.wooriyo.pinmenumobileer.printer.sam4s
 
 import android.content.Context
 import com.sam4s.io.ethernet.SocketInfo
 import com.sam4s.printer.Sam4sBuilder
 import com.sam4s.printer.Sam4sPrint
 
-class EthernetConnection(mContext: Context):PrinterConnection(mContext) {
+class EthernetConnection(mContext: Context): PrinterConnection(mContext) {
     private var device_name: String? = null
     private var device_port = 6001
     private var mSocketInfo: SocketInfo? = null

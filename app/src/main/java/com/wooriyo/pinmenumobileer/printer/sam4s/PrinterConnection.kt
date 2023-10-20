@@ -1,4 +1,4 @@
-package com.wooriyo.pinmenumobileer.printer
+package com.wooriyo.pinmenumobileer.printer.sam4s
 
 import android.content.Context
 import com.sam4s.printer.Sam4sBuilder

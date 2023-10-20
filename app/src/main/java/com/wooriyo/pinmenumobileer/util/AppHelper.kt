@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity.INPUT_METHOD_SERVICE
 import androidx.recyclerview.widget.RecyclerView
+import com.sewoo.request.android.RequestHandler
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.bluetoothAdapter
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.remoteDevices
@@ -182,10 +183,13 @@ class AppHelper {
         }
 
         // 블루투스 & 프린터기 연결 관련 메소드
+
+        // 블루투스 기기 찾기
         fun searchDevice() {
             MyApplication.bluetoothAdapter.startDiscovery()
         }
 
+        // 블루투스 연결
         fun connDevice(): Int {
             var retVal: Int = -1
 
@@ -208,6 +212,7 @@ class AppHelper {
             return retVal
         }
 
+        // 페어링 된 기기 찾기
         fun getPairedDevice() {
             remoteDevices.clear()
 
@@ -225,23 +230,35 @@ class AppHelper {
                 }
             }
             Log.d("AppHelper", "페어링된 기기 목록 >>$remoteDevices")
-            checkPrinterConn()
+            if(remoteDevices.isNotEmpty()) {
+                checkPrinterConn()
+            }
         }
 
+        // 페어링 된 기기 세우전자 제품인지 확인
         fun checkPrinterConn() {
             Log.d("AppHelper", "CheckPrintConnn~~!~!~!")
             remoteDevices.forEach {
                 val m: Method = it.javaClass.getMethod("isConnected")
                 val connected = m.invoke(it) as Boolean
 
-                if(connected) {
-                    val deviceHardwareAddress = it.address // MAC address
+                Log.d("AppHelper", "Connected Result >> $connected")
 
-                    if(MyApplication.bluetoothPort.isValidAddress(deviceHardwareAddress)) {
-                        val deviceNum = it.bluetoothClass.majorDeviceClass
-                        Log.d("AppHelper", "연결된 기기 == 세우테크 프린터 맞음")
+                val deviceHardwareAddress = it.address // MAC address
 
-                    }
+                if(MyApplication.bluetoothPort.isValidAddress(deviceHardwareAddress)) {
+                    val deviceNum = it.bluetoothClass.majorDeviceClass
+                    Log.d("AppHelper", "연결된 기기 == 세우테크 프린터 맞음")
+
+                    val rtnVal = connDevice()
+
+                    if (rtnVal == 0) { // Connection success.
+                        val rh = RequestHandler()
+                        MyApplication.btThread = Thread(rh)
+                        MyApplication.btThread!!.start()
+
+                    } else // Connection failed.
+                        Log.d("AppHelper", "블루투스 연결 실패~!")
                 }
             }
         }
