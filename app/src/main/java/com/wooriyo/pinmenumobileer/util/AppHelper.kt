@@ -186,11 +186,13 @@ class AppHelper {
 
         // 블루투스 기기 찾기
         fun searchDevice() {
+            Log.d("AppHelper", "searchDevice 시작")
             MyApplication.bluetoothAdapter.startDiscovery()
         }
 
         // 블루투스 연결
         fun connDevice(): Int {
+            Log.d("AppHelper", "connDevice 시작")
             var retVal: Int = -1
 
             Log.d("AppHelper", "블루투스 기기 커넥트")
@@ -214,6 +216,7 @@ class AppHelper {
 
         // 페어링 된 기기 찾기
         fun getPairedDevice() {
+            Log.d("AppHelper", "getPairedDevice 시작")
             remoteDevices.clear()
 
             val pairedDevices: Set<BluetoothDevice>? = bluetoothAdapter.bondedDevices
@@ -237,7 +240,8 @@ class AppHelper {
 
         // 페어링 된 기기 세우전자 제품인지 확인
         fun checkPrinterConn() {
-            Log.d("AppHelper", "CheckPrintConnn~~!~!~!")
+            Log.d("AppHelper", "CheckPrintConnn 시작")
+
             remoteDevices.forEach {
                 val m: Method = it.javaClass.getMethod("isConnected")
                 val connected = m.invoke(it) as Boolean

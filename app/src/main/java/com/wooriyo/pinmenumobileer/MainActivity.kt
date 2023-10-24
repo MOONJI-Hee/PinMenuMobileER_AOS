@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeList
@@ -27,9 +26,11 @@ import com.wooriyo.pinmenumobileer.qr.QrAgreeActivity
 import com.wooriyo.pinmenumobileer.qr.SetQrcodeFragment
 import com.wooriyo.pinmenumobileer.store.StoreListFragment
 import com.wooriyo.pinmenumobileer.util.ApiClient
+import com.wooriyo.pinmenumobileer.util.AppHelper
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.concurrent.thread
 
 class MainActivity : BaseActivity() {
     lateinit var binding: ActivityMainBinding
@@ -58,7 +59,13 @@ class MainActivity : BaseActivity() {
     }
 
     private val turnOnBluetoothResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if(it.resultCode == RESULT_OK) { }
+        if(it.resultCode == RESULT_OK) {
+            val thread = Thread(Runnable {
+                Log.d(TAG, "Thread : ${Thread.currentThread().name}")
+                AppHelper.getPairedDevice()
+            })
+            thread.start()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,16 +95,21 @@ class MainActivity : BaseActivity() {
             icPrint.setOnClickListener { setNavi(it.id) }
             icMore.setOnClickListener { setNavi(it.id) }
         }
+
+        Log.d(TAG, "Thread : ${Thread.currentThread().name}")
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
+        if(grantResults.isEmpty()) return
+
         when(requestCode) {
             AppProperties.REQUEST_ENABLE_BT -> {
-                if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    checkBluetooth()
-                }
+                checkBluetoothPermission()
+//                if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    checkBluetooth()
+//                }
             }
             AppProperties.REQUEST_LOCATION -> {
                 grantResults.forEach {
@@ -130,6 +142,7 @@ class MainActivity : BaseActivity() {
                         }
                         .setNegativeButton(R.string.cancel) {dialog, _ -> dialog.dismiss()}
                         .show()
+                    return
                 }else {
                     deniedPms.add(pms)
                 }
@@ -161,8 +174,8 @@ class MainActivity : BaseActivity() {
                         .setTitle(R.string.pms_bluetooth_title)
                         .setMessage(R.string.pms_bluetooth_content)
                         .setPositiveButton(R.string.confirm) { dialog, _ ->
-                            dialog.dismiss()
                             getBluetoothPms()
+                            dialog.dismiss()
                             return@setPositiveButton
                         }
                         .setNegativeButton(R.string.cancel) {dialog, _ ->
@@ -170,6 +183,7 @@ class MainActivity : BaseActivity() {
                             return@setNegativeButton
                         }
                         .show()
+                    return
                 }else
                     deniedPms.add(pms)
             }
@@ -216,6 +230,12 @@ class MainActivity : BaseActivity() {
     fun checkBluetooth() {
         if(!MyApplication.bluetoothAdapter.isEnabled) {   // 블루투스 꺼져있음
             turnOnBluetooth()
+        }else {
+            val thread: Thread = Thread(Runnable{
+                Log.d(TAG, "Thread : ${Thread.currentThread().name}")
+                AppHelper.getPairedDevice()
+            })
+            thread.start()
         }
     }
 

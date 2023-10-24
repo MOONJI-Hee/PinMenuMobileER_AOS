@@ -19,8 +19,6 @@ import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.model.SharedDTO
 import com.wooriyo.pinmenumobileer.model.StoreDTO
 import com.wooriyo.pinmenumobileer.printer.sam4s.PrinterConnection
-import com.wooriyo.pinmenumobileer.util.AppHelper
-
 
 class MyApplication: Application() {
 
@@ -117,7 +115,6 @@ class MyApplication: Application() {
         bluetoothPort.SetMacFilter(false)
 
         escposPrinter = ESCPOSPrinter()
-        AppHelper.getPairedDevice()
 
         createNotificationChannel()
 
