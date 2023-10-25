@@ -62,10 +62,10 @@ interface Api {
     ): Call<ResultDTO>
 
     // 로그아웃
-    @GET("checkLogout.php")
+    @GET("m/logout.php")
     fun logout(
-        @Query("userid") userid: String,
-        @Query("storeidx") storeidx: Int
+        @Query("useridx") useridx: Int,
+        @Query("push_token") push_token: String
     ): Call<ResultDTO>
 
     //비밀번호 찾기

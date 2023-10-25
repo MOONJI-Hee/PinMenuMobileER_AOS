@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity.INPUT_METHOD_SERVICE
 import androidx.recyclerview.widget.RecyclerView
+import com.sam4s.printer.Sam4sFinder
 import com.sewoo.request.android.RequestHandler
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.bluetoothAdapter
@@ -34,6 +35,9 @@ import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.ScheduledFuture
+import java.util.concurrent.TimeUnit
 
 // 자주 쓰는 메소드 모음 - 문지희 (2023.05 갱신)
 class AppHelper {
@@ -182,7 +186,7 @@ class AppHelper {
                 })
         }
 
-        // 블루투스 & 프린터기 연결 관련 메소드
+        // 블루투스 & 세우전자 프린터기 연결 관련 메소드
 
         // 블루투스 기기 찾기
         fun searchDevice() {
@@ -267,6 +271,7 @@ class AppHelper {
             }
         }
 
+        // 주문내역(상세내역) 영수증 형태 String으로 받기 - 세우전자
         fun getPrint(ord: OrderDTO) : String {
             var hangul_size = AppProperties.HANGUL_SIZE_BIG
             var one_line = AppProperties.ONE_LINE_BIG
@@ -340,6 +345,7 @@ class AppHelper {
             return result.toString()
         }
 
+        // 주문내역(상세내역) 영수증 형태 String으로 받기 - SAM4S
         fun getSam4sPrint(ord: OrderDTO) : String {
             var hangul_size = AppProperties.HANGUL_SIZE_SAM4S
             var one_line = AppProperties.ONE_LINE_SAM4S
@@ -401,6 +407,54 @@ class AppHelper {
                 result.append("\n$underline2")
 
             return result.toString()
+        }
+
+        // SAM4S 프린터기 관련 메소드
+
+        // 같은 ip내 GCUBE 프린터 검색
+        fun searchCube() {
+//
+//            val finder: Sam4sFinder = Sam4sFinder()
+//
+//            lateinit var scheduler: ScheduledExecutorService
+//            var future: ScheduledFuture<*>? = null
+//
+//            Log.d(TAG, "search 들어옴")
+//            if (future != null) {
+//                Log.d(TAG, "future is not null")
+//                future!!.cancel(false)
+//                while (!future!!.isDone) {
+//                    try {
+//                        Thread.sleep(500)
+//                    } catch (e: java.lang.Exception) {
+//                        break
+//                    }
+//                }
+//                future = null
+//            }
+//            scheduler.let {
+//                finder.startSearch(this@CubeTestActivity, Sam4sFinder.DEVTYPE_ETHERNET)
+//                Log.d(TAG, "scheduler 돌려려려려려")
+//                future = it.scheduleWithFixedDelay(this, 0, 500, TimeUnit.MILLISECONDS )
+//            }
+        }
+
+        // GCUBE 연결되었는지 확인, 프린터기 모델명 return
+        fun checkCubeConn(): String {
+            var name = ""
+
+            val temp = MyApplication.INSTANCE.mPrinterConnection
+
+            if (temp != null && temp.IsConnected()) {
+                Log.d("AppHelper", "연결됨 들어옴")
+            }
+
+            Log.d("AppHelper", temp.getPrinterStatus()?:"Null Error")
+            name = temp.getPrinterName()?:""
+
+            Log.d("AppHelper", "Printer name >> $name")
+
+            return name
         }
     }
 }

@@ -121,6 +121,7 @@
         android:layout_marginTop="10dp"
         android:paddingStart="25dp"
         android:paddingVertical="10dp"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/cl901">
 
         <ImageView

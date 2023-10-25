@@ -40,13 +40,12 @@ class OrderDetailAdapter(val dataSet: ArrayList<OrderDTO>): RecyclerView.Adapter
                             strOpt += "\n$it"
                     }
 
-                    var height = 0
-                    if(data.opt.size == 1)
-                        height = 100
-                    else if (data.opt.size <= 5)
-                        height = 204
-                    else if (data.opt.size <= 9)
-                        height = 308
+                    var height = 100
+
+                    val multiple = (data.opt.size - 1) / 4
+
+                    height += (104 * multiple)
+
                     setHeight(layout, height)
 
                     option.text = strOpt

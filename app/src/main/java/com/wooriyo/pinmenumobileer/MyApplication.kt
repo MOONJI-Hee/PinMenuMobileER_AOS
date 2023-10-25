@@ -13,6 +13,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.view.WindowManager
+import com.sam4s.io.ethernet.SocketInfo
 import com.sewoo.jpos.printer.ESCPOSPrinter
 import com.sewoo.port.android.BluetoothPort
 import com.wooriyo.pinmenumobileer.config.AppProperties
@@ -29,7 +30,7 @@ class MyApplication: Application() {
         INSTANCE = this
     }
 
-    fun  getPrinterConnection(): PrinterConnection?{
+    fun getPrinterConnection(): PrinterConnection?{
         return mPrinterConnection
     }
 
@@ -62,16 +63,15 @@ class MyApplication: Application() {
         // 블루투스 관련 변수
         lateinit var bluetoothManager: BluetoothManager
         lateinit var bluetoothAdapter: BluetoothAdapter
-        lateinit var remoteDevices: ArrayList<BluetoothDevice>
-        lateinit var arrRemoteDevice : ArrayList<String>
-
-        var bidx = 0    //프린터 설정 시 부여되는 idx (기기별 매장 하나 당 한개씩 부여)
 
         //세우전자 프린터 관련
+        lateinit var remoteDevices: ArrayList<BluetoothDevice>  // 페어링 된 기기 중 세우전자 프린터 리스트
         lateinit var bluetoothPort: BluetoothPort
         lateinit var escposPrinter : ESCPOSPrinter
         val BT_PRINTER = 1536
         var btThread: Thread? = null
+
+        var bidx = 0    //프린터 설정 시 부여되는 idx (기기별 매장 하나 당 한개씩 부여)
 
         fun setStoreDTO() {
             store = StoreDTO(useridx)
@@ -107,18 +107,19 @@ class MyApplication: Application() {
         //블루투스
         bluetoothManager = this.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         bluetoothAdapter = bluetoothManager.adapter
-        remoteDevices = ArrayList<BluetoothDevice>()
-        arrRemoteDevice = ArrayList<String>()
 
         //세우전자
+        remoteDevices = ArrayList<BluetoothDevice>()
         bluetoothPort = BluetoothPort.getInstance()
         bluetoothPort.SetMacFilter(false)
 
         escposPrinter = ESCPOSPrinter()
 
+        //SAM4S
+        mPrinterConnection = PrinterConnection(applicationContext, 0)
+
         createNotificationChannel()
 
-        mPrinterConnection = PrinterConnection(applicationContext, 0)
 
         super.onCreate()
     }

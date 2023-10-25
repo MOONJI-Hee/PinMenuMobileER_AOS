@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.wooriyo.pinmenumobileer.MainActivity
 import com.wooriyo.pinmenumobileer.MyApplication
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.pref
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.common.AlertDialog
 import com.wooriyo.pinmenumobileer.common.ConfirmDialog
@@ -73,12 +74,30 @@ class MoreFragment : Fragment() {
     }
 
     fun logout() {
-        MyApplication.pref.logout()
-        val intent = Intent(context, LoginActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
+        ApiClient.service.logout(MyApplication.useridx, pref.getToken().toString()).enqueue(object : Callback<ResultDTO> {
+            override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                Log.d(TAG, "로그아웃 url : $response")
+                if(!response.isSuccessful) return
+
+                val result = response.body() ?: return
+                when(result.status) {
+                    1 -> {
+                        MyApplication.pref.logout()
+                        val intent = Intent(context, LoginActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                Toast.makeText(context, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "로그아웃 실패 >> $t")
+                Log.d(TAG, "로그아웃 실패 >> ${call.request()}")
+            }
+        })
     }
 
     fun dropMbr() {

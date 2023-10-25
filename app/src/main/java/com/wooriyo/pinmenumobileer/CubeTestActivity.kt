@@ -105,7 +105,7 @@ class CubeTestActivity : BaseActivity(), Runnable {
     fun stop() {
         if (future != null) {
             future!!.cancel(false)
-            while (!future!!.isDone()) {
+            while (!future!!.isDone) {
                 try {
                     Thread.sleep(500)
                 } catch (e: java.lang.Exception) {
@@ -160,12 +160,11 @@ class CubeTestActivity : BaseActivity(), Runnable {
 
     override fun run() {
         val list = finder.devices
-        if(list != null && list.size > 0) {
+
+        if(list.size > 0) {
             Log.d(TAG, "device 찾음")
             Log.d(TAG, "프린터 왜 정보 안나와.. >>>> ${(list[0] as SocketInfo).address}")
-//            Log.d(TAG, "프린터 왜 정보 안나와.. >>>> ${(list[0] as SocketInfo).gateway}")
             Log.d(TAG, "프린터 왜 정보 안나와.. >>>> ${(list[0] as SocketInfo).port}")
-//            Log.d(TAG, "프린터 왜 정보 안나와.. >>>> ${(list[0] as SocketInfo).macAddress}")
 
             Log.d(TAG, "프린터 정보 >>>> ${NetworkPrinterInfo(list[0] as SocketInfo).getTitle()}")
             Log.d(TAG, "프린터 정보 >>>> ${NetworkPrinterInfo(list[0] as SocketInfo).getSubTitle()}")

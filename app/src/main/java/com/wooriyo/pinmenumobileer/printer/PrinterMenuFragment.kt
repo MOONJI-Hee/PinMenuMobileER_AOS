@@ -60,13 +60,21 @@ class PrinterMenuFragment : Fragment() {
 
         binding.run {
             connSet.setOnClickListener {
-                if(printerList.isEmpty()) {
+                if(MyApplication.remoteDevices.isEmpty()) {
                     startActivity(Intent(context, NewConnActivity::class.java))
                 }else {
                     val intent = Intent(context, SetConnActivity::class.java)
                     intent.putExtra("printerList", printerList)
                     startActivity(intent)
                 }
+
+//                if(printerList.isEmpty()) {
+//                    startActivity(Intent(context, NewConnActivity::class.java))
+//                }else {
+//                    val intent = Intent(context, SetConnActivity::class.java)
+//                    intent.putExtra("printerList", printerList)
+//                    startActivity(intent)
+//                }
             }
             support.setOnClickListener { startActivity(Intent(context, SupportPrinterActivity::class.java)) }
             contentSet.setOnClickListener { startActivity(Intent(context, ContentSetActivity::class.java)) }
@@ -77,7 +85,7 @@ class PrinterMenuFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        getConnPrintList()
+//        getConnPrintList()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -188,35 +196,35 @@ class PrinterMenuFragment : Fragment() {
         ActivityCompat.requestPermissions(activity as MainActivity, permissions_bt, AppProperties.REQUEST_ENABLE_BT)
     }
 
-    fun getConnPrintList() {
-        ApiClient.service.connPrintList(
-            MyApplication.useridx,
-            MyApplication.storeidx,
-            MyApplication.androidId
-        ).enqueue(object :
-            Callback<PrintListDTO> {
-            override fun onResponse(call: Call<PrintListDTO>, response: Response<PrintListDTO>) {
-                Log.d(TAG, "등록된 프린터 리스트 조회 URL : $response")
-                if(!response.isSuccessful) return
-
-                val result = response.body() ?: return
-
-                when(result.status) {
-                    1 -> {
-                        printerList.clear()
-                        printerList.addAll(result.myprintList)
-                    }
-                    else -> Toast.makeText(context, result.msg, Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onFailure(call: Call<PrintListDTO>, t: Throwable) {
-                Toast.makeText(context, R.string.msg_retry, Toast.LENGTH_SHORT).show()
-                Log.d(TAG, "등록된 프린터 리스트 조회 오류 >> $t")
-                Log.d(TAG, "등록된 프린터 리스트 조회 오류 >> ${call.request()}")
-            }
-        })
-    }
+//    fun getConnPrintList() {
+//        ApiClient.service.connPrintList(
+//            MyApplication.useridx,
+//            MyApplication.storeidx,
+//            MyApplication.androidId
+//        ).enqueue(object :
+//            Callback<PrintListDTO> {
+//            override fun onResponse(call: Call<PrintListDTO>, response: Response<PrintListDTO>) {
+//                Log.d(TAG, "등록된 프린터 리스트 조회 URL : $response")
+//                if(!response.isSuccessful) return
+//
+//                val result = response.body() ?: return
+//
+//                when(result.status) {
+//                    1 -> {
+//                        printerList.clear()
+//                        printerList.addAll(result.myprintList)
+//                    }
+//                    else -> Toast.makeText(context, result.msg, Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<PrintListDTO>, t: Throwable) {
+//                Toast.makeText(context, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+//                Log.d(TAG, "등록된 프린터 리스트 조회 오류 >> $t")
+//                Log.d(TAG, "등록된 프린터 리스트 조회 오류 >> ${call.request()}")
+//            }
+//        })
+//    }
 
     companion object {
         @JvmStatic
