@@ -33,7 +33,7 @@ class BtDiscoveryReceiver: BroadcastReceiver() {
                     remoteDevices.add(remoteDevice)
                 }
             }
-            val retVal = AppHelper.connDevice()
+            val retVal = AppHelper.connDevice(0)
 
             if (retVal == 0) { // Connection success.
                 val rh = RequestHandler()

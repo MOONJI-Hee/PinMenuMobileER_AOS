@@ -38,6 +38,8 @@ class SetConnActivity : BaseActivity() {
     val TAG = "SetConnActivity"
     val mActivity = this@SetConnActivity
 
+    lateinit var cubeList : ArrayList<*>
+
     val printerList = ArrayList<PrintDTO>()
     val printerAdapter = PrinterAdapter(printerList)
 
@@ -73,7 +75,7 @@ class SetConnActivity : BaseActivity() {
 
                     status = "N"
                 } else {
-                    val retVal = connDevice()
+                    val retVal = connDevice(0)
 
                     if (retVal == 0) {
                         val rh = RequestHandler()
@@ -127,8 +129,6 @@ class SetConnActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        // 연결 프린터 리스트 조회 api
-        getConnPrintList()
     }
 
     fun getPrintSetting() {
@@ -155,33 +155,6 @@ class SetConnActivity : BaseActivity() {
         })
     }
 
-    fun getConnPrintList() {
-        ApiClient.service.connPrintList(useridx, storeidx, androidId).enqueue(object : Callback<PrintListDTO> {
-            override fun onResponse(call: Call<PrintListDTO>, response: Response<PrintListDTO>) {
-                Log.d(TAG, "등록된 프린터 리스트 조회 URL : $response")
-                if(!response.isSuccessful) return
-
-                val result = response.body() ?: return
-
-                when(result.status) {
-                    1 -> {
-                        printerList.clear()
-                        printerList.addAll(result.myprintList)
-                        printerAdapter.notifyDataSetChanged()
-
-                        checkConn()
-                    }
-                    else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onFailure(call: Call<PrintListDTO>, t: Throwable) {
-                Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
-                Log.d(TAG, "등록된 프린터 리스트 조회 오류 >> $t")
-                Log.d(TAG, "등록된 프린터 리스트 조회 오류 >> ${call.request()}")
-            }
-        })
-    }
 
     fun setPrintConnStatus(position: Int, status: String) {
         ApiClient.service.setPrintConnStatus(useridx, storeidx, androidId, printerList[position].idx, status)
@@ -213,4 +186,32 @@ class SetConnActivity : BaseActivity() {
             connPos = 0
         }
     }
+
+//    fun getConnPrintList() {
+//        ApiClient.service.connPrintList(useridx, storeidx, androidId).enqueue(object : Callback<PrintListDTO> {
+//            override fun onResponse(call: Call<PrintListDTO>, response: Response<PrintListDTO>) {
+//                Log.d(TAG, "등록된 프린터 리스트 조회 URL : $response")
+//                if(!response.isSuccessful) return
+//
+//                val result = response.body() ?: return
+//
+//                when(result.status) {
+//                    1 -> {
+//                        printerList.clear()
+//                        printerList.addAll(result.myprintList)
+//                        printerAdapter.notifyDataSetChanged()
+//
+//                        checkConn()
+//                    }
+//                    else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<PrintListDTO>, t: Throwable) {
+//                Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+//                Log.d(TAG, "등록된 프린터 리스트 조회 오류 >> $t")
+//                Log.d(TAG, "등록된 프린터 리스트 조회 오류 >> ${call.request()}")
+//            }
+//        })
+//    }
 }

@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.sewoo.request.android.RequestHandler
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeList
 import com.wooriyo.pinmenumobileer.common.SelectStoreFragment
 import com.wooriyo.pinmenumobileer.config.AppProperties
@@ -39,6 +40,8 @@ class MainActivity : BaseActivity() {
 
     var isMain = true
 
+    lateinit var thread: Thread
+
     @RequiresApi(33)
     val pms_noti : String = Manifest.permission.POST_NOTIFICATIONS
 
@@ -59,19 +62,27 @@ class MainActivity : BaseActivity() {
     }
 
     private val turnOnBluetoothResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if(it.resultCode == RESULT_OK) {
-            val thread = Thread(Runnable {
-                Log.d(TAG, "Thread : ${Thread.currentThread().name}")
-                AppHelper.getPairedDevice()
-            })
-            thread.start()
-        }
+        if(it.resultCode == RESULT_OK) { checkBluetooth() }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        thread = Thread(Runnable{
+            val reVal = AppHelper.getPairedDevice()
+            if(reVal == 1) {
+                val rtnVal = AppHelper.connDevice(0)
+
+                if (rtnVal == 0) { // Connection success.
+                    val rh = RequestHandler()
+                    MyApplication.btThread = Thread(rh)
+                    MyApplication.btThread!!.start()
+                } else // Connection failed.
+                    Log.d("AppHelper", "블루투스 연결 실패~!")
+            }
+        })
 
         val type : Int = intent.getIntExtra("type", 0)
 
@@ -95,8 +106,6 @@ class MainActivity : BaseActivity() {
             icPrint.setOnClickListener { setNavi(it.id) }
             icMore.setOnClickListener { setNavi(it.id) }
         }
-
-        Log.d(TAG, "Thread : ${Thread.currentThread().name}")
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -231,10 +240,6 @@ class MainActivity : BaseActivity() {
         if(!MyApplication.bluetoothAdapter.isEnabled) {   // 블루투스 꺼져있음
             turnOnBluetooth()
         }else {
-            val thread: Thread = Thread(Runnable{
-                Log.d(TAG, "Thread : ${Thread.currentThread().name}")
-                AppHelper.getPairedDevice()
-            })
             thread.start()
         }
     }

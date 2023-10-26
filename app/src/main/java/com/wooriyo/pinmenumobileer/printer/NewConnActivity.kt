@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import com.sam4s.io.ethernet.SocketInfo
 import com.sewoo.request.android.RequestHandler
 import com.wooriyo.pinmenumobileer.broadcast.BtDiscoveryReceiver
 import com.wooriyo.pinmenumobileer.BaseActivity
@@ -22,6 +23,7 @@ import com.wooriyo.pinmenumobileer.listener.DialogListener
 import com.wooriyo.pinmenumobileer.model.PrintContentDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.printer.dialog.SetNickDialog
+import com.wooriyo.pinmenumobileer.printer.sam4s.NetworkPrinterInfo
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.util.AppHelper
 import com.wooriyo.pinmenumobileer.util.AppHelper.Companion.searchDevice
@@ -43,19 +45,16 @@ class NewConnActivity : BaseActivity() {
     // Broadcast Receiver
     val connectDevice = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
+            loadingDialog.dismiss()
+
             if (intent == null) return
 
             val action = intent.action
             if (BluetoothDevice.ACTION_ACL_CONNECTED == action) {
-                binding.ivStatus.setImageResource(R.drawable.icon_print_connection_on)
-                binding.tvStatus.setTextColor(Color.BLACK)
-                binding.tvStatus.text = getString(R.string.after_conn)
-                binding.tvNickPrinter.setTextColor(Color.BLACK)
-                binding.nickPrinter.isEnabled = true
-                binding.btnRetry.visibility = View.GONE
-
-                setPrintConnStatus("Y")
+                setConnStatus()
             } else if (BluetoothDevice.ACTION_ACL_DISCONNECTED == action) {
+                setDisConnStatus()
+
                 try {
                     if (MyApplication.bluetoothPort.isConnected) MyApplication.bluetoothPort.disconnect()
                 } catch (e: IOException) {
@@ -63,37 +62,51 @@ class NewConnActivity : BaseActivity() {
                 } catch (e: InterruptedException) {
                     e.printStackTrace()
                 }
+
                 if (MyApplication.btThread != null) {
                     if(MyApplication.btThread!!.isAlive) {
                         MyApplication.btThread!!.interrupt()
                         MyApplication.btThread = null
                     }
                 }
-                binding.ivStatus.setImageResource(R.drawable.icon_print_connection_off)
-                binding.tvStatus.setTextColor(Color.parseColor("#B4B4B4"))
-                binding.tvStatus.text = getString(R.string.before_conn)
-                binding.tvNickPrinter.setTextColor(Color.parseColor("#B4B4B4"))
-                binding.nickPrinter.isEnabled = false
-                binding.btnRetry.visibility = View.VISIBLE
-
-                setPrintConnStatus("N")
             }
         }
     }
+
     val discoveryResult = BtDiscoveryReceiver()
 
     private val choosePrinterModel = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if(it.resultCode == RESULT_OK) {
+            loadingDialog.show(supportFragmentManager, "loading")
             val data = it.data ?: return@registerForActivityResult
 
             printType = data.getIntExtra("printType", 0)
+
+            setPrintInfo()
 
             // 프린터 새로 등록 전에 이미 연결되어있으면 연결 끊기
             if (MyApplication.bluetoothPort.isConnected) {
                 MyApplication.bluetoothPort.disconnect()
             }
-            setPrintInfo()
-            searchDevice()
+
+            Thread(Runnable {
+                if(printType == 3){
+                    val list = AppHelper.searchCube(mActivity)
+
+                    if(AppHelper.list != null && AppHelper.list!!.size > 0) {
+                        Log.d("AppeHelper", "device 찾음")
+                        Log.d("AppeHelper", "프린터 왜 정보 안나와.. >>>> ${(AppHelper.list!![0] as SocketInfo).address}")
+                        Log.d("AppeHelper", "프린터 왜 정보 안나와.. >>>> ${(AppHelper.list!![0] as SocketInfo).port}")
+
+                        Log.d("AppeHelper", "프린터 정보 >>>> ${NetworkPrinterInfo(AppHelper.list!![0] as SocketInfo).getTitle()}")
+                        Log.d("AppeHelper", "프린터 정보 >>>> ${NetworkPrinterInfo(AppHelper.list!![0] as SocketInfo).getSubTitle()}")
+                        Log.d("AppeHelper", "프린터 정보 >>>> ${NetworkPrinterInfo(AppHelper.list!![0] as SocketInfo)}")
+
+//                    AppHelper.stopSearchCube()
+                        AppHelper.connectCube(mActivity, list!![0] as SocketInfo)
+                    }
+                }else searchDevice()
+            }).start()
         }
     }
 
@@ -121,14 +134,14 @@ class NewConnActivity : BaseActivity() {
             choosePrinterModel.launch(intent)
         }
         binding.btnRetry.setOnClickListener {
-            val rtnVal = AppHelper.connDevice()
+            val rtnVal = AppHelper.connDevice(0)
 
             if (rtnVal == 0) { // Connection success.
                 val rh = RequestHandler()
                 MyApplication.btThread = Thread(rh)
                 MyApplication.btThread!!.start()
 
-                setPrintConnStatus("Y")
+//                setPrintConnStatus("Y")
             } else // Connection failed.
                 Toast.makeText(mActivity, "블루투스 연결 실패", Toast.LENGTH_SHORT).show()
         }
@@ -160,8 +173,30 @@ class NewConnActivity : BaseActivity() {
         binding.nickPrinter.isEnabled = true
     }
 
+    fun setConnStatus() {
+        binding.ivStatus.setImageResource(R.drawable.icon_print_connection_on)
+        binding.tvStatus.setTextColor(Color.BLACK)
+        binding.tvStatus.text = getString(R.string.after_conn)
+        binding.tvNickPrinter.setTextColor(Color.BLACK)
+        binding.nickPrinter.isEnabled = true
+        binding.btnRetry.visibility = View.GONE
+
+//                setPrintConnStatus("Y")
+    }
+
+    fun setDisConnStatus() {
+        binding.ivStatus.setImageResource(R.drawable.icon_print_connection_off)
+        binding.tvStatus.setTextColor(Color.parseColor("#B4B4B4"))
+        binding.tvStatus.text = getString(R.string.before_conn)
+        binding.tvNickPrinter.setTextColor(Color.parseColor("#B4B4B4"))
+        binding.nickPrinter.isEnabled = false
+        binding.btnRetry.visibility = View.VISIBLE
+
+//                setPrintConnStatus("N")
+    }
+
     fun getPrintSetting() {
-        ApiClient.service.getPrintContentSet(MyApplication.useridx, MyApplication.storeidx, MyApplication.androidId)
+        ApiClient.service.getPrintContentSet(useridx, storeidx, androidId)
             .enqueue(object : Callback<PrintContentDTO> {
                 override fun onResponse(call: Call<PrintContentDTO>, response: Response<PrintContentDTO>) {
                     Log.d(TAG, "프린터 출력 내용 조회 url : $response")
@@ -182,31 +217,6 @@ class NewConnActivity : BaseActivity() {
                 Log.d(TAG, "프린터 출력 내용 조회 오류 >> ${call.request()}")
             }
         })
-    }
-
-    fun setPrinterModel() {
-        ApiClient.service.udtPrintModel(MyApplication.useridx, MyApplication.storeidx, MyApplication.androidId, printType, "Y")
-            .enqueue(object : Callback<ResultDTO> {
-                override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
-                    Log.d(TAG, "신규 프린터 설정 url : $response")
-                    if(!response.isSuccessful) return
-
-                    val result = response.body() ?: return
-                    when(result.status) {
-                        1 -> {
-                            val intent = Intent(mActivity, SetConnActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                            startActivity(intent)
-                        }
-                        else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
-                    }
-                }
-                override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
-                    Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, "신규 프린터 설정 오류 >> $t")
-                    Log.d(TAG, "신규 프린터 설정 오류 >> ${call.request()}")
-                }
-            })
     }
 
     fun showSetNickDialog(type: Int) {
@@ -234,26 +244,51 @@ class NewConnActivity : BaseActivity() {
         nickDialog.show(supportFragmentManager, "SetNickDialog")
     }
 
-    fun setPrintConnStatus(status: String) {
-        ApiClient.service.setPrintConnStatus(useridx, storeidx, androidId, bidx, status)
-            .enqueue(object : Callback<ResultDTO>{
+    fun setPrinterModel() {
+        ApiClient.service.udtPrintModel(MyApplication.useridx, MyApplication.storeidx, MyApplication.androidId, printType, "Y")
+            .enqueue(object : Callback<ResultDTO> {
                 override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
-                    Log.d(TAG, "연결 프린터 상태 갱신 Url : $response")
+                    Log.d(TAG, "신규 프린터 설정 url : $response")
                     if(!response.isSuccessful) return
 
                     val result = response.body() ?: return
-
                     when(result.status) {
-                        1 -> {}
+                        1 -> {
+                            val intent = Intent(mActivity, SetConnActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                            startActivity(intent)
+                        }
                         else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                     }
                 }
-
                 override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
                     Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, "연결 프린터 상태 갱신 오류 >> $t")
-                    Log.d(TAG, "연결 프린터 상태 갱신 오류 >> ${call.request()}")
+                    Log.d(TAG, "신규 프린터 설정 오류 >> $t")
+                    Log.d(TAG, "신규 프린터 설정 오류 >> ${call.request()}")
                 }
             })
     }
+
+//    fun setPrintConnStatus(status: String) {
+//        ApiClient.service.setPrintConnStatus(useridx, storeidx, androidId, bidx, status)
+//            .enqueue(object : Callback<ResultDTO>{
+//                override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+//                    Log.d(TAG, "연결 프린터 상태 갱신 Url : $response")
+//                    if(!response.isSuccessful) return
+//
+//                    val result = response.body() ?: return
+//
+//                    when(result.status) {
+//                        1 -> {}
+//                        else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+//                    Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+//                    Log.d(TAG, "연결 프린터 상태 갱신 오류 >> $t")
+//                    Log.d(TAG, "연결 프린터 상태 갱신 오류 >> ${call.request()}")
+//                }
+//            })
+//    }
 }

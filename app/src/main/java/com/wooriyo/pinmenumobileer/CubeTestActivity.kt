@@ -128,11 +128,11 @@ class CubeTestActivity : BaseActivity(), Runnable {
 
         MyApplication.INSTANCE.getPrinterConnection()?.ClosePrinter()
         val connection = EthernetConnection(this@CubeTestActivity)
-//        connection.setSocketInfo(info)
+        connection.setSocketInfo(info)
 //        connection.setSocketInfo(printerInfo.getDevice())
-        connection.setName(info.address)
-        connection.setAdress(info.address)
-        connection.setPort(info.port)
+//        connection.setName(info.address)
+//        connection.setAdress(info.address)
+//        connection.setPort(info.port)
         connection.OpenPrinter()
 
         MyApplication.INSTANCE.setPrinterConnection(connection)
@@ -159,7 +159,10 @@ class CubeTestActivity : BaseActivity(), Runnable {
     }
 
     override fun run() {
+        Log.d(TAG, "Runnable 들어옴")
+
         val list = finder.devices
+        Log.d(TAG, "list size >> ${list.size}")
 
         if(list.size > 0) {
             Log.d(TAG, "device 찾음")

@@ -44,7 +44,7 @@ class SelectPrinterActivity : BaseActivity() {
             te202.setOnClickListener {
                 ckTe202.isChecked = true
             }
-            ckSam4s.setOnClickListener {
+            gcube.setOnClickListener {
                 ckSam4s.isChecked = true
             }
 

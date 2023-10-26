@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity.INPUT_METHOD_SERVICE
 import androidx.recyclerview.widget.RecyclerView
+import com.sam4s.io.ethernet.SocketInfo
 import com.sam4s.printer.Sam4sFinder
 import com.sewoo.request.android.RequestHandler
 import com.wooriyo.pinmenumobileer.MyApplication
@@ -24,6 +25,8 @@ import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.model.OrderDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
+import com.wooriyo.pinmenumobileer.printer.sam4s.EthernetConnection
+import com.wooriyo.pinmenumobileer.printer.sam4s.NetworkPrinterInfo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,12 +38,15 @@ import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 // 자주 쓰는 메소드 모음 - 문지희 (2023.05 갱신)
 class AppHelper {
+    val TAG = "AppHelper"
     companion object {
         private val datetimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         private val appCallFormatter = DateTimeFormatter.ofPattern("yyMMddHHmmss")
@@ -195,14 +201,14 @@ class AppHelper {
         }
 
         // 블루투스 연결
-        fun connDevice(): Int {
-            Log.d("AppHelper", "connDevice 시작")
+        fun connDevice(position: Int): Int {
             var retVal: Int = -1
 
             Log.d("AppHelper", "블루투스 기기 커넥트")
             Log.d("AppHelper", "remote 기기 > $remoteDevices")
+
             if(remoteDevices.isNotEmpty()) {
-                val connDvc = remoteDevices[0]
+                val connDvc = remoteDevices[position]
                 Log.d("AppHelper", "connDvc >> $connDvc")
 
                 try {
@@ -219,7 +225,7 @@ class AppHelper {
         }
 
         // 페어링 된 기기 찾기
-        fun getPairedDevice() {
+        fun getPairedDevice() : Int {
             Log.d("AppHelper", "getPairedDevice 시작")
             remoteDevices.clear()
 
@@ -237,38 +243,8 @@ class AppHelper {
                 }
             }
             Log.d("AppHelper", "페어링된 기기 목록 >>$remoteDevices")
-            if(remoteDevices.isNotEmpty()) {
-                checkPrinterConn()
-            }
-        }
 
-        // 페어링 된 기기 세우전자 제품인지 확인
-        fun checkPrinterConn() {
-            Log.d("AppHelper", "CheckPrintConnn 시작")
-
-            remoteDevices.forEach {
-                val m: Method = it.javaClass.getMethod("isConnected")
-                val connected = m.invoke(it) as Boolean
-
-                Log.d("AppHelper", "Connected Result >> $connected")
-
-                val deviceHardwareAddress = it.address // MAC address
-
-                if(MyApplication.bluetoothPort.isValidAddress(deviceHardwareAddress)) {
-                    val deviceNum = it.bluetoothClass.majorDeviceClass
-                    Log.d("AppHelper", "연결된 기기 == 세우테크 프린터 맞음")
-
-                    val rtnVal = connDevice()
-
-                    if (rtnVal == 0) { // Connection success.
-                        val rh = RequestHandler()
-                        MyApplication.btThread = Thread(rh)
-                        MyApplication.btThread!!.start()
-
-                    } else // Connection failed.
-                        Log.d("AppHelper", "블루투스 연결 실패~!")
-                }
-            }
+            return if(remoteDevices.isNotEmpty()) 1 else 0
         }
 
         // 주문내역(상세내역) 영수증 형태 String으로 받기 - 세우전자
@@ -410,33 +386,84 @@ class AppHelper {
         }
 
         // SAM4S 프린터기 관련 메소드
+        val finder: Sam4sFinder = Sam4sFinder()
+
+        var scheduler = Executors.newSingleThreadScheduledExecutor()
+        var future: ScheduledFuture<*>? = null
+
+        var list : ArrayList<*>? = null
 
         // 같은 ip내 GCUBE 프린터 검색
-        fun searchCube() {
-//
-//            val finder: Sam4sFinder = Sam4sFinder()
-//
+        fun searchCube(context: Context): ArrayList<*>? {
 //            lateinit var scheduler: ScheduledExecutorService
-//            var future: ScheduledFuture<*>? = null
-//
-//            Log.d(TAG, "search 들어옴")
-//            if (future != null) {
-//                Log.d(TAG, "future is not null")
-//                future!!.cancel(false)
-//                while (!future!!.isDone) {
-//                    try {
-//                        Thread.sleep(500)
-//                    } catch (e: java.lang.Exception) {
-//                        break
-//                    }
-//                }
-//                future = null
-//            }
-//            scheduler.let {
-//                finder.startSearch(this@CubeTestActivity, Sam4sFinder.DEVTYPE_ETHERNET)
-//                Log.d(TAG, "scheduler 돌려려려려려")
-//                future = it.scheduleWithFixedDelay(this, 0, 500, TimeUnit.MILLISECONDS )
-//            }
+            Log.d("AppeHelper", "search 들어옴")
+
+            if (future != null) {
+                Log.d("AppHelper", "future is not null")
+                future!!.cancel(false)
+                while (!future!!.isDone) {
+                    try {
+                        Thread.sleep(500)
+                    } catch (e: java.lang.Exception) {
+                        break
+                    }
+                }
+                future = null
+            }
+
+            scheduler.let {
+                finder.startSearch(context, Sam4sFinder.DEVTYPE_ETHERNET)
+                Log.d("AppeHelper", "scheduler 돌려려려려려")
+                future = it.scheduleWithFixedDelay(
+                    Runnable {
+                        list = finder.devices
+
+                        if(list != null && list!!.size > 0) {
+                            Log.d("AppeHelper", "device 찾음")
+                            Log.d("AppeHelper", "프린터 왜 정보 안나와.. >>>> ${(list!![0] as SocketInfo).address}")
+                            Log.d("AppeHelper", "프린터 왜 정보 안나와.. >>>> ${(list!![0] as SocketInfo).port}")
+
+                            Log.d("AppeHelper", "프린터 정보 >>>> ${NetworkPrinterInfo(list!![0] as SocketInfo).getTitle()}")
+                            Log.d("AppeHelper", "프린터 정보 >>>> ${NetworkPrinterInfo(list!![0] as SocketInfo).getSubTitle()}")
+                            Log.d("AppeHelper", "프린터 정보 >>>> ${NetworkPrinterInfo(list!![0] as SocketInfo)}")
+
+                            stopSearchCube()
+//                            connectCube(context, NetworkPrinterInfo(list[0] as SocketInfo), list[0] as SocketInfo)
+                        }
+                    }, 0, 500, TimeUnit.MILLISECONDS )
+            }
+
+            return list
+        }
+
+        fun stopSearchCube() {
+            if (future != null) {
+                future!!.cancel(false)
+                while (!future!!.isDone) {
+                    try {
+                        Thread.sleep(500)
+                    } catch (e: java.lang.Exception) {
+                        break
+                    }
+                }
+                future = null
+            }
+            finder.stopSearch()
+        }
+
+        fun connectCube(context: Context, info: SocketInfo) {
+            MyApplication.INSTANCE.getPrinterConnection()?.ClosePrinter()
+            val connection = EthernetConnection(context)
+//        connection.setSocketInfo(info)
+//        connection.setSocketInfo(printerInfo.getDevice())
+            connection.setName(info.address)
+            connection.setAdress(info.address)
+            connection.setPort(info.port)
+            connection.OpenPrinter()
+
+            MyApplication.INSTANCE.setPrinterConnection(connection)
+
+            checkCubeConn()
         }
 
         // GCUBE 연결되었는지 확인, 프린터기 모델명 return
