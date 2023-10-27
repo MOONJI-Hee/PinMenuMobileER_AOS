@@ -2,16 +2,19 @@ package com.wooriyo.pinmenumobileer.printer
 
 import android.bluetooth.BluetoothDevice
 import android.content.*
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.sam4s.io.ethernet.SocketInfo
 import com.sewoo.request.android.RequestHandler
 import com.wooriyo.pinmenumobileer.broadcast.BtDiscoveryReceiver
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.androidId
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.remoteDevices
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
@@ -23,6 +26,8 @@ import com.wooriyo.pinmenumobileer.model.PrintDTO
 import com.wooriyo.pinmenumobileer.model.PrintListDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.printer.adapter.PrinterAdapter
+import com.wooriyo.pinmenumobileer.printer.adapter.Sam4sAdapter
+import com.wooriyo.pinmenumobileer.printer.adapter.SewooAdapter
 import com.wooriyo.pinmenumobileer.printer.dialog.SetNickDialog
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.util.AppHelper
@@ -38,10 +43,13 @@ class SetConnActivity : BaseActivity() {
     val TAG = "SetConnActivity"
     val mActivity = this@SetConnActivity
 
-    lateinit var cubeList : ArrayList<*>
+    lateinit var cubeList : ArrayList<SocketInfo>
+    lateinit var sam4sAdapter: Sam4sAdapter
 
     val printerList = ArrayList<PrintDTO>()
     val printerAdapter = PrinterAdapter(printerList)
+
+    val sewooAdapter = SewooAdapter(remoteDevices)
 
     var connPos = -1
 
@@ -49,6 +57,14 @@ class SetConnActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySetConnBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        cubeList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            (intent.getParcelableArrayListExtra("cubeList", SocketInfo::class.java) ?: ArrayList<SocketInfo>())
+        }else {
+            (intent.getParcelableArrayListExtra("cubeList") ?: ArrayList<SocketInfo>())
+        }
+
+        sam4sAdapter = Sam4sAdapter(cubeList)
 
         // 디바이스, 프린터 정보 조회
         getPrintSetting()
@@ -115,6 +131,12 @@ class SetConnActivity : BaseActivity() {
 
         binding.rvPrinter.layoutManager = LinearLayoutManager(mActivity, RecyclerView.VERTICAL, false)
         binding.rvPrinter.adapter = printerAdapter
+
+        binding.rvSewoo.layoutManager = LinearLayoutManager(mActivity, RecyclerView.VERTICAL, false)
+        binding.rvSewoo.adapter = sewooAdapter
+
+        binding.rvSam4s.layoutManager = LinearLayoutManager(mActivity, RecyclerView.VERTICAL, false)
+        binding.rvSam4s.adapter = printerAdapter
 
         val nickDialog = SetNickDialog("", 1, "안드로이드 스마트폰")
         nickDialog.setOnNickChangeListener(object : DialogListener{

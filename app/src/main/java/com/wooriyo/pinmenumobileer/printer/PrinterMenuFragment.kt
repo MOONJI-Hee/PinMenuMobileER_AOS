@@ -59,13 +59,16 @@ class PrinterMenuFragment : Fragment() {
 
         binding.run {
             connSet.setOnClickListener {
-                if(MyApplication.remoteDevices.isEmpty() && cubeList.isNullOrEmpty()) {
-                    startActivity(Intent(context, NewConnActivity::class.java))
-                }else {
-                    val intent = Intent(context, SetConnActivity::class.java)
-                    intent.putExtra("cubeList", cubeList)
-                    startActivity(intent)
-                }
+                val intent = Intent(context, SetConnActivity::class.java)
+                intent.putExtra("cubeList", cubeList)
+                startActivity(intent)
+//                if(MyApplication.remoteDevices.isEmpty() && cubeList.isNullOrEmpty()) {
+//                    startActivity(Intent(context, NewConnActivity::class.java))
+//                }else {
+//                    val intent = Intent(context, SetConnActivity::class.java)
+//                    intent.putExtra("cubeList", cubeList)
+//                    startActivity(intent)
+//                }
             }
             support.setOnClickListener { startActivity(Intent(context, SupportPrinterActivity::class.java)) }
             contentSet.setOnClickListener { startActivity(Intent(context, ContentSetActivity::class.java)) }

@@ -86,7 +86,23 @@
         android:layout_height="0dp"
         android:paddingTop="10dp"
         android:background="@color/white"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAble"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSewoo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/tvAble"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSam4s"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/rvSewoo"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
