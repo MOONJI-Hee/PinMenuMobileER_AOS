@@ -61,6 +61,7 @@ class PrinterMenuFragment : Fragment() {
             connSet.setOnClickListener {
                 val intent = Intent(context, SetConnActivity::class.java)
                 intent.putExtra("cubeList", cubeList)
+                Log.d("AppeHelper", "cubeList 보냄 >> $cubeList")
                 startActivity(intent)
 //                if(MyApplication.remoteDevices.isEmpty() && cubeList.isNullOrEmpty()) {
 //                    startActivity(Intent(context, NewConnActivity::class.java))
@@ -79,10 +80,15 @@ class PrinterMenuFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        cubeList = AppHelper.searchCube(requireContext()) ?: ArrayList<SocketInfo>()
-        if(cubeList.size > 0) {
-            Log.d("AppeHelper", "cubeList 들어옴")
-        }
+        Thread(Runnable{
+            Log.d(TAG, "PrinterMenuFragment의 onResume")
+
+            // 여기 주석 풀어야 함
+//            cubeList = AppHelper.searchCube(requireContext()) ?: ArrayList<SocketInfo>()
+            if(cubeList.size > 0) {
+                Log.d("AppeHelper", "cubeList 들어옴 >> $cubeList")
+            }
+        }).start()
     }
 
     companion object {

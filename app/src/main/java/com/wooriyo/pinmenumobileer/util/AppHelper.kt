@@ -20,9 +20,11 @@ import com.sam4s.printer.Sam4sFinder
 import com.sewoo.request.android.RequestHandler
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.bluetoothAdapter
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.connDev_sewoo
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.remoteDevices
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.config.AppProperties
+import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.BT_PRINTER
 import com.wooriyo.pinmenumobileer.model.OrderDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.printer.sam4s.EthernetConnection
@@ -214,6 +216,7 @@ class AppHelper {
                 try {
                     MyApplication.bluetoothPort.connect(connDvc)
                     retVal = Integer.valueOf(0)
+                    connDev_sewoo = remoteDevices[position].address
                 } catch (e: IOException) {
                     e.printStackTrace()
                     retVal = Integer.valueOf(-1)
@@ -237,7 +240,7 @@ class AppHelper {
                 if(MyApplication.bluetoothPort.isValidAddress(deviceHardwareAddress)) {
                     val deviceNum = device.bluetoothClass.majorDeviceClass
 
-                    if(deviceNum == MyApplication.BT_PRINTER) {
+                    if(deviceNum == BT_PRINTER) {
                         remoteDevices.add(device)
                     }
                 }
@@ -394,8 +397,7 @@ class AppHelper {
         var list : ArrayList<*>? = null
 
         // 같은 ip내 GCUBE 프린터 검색
-        fun searchCube(context: Context): ArrayList<*>? {
-//            lateinit var scheduler: ScheduledExecutorService
+        fun searchCube(context: Context) {
             Log.d("AppeHelper", "search 들어옴")
 
             if (future != null) {
@@ -416,7 +418,7 @@ class AppHelper {
                 Log.d("AppeHelper", "scheduler 돌려려려려려")
                 future = it.scheduleWithFixedDelay(
                     Runnable {
-                        list = finder.devices
+                        val list = finder.devices
 
                         if(list != null && list!!.size > 0) {
                             Log.d("AppeHelper", "device 찾음")
@@ -428,12 +430,11 @@ class AppHelper {
                             Log.d("AppeHelper", "프린터 정보 >>>> ${NetworkPrinterInfo(list!![0] as SocketInfo)}")
 
                             stopSearchCube()
-//                            connectCube(context, NetworkPrinterInfo(list[0] as SocketInfo), list[0] as SocketInfo)
+                            connectCube(context, list!![0] as SocketInfo)
                         }
                     }, 0, 500, TimeUnit.MILLISECONDS )
             }
-
-            return list
+//            return list
         }
 
         fun stopSearchCube() {
@@ -454,34 +455,40 @@ class AppHelper {
         fun connectCube(context: Context, info: SocketInfo) {
             MyApplication.INSTANCE.getPrinterConnection()?.ClosePrinter()
             val connection = EthernetConnection(context)
-//        connection.setSocketInfo(info)
-//        connection.setSocketInfo(printerInfo.getDevice())
+//            connection.setSocketInfo(info)
             connection.setName(info.address)
             connection.setAdress(info.address)
             connection.setPort(info.port)
             connection.OpenPrinter()
 
+            Log.d("AppHelper", "Printer Status >> ${connection.getPrinterStatus()}")
+            Log.d("AppHelper", "Printer IsConnected >> ${connection.IsConnected()}")
+
+
             MyApplication.INSTANCE.setPrinterConnection(connection)
 
-            checkCubeConn()
+
+
+//            checkCubeConn()
         }
 
-        // GCUBE 연결되었는지 확인, 프린터기 모델명 return
-        fun checkCubeConn(): String {
-            var name = ""
+        // GCUBE 연결되었는지 확인, 상태 return
+        fun checkCubeConn(context: Context): Int {
+            val cube = MyApplication.INSTANCE.getPrinterConnection()
+            val connection = EthernetConnection(context)
 
-            val temp = MyApplication.INSTANCE.mPrinterConnection
+            connection.OpenPrinter()
 
-            if (temp != null && temp.IsConnected()) {
+            if (connection.IsConnected()) {
                 Log.d("AppHelper", "연결됨 들어옴")
             }
 
-            Log.d("AppHelper", temp.getPrinterStatus()?:"Null Error")
-            name = temp.getPrinterName()?:""
-
+            val status = connection.getPrinterStatus()?:"Null Error"
+            val name = connection.getPrinterName()?:""
+            Log.d("AppHelper", "Printer Status >> $status")
             Log.d("AppHelper", "Printer name >> $name")
 
-            return name
+            return if (status == "Printer Ready") 1 else 0
         }
     }
 }

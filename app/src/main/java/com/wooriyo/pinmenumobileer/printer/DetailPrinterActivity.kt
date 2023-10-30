@@ -1,11 +1,18 @@
 package com.wooriyo.pinmenumobileer.printer
 
+import android.bluetooth.BluetoothDevice
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.sam4s.io.ethernet.SocketInfo
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.androidId
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.bidx
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.bluetoothAdapter
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.remoteDevices
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.ActivityDetailPrinterBinding
@@ -18,30 +25,44 @@ import retrofit2.Response
 
 class DetailPrinterActivity : BaseActivity() {
     lateinit var binding: ActivityDetailPrinterBinding
-
-    lateinit var printer: PrintDTO
-
-    val TAG = "DetailPrinterActivity"
     val mActivity = this@DetailPrinterActivity
+    val TAG = "DetailPrinterActivity"
+
+//    lateinit var printer: PrintDTO
+    var printer_sw : BluetoothDevice ?= null
+    var printer_s4 : SocketInfo ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailPrinterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        printer = intent.getSerializableExtra("printer") as PrintDTO
+//        printer = intent.getSerializableExtra("printer") as PrintDTO
+
+        printer_sw =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+                intent.getParcelableExtra("sewoo", BluetoothDevice::class.java)
+            else
+                intent.getParcelableExtra("sewoo")
+
+        printer_s4 =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+                intent.getParcelableExtra("sam4s", SocketInfo::class.java)
+            else
+                intent.getParcelableExtra("sam4s")
 
         var img = 0
-        when (printer.printType) {
-            1 -> img = R.drawable.skl_ts400b
-            2 -> img = R.drawable.skl_te202
-            3 -> img = R.drawable.sam4s
+        var model = ""
+        if(printer_sw != null) {
+            img = R.drawable.skl_ts400b
+            model = getString(R.string.skl_ts400b)
+        }else if (printer_s4 != null) {
+            img = R.drawable.sam4s
+            model = getString(R.string.gcube)
         }
 
         binding.ivPrinter.setImageResource(img)
-        binding.model.text = printer.model
-        if (printer.nick != "")
-            binding.etNickPrinter.setText(printer.nick)
+        binding.model.text = model
 
         binding.back.setOnClickListener { finish() }
         binding.save.setOnClickListener { save() }
@@ -50,7 +71,7 @@ class DetailPrinterActivity : BaseActivity() {
 
     fun save() {
         val nick = binding.etNickPrinter.text.toString()
-        ApiClient.service.setPrintNick(useridx, MyApplication.storeidx, androidId, nick, 2)
+        ApiClient.service.setPrintNick(useridx, storeidx, androidId, nick, 2)
             .enqueue(object : Callback<ResultDTO> {
                 override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                     Log.d(TAG, "프린터 별명 설정 URL >> $response")
@@ -60,7 +81,6 @@ class DetailPrinterActivity : BaseActivity() {
                     when (result.status) {
                         1 -> {
                             Toast.makeText(mActivity, R.string.complete, Toast.LENGTH_SHORT).show()
-                            printer.nick = nick
                         }
                         else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                     }
@@ -78,7 +98,7 @@ class DetailPrinterActivity : BaseActivity() {
         // 삭제 전 연결 해제
         if (MyApplication.bluetoothPort.isConnected) MyApplication.bluetoothPort.disconnect()
 
-        ApiClient.service.delPrint(useridx, printer.storeidx, androidId, printer.idx)
+        ApiClient.service.delPrint(useridx, storeidx, androidId, bidx)
             .enqueue(object : Callback<ResultDTO> {
                 override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                     Log.d(TAG, "프린터 삭제 URL : $response")

@@ -12,6 +12,7 @@ import com.sewoo.jpos.command.ESCPOSConst
 import com.sewoo.jpos.printer.ESCPOSPrinter
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.cubeBuilder
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.escposPrinter
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.store
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
@@ -372,36 +373,27 @@ class OrderListActivity : BaseActivity() {
 
 
         //SAM4S
-//        val builder = Sam4sBuilder("GCube-102", Sam4sBuilder.LANG_KO)
-//
-//        builder.addTextSize(1, 1)
-//        builder.addFeedLine(1)
-//
-//        //addTextStyle
-//        builder.addTextStyle(false, false, false, Sam4sBuilder.COLOR_1)
-//
-//        builder.addText("${store.name}\n")
-//        builder.addText("주문날짜 : $pOrderDt\n")
-//        builder.addText("주문번호 : $pOrderNo\n")
-//        builder.addText("테이블번호 : $pTableNo\n")
-//        builder.addText(TITLE_MENU_SAM4S)
-//        builder.addText(hyphen.toString())
-//
-//        orderList[position].olist.forEach {
-//            val pOrder = AppHelper.getSam4sPrint(it)
-//            builder.addText("$pOrder\n")
-//        }
-//        builder.addFeedLine(4)
-//        builder.addCut(Sam4sBuilder.CUT_NO_FEED)
-//
-//        //send builder data
-//        try {
-//            //cl_Menu.mPrinter.sendData(builder);
-//            MyApplication.INSTANCE.mPrinterConnection?.sendData(builder)
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        }
+        cubeBuilder.addText("${store.name}\n")
+        cubeBuilder.addText("주문날짜 : $pOrderDt\n")
+        cubeBuilder.addText("주문번호 : $pOrderNo\n")
+        cubeBuilder.addText("테이블번호 : $pTableNo\n")
+        cubeBuilder.addText(TITLE_MENU_SAM4S)
+        cubeBuilder.addText(hyphen.toString())
 
+        orderList[position].olist.forEach {
+            val pOrder = AppHelper.getSam4sPrint(it)
+            cubeBuilder.addText("$pOrder\n")
+        }
+        cubeBuilder.addFeedLine(4)
+        cubeBuilder.addCut(Sam4sBuilder.CUT_NO_FEED)
+
+        //send builder data
+        try {
+            //cl_Menu.mPrinter.sendData(builder);
+            MyApplication.INSTANCE.mPrinterConnection?.sendData(cubeBuilder)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     fun getPrint(ord: OrderDTO) : String {

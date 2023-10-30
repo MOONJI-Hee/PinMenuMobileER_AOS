@@ -2,6 +2,7 @@ package com.wooriyo.pinmenumobileer.printer
 
 import android.bluetooth.BluetoothDevice
 import android.content.*
+import android.content.ClipData.Item
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -46,8 +47,8 @@ class SetConnActivity : BaseActivity() {
     lateinit var cubeList : ArrayList<SocketInfo>
     lateinit var sam4sAdapter: Sam4sAdapter
 
-    val printerList = ArrayList<PrintDTO>()
-    val printerAdapter = PrinterAdapter(printerList)
+//    val printerList = ArrayList<PrintDTO>()
+//    val printerAdapter = PrinterAdapter(printerList)
 
     val sewooAdapter = SewooAdapter(remoteDevices)
 
@@ -64,6 +65,8 @@ class SetConnActivity : BaseActivity() {
             (intent.getParcelableArrayListExtra("cubeList") ?: ArrayList<SocketInfo>())
         }
 
+        Log.d(TAG, "cubeList 들어왔니??? >> $cubeList")
+
         sam4sAdapter = Sam4sAdapter(cubeList)
 
         // 디바이스, 프린터 정보 조회
@@ -73,44 +76,40 @@ class SetConnActivity : BaseActivity() {
 //        getPairedDevice()
 
         // BroadCast Receiver
-        registerReceiver(BtDiscoveryReceiver(), IntentFilter(BluetoothDevice.ACTION_FOUND))
+//        registerReceiver(BtDiscoveryReceiver(), IntentFilter(BluetoothDevice.ACTION_FOUND))
 //        registerReceiver(connectDevice, IntentFilter(BluetoothDevice.ACTION_ACL_CONNECTED))
 //        registerReceiver(connectDevice, IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED))
 
         // 연결 프린트 리사이클러뷰
-        printerAdapter.setConnClickListener(object : ItemClickListener {
+        sewooAdapter.setConnClickListener(object : ItemClickListener {
             override fun onItemClick(position: Int) {
-                val selType = printerList[position].printType
                 var status = ""
 
-                if (printerList[position].connected) {
+                if (remoteDevices[position].bondState == 0) {
                     MyApplication.bluetoothPort.disconnect()
 
-//                    MyApplication.btConn = false
-                    printerList[position].connected = false
+//                    printerList[position].connected = false
 
                     status = "N"
                 } else {
-                    val retVal = connDevice(0)
+                    val retVal = connDevice(position)
 
                     if (retVal == 0) {
                         val rh = RequestHandler()
                         MyApplication.btThread = Thread(rh)
                         MyApplication.btThread!!.start()
 
-//                        MyApplication.btConn = true
-                        printerList[position].connected = true
+//                        printerList[position].connected = true
 
                         status = "Y"
 
                         val prePos = connPos
                         connPos = position
-                        printerAdapter.notifyItemChanged(position)
+                        sewooAdapter.notifyItemChanged(position)
 
-                        if (prePos != connPos)
-                            printerAdapter.notifyItemChanged(prePos)
+//                        if (prePos != connPos)
+//                            printerAdapter.notifyItemChanged(prePos)
 
-                        setPrintConnStatus(position, status)
                     }else if (retVal == -2) {
                         AppHelper.searchDevice()
                     } else {
@@ -120,23 +119,29 @@ class SetConnActivity : BaseActivity() {
                 }
                 val prePos = connPos
                 connPos = position
-                printerAdapter.notifyItemChanged(position)
+                sewooAdapter.notifyItemChanged(position)
 
                 if (prePos != connPos)
-                    printerAdapter.notifyItemChanged(prePos)
+                    sewooAdapter.notifyItemChanged(prePos)
 
-                setPrintConnStatus(position, status)
+//                setPrintConnStatus(position, status)
             }
         })
 
-        binding.rvPrinter.layoutManager = LinearLayoutManager(mActivity, RecyclerView.VERTICAL, false)
-        binding.rvPrinter.adapter = printerAdapter
+        sam4sAdapter.setConnClickListener(object: ItemClickListener {
+            override fun onItemClick(position: Int) {
+                // 아직 뭐할지 몰라...ㅋ
+            }
+        })
+
+//        binding.rvPrinter.layoutManager = LinearLayoutManager(mActivity, RecyclerView.VERTICAL, false)
+//        binding.rvPrinter.adapter = printerAdapter
 
         binding.rvSewoo.layoutManager = LinearLayoutManager(mActivity, RecyclerView.VERTICAL, false)
         binding.rvSewoo.adapter = sewooAdapter
 
         binding.rvSam4s.layoutManager = LinearLayoutManager(mActivity, RecyclerView.VERTICAL, false)
-        binding.rvSam4s.adapter = printerAdapter
+        binding.rvSam4s.adapter = sam4sAdapter
 
         val nickDialog = SetNickDialog("", 1, "안드로이드 스마트폰")
         nickDialog.setOnNickChangeListener(object : DialogListener{
@@ -177,36 +182,27 @@ class SetConnActivity : BaseActivity() {
         })
     }
 
-
     fun setPrintConnStatus(position: Int, status: String) {
-        ApiClient.service.setPrintConnStatus(useridx, storeidx, androidId, printerList[position].idx, status)
-            .enqueue(object : Callback<ResultDTO>{
-                override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
-                    Log.d(TAG, "연결 프린터 상태 갱신 Url : $response")
-                    if(!response.isSuccessful) return
-
-                    val result = response.body() ?: return
-
-                    when(result.status) {
-                        1 -> {}
-                        else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-                override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
-                    Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, "연결 프린터 상태 갱신 오류 >> $t")
-                    Log.d(TAG, "연결 프린터 상태 갱신 오류 >> ${call.request()}")
-                }
-            })
-    }
-
-    fun checkConn() {
-        if(MyApplication.bluetoothPort.isConnected){
-            printerList[0].connected = true
-            printerAdapter.notifyItemChanged(0)
-            connPos = 0
-        }
+//        ApiClient.service.setPrintConnStatus(useridx, storeidx, androidId, printerList[position].idx, status)
+//            .enqueue(object : Callback<ResultDTO>{
+//                override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+//                    Log.d(TAG, "연결 프린터 상태 갱신 Url : $response")
+//                    if(!response.isSuccessful) return
+//
+//                    val result = response.body() ?: return
+//
+//                    when(result.status) {
+//                        1 -> {}
+//                        else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+//                    Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+//                    Log.d(TAG, "연결 프린터 상태 갱신 오류 >> $t")
+//                    Log.d(TAG, "연결 프린터 상태 갱신 오류 >> ${call.request()}")
+//                }
+//            })
     }
 
 //    fun getConnPrintList() {

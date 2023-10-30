@@ -14,6 +14,8 @@ import android.os.Build
 import android.provider.Settings
 import android.view.WindowManager
 import com.sam4s.io.ethernet.SocketInfo
+import com.sam4s.printer.Sam4sBuilder
+import com.sam4s.printer.Sam4sPrint
 import com.sewoo.jpos.printer.ESCPOSPrinter
 import com.sewoo.port.android.BluetoothPort
 import com.wooriyo.pinmenumobileer.config.AppProperties
@@ -68,8 +70,11 @@ class MyApplication: Application() {
         lateinit var remoteDevices: ArrayList<BluetoothDevice>  // 페어링 된 기기 중 세우전자 프린터 리스트
         lateinit var bluetoothPort: BluetoothPort
         lateinit var escposPrinter : ESCPOSPrinter
-        val BT_PRINTER = 1536
         var btThread: Thread? = null
+        var connDev_sewoo = "00:00:00:00:00:00"
+
+        //SAM4S 프린터 관련
+        lateinit var cubeBuilder: Sam4sBuilder
 
         var bidx = 0    //프린터 설정 시 부여되는 idx (기기별 매장 하나 당 한개씩 부여)
 
@@ -117,9 +122,12 @@ class MyApplication: Application() {
 
         //SAM4S
         mPrinterConnection = PrinterConnection(applicationContext, 0)
+        cubeBuilder = Sam4sBuilder("GCube-100", Sam4sBuilder.LANG_KO)
+        cubeBuilder.addTextSize(1, 1)
+        cubeBuilder.addFeedLine(1)
+        cubeBuilder.addTextStyle(false, false, false, Sam4sBuilder.COLOR_1)
 
         createNotificationChannel()
-
 
         super.onCreate()
     }

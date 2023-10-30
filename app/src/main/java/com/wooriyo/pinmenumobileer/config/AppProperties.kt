@@ -30,6 +30,9 @@ class AppProperties {
         const val REQUEST_ENABLE_BT = 1
         const val REQUEST_NOTIFICATION = 2
 
+        // 세우 프린터 관련
+        const val BT_PRINTER = 1536
+
         //프린트 관련
         const val FONT_BIG = 37
         const val FONT_SMALL = 28

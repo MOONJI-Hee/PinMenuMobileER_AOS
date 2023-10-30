@@ -103,7 +103,7 @@ class NewConnActivity : BaseActivity() {
                         Log.d("AppeHelper", "프린터 정보 >>>> ${NetworkPrinterInfo(AppHelper.list!![0] as SocketInfo)}")
 
 //                    AppHelper.stopSearchCube()
-                        AppHelper.connectCube(mActivity, list!![0] as SocketInfo)
+//                        AppHelper.connectCube(mActivity, list!![0] as SocketInfo)
                     }
                 }else searchDevice()
             }).start()
