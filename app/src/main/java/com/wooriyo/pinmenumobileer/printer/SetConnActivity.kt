@@ -1,9 +1,5 @@
 package com.wooriyo.pinmenumobileer.printer
 
-import android.bluetooth.BluetoothDevice
-import android.content.*
-import android.content.ClipData.Item
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -11,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sam4s.io.ethernet.SocketInfo
 import com.sewoo.request.android.RequestHandler
-import com.wooriyo.pinmenumobileer.broadcast.BtDiscoveryReceiver
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.androidId
@@ -23,10 +18,6 @@ import com.wooriyo.pinmenumobileer.databinding.ActivitySetConnBinding
 import com.wooriyo.pinmenumobileer.listener.DialogListener
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.PrintContentDTO
-import com.wooriyo.pinmenumobileer.model.PrintDTO
-import com.wooriyo.pinmenumobileer.model.PrintListDTO
-import com.wooriyo.pinmenumobileer.model.ResultDTO
-import com.wooriyo.pinmenumobileer.printer.adapter.PrinterAdapter
 import com.wooriyo.pinmenumobileer.printer.adapter.Sam4sAdapter
 import com.wooriyo.pinmenumobileer.printer.adapter.SewooAdapter
 import com.wooriyo.pinmenumobileer.printer.dialog.SetNickDialog
@@ -59,11 +50,13 @@ class SetConnActivity : BaseActivity() {
         binding = ActivitySetConnBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        cubeList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            (intent.getParcelableArrayListExtra("cubeList", SocketInfo::class.java) ?: ArrayList<SocketInfo>())
-        }else {
-            (intent.getParcelableArrayListExtra("cubeList") ?: ArrayList<SocketInfo>())
-        }
+//        cubeList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            (intent.getParcelableArrayListExtra("cubeList", SocketInfo::class.java) ?: ArrayList<SocketInfo>())
+//        }else {
+//            (intent.getParcelableArrayListExtra("cubeList") ?: ArrayList<SocketInfo>())
+//        }
+
+        this.cubeList = AppHelper.cubePrinterList
 
         Log.d(TAG, "cubeList 들어왔니??? >> $cubeList")
 
@@ -130,7 +123,7 @@ class SetConnActivity : BaseActivity() {
 
         sam4sAdapter.setConnClickListener(object: ItemClickListener {
             override fun onItemClick(position: Int) {
-                // 아직 뭐할지 몰라...ㅋ
+                AppHelper.connectCube(mActivity, cubeList[position])
             }
         })
 

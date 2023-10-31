@@ -86,28 +86,38 @@ class Sam4sAdapter(val dataSet: ArrayList<SocketInfo>): RecyclerView.Adapter<Sam
             }
 
             binding.btnTest.setOnClickListener {
-                if(AppHelper.checkCubeConn(context) == 1) {
-                    MyApplication.cubeBuilder.createCommandBuffer()
-                    MyApplication.cubeBuilder.addText(context.getString(R.string.print_test))
-                    MyApplication.cubeBuilder.addFeedLine(4)
-                    MyApplication.cubeBuilder.addCut(Sam4sBuilder.CUT_NO_FEED)
-                    try {
-                        MyApplication.INSTANCE.mPrinterConnection?.sendData(MyApplication.cubeBuilder)
-                        MyApplication.cubeBuilder.clearCommandBuffer()
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }else {
+                MyApplication.cubeBuilder.createCommandBuffer()
+                MyApplication.cubeBuilder.addText(context.getString(R.string.print_test))
+                MyApplication.cubeBuilder.addFeedLine(4)
+                MyApplication.cubeBuilder.addCut(Sam4sBuilder.CUT_NO_FEED)
+                try {
+                    MyApplication.INSTANCE.mPrinterConnection?.sendData(MyApplication.cubeBuilder)
+                    MyApplication.cubeBuilder.clearCommandBuffer()
+                } catch (e: Exception) {
+                    e.printStackTrace()
                     val fragmentActivity = context as FragmentActivity
                     AlertDialog("", context.getString(R.string.dialog_check_conn), 1).show(fragmentActivity.supportFragmentManager, "AlertDialog")
                 }
-            }
-            binding.btnConn.setOnClickListener {
-                Thread(Runnable{
-                    AppHelper.connectCube(context, data)
-                }).start()
 
-//                itemClickListener.onItemClick(adapterPosition)
+//                if(AppHelper.checkCubeConn(context) == 1) {
+//                    MyApplication.cubeBuilder.createCommandBuffer()
+//                    MyApplication.cubeBuilder.addText(context.getString(R.string.print_test))
+//                    MyApplication.cubeBuilder.addFeedLine(4)
+//                    MyApplication.cubeBuilder.addCut(Sam4sBuilder.CUT_NO_FEED)
+//                    try {
+//                        MyApplication.INSTANCE.mPrinterConnection?.sendData(MyApplication.cubeBuilder)
+//                        MyApplication.cubeBuilder.clearCommandBuffer()
+//                    } catch (e: Exception) {
+//                        e.printStackTrace()
+//                    }
+//                }else {
+//                    val fragmentActivity = context as FragmentActivity
+//                    AlertDialog("", context.getString(R.string.dialog_check_conn), 1).show(fragmentActivity.supportFragmentManager, "AlertDialog")
+//                }
+            }
+
+            binding.btnConn.setOnClickListener {
+                itemClickListener.onItemClick(adapterPosition)
             }
         }
     }

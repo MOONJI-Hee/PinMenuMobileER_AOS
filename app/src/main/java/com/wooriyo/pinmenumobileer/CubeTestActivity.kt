@@ -12,6 +12,7 @@ import com.wooriyo.pinmenumobileer.printer.sam4s.EthernetConnection
 import com.wooriyo.pinmenumobileer.printer.sam4s.NetworkPrinterInfo
 import com.wooriyo.pinmenumobileer.util.AppHelper
 import com.wooriyo.pinmenumobileer.util.AppHelper.Companion.checkCubeConn
+import com.wooriyo.pinmenumobileer.util.AppHelper.Companion.connectCube
 import com.wooriyo.pinmenumobileer.util.AppHelper.Companion.stopSearchCube
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
@@ -20,8 +21,6 @@ import java.util.concurrent.TimeUnit
 
 class CubeTestActivity : BaseActivity() {
     lateinit var binding: ActivityCubeTestBinding
-
-    private val finder: Sam4sFinder = Sam4sFinder()
 
     lateinit var scheduler: ScheduledExecutorService
     var future: ScheduledFuture<*>? = null
@@ -39,9 +38,12 @@ class CubeTestActivity : BaseActivity() {
             startActivity(Intent(this@CubeTestActivity, StartActivity::class.java))
         }
 
-        binding.find.setOnClickListener { search() }
+        binding.find.setOnClickListener { AppHelper.searchCube(this@CubeTestActivity) }
         binding.print.setOnClickListener { cut() }
-        binding.check.setOnClickListener { checkCubeConn(this@CubeTestActivity) }
+        binding.check.setOnClickListener {
+//            checkCubeConn(this@CubeTestActivity)
+            connectCube(this@CubeTestActivity, AppHelper.cubePrinterList[0])
+        }
     }
 
     override fun onPause() {
@@ -69,12 +71,31 @@ class CubeTestActivity : BaseActivity() {
 
     fun search() {
         Log.d(TAG, "search 들어옴")
-        val list = AppHelper.searchCube(this@CubeTestActivity)
-        Log.d(TAG, "검색된 리스트 > $list")
 
-//        if(list != null && list.size > 0) {
-//            AppHelper.connectCube(this@CubeTestActivity, list[0] as SocketInfo)
-//        }
+        if (AppHelper.future != null) {
+            Log.d("AppHelper", "future is not null")
+            AppHelper.future!!.cancel(false)
+            while (!AppHelper.future!!.isDone) {
+                try {
+                    Thread.sleep(500)
+                } catch (e: java.lang.Exception) {
+                    break
+                }
+            }
+            AppHelper.future = null
+        }
+
+        AppHelper.scheduler.let {
+            AppHelper.finder.startSearch(this@CubeTestActivity, Sam4sFinder.DEVTYPE_ETHERNET)
+            AppHelper.future = it.scheduleWithFixedDelay(
+                Runnable {
+                    val cubeList = AppHelper.getCubeList()
+
+                    if(cubeList != null && cubeList.size>0) {
+                        connectCube(this@CubeTestActivity, cubeList[0] as SocketInfo)
+                    }
+                }, 0, 500, TimeUnit.MILLISECONDS )
+        }
     }
 
 //    fun stop() {

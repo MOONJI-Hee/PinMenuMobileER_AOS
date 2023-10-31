@@ -357,42 +357,47 @@ class OrderListActivity : BaseActivity() {
         val pTableNo = orderList[position].tableNo
         val pOrderNo = orderList[position].ordcode
 
-        escposPrinter.printAndroidFont(store.name, FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
-        escposPrinter.printAndroidFont("주문날짜 : $pOrderDt", FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
-        escposPrinter.printAndroidFont("주문번호 : $pOrderNo", FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
-        escposPrinter.printAndroidFont("테이블번호 : $pTableNo", FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
-        escposPrinter.printAndroidFont(TITLE_MENU, FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
-        escposPrinter.printAndroidFont(hyphen.toString(), FONT_WIDTH, font_size, ESCPOSConst.LK_ALIGNMENT_LEFT)
+        if(MyApplication.bluetoothPort.isConnected){
+            escposPrinter.printAndroidFont(store.name, FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+            escposPrinter.printAndroidFont("주문날짜 : $pOrderDt", FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+            escposPrinter.printAndroidFont("주문번호 : $pOrderNo", FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+            escposPrinter.printAndroidFont("테이블번호 : $pTableNo", FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+            escposPrinter.printAndroidFont(TITLE_MENU, FONT_WIDTH, FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+            escposPrinter.printAndroidFont(hyphen.toString(), FONT_WIDTH, font_size, ESCPOSConst.LK_ALIGNMENT_LEFT)
 
-        orderList[position].olist.forEach {
-            val pOrder = getPrint(it)
-            escposPrinter.printAndroidFont(pOrder, FONT_WIDTH, font_size, ESCPOSConst.LK_ALIGNMENT_LEFT)
+            orderList[position].olist.forEach {
+                val pOrder = getPrint(it)
+                escposPrinter.printAndroidFont(pOrder, FONT_WIDTH, font_size, ESCPOSConst.LK_ALIGNMENT_LEFT)
+            }
+            escposPrinter.lineFeed(4)
+            escposPrinter.cutPaper()
         }
-        escposPrinter.lineFeed(4)
-        escposPrinter.cutPaper()
 
+        if(AppHelper.checkCubeConn(mActivity) == 1) {
+            //SAM4S
+            cubeBuilder.createCommandBuffer()
+            cubeBuilder.addText("${store.name}\n")
+            cubeBuilder.addText("주문날짜 : $pOrderDt\n")
+            cubeBuilder.addText("주문번호 : $pOrderNo\n")
+            cubeBuilder.addText("테이블번호 : $pTableNo\n")
+            cubeBuilder.addText(TITLE_MENU_SAM4S)
+            cubeBuilder.addText(hyphen.toString())
 
-        //SAM4S
-        cubeBuilder.addText("${store.name}\n")
-        cubeBuilder.addText("주문날짜 : $pOrderDt\n")
-        cubeBuilder.addText("주문번호 : $pOrderNo\n")
-        cubeBuilder.addText("테이블번호 : $pTableNo\n")
-        cubeBuilder.addText(TITLE_MENU_SAM4S)
-        cubeBuilder.addText(hyphen.toString())
+            orderList[position].olist.forEach {
+                val pOrder = AppHelper.getSam4sPrint(it)
+                cubeBuilder.addText("$pOrder\n")
+            }
+            cubeBuilder.addFeedLine(4)
+            cubeBuilder.addCut(Sam4sBuilder.CUT_NO_FEED)
 
-        orderList[position].olist.forEach {
-            val pOrder = AppHelper.getSam4sPrint(it)
-            cubeBuilder.addText("$pOrder\n")
-        }
-        cubeBuilder.addFeedLine(4)
-        cubeBuilder.addCut(Sam4sBuilder.CUT_NO_FEED)
-
-        //send builder data
-        try {
-            //cl_Menu.mPrinter.sendData(builder);
-            MyApplication.INSTANCE.mPrinterConnection?.sendData(cubeBuilder)
-        } catch (e: Exception) {
-            e.printStackTrace()
+            //send builder data
+            try {
+                //cl_Menu.mPrinter.sendData(builder);
+                MyApplication.INSTANCE.mPrinterConnection?.sendData(cubeBuilder)
+                cubeBuilder.clearCommandBuffer()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 

@@ -89,24 +89,24 @@ class NewConnActivity : BaseActivity() {
                 MyApplication.bluetoothPort.disconnect()
             }
 
-            Thread(Runnable {
-                if(printType == 3){
-                    val list = AppHelper.searchCube(mActivity)
-
-                    if(AppHelper.list != null && AppHelper.list!!.size > 0) {
-                        Log.d("AppeHelper", "device 찾음")
-                        Log.d("AppeHelper", "프린터 왜 정보 안나와.. >>>> ${(AppHelper.list!![0] as SocketInfo).address}")
-                        Log.d("AppeHelper", "프린터 왜 정보 안나와.. >>>> ${(AppHelper.list!![0] as SocketInfo).port}")
-
-                        Log.d("AppeHelper", "프린터 정보 >>>> ${NetworkPrinterInfo(AppHelper.list!![0] as SocketInfo).getTitle()}")
-                        Log.d("AppeHelper", "프린터 정보 >>>> ${NetworkPrinterInfo(AppHelper.list!![0] as SocketInfo).getSubTitle()}")
-                        Log.d("AppeHelper", "프린터 정보 >>>> ${NetworkPrinterInfo(AppHelper.list!![0] as SocketInfo)}")
-
-//                    AppHelper.stopSearchCube()
-//                        AppHelper.connectCube(mActivity, list!![0] as SocketInfo)
-                    }
-                }else searchDevice()
-            }).start()
+//            Thread(Runnable {
+//                if(printType == 3){
+//                    val list = AppHelper.searchCube(mActivity)
+//
+//                    if(AppHelper.list != null && AppHelper.list!!.size > 0) {
+//                        Log.d("AppeHelper", "device 찾음")
+//                        Log.d("AppeHelper", "프린터 왜 정보 안나와.. >>>> ${(AppHelper.list!![0] as SocketInfo).address}")
+//                        Log.d("AppeHelper", "프린터 왜 정보 안나와.. >>>> ${(AppHelper.list!![0] as SocketInfo).port}")
+//
+//                        Log.d("AppeHelper", "프린터 정보 >>>> ${NetworkPrinterInfo(AppHelper.list!![0] as SocketInfo).getTitle()}")
+//                        Log.d("AppeHelper", "프린터 정보 >>>> ${NetworkPrinterInfo(AppHelper.list!![0] as SocketInfo).getSubTitle()}")
+//                        Log.d("AppeHelper", "프린터 정보 >>>> ${NetworkPrinterInfo(AppHelper.list!![0] as SocketInfo)}")
+//
+////                    AppHelper.stopSearchCube()
+////                        AppHelper.connectCube(mActivity, list!![0] as SocketInfo)
+//                    }
+//                }else searchDevice()
+//            }).start()
         }
     }
 

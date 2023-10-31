@@ -394,14 +394,11 @@ class AppHelper {
         var scheduler = Executors.newSingleThreadScheduledExecutor()
         var future: ScheduledFuture<*>? = null
 
-        var list : ArrayList<*>? = null
+        val cubePrinterList = ArrayList<SocketInfo>()
 
         // 같은 ip내 GCUBE 프린터 검색
         fun searchCube(context: Context) {
-            Log.d("AppeHelper", "search 들어옴")
-
             if (future != null) {
-                Log.d("AppHelper", "future is not null")
                 future!!.cancel(false)
                 while (!future!!.isDone) {
                     try {
@@ -415,29 +412,37 @@ class AppHelper {
 
             scheduler.let {
                 finder.startSearch(context, Sam4sFinder.DEVTYPE_ETHERNET)
-                Log.d("AppeHelper", "scheduler 돌려려려려려")
                 future = it.scheduleWithFixedDelay(
                     Runnable {
-                        val list = finder.devices
+                        val list = getCubeList()
 
-                        if(list != null && list!!.size > 0) {
-                            Log.d("AppeHelper", "device 찾음")
-                            Log.d("AppeHelper", "프린터 왜 정보 안나와.. >>>> ${(list!![0] as SocketInfo).address}")
-                            Log.d("AppeHelper", "프린터 왜 정보 안나와.. >>>> ${(list!![0] as SocketInfo).port}")
-
-                            Log.d("AppeHelper", "프린터 정보 >>>> ${NetworkPrinterInfo(list!![0] as SocketInfo).getTitle()}")
-                            Log.d("AppeHelper", "프린터 정보 >>>> ${NetworkPrinterInfo(list!![0] as SocketInfo).getSubTitle()}")
-                            Log.d("AppeHelper", "프린터 정보 >>>> ${NetworkPrinterInfo(list!![0] as SocketInfo)}")
-
-                            stopSearchCube()
-                            connectCube(context, list!![0] as SocketInfo)
+                        if(list != null && list.size > 0) {
+                            cubePrinterList.clear()
+                            list.forEach { cube -> cubePrinterList.add(cube as SocketInfo) }
+//                            connectCube(context, cubeList[0] as SocketInfo)
                         }
                     }, 0, 500, TimeUnit.MILLISECONDS )
             }
-//            return list
+        }
+
+        fun getCubeList() : ArrayList<*>? {
+            val list = finder.devices
+
+            if(list != null && list.size > 0) {
+                Log.d("AppeHelper", "device 찾음")
+                Log.d("AppeHelper", "프린터 왜 정보 안나와.. >>>> ${(list[0] as SocketInfo).address}")
+                Log.d("AppeHelper", "프린터 왜 정보 안나와.. >>>> ${(list[0] as SocketInfo).port}")
+
+                stopSearchCube()
+
+                return list
+            }else {
+                return null
+            }
         }
 
         fun stopSearchCube() {
+            Log.d("AppHelper", "Stop Search 들어옴")
             if (future != null) {
                 future!!.cancel(false)
                 while (!future!!.isDone) {
@@ -452,6 +457,21 @@ class AppHelper {
             finder.stopSearch()
         }
 
+        fun destroySearchCube() {
+            if(future != null) {
+                future!!.cancel(false)
+                while(!future!!.isDone()) {
+                    try {
+                        Thread.sleep(500)
+                    } catch (e: Exception) {
+                        break
+                    }
+                }
+                future = null
+            }
+            scheduler.shutdown()
+        }
+
         fun connectCube(context: Context, info: SocketInfo) {
             MyApplication.INSTANCE.getPrinterConnection()?.ClosePrinter()
             val connection = EthernetConnection(context)
@@ -464,11 +484,7 @@ class AppHelper {
             Log.d("AppHelper", "Printer Status >> ${connection.getPrinterStatus()}")
             Log.d("AppHelper", "Printer IsConnected >> ${connection.IsConnected()}")
 
-
             MyApplication.INSTANCE.setPrinterConnection(connection)
-
-
-
 //            checkCubeConn()
         }
 

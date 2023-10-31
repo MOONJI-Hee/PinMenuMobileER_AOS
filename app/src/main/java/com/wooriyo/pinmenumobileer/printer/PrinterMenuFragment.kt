@@ -1,45 +1,24 @@
 package com.wooriyo.pinmenumobileer.printer
 
-import android.Manifest
-import android.bluetooth.BluetoothAdapter
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import com.sam4s.io.ethernet.SocketInfo
-import com.sewoo.request.android.RequestHandler
+import com.sam4s.printer.Sam4sFinder
 import com.wooriyo.pinmenumobileer.MainActivity
-import com.wooriyo.pinmenumobileer.MyApplication
-import com.wooriyo.pinmenumobileer.R
-import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.databinding.FragmentPrinterMenuBinding
-import com.wooriyo.pinmenumobileer.model.PrintDTO
-import com.wooriyo.pinmenumobileer.model.PrintListDTO
-import com.wooriyo.pinmenumobileer.printer.sam4s.NetworkPrinterInfo
-import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.util.AppHelper
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import kotlin.concurrent.thread
+import java.util.concurrent.TimeUnit
 
 class PrinterMenuFragment : Fragment() {
     lateinit var binding: FragmentPrinterMenuBinding
     val TAG = "PrinterMenuFragment"
 
-    lateinit var cubeList : ArrayList<*>
+    var cubeList : ArrayList<*> ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,8 +39,8 @@ class PrinterMenuFragment : Fragment() {
         binding.run {
             connSet.setOnClickListener {
                 val intent = Intent(context, SetConnActivity::class.java)
-                intent.putExtra("cubeList", cubeList)
-                Log.d("AppeHelper", "cubeList 보냄 >> $cubeList")
+//                intent.putExtra("cubeList", cubeList)
+//                Log.d("AppeHelper", "cubeList 보냄 >> $cubeList")
                 startActivity(intent)
 //                if(MyApplication.remoteDevices.isEmpty() && cubeList.isNullOrEmpty()) {
 //                    startActivity(Intent(context, NewConnActivity::class.java))
@@ -80,15 +59,17 @@ class PrinterMenuFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        Thread(Runnable{
-            Log.d(TAG, "PrinterMenuFragment의 onResume")
+        AppHelper.searchCube(requireContext())
+    }
 
-            // 여기 주석 풀어야 함
-//            cubeList = AppHelper.searchCube(requireContext()) ?: ArrayList<SocketInfo>()
-            if(cubeList.size > 0) {
-                Log.d("AppeHelper", "cubeList 들어옴 >> $cubeList")
-            }
-        }).start()
+    override fun onPause() {
+        super.onPause()
+        AppHelper.stopSearchCube()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        AppHelper.destroySearchCube()
     }
 
     companion object {
