@@ -90,6 +90,8 @@ class StoreListFragment : Fragment() {
                 binding.arpayo.text = getString(R.string.arpayo_dis_conn)
         }
 
+        binding.version.text = MyApplication.appver
+
         return binding.root
     }
 

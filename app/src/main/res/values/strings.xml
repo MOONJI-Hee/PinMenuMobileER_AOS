@@ -271,6 +271,14 @@
     <string name="gcube">GCUBE</string>
     <string name="sam4s">Sam4S</string>
 
+    <string name="printer_conn_way">연결방식&#160;:&#160;</string>
+    <string name="printer_etc">특이사항&#160;:&#160;</string>
+    <string name="printer_bluetooth">블루투스</string>
+    <string name="printer_wifi">와이파이</string>
+    <string name="printer_etc_ts400b">세우테크가 강력하게 추천하는\n블루투스 프린터</string>
+    <string name="printer_etc_gcube">iOS에서 지원하지 않음</string>
+    <string name="printer_support_info">핀메뉴에서는 프린터를 제공하지 않습니다.\n핀메뉴와 연동이 가능한 프린터를 보유하고 있다면\n직접 연결을 통해 바로 이용이 가능하며,\n연동이 가능한 프린터가 없다면 구매 후 연동하여\n이용이 가능합니다.</string>
+
     <string name="printer_title_conn_mng">연결 프린터 관리</string>
     <string name="printer_available">연결 가능한 프린터</string>
     <string name="test">테스트</string>

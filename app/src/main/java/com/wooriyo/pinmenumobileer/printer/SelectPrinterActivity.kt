@@ -37,6 +37,10 @@ class SelectPrinterActivity : BaseActivity() {
             ckTe202.visibility = View.VISIBLE
             ckSam4s.visibility = View.VISIBLE
             select.visibility = View.VISIBLE
+            supportInfo.visibility = View.GONE
+            openTs400b.visibility = View.GONE
+            openTe202.visibility = View.GONE
+            openGcube.visibility = View.GONE
 
             ts400b.setOnClickListener {
                 ckTs400b.isChecked = true

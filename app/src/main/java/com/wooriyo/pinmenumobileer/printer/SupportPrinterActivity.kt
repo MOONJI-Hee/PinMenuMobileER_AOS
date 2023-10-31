@@ -2,6 +2,8 @@ package com.wooriyo.pinmenumobileer.printer
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.R
@@ -21,6 +23,10 @@ class SupportPrinterActivity : BaseActivity() {
 
     val modelList = ArrayList<PrintModelDTO>()
 
+    var opend_ts = false
+    var opend_te = false
+    var opend_cube = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySupportPrinterBinding.inflate(layoutInflater)
@@ -29,6 +35,28 @@ class SupportPrinterActivity : BaseActivity() {
         getSupportPrinter()
 
         binding.back.setOnClickListener { finish() }
+        binding.ts400b.setOnClickListener {
+            if(opend_ts) {
+                binding.ts400bInfo.visibility = View.GONE
+                binding.openTs400b.setImageResource(R.drawable.icon_list_arrow_down)
+                opend_ts = false
+            }else {
+                binding.ts400bInfo.visibility = View.VISIBLE
+                binding.openTs400b.setImageResource(R.drawable.icon_list_arrow_up)
+                opend_ts = true
+            }
+        }
+        binding.gcube.setOnClickListener {
+            if(opend_cube) {
+                binding.gcubeInfo.visibility = View.GONE
+                binding.openGcube.setImageResource(R.drawable.icon_list_arrow_down)
+                opend_cube = false
+            }else {
+                binding.gcubeInfo.visibility = View.VISIBLE
+                binding.openGcube.setImageResource(R.drawable.icon_list_arrow_up)
+                opend_cube = true
+            }
+        }
     }
 
     fun getSupportPrinter() {
