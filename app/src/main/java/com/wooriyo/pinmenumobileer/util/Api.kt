@@ -421,6 +421,23 @@ interface Api {
         @Query("name") storeName: String
     ): Call<ResultDTO>
 
+    // QR 후결제 전체 사용 설정
+    @GET("m/udt_AllNonePay.php")
+    fun setPostPaidAll(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("buse") buse: String
+    ): Call<ResultDTO>
+
+    // QR 후결제 개별 사용 설정
+    @GET("m/udtNonePay.php")
+    fun setPostPaid(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("buse") buse: String,
+        @Query("qidx") qidx: Int
+    ): Call<ResultDTO>
+
     // pg 결제 고객 정보 받기 설정
     @GET("m/set_qrcustominfo.php")
     fun setQrCustomInfo(
@@ -431,8 +448,17 @@ interface Api {
         @Query("bladr") addr: String,
         @Query("bletc") etc: String,
         @Query("blmemo") memo: String,
-        @Query("memo") strMemo: String
+        @Query("blAll") blAll: String,  // 테이블 전체 사용 여부 Y, N
+        @Query("memo") strMemo: String,
+        @Query("JSON") JSON: String     // 테이블 개별 사용 여부 JsonArray Y, N
     ): Call<ResultDTO>
+
+    // pg 결제 관련 테이블 리스트
+    @GET("m/custom.tablelist.php")
+    fun getTableList(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int
+    ): Call<PgResultDTO>
 
     // pg 결제 내역
     @GET("m/pg.list.php")
@@ -455,6 +481,13 @@ interface Api {
         @Query("useridx") useridx: Int,
         @Query("storeidx") storeidx: Int,
         @Query("tid") tid: String
+    ): Call<ResultDTO>
+
+    // 버전 체크
+    @GET("check_version.php")
+    fun checkVersion(
+        @Query("MODE") MODE: Int,           // 0 : 주문, 1 : 관리
+        @Query("APPVS") APPVS: String
     ): Call<ResultDTO>
 
     // 카카오 지도 관련 api

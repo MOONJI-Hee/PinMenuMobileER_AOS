@@ -18,7 +18,6 @@ import com.wooriyo.pinmenumobileer.common.SelectStoreActivity
 import com.wooriyo.pinmenumobileer.databinding.FragmentMoreBinding
 import com.wooriyo.pinmenumobileer.member.LoginActivity
 import com.wooriyo.pinmenumobileer.model.ResultDTO
-import com.wooriyo.pinmenumobileer.pg.SetCustomerInfoActivity
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import retrofit2.Call
 import retrofit2.Callback

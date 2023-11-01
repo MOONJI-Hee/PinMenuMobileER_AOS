@@ -10,7 +10,7 @@ import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeList
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.ActivitySelectStoreBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
-import com.wooriyo.pinmenumobileer.pg.SetCustomerInfoActivity
+import com.wooriyo.pinmenumobileer.more.SetCustomerInfoActivity
 import com.wooriyo.pinmenumobileer.printer.adapter.StoreAdapter
 
 class SelectStoreActivity : BaseActivity() {
