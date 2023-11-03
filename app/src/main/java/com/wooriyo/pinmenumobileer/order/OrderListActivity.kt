@@ -373,31 +373,33 @@ class OrderListActivity : BaseActivity() {
             escposPrinter.cutPaper()
         }
 
+        //SAM4S
+        cubeBuilder.createCommandBuffer()
+        cubeBuilder.addText("${store.name}\n")
+        cubeBuilder.addText("주문날짜 : $pOrderDt\n")
+        cubeBuilder.addText("주문번호 : $pOrderNo\n")
+        cubeBuilder.addText("테이블번호 : $pTableNo\n")
+        cubeBuilder.addText(TITLE_MENU_SAM4S)
+        cubeBuilder.addText(hyphen.toString())
+
+        orderList[position].olist.forEach {
+            val pOrder = AppHelper.getSam4sPrint(it)
+            cubeBuilder.addText("$pOrder\n")
+        }
+        cubeBuilder.addFeedLine(4)
+        cubeBuilder.addCut(Sam4sBuilder.CUT_NO_FEED)
+
+        //send builder data
+        try {
+            //cl_Menu.mPrinter.sendData(builder);
+            MyApplication.INSTANCE.mPrinterConnection?.sendData(cubeBuilder)
+            cubeBuilder.clearCommandBuffer()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
         if(AppHelper.checkCubeConn(mActivity) == 1) {
-            //SAM4S
-            cubeBuilder.createCommandBuffer()
-            cubeBuilder.addText("${store.name}\n")
-            cubeBuilder.addText("주문날짜 : $pOrderDt\n")
-            cubeBuilder.addText("주문번호 : $pOrderNo\n")
-            cubeBuilder.addText("테이블번호 : $pTableNo\n")
-            cubeBuilder.addText(TITLE_MENU_SAM4S)
-            cubeBuilder.addText(hyphen.toString())
 
-            orderList[position].olist.forEach {
-                val pOrder = AppHelper.getSam4sPrint(it)
-                cubeBuilder.addText("$pOrder\n")
-            }
-            cubeBuilder.addFeedLine(4)
-            cubeBuilder.addCut(Sam4sBuilder.CUT_NO_FEED)
-
-            //send builder data
-            try {
-                //cl_Menu.mPrinter.sendData(builder);
-                MyApplication.INSTANCE.mPrinterConnection?.sendData(cubeBuilder)
-                cubeBuilder.clearCommandBuffer()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
         }
     }
 

@@ -117,7 +117,7 @@ class SetCustomerInfoActivity : BaseActivity() {
                     1 -> {
                         tableList.clear()
                         tableList.addAll(result.tableList)
-                        tableAdapter.checkAll(result.blAll)
+                        tableAdapter.checkAll(false)
                     }
                     else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                 }
