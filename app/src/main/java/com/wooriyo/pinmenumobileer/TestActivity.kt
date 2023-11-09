@@ -36,7 +36,6 @@ class TestActivity : BaseActivity() {
 
     lateinit var binding: ActivityTestBinding
 
-
     val storeCode = "031823"
     val prodCode = "900014"
 
@@ -94,25 +93,60 @@ class TestActivity : BaseActivity() {
                 val orderList = JSONArray()
                 for (i in 0 until data.olist.size) {
                     val ord = data.olist[i]
-                    val orderDetail = KpnOrderDetailDTO(
-                        (i + 1).toString(), prodCode, ord.name, ord.toString(), ord.gea.toString(), ord.amount.toString(),
-                        "0", ord.amount.toString(), "0", ""
-                    )
-                    orderList.put(gson.toJson(orderDetail))
+//                    val orderDetail = KpnOrderDetailDTO(
+//                        (i + 1).toString(), prodCode, ord.name, ord.toString(), ord.gea.toString(), ord.amount.toString(),
+//                        "0", ord.amount.toString(), "0", ""
+//                    )
+
+                    val json = JSONObject()
+
+                    json.put("orderDtlNo", (i + 1).toString())
+                    json.put("prodCd", prodCode)
+                    json.put("prodNm", ord.name)
+                    json.put("saleUprc", ord.toString())
+                    json.put("orderQty", ord.gea.toString())
+                    json.put("saleAmt", ord.amount.toString())
+                    json.put("dcAmt", "0")
+                    json.put("dcmSaleUprc", ord.amount.toString())
+                    json.put("vatAmt", "0")
+                    json.put("cookMemo", "")
+
+                    orderList.put(json)
                 }
 
-                val kpnOrder = KpnOrderDTO (
-                    KPN_VENDOR_ID, KPN_VENDOR_NM, KPN_SYSTEM_ID, KPN_SYSTEM_NM, data.ordcode_key, KPN_ORDER_TYPE_TABLE,
-                    "Y", "", "", "", data.orddt, data.olist.size.toString(), orderList,
-                    data.amount.toString(), data.olist.size.toString(), "", "001", ""
-                )
+//                val kpnOrder = KpnOrderDTO (
+//                    KPN_VENDOR_ID, KPN_VENDOR_NM, KPN_SYSTEM_ID, KPN_SYSTEM_NM, data.ordcode_key, KPN_ORDER_TYPE_TABLE,
+//                    "Y", "", "", "", data.orddt, data.olist.size.toString(), orderList,
+//                    data.amount.toString(), data.olist.size.toString(), "", "001", ""
+//                )
 
                 val json = JSONObject()
 
-                Log.d(TAG, "주문리스트 >>> ${gson.toJson(kpnOrder)}")
+                json.put("orderVendorId", KPN_VENDOR_ID)
+                json.put("orderVendorNm", KPN_VENDOR_NM)
+                json.put("orderSystemId", KPN_SYSTEM_ID)
+                json.put("orderSystemNm", KPN_SYSTEM_NM)
+                json.put("orderNo", data.ordcode_key)
+                json.put("orderType", KPN_ORDER_TYPE_TABLE)
+                json.put("saleYn", "Y")
+                json.put("pickTime", "")
+                json.put("printTime", "")
+                json.put("orgOrderNo", "")
+                json.put("orderDt", data.orddt)
+                json.put("dataCnt", data.olist.size.toString())
+                json.put("OrderDetailInfo", orderList)
+                json.put("paymentTotAmt", data.amount.toString())
+                json.put("paymentCnt", data.olist.size.toString())
+                json.put("kitchenMemo", "")
+                json.put("tableCd", "001")
+                json.put("posOrderNo", "")
 
 
-                ApiClient.posService().sendFirst(KPN_SERVICE_ID_ORDER, KPN_API_ID_ORDER, storeCode, storeCode, gson.toJson(kpnOrder))
+
+                Log.d(TAG, "주문리스트 >>> $json")
+
+
+                ApiClient.posService().sendFirst(KPN_SERVICE_ID_ORDER, KPN_API_ID_ORDER, storeCode, storeCode, json)
                     .enqueue(object : Callback<KpnResultDTO>{
                         override fun onResponse(call: Call<KpnResultDTO>, response: Response<KpnResultDTO>) {
                             Log.d(TAG, "연결 가능 프린터 리스트 조회 URL : $response")
