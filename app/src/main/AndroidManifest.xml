@@ -30,6 +30,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PinmenuMobileER">
         <activity
+            android:name=".TestActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".pg.PgCancelActivity"
             android:exported="false" />
         <activity
@@ -126,10 +135,7 @@
         <activity
             android:name=".member.StartActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity
             android:name=".more.MemberSetActivity"

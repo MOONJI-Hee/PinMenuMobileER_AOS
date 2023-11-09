@@ -3,7 +3,9 @@ package com.wooriyo.pinmenumobileer.util
 import com.wooriyo.pinmenumobileer.model.*
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.model.StoreListDTO
+import com.wooriyo.pinmenumobileer.pos.model.KpnResultDTO
 import okhttp3.MultipartBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -496,4 +498,16 @@ interface Api {
         @Header("Authorization") key : String,
         @Query("query") query : String
     ): Call<KakaoResultDTO>
+
+    //Pos 연동 - 주문 관련 Api
+
+    // 1. KPN (First Pos)
+    @GET("/")
+    fun sendFirst(
+        @Query("serviceId") serviceId: String,      // 서비스 아이디 (주문 : Order, 그외 : Inquiry)
+        @Query("apiId") apiId: String,              // Api 아이디 (주문 : OrderDetail, 그외 : MasterSeq, OpenStatus 등..)
+        @Query("HD_ShopCd") HD_ShopCd: String,      // 매장의 본사코드 (FirstPOS ASP 등록 본사 코드 4자리) (매장코드 넣어도 상관없음)
+        @Query("shopCd") shopCd: String,            // 매장코드 (FirstPOS ASP 등록 매장 코드 4자리)
+        @Query("data") data: String             // 전송데이터
+    ): Call<KpnResultDTO>
 }

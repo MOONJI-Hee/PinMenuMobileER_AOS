@@ -10,7 +10,7 @@ object ApiClient {
     val service: Api = initService()
     val imgService: Api = imgService()
     val kakaoService: Api = kakaoService()
-
+    val posService: Api = posService()
     private fun initService() : Api =
         Retrofit.Builder()
             .baseUrl(AppProperties.SERVER)
@@ -28,6 +28,13 @@ object ApiClient {
     fun kakaoService() : Api =
         Retrofit.Builder()
             .baseUrl(AppProperties.KAKAO_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(Api::class.java)
+
+    fun posService() : Api =
+        Retrofit.Builder()
+            .baseUrl("http://192.168.0.3:3333")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(Api::class.java)

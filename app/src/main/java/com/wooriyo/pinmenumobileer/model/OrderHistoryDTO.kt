@@ -13,6 +13,7 @@ data class OrderHistoryDTO(
     @SerializedName("amount") var amount : Int,                     // 총 금액
     @SerializedName("paytype") var paytype : Int,                   // 3: 큐알 결제 완료, 0: 그 외
     @SerializedName("regdt") var regdt : String,                    // 등록일시 (주문일시)
+    @SerializedName("orddt") var orddt : String,                    // (주문일시) (KPN POS 연동시 사용하기 위함)
     @SerializedName("iscompleted") var iscompleted : Int,           // 완료 여부 (1 : 완료, 0 : 미완료)
     @SerializedName("complate_updt") var complate_updt : String,    // 완료일시 (결제일시)
     @SerializedName("total_gea") var total : Int,                   // 총 개수
