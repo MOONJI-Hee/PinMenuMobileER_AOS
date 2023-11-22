@@ -16,9 +16,11 @@ import com.sewoo.jpos.command.ESCPOSConst
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.escposPrinter
 import com.wooriyo.pinmenumobileer.R
+import com.wooriyo.pinmenumobileer.call.CallListActivity
 import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.CHANNEL_ID_ORDER
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.NOTIFICATION_ID_ORDER
+import com.wooriyo.pinmenumobileer.listener.NotiEventListener
 import com.wooriyo.pinmenumobileer.member.StartActivity
 import com.wooriyo.pinmenumobileer.model.ReceiptDTO
 import com.wooriyo.pinmenumobileer.util.ApiClient
@@ -40,74 +42,82 @@ class MyFirebaseService: FirebaseMessagingService() {
         super.onMessageReceived(message)
 
         Log.d(TAG, "message.data >> ${message.data}")
-        Log.d(TAG, "message.notification >> ${message.notification?.sound}")
+        Log.d(TAG, "message.notification.body >> ${message.notification?.body}")
+        Log.d(TAG, "message.notification.tag >> ${message.notification?.tag}")
+        Log.d(TAG, "message.notification.title >> ${message.notification?.title}")
+        Log.d(TAG, "message.notification.sound >> ${message.notification?.sound}")
 
         createNotification(message)
 
-        val ordCode = message.data["moredata"]
+        if(message.data["moredata"] == "call") {
+            // 호출
+            CallListActivity().getCallList()
+        }else {
 
-        ApiClient.service.getReceipt(ordCode.toString()).enqueue(object : retrofit2.Callback<ReceiptDTO>{
-            override fun onResponse(call: Call<ReceiptDTO>, response: Response<ReceiptDTO>) {
-                Log.d(TAG, "단건 주문 조회 URL : $response")
-                if(!response.isSuccessful) return
+            val ordCode = message.data["moredata"]
 
-                val result = response.body() ?: return
+            ApiClient.service.getReceipt(ordCode.toString()).enqueue(object : retrofit2.Callback<ReceiptDTO>{
+                override fun onResponse(call: Call<ReceiptDTO>, response: Response<ReceiptDTO>) {
+                    Log.d(TAG, "단건 주문 조회 URL : $response")
+                    if(!response.isSuccessful) return
 
-                when(result.status) {
-                    1 -> {
-                        if(MyApplication.bluetoothPort.isConnected) {
-                            val pOrderDt = result.regdt
-                            val pTableNo = result.tableNo
-                            val pOrderNo = ordCode
+                    val result = response.body() ?: return
 
-                            val hyphen_num = AppProperties.HYPHEN_NUM_BIG
-                            val font_size = AppProperties.FONT_BIG
+                    when(result.status) {
+                        1 -> {
+                            if(MyApplication.bluetoothPort.isConnected) {
+                                val pOrderDt = result.regdt
+                                val pTableNo = result.tableNo
+                                val pOrderNo = ordCode
 
-                            val hyphen = StringBuilder()    // 하이픈
-                            for (i in 1..hyphen_num) {
-                                hyphen.append("-")
+                                val hyphen_num = AppProperties.HYPHEN_NUM_BIG
+                                val font_size = AppProperties.FONT_BIG
+
+                                val hyphen = StringBuilder()    // 하이픈
+                                for (i in 1..hyphen_num) {
+                                    hyphen.append("-")
+                                }
+
+                                escposPrinter.printAndroidFont(
+                                    result.storenm,
+                                    AppProperties.FONT_WIDTH,
+                                    AppProperties.FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                                escposPrinter.printAndroidFont("주문날짜 : $pOrderDt",
+                                    AppProperties.FONT_WIDTH,
+                                    AppProperties.FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                                escposPrinter.printAndroidFont("주문번호 : $pOrderNo",
+                                    AppProperties.FONT_WIDTH,
+                                    AppProperties.FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                                escposPrinter.printAndroidFont("테이블번호 : $pTableNo",
+                                    AppProperties.FONT_WIDTH,
+                                    AppProperties.FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                                escposPrinter.printAndroidFont(
+                                    AppProperties.TITLE_MENU,
+                                    AppProperties.FONT_WIDTH, AppProperties.FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                                escposPrinter.printAndroidFont(hyphen.toString(),
+                                    AppProperties.FONT_WIDTH, font_size, ESCPOSConst.LK_ALIGNMENT_LEFT)
+
+                                result.orderdata.forEach {
+                                    val pOrder = AppHelper.getPrint(it)
+                                    escposPrinter.printAndroidFont(pOrder,AppProperties.FONT_WIDTH, font_size, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                                }
+                                escposPrinter.lineFeed(4)
+                                escposPrinter.cutPaper()
+                            }else {
+                                Log.d(TAG, "프린트 연결 안됨")
                             }
-
-                            escposPrinter.printAndroidFont(
-                                result.storenm,
-                                AppProperties.FONT_WIDTH,
-                                AppProperties.FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
-                            escposPrinter.printAndroidFont("주문날짜 : $pOrderDt",
-                                AppProperties.FONT_WIDTH,
-                                AppProperties.FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
-                            escposPrinter.printAndroidFont("주문번호 : $pOrderNo",
-                                AppProperties.FONT_WIDTH,
-                                AppProperties.FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
-                            escposPrinter.printAndroidFont("테이블번호 : $pTableNo",
-                                AppProperties.FONT_WIDTH,
-                                AppProperties.FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
-                            escposPrinter.printAndroidFont(
-                                AppProperties.TITLE_MENU,
-                                AppProperties.FONT_WIDTH, AppProperties.FONT_SMALL, ESCPOSConst.LK_ALIGNMENT_LEFT)
-                            escposPrinter.printAndroidFont(hyphen.toString(),
-                                AppProperties.FONT_WIDTH, font_size, ESCPOSConst.LK_ALIGNMENT_LEFT)
-
-                            result.orderdata.forEach {
-                                val pOrder = AppHelper.getPrint(it)
-                                escposPrinter.printAndroidFont(pOrder,AppProperties.FONT_WIDTH, font_size, ESCPOSConst.LK_ALIGNMENT_LEFT)
-                            }
-                            escposPrinter.lineFeed(4)
-                            escposPrinter.cutPaper()
-                        }else {
-                            Log.d(TAG, "프린트 연결 안됨")
                         }
+                        else -> Toast.makeText(applicationContext, result.msg, Toast.LENGTH_SHORT).show()
                     }
-                    else -> Toast.makeText(applicationContext, result.msg, Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onFailure(call: Call<ReceiptDTO>, t: Throwable) {
-                Toast.makeText(applicationContext, R.string.msg_retry, Toast.LENGTH_SHORT).show()
-                Log.d(TAG, "단건 주문 조회 오류 >> $t")
-                Log.d(TAG, "단건 주문 조회 오류 >> ${call.request()}")
-            }
-        })
-
+                override fun onFailure(call: Call<ReceiptDTO>, t: Throwable) {
+                    Toast.makeText(applicationContext, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "단건 주문 조회 오류 >> $t")
+                    Log.d(TAG, "단건 주문 조회 오류 >> ${call.request()}")
+                }
+            })
+        }
     }
 
     private fun createNotification(message: RemoteMessage) {
@@ -118,7 +128,7 @@ class MyFirebaseService: FirebaseMessagingService() {
             .setSmallIcon(R.drawable.ic_noti)
             .setContentTitle(message.notification?.title)
             .setContentText(message.notification?.body)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setSound(uri, AudioManager.STREAM_NOTIFICATION)
 //            .setContentIntent(createPendingIntent())
             .setAutoCancel(true)

@@ -143,7 +143,7 @@ class MyApplication: Application() {
             .build()
 
         // 알림 채널 생성
-        val ordChannel = NotificationChannel(AppProperties.CHANNEL_ID_ORDER, "새 주문 알림", NotificationManager.IMPORTANCE_DEFAULT)
+        val ordChannel = NotificationChannel(AppProperties.CHANNEL_ID_ORDER, "새 주문 알림", NotificationManager.IMPORTANCE_HIGH)
         ordChannel.enableLights(true)
         ordChannel.enableVibration(true)
         ordChannel.setSound(uri, audioAttributes)

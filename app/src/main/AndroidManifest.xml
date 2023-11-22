@@ -137,11 +137,12 @@
         <activity
             android:name=".order.OrderListActivity"
             android:exported="false" />
-
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_appKey" />
-
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_noti" />
         <service
             android:name=".fcm.MyFirebaseService"
             android:exported="false">
