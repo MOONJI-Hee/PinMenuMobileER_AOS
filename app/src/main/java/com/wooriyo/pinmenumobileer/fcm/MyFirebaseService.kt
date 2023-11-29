@@ -43,20 +43,18 @@ class MyFirebaseService: FirebaseMessagingService() {
 
         Log.d(TAG, "message.data >> ${message.data}")
         Log.d(TAG, "message.notification.body >> ${message.notification?.body}")
-        Log.d(TAG, "message.notification.tag >> ${message.notification?.tag}")
-        Log.d(TAG, "message.notification.title >> ${message.notification?.title}")
-        Log.d(TAG, "message.notification.sound >> ${message.notification?.sound}")
 
         createNotification(message)
 
         if(message.data["moredata"] == "call") {
             // 호출
-            CallListActivity().getCallList()
+//            CallListActivity().getCallList()
         }else {
 
-            val ordCode = message.data["moredata"]
+            val ordCode_key = message.data["moredata"]
+            val ordCode = message.data["moredata_ordcode"]
 
-            ApiClient.service.getReceipt(ordCode.toString()).enqueue(object : retrofit2.Callback<ReceiptDTO>{
+            ApiClient.service.getReceipt(ordCode_key.toString()).enqueue(object : retrofit2.Callback<ReceiptDTO>{
                 override fun onResponse(call: Call<ReceiptDTO>, response: Response<ReceiptDTO>) {
                     Log.d(TAG, "단건 주문 조회 URL : $response")
                     if(!response.isSuccessful) return

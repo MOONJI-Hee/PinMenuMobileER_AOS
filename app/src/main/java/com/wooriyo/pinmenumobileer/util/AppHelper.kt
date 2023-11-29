@@ -391,7 +391,7 @@ class AppHelper {
         // SAM4S 프린터기 관련 메소드
         val finder: Sam4sFinder = Sam4sFinder()
 
-        var scheduler = Executors.newSingleThreadScheduledExecutor()
+        var scheduler:ScheduledExecutorService ?= null
         var future: ScheduledFuture<*>? = null
 
         val cubePrinterList = ArrayList<SocketInfo>()
@@ -409,10 +409,10 @@ class AppHelper {
                 }
                 future = null
             }
-
+            scheduler = Executors.newSingleThreadScheduledExecutor()
             scheduler.let {
                 finder.startSearch(context, Sam4sFinder.DEVTYPE_ETHERNET)
-                future = it.scheduleWithFixedDelay(
+                future = it?.scheduleWithFixedDelay(
                     Runnable {
                         val list = getCubeList()
 
@@ -469,7 +469,7 @@ class AppHelper {
                 }
                 future = null
             }
-            scheduler.shutdown()
+            scheduler?.shutdown()
         }
 
         fun connectCube(context: Context, info: SocketInfo) {
