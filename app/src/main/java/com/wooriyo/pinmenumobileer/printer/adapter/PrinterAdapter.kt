@@ -6,16 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.annotations.SerializedName
 import com.sewoo.jpos.command.ESCPOSConst
-import com.sewoo.jpos.printer.ESCPOSPrinter
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.bluetoothPort
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.escposPrinter
 import com.wooriyo.pinmenumobileer.R
-import com.wooriyo.pinmenumobileer.common.AlertDialog
+import com.wooriyo.pinmenumobileer.common.dialog.AlertDialog
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.FONT_BIG
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.FONT_SMALL
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.FONT_WIDTH

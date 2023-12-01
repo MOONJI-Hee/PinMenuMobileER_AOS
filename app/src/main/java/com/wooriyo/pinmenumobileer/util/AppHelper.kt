@@ -19,6 +19,7 @@ import com.sam4s.io.ethernet.SocketInfo
 import com.sam4s.printer.Sam4sFinder
 import com.sewoo.request.android.RequestHandler
 import com.wooriyo.pinmenumobileer.MyApplication
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.appver
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.bluetoothAdapter
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.connDev_sewoo
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.remoteDevices
@@ -165,6 +166,12 @@ class AppHelper {
         // APPCALL 거래번호 생성
         fun getAppCallNo(): String {
             return appCallFormatter.format(LocalDateTime.now())
+        }
+
+        // 버전 비교
+        fun compareVer(curver: String) {
+            val arr_cur = curver.split(".")
+            val arr_app = appver.split(".")
         }
 
         fun osVersion(): Int = Build.VERSION.SDK_INT    // 안드로이드 버전

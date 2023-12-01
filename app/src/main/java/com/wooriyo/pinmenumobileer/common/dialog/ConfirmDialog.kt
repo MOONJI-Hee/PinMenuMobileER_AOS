@@ -1,4 +1,4 @@
-package com.wooriyo.pinmenumobileer.common
+package com.wooriyo.pinmenumobileer.common.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater

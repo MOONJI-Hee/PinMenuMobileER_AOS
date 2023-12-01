@@ -9,7 +9,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sam4s.printer.Sam4sBuilder
 import com.sewoo.jpos.command.ESCPOSConst
-import com.sewoo.jpos.printer.ESCPOSPrinter
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.cubeBuilder
@@ -18,8 +17,8 @@ import com.wooriyo.pinmenumobileer.MyApplication.Companion.store
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
-import com.wooriyo.pinmenumobileer.common.ConfirmDialog
-import com.wooriyo.pinmenumobileer.common.ClearDialog
+import com.wooriyo.pinmenumobileer.common.dialog.ConfirmDialog
+import com.wooriyo.pinmenumobileer.common.dialog.ClearDialog
 import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.FONT_BIG
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.FONT_SMALL
@@ -158,7 +157,7 @@ class OrderListActivity : BaseActivity() {
         })
         orderAdapter.setOnDeleteListener(object:ItemClickListener{
             override fun onItemClick(position: Int) {
-                var deleteDialog: ConfirmDialog ?= null
+                var deleteDialog: ConfirmDialog?= null
                 deleteDialog = ConfirmDialog(
                     getString(R.string.btn_delete),
                     getString(R.string.dialog_delete),

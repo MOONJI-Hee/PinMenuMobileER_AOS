@@ -1,4 +1,4 @@
-package com.wooriyo.pinmenumobileer.common
+package com.wooriyo.pinmenumobileer.common.dialog
 
 import android.app.ActionBar.LayoutParams
 import android.os.Bundle

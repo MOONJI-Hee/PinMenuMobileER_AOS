@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sewoo.jpos.command.ESCPOSConst
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
-import com.wooriyo.pinmenumobileer.common.AlertDialog
+import com.wooriyo.pinmenumobileer.common.dialog.AlertDialog
 import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.databinding.ListPrinterBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener

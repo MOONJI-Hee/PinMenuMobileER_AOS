@@ -12,8 +12,8 @@ import com.wooriyo.pinmenumobileer.MainActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.pref
 import com.wooriyo.pinmenumobileer.R
-import com.wooriyo.pinmenumobileer.common.AlertDialog
-import com.wooriyo.pinmenumobileer.common.ConfirmDialog
+import com.wooriyo.pinmenumobileer.common.dialog.AlertDialog
+import com.wooriyo.pinmenumobileer.common.dialog.ConfirmDialog
 import com.wooriyo.pinmenumobileer.common.SelectStoreActivity
 import com.wooriyo.pinmenumobileer.databinding.FragmentMoreBinding
 import com.wooriyo.pinmenumobileer.member.LoginActivity

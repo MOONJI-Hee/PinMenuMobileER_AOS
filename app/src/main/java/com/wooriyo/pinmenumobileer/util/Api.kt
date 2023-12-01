@@ -489,7 +489,8 @@ interface Api {
     @GET("check_version.php")
     fun checkVersion(
         @Query("MODE") MODE: Int,           // 0 : 주문, 1 : 관리
-        @Query("APPVS") APPVS: String
+        @Query("APPVS") APPVS: String,
+        @Query("TYPE") type: Int        // 1: 모바일, 2: 태블릿
     ): Call<ResultDTO>
 
     // 카카오 지도 관련 api

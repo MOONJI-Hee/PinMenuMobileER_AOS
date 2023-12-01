@@ -10,8 +10,10 @@ import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MainActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.androidId
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.appver
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.pref
 import com.wooriyo.pinmenumobileer.R
+import com.wooriyo.pinmenumobileer.model.ResultDTO
 import retrofit2.Call
 import retrofit2.Response
 
@@ -76,5 +78,27 @@ class StartActivity : BaseActivity() {
 //                    loginWithDB()
                 }
             })
+    }
+
+    fun checkVersion() {
+        ApiClient.service.checkVersion(1, appver, 1).enqueue(object : retrofit2.Callback<ResultDTO>{
+            override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                Log.d(TAG, "버전 확인 url : $response")
+                if(!response.isSuccessful) return
+
+                val result = response.body() ?: return
+
+                if(result.status == 1) {
+                    val curver = result.curver
+                }else {
+                    Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "버전 확인 status != 1")
+                }
+            }
+
+            override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                Log.d(TAG, "버전 확인 실패 >> $t")
+            }
+        })
     }
 }

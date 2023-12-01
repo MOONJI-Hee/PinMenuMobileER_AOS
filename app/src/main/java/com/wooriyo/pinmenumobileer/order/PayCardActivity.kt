@@ -8,12 +8,10 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import com.google.firebase.auth.ktx.userProfileChangeRequest
-import com.google.gson.JsonObject
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
-import com.wooriyo.pinmenumobileer.common.ConfirmDialog
+import com.wooriyo.pinmenumobileer.common.dialog.ConfirmDialog
 import com.wooriyo.pinmenumobileer.databinding.ActivityPayCardBinding
 import com.wooriyo.pinmenumobileer.listener.EasyCheckListener
 import com.wooriyo.pinmenumobileer.model.OrderHistoryDTO

@@ -3,7 +3,7 @@ package com.wooriyo.pinmenumobileer
 import android.os.Bundle
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
-import com.wooriyo.pinmenumobileer.common.LoadingDialog
+import com.wooriyo.pinmenumobileer.common.dialog.LoadingDialog
 import com.wooriyo.pinmenumobileer.util.AppHelper
 
 open class BaseActivity: AppCompatActivity() {

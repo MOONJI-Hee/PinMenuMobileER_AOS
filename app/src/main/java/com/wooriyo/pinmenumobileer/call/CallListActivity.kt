@@ -10,8 +10,8 @@ import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.call.adapter.CallListAdapter
-import com.wooriyo.pinmenumobileer.common.ClearDialog
-import com.wooriyo.pinmenumobileer.common.ConfirmDialog
+import com.wooriyo.pinmenumobileer.common.dialog.ClearDialog
+import com.wooriyo.pinmenumobileer.common.dialog.ConfirmDialog
 import com.wooriyo.pinmenumobileer.databinding.ActivityOrderListBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.CallHistoryDTO
@@ -22,7 +22,6 @@ import com.wooriyo.pinmenumobileer.util.AppHelper
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 import kotlin.collections.ArrayList
 
 // 호출 목록 확인 페이지 ( 주문 목록 페이지와 레이아웃 같이 사용)

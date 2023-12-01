@@ -2,7 +2,6 @@ package com.wooriyo.pinmenumobileer.printer.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,16 +9,13 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.sam4s.io.ethernet.SocketInfo
 import com.sam4s.printer.Sam4sBuilder
-import com.sewoo.jpos.command.ESCPOSConst
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
-import com.wooriyo.pinmenumobileer.common.AlertDialog
-import com.wooriyo.pinmenumobileer.config.AppProperties
+import com.wooriyo.pinmenumobileer.common.dialog.AlertDialog
 import com.wooriyo.pinmenumobileer.databinding.ListPrinterBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.printer.DetailPrinterActivity
 import com.wooriyo.pinmenumobileer.util.AppHelper
-import java.io.IOException
 
 class Sam4sAdapter(val dataSet: ArrayList<SocketInfo>): RecyclerView.Adapter<Sam4sAdapter.ViewHolder>() {
     lateinit var itemClickListener: ItemClickListener

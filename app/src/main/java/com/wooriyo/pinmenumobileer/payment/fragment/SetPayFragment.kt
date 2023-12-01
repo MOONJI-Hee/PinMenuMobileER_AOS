@@ -11,7 +11,7 @@ import android.widget.Toast
 import com.wooriyo.pinmenumobileer.MainActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
-import com.wooriyo.pinmenumobileer.common.AlertDialog
+import com.wooriyo.pinmenumobileer.common.dialog.AlertDialog
 import com.wooriyo.pinmenumobileer.databinding.FragmentSetPayBinding
 import com.wooriyo.pinmenumobileer.model.PaySettingDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
