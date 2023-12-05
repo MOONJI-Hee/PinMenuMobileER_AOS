@@ -169,9 +169,16 @@ class AppHelper {
         }
 
         // 버전 비교
-        fun compareVer(curver: String) {
+        fun compareVer(curver: String): Boolean {
             val arr_cur = curver.split(".")
             val arr_app = appver.split(".")
+
+            for(i : Int in arr_app.indices) {
+                if(arr_app[i] < arr_cur[i]) {
+                    return false
+                }
+            }
+            return true
         }
 
         fun osVersion(): Int = Build.VERSION.SDK_INT    // 안드로이드 버전

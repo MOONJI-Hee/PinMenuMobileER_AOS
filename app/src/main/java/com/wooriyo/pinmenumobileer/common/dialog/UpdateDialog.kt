@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import com.wooriyo.pinmenumobileer.BaseDialogFragment
 import com.wooriyo.pinmenumobileer.R
@@ -13,6 +14,7 @@ import com.wooriyo.pinmenumobileer.databinding.DialogConfirmBinding
 
 class UpdateDialog(val update: Int, val msg: String): BaseDialogFragment() {
     lateinit var binding: DialogConfirmBinding
+    lateinit var onClickListener: OnClickListener
     val TAG = "UpdateDialog"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +29,10 @@ class UpdateDialog(val update: Int, val msg: String): BaseDialogFragment() {
         if(update == 0) {   // 권장 업데이트
             binding.cancel.run {
                 text = "나중에 하기"
-                setOnClickListener { dismiss() }
+                setOnClickListener {
+                    onClickListener.onClick(it)
+                    dismiss()
+                }
             }
         }else if (update == 1) {
             binding.run {
@@ -47,5 +52,14 @@ class UpdateDialog(val update: Int, val msg: String): BaseDialogFragment() {
         }
 
         return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dismiss()
+    }
+
+    fun setCancelClickListener(onClickListener: OnClickListener) {
+        this.onClickListener = onClickListener
     }
 }

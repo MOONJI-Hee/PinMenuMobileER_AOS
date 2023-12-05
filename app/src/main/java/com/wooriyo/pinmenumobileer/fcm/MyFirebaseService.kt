@@ -8,11 +8,15 @@ import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.UiThread
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.sewoo.jpos.command.ESCPOSConst
+import com.wooriyo.pinmenumobileer.BaseActivity
+import com.wooriyo.pinmenumobileer.BaseActivity.Companion.currentActivity
+import com.wooriyo.pinmenumobileer.MainActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.escposPrinter
 import com.wooriyo.pinmenumobileer.R
@@ -23,6 +27,8 @@ import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.NOTIFICATION_I
 import com.wooriyo.pinmenumobileer.listener.NotiEventListener
 import com.wooriyo.pinmenumobileer.member.StartActivity
 import com.wooriyo.pinmenumobileer.model.ReceiptDTO
+import com.wooriyo.pinmenumobileer.order.OrderListActivity
+import com.wooriyo.pinmenumobileer.store.StoreListFragment
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.util.AppHelper
 import retrofit2.Call
@@ -46,11 +52,26 @@ class MyFirebaseService: FirebaseMessagingService() {
 
         createNotification(message)
 
-        if(message.data["moredata"] == "call") {
-            // 호출
-//            CallListActivity().getCallList()
-        }else {
+        if(currentActivity != null) {
+            Log.d(TAG, "currentActivity.localClassName >> ${currentActivity!!.localClassName}")
 
+            if (currentActivity!!.localClassName == "call.CallListActivity")
+                (currentActivity as CallListActivity).getCallList()
+            else if (currentActivity!!.localClassName == "order.OrderListActivity")
+                (currentActivity as OrderListActivity).getOrderList()
+            else if (currentActivity!!.localClassName == "MainActivity") {
+                val currentFragment = (currentActivity as MainActivity).supportFragmentManager.findFragmentById(R.id.fragment)
+                if(currentFragment?.id == StoreListFragment.newInstance().id) {
+                    (currentFragment as StoreListFragment).getStoreList()
+                }
+            }
+        }else{
+            Log.d(TAG, "currentActivity == null")
+        }
+
+        if(message.data["moredata"] == "call") {
+            //TODO 호출 영수증 뽑기
+        } else {
             val ordCode_key = message.data["moredata"]
             val ordCode = message.data["moredata_ordcode"]
 
@@ -134,19 +155,6 @@ class MyFirebaseService: FirebaseMessagingService() {
         // 알림 생성
         val notificationManager = NotificationManagerCompat.from(this)
         notificationManager.notify(NOTIFICATION_ID_ORDER, builder.build())
-    }
-
-    fun createNotificationChannel() {
-        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-
-        // 알림 채널 생성
-        val ordChannel = NotificationChannel(CHANNEL_ID_ORDER, "새 주문 알림", NotificationManager.IMPORTANCE_DEFAULT)
-        ordChannel.enableLights(true)
-        ordChannel.enableVibration(true)
-        notificationManager.createNotificationChannel(ordChannel)
-
-        val delete_id: String = "pinmenu_mobile_noti"
-        notificationManager.deleteNotificationChannel(delete_id)
     }
 
     private fun createPendingIntent () : PendingIntent {

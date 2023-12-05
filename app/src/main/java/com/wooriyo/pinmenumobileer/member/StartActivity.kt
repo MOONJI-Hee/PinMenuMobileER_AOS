@@ -3,6 +3,8 @@ package com.wooriyo.pinmenumobileer.member
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.View.OnClickListener
 import android.widget.Toast
 import com.wooriyo.pinmenumobileer.model.MemberDTO
 import com.wooriyo.pinmenumobileer.util.ApiClient
@@ -13,7 +15,9 @@ import com.wooriyo.pinmenumobileer.MyApplication.Companion.androidId
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.appver
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.pref
 import com.wooriyo.pinmenumobileer.R
+import com.wooriyo.pinmenumobileer.common.dialog.UpdateDialog
 import com.wooriyo.pinmenumobileer.model.ResultDTO
+import com.wooriyo.pinmenumobileer.util.AppHelper
 import retrofit2.Call
 import retrofit2.Response
 
@@ -29,6 +33,10 @@ class StartActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
 
+        checkVersion()
+    }
+
+    fun getMbrInfo() {
         val memberDTO = pref.getMbrDTO()
 
         if(memberDTO == null) {
@@ -46,6 +54,7 @@ class StartActivity : BaseActivity() {
 
         Log.d(TAG, "Android ID >>> $androidId")
     }
+
     fun loginWithApi()  {
         ApiClient.service.checkMbr(id, pw, token, MyApplication.os, MyApplication.osver, MyApplication.appver, MyApplication.md, androidId)
             .enqueue(object: retrofit2.Callback<MemberDTO>{
@@ -90,6 +99,13 @@ class StartActivity : BaseActivity() {
 
                 if(result.status == 1) {
                     val curver = result.curver
+                    if(AppHelper.compareVer(curver)) {  // 최신버전 이상
+                        getMbrInfo()
+                    }else { // 최신버전 이하
+                        val dialog = UpdateDialog(result.update, result.updateMsg)
+                        dialog.setCancelClickListener { getMbrInfo() }
+                        dialog.show(supportFragmentManager, "UpdateDialog")
+                    }
                 }else {
                     Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, "버전 확인 status != 1")
