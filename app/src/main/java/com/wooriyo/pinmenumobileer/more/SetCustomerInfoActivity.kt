@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wooriyo.pinmenumobileer.BaseActivity
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.bidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.store
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
@@ -78,7 +79,7 @@ class SetCustomerInfoActivity : BaseActivity() {
             }
         }
 
-        ApiClient.service.setQrCustomInfo(useridx, storeidx, useName, usePhone, useAddr, useEtc, useNoti, useAll, memo, jsonArray.toString()).enqueue(object : Callback<ResultDTO>{
+        ApiClient.service.setQrCustomInfo(useridx, storeidx, useName, usePhone, useAddr, useEtc, useNoti, memo, useAll, jsonArray.toString()).enqueue(object : Callback<ResultDTO>{
             override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                 Log.d(TAG, "결제고객 정보 설정 url : $response")
                 if(!response.isSuccessful) return
@@ -117,7 +118,10 @@ class SetCustomerInfoActivity : BaseActivity() {
                     1 -> {
                         tableList.clear()
                         tableList.addAll(result.tableList)
-                        tableAdapter.checkAll(false)
+
+                        val bisAll = result.blAll == "Y"
+                        binding.allTable.isChecked = bisAll
+                        tableAdapter.checkAll(bisAll)
                     }
                     else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                 }

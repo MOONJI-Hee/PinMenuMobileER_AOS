@@ -450,12 +450,12 @@ interface Api {
         @Query("bladr") addr: String,
         @Query("bletc") etc: String,
         @Query("blmemo") memo: String,
-        @Query("blAll") blAll: String,  // 테이블 전체 사용 여부 Y, N
         @Query("memo") strMemo: String,
+        @Query("blAll") blAll: String,  // 테이블 전체 사용 여부 Y, N
         @Query("JSON") JSON: String     // 테이블 개별 사용 여부 JsonArray Y, N
     ): Call<ResultDTO>
 
-    // pg 결제 관련 테이블 리스트
+    // pg 결제 고객 정보 받기 - 테이블 리스트
     @GET("m/custom.tablelist.php")
     fun getTableList(
         @Query("useridx") useridx: Int,
