@@ -99,6 +99,14 @@
             android:text="@string/btn_login"
             app:layout_constraintBottom_toBottomOf="parent" />
 
+        <TextView
+            style="@style/subtext"
+            android:id="@+id/version"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintStart_toStartOf="@+id/login"
+            app:layout_constraintEnd_toEndOf="@+id/login"
+            app:layout_constraintBottom_toTopOf="@+id/login"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

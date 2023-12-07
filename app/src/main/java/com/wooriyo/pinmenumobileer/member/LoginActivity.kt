@@ -43,6 +43,8 @@ class LoginActivity: BaseActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.version.text = "Ver ${MyApplication.appver}"
+
         binding.login.setOnClickListener{
             id = binding.etId.text.toString().trim()
             pw = binding.etPw.text.toString().trim()
