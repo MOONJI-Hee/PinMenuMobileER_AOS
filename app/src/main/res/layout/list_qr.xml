@@ -6,24 +6,25 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="210dp"
         android:layout_marginHorizontal="7.5dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/bg_r6w">
-        
-        <TextView
-            style="@style/subtext"
-            android:id="@+id/seq"
-            android:text="@string/qr_cnt"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/able"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/seq"
+                style="@style/subtext"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/qr_cnt"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <ImageView
                 android:id="@+id/set"
                 android:layout_width="24dp"
@@ -32,34 +33,53 @@
                 android:layout_marginEnd="6dp"
                 android:src="@drawable/icon_set"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/ivQr"
                 android:layout_width="74dp"
                 android:layout_height="74dp"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="43dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                style="@style/subtext"
                 android:id="@+id/tv1"
+                style="@style/subtext"
+                android:layout_marginBottom="8dp"
                 android:text="@string/table_no"
-                android:layout_marginStart="30dp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toTopOf="@+id/postPay"
+                app:layout_constraintEnd_toStartOf="@+id/tableNo"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 style="@style/text15"
                 android:id="@+id/tableNo"
-                android:textStyle="bold"
                 android:layout_marginStart="6dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/tv1"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv1"
-                app:layout_constraintTop_toTopOf="@+id/tv1"
-                app:layout_constraintBottom_toBottomOf="@+id/tv1"/>
+                app:layout_constraintTop_toTopOf="@+id/tv1"/>
+
+            <TextView
+                style="@style/text17d"
+                android:layout_marginStart="10dp"
+                android:text="@string/qr_post_pay"
+                app:layout_constraintBottom_toBottomOf="@+id/postPay"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/postPay" />
+
+            <CheckBox
+                android:id="@+id/postPay"
+                style="@style/toggle"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

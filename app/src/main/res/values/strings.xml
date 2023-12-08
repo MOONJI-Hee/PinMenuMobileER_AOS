@@ -316,12 +316,14 @@
     <string name="qr_insurance_check">결제 관련 이행보증보험 결제관리를\n이해하였고 동의합니다.</string>
     <string name="qr_setting_go">QR코드 설정 바로가기</string>
     <string name="qr_setting">QR코드 설정</string>
-    <string name="qr_usable_cnt">사용 가능한 QR코드 수&#160;:&#160;</string>
+    <string name="qr_usable_cnt">추가 가능한 QR코드 수&#160;:&#160;</string>
     <string name="qr_store_name">Store Name</string>
     <string name="only_eng">Only English</string>
     <string name="qr_file_name_info">QR코드 저장시 파일명에 사용</string>
     <string name="qr_down_all">전체 QR코드 사진첩에 저장하기</string>
     <string name="qr_down_one">QR코드 사진첩에 저장하기</string>
+    <string name="qr_post_pay_all">QR코드 전체 후불결제 적용</string>
+    <string name="qr_post_pay">후불결제</string>
     <string name="qr_cnt">QR-%d</string>
     <string name="table_no">Table No.</string>
     <string name="table_no_hint">테이블 번호 입력</string>

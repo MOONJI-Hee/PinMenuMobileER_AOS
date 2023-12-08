@@ -2,32 +2,45 @@ package com.wooriyo.pinmenumobileer.qr.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.wooriyo.pinmenumobileer.R
+import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.databinding.ListQrBinding
 import com.wooriyo.pinmenumobileer.model.QrDTO
 import com.wooriyo.pinmenumobileer.qr.QrDetailActivity
 
-class QrAdapter(val dataSet: ArrayList<QrDTO>): RecyclerView.Adapter<QrAdapter.ViewHolder>() {
+class QrAdapter(val dataSet: ArrayList<QrDTO>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var qrCnt = 0
     var storeName = ""
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = ListQrBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding, parent.context)
+        return if(viewType == AppProperties.VIEW_TYPE_COM) ViewHolder(binding, parent.context) else ViewHolder_add(binding, parent.context)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(dataSet, qrCnt)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when(getItemViewType(position)){
+            AppProperties.VIEW_TYPE_COM -> {
+                holder as ViewHolder
+                holder.bind(dataSet[position], qrCnt)
+            }
+            AppProperties.VIEW_TYPE_ADD -> {
+                holder as ViewHolder_add
+                holder.bind()
+            }
+        }
     }
 
     override fun getItemCount(): Int {
-        return if(qrCnt < dataSet.size) dataSet.size else qrCnt
+        return if(dataSet.size < qrCnt) dataSet.size + 1 else dataSet.size
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if(position == dataSet.size) AppProperties.VIEW_TYPE_ADD else AppProperties.VIEW_TYPE_COM
     }
 
     fun setQrCount(qrCnt: Int) {
@@ -35,45 +48,43 @@ class QrAdapter(val dataSet: ArrayList<QrDTO>): RecyclerView.Adapter<QrAdapter.V
     }
 
     class ViewHolder(val binding: ListQrBinding, val context: Context):RecyclerView.ViewHolder(binding.root) {
-        fun bind(dataSet: ArrayList<QrDTO>, qrCnt: Int) {
-            val intent = Intent(context, QrDetailActivity::class.java)
+        fun bind(data: QrDTO, qrCnt: Int) {
+            binding.able.visibility = View.VISIBLE
+            binding.plus.visibility = View.GONE
 
+            binding.tableNo.text = data.tableNo
             binding.seq.text = String.format(context.getString( R.string.qr_cnt), adapterPosition+1)
+
+            Glide.with(context)
+                .load(data.filePath)
+                .into(binding.ivQr)
+
+            if(qrCnt < adapterPosition+1) {
+                binding.disable.visibility = View.VISIBLE
+            }else
+                binding.disable.visibility = View.GONE
+
+            val intent = Intent(context, QrDetailActivity::class.java)
             intent.putExtra("seq", adapterPosition+1)
+            intent.putExtra("qrcode", data)
 
-            run task@ {
-                dataSet.forEach{
-                    if(adapterPosition+1 == it.seq) {
-                        binding.able.visibility = View.VISIBLE
-                        binding.plus.visibility = View.GONE
-
-                        binding.tableNo.text = it.tableNo
-
-                        Glide.with(context)
-                            .load(it.filePath)
-                            .into(binding.ivQr)
-
-                        if(qrCnt < it.seq) {
-                            binding.disable.visibility = View.VISIBLE
-                        }else
-                            binding.disable.visibility = View.GONE
-
-                        intent.putExtra("qrcode", it)
-
-                        return@task
-                    }else {
-                        intent.removeExtra("qrcode")
-                        binding.able.visibility = View.GONE
-                        binding.plus.visibility = View.VISIBLE
-                    }
-                }
-            }
-
-            val onDetailClick = View.OnClickListener {
+            binding.able.setOnClickListener{
                 context.startActivity(intent)
             }
-            binding.plus.setOnClickListener(onDetailClick)
-            binding.able.setOnClickListener(onDetailClick)
+        }
+    }
+
+    class ViewHolder_add(val binding: ListQrBinding, val context: Context): RecyclerView.ViewHolder(binding.root) {
+        fun bind() {
+            binding.able.visibility = View.GONE
+            binding.plus.visibility = View.VISIBLE
+
+            val intent = Intent(context, QrDetailActivity::class.java)
+            intent.putExtra("seq", adapterPosition+1)
+
+            binding.plus.setOnClickListener{
+                context.startActivity(intent)
+            }
         }
     }
 }

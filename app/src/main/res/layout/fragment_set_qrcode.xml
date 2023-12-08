@@ -93,32 +93,32 @@
         app:layout_constraintEnd_toEndOf="@+id/saveName"
         app:layout_constraintTop_toBottomOf="@+id/tv3"/>
 
-    <ScrollView
+    <TextView
+        style="@style/text17d"
+        android:text="@string/qr_post_pay_all"
+        app:layout_constraintStart_toStartOf="@+id/downAll"
+        app:layout_constraintTop_toTopOf="@+id/postPayAll"
+        app:layout_constraintBottom_toBottomOf="@+id/postPayAll"/>
+
+    <CheckBox style="@style/toggle"
+        android:id="@+id/postPayAll"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/downAll" />
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="14dp"
         android:paddingHorizontal="12.5dp"
         android:background="@color/f9"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/downAll">
-        <LinearLayout
+        app:layout_constraintTop_toBottomOf="@+id/postPayAll">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvQr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvQr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="20dp" />
-            <TextView
-                style="@style/subtext"
-                android:layout_marginTop="15dp"
-                android:text="@string/qr_setting_info1"/>
-            <TextView
-                style="@style/subtext"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="30dp"
-                android:text="@string/qr_setting_info2"/>
-        </LinearLayout>
-    </ScrollView>
+            android:paddingTop="20dp" />
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

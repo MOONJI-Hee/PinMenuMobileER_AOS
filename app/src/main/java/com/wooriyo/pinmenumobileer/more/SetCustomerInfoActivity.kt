@@ -14,6 +14,7 @@ import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.ActivitySetCustomerInfoBinding
+import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.PgResultDTO
 import com.wooriyo.pinmenumobileer.model.PgTableDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
@@ -33,12 +34,40 @@ class SetCustomerInfoActivity : BaseActivity() {
     val tableList = ArrayList<PgTableDTO>()
     val tableAdapter = PgTableAdapter(tableList)
 
+    var bisAll = true   // 테이블 전체 선택 여부
+    var tb_cnt = 0      // 테이블 개수
+    var sel_tb_cnt = 0  // 선택된 테이블 개수
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySetCustomerInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         getTableList()
+
+        tableAdapter.setOnCheckClickListener(object : ItemClickListener{
+            override fun onCheckClick(position: Int, v: CheckBox, isChecked: Boolean) {
+                if(isChecked) {
+                    sel_tb_cnt++
+                    if(sel_tb_cnt == tb_cnt) {
+                        checkAll()
+                        sel_tb_cnt = 0
+                    }else if(sel_tb_cnt == 1) {
+                        bisAll = false
+                        binding.allTable.isChecked = false
+                    }
+                }else {
+                    if(sel_tb_cnt == 1) {
+                        checkAll()
+                        sel_tb_cnt = 0
+                    }else if (sel_tb_cnt > 1) {
+                        sel_tb_cnt--
+                    }
+                }
+
+                Log.d(TAG, "sel_tb_cnt >> $sel_tb_cnt")
+            }
+        })
 
         binding.run {
             rvTable.layoutManager = LinearLayoutManager(mActivity, RecyclerView.VERTICAL, false)
@@ -55,7 +84,20 @@ class SetCustomerInfoActivity : BaseActivity() {
 
             back.setOnClickListener { finish() }
             save.setOnClickListener { save() }
+            allTable.setOnClickListener {
+                // 전체 선택만 가능. 해제는 할 수 없음
+                checkAll()
+                sel_tb_cnt = 0
+            }
         }
+    }
+
+    fun checkAll() {
+        if(!bisAll)
+            tableAdapter.checkAll(true)
+
+        bisAll = true
+        binding.allTable.isChecked = true
     }
 
     fun save() {
@@ -118,8 +160,9 @@ class SetCustomerInfoActivity : BaseActivity() {
                     1 -> {
                         tableList.clear()
                         tableList.addAll(result.tableList)
+                        tb_cnt = tableList.size
 
-                        val bisAll = result.blAll == "Y"
+                        bisAll = result.blAll == "Y"
                         binding.allTable.isChecked = bisAll
                         tableAdapter.checkAll(bisAll)
                     }

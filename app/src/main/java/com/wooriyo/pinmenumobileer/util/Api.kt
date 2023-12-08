@@ -425,7 +425,7 @@ interface Api {
 
     // QR 후결제 전체 사용 설정
     @GET("m/udt_AllNonePay.php")
-    fun setPostPaidAll(
+    fun setPostPayAll(
         @Query("useridx") useridx: Int,
         @Query("storeidx") storeidx: Int,
         @Query("buse") buse: String
@@ -433,11 +433,11 @@ interface Api {
 
     // QR 후결제 개별 사용 설정
     @GET("m/udtNonePay.php")
-    fun setPostPaid(
+    fun setPostPay(
         @Query("useridx") useridx: Int,
         @Query("storeidx") storeidx: Int,
-        @Query("buse") buse: String,
-        @Query("qidx") qidx: Int
+        @Query("qidx") qidx: Int,
+        @Query("buse") buse: String
     ): Call<ResultDTO>
 
     // pg 결제 고객 정보 받기 설정
