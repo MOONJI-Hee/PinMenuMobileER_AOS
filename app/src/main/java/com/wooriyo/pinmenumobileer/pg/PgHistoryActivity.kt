@@ -67,9 +67,7 @@ class PgHistoryActivity : BaseActivity() {
                         pgHistoryList.addAll(result.pgHistoryList)
                         pgHistoryAdapter.notifyDataSetChanged()
                     }
-                    else -> {
-                        Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
-                    }
+                    else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                 }
             }
 

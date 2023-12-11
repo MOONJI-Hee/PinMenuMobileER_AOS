@@ -170,6 +170,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/bottom"/>
 
+    <ImageView
+        android:id="@+id/completePos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_complete_pos"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom"/>
+
     <LinearLayout
         android:id="@+id/arrowUp"
         android:layout_width="match_parent"

@@ -5,17 +5,24 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.databinding.ListQrBinding
+import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.QrDTO
 import com.wooriyo.pinmenumobileer.qr.QrDetailActivity
 
 class QrAdapter(val dataSet: ArrayList<QrDTO>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    lateinit var postPayClickListener: ItemClickListener
+
     var qrCnt = 0
-    var storeName = ""
+
+    fun setOnPostPayClickListener(postPayClickListener: ItemClickListener) {
+        this.postPayClickListener = postPayClickListener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = ListQrBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -26,7 +33,7 @@ class QrAdapter(val dataSet: ArrayList<QrDTO>): RecyclerView.Adapter<RecyclerVie
         when(getItemViewType(position)){
             AppProperties.VIEW_TYPE_COM -> {
                 holder as ViewHolder
-                holder.bind(dataSet[position], qrCnt)
+                holder.bind(dataSet[position], qrCnt, postPayClickListener)
             }
             AppProperties.VIEW_TYPE_ADD -> {
                 holder as ViewHolder_add
@@ -48,7 +55,7 @@ class QrAdapter(val dataSet: ArrayList<QrDTO>): RecyclerView.Adapter<RecyclerVie
     }
 
     class ViewHolder(val binding: ListQrBinding, val context: Context):RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: QrDTO, qrCnt: Int) {
+        fun bind(data: QrDTO, qrCnt: Int, postPayClickListener: ItemClickListener) {
             binding.able.visibility = View.VISIBLE
             binding.plus.visibility = View.GONE
 
@@ -64,12 +71,18 @@ class QrAdapter(val dataSet: ArrayList<QrDTO>): RecyclerView.Adapter<RecyclerVie
             }else
                 binding.disable.visibility = View.GONE
 
+            binding.postPay.isChecked = data.qrbuse == "Y"
+
             val intent = Intent(context, QrDetailActivity::class.java)
             intent.putExtra("seq", adapterPosition+1)
             intent.putExtra("qrcode", data)
 
             binding.able.setOnClickListener{
                 context.startActivity(intent)
+            }
+
+            binding.postPay.setOnClickListener {
+                postPayClickListener.onQrClick(adapterPosition, (it as CheckBox).isChecked)
             }
         }
     }

@@ -111,7 +111,7 @@ class QrDetailActivity : BaseActivity() {
                 val result = response.body() ?: return
                 when (result.status) {
                     1 -> {
-                        qrCode = QrDTO(result.qidx, MyApplication.storeidx, seq, 1, result.filePath, "", getToday())
+                        qrCode = QrDTO(result.qidx, MyApplication.storeidx, seq, 1, result.filePath, "", getToday(), "N")
 
                         binding.delete.isEnabled = true
                         binding.save.isEnabled = true

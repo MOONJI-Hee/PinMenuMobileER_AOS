@@ -10,18 +10,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.gson.annotations.SerializedName
 import com.wooriyo.pinmenumobileer.MainActivity
+import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.engStoreName
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.setStoreDTO
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.store
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeList
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.broadcast.DownloadReceiver
 import com.wooriyo.pinmenumobileer.databinding.FragmentSetQrcodeBinding
+import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.QrDTO
 import com.wooriyo.pinmenumobileer.model.QrListDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
@@ -44,6 +49,7 @@ class SetQrcodeFragment : Fragment() {
     var storeName = ""
 
     var bisAll = false
+    var bisCnt = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +64,25 @@ class SetQrcodeFragment : Fragment() {
         bisAll = store.qrbuse == "Y"
         binding.postPayAll.isChecked = bisAll
 
+        qrAdapter.setOnPostPayClickListener(object: ItemClickListener{
+            override fun onQrClick(position: Int, status: Boolean) {
+                if(status) bisCnt++ else bisCnt--
+
+                Log.d(TAG, "checked Toggle Cnt > $bisCnt")
+
+                if(bisCnt == qrList.size) {
+                    binding.postPayAll.isChecked = true
+                    setAllPostPay("Y")
+                }else {
+                    if(binding.postPayAll.isChecked) {
+                        binding.postPayAll.isChecked = false
+                    }
+                    val buse = if(status) "Y" else "N"
+                    setPostPay(qrList[position].idx, buse, position)
+                }
+            }
+        })
+
         binding.rvQr.run {
             layoutManager = GridLayoutManager(context, 2)
             adapter = qrAdapter
@@ -66,6 +91,12 @@ class SetQrcodeFragment : Fragment() {
         binding.run {
             saveName.setOnClickListener { udtStoreName() }
             downAll.setOnClickListener { downloadAll() }
+            postPayAll.setOnClickListener {
+                it as CheckBox
+                val buse = if(it.isChecked) "Y" else "N"
+                setAllCheck(buse)
+                setAllPostPay(buse)
+            }
         }
 
         return binding.root
@@ -122,9 +153,13 @@ class SetQrcodeFragment : Fragment() {
                             binding.etStoreName.setText(storeName)
                             engStoreName = storeName
                         }
-
                         qrAdapter.setQrCount(qrCnt)
                         qrAdapter.notifyDataSetChanged()
+
+                        bisCnt = 0
+                        qrList.forEach {
+                            if(it.qrbuse == "Y") bisCnt++
+                        }
                     }
 
                     else -> Toast.makeText(context, result.msg, Toast.LENGTH_SHORT).show()
@@ -202,7 +237,7 @@ class SetQrcodeFragment : Fragment() {
                 val result = response.body() ?: return
                 when (result.status) {
                     1 -> {
-
+                        store.qrbuse = buse
                     }
                     else -> Toast.makeText(context, result.msg, Toast.LENGTH_SHORT).show()
                 }
@@ -214,6 +249,19 @@ class SetQrcodeFragment : Fragment() {
                 Log.d(TAG, "QR 후불 결제 전체 설정 실패 >> ${call.request()}")
             }
         })
+    }
+
+    fun setAllCheck(buse: String) {
+        bisCnt = if(buse == "Y") qrList.size else 0
+
+        for(i in 0 until qrList.size) {
+            if(qrList[i].qrbuse != buse){
+                qrList[i].qrbuse = buse
+                qrAdapter.notifyItemChanged(i)
+            }
+        }
+//        qrList.forEach { it.qrbuse = buse }
+//        qrAdapter.notifyItemRangeChanged(0, qrList.size)
     }
 
     companion object {

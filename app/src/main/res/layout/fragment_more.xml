@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/f9"
-    tools:context=".more.MoreActivity">
+    android:background="@color/f9">
     <TextView
         style="@style/title"
         android:id="@+id/title"
@@ -23,6 +22,7 @@
             style="@style/more_menu"
             android:id="@+id/qrCustomerInfo"
             android:text="@string/qr_customer_info_title"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
         <ImageView
