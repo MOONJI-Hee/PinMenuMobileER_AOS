@@ -19,7 +19,6 @@
     <string name="minus">-</string>
 
     <string name="total">총</string>
-    <string name="order">주문하기</string>
     <string name="delete_order">주문삭제</string>
     <string name="total_gea">총 %d개</string>
 
@@ -30,13 +29,16 @@
     <string name="essential">필수</string>
     <string name="empty">없음</string>
 
+    <string name="order">주문</string>
+    <string name="call">호출</string>
+    <string name="pos">포스</string>
+
     <string name="confirm">확인</string>
     <string name="cancel">취소</string>
     <string name="save">저장</string>
     <string name="delete">삭제</string>
     <string name="update">수정</string>
     <string name="sequence">순서</string>
-    <string name="call">호출</string>
     <string name="setting">설정</string>
     <string name="restore">복원</string>
 
@@ -197,6 +199,23 @@
     <string name="menu_mgmt_sub">메뉴 정보 입력</string>
     <string name="menu_mgmt_sub2">메뉴판 색상 설정</string>
     <string name="event_mgmt_sub">재방문 이벤트 관리</string>
+
+    <!--  메뉴 관리  -->
+    <string name="manage_menu">메뉴관리</string>
+
+    <!--  카테고리 설정  -->
+    <string name="category_info_seq"><b>카테고리 순서 변경</b>은\n변경하고자하는 카테고리를 누른 후 좌우 버튼을 눌러 순서를 변경합니다.\n변경 후에는 [ 저장 ] 버튼을 눌러주셔야 변경된 내용이 적용됩니다.</string>
+    <string name="category_info_udt"><b>카테고리 [ 수정 ] [ 삭제 ] [ 숨기기 ]를 할 경우</b>에는\n변경하고자하는 카테고리를 누른 후 변경 팝업창이 나오면 텍스트 수정, 삭제, 카테고리 숨김을 진행하실 수 있습니다.</string>
+    <string name="category_name">카테고리 명칭</string>
+    <string name="category_name_hint">명칭을 입력해 주세요.</string>
+    <string name="category_exp">카테고리 설명</string>
+    <string name="category_exp_hint">설명 혹은 영문을 입력해 주세요.</string>
+    <string name="category_dialog_info1"><b>카테고리 순서 변경이 필요한 경우</b>에는\n우측 상단 [ 카테고리 순서 변경 ] 버튼을 누른 후\n변경하고자하는 카테고리를 선택하여 좌우로 이동시켜 순서를 변경합니다.\n변경 후에는 [ 저장 ] 버튼을 눌러주셔야 변경된 내용이 적용됩니다.</string>
+    <string name="category_dialog_info2"><b>카테고리 [숨김] 필요한 경우</b>에는\n우측 상단에 있는 [숨기기] 옆 Off 버튼을 On으로 변경\n후 저장을 눌러주십시오.\n삭제는 카테고리에 입력된 모든 메뉴 정보가 삭제되지만,\n[숨기기]는 고객에게 보여지지 않도록 설정됩니다.</string>
+    <string name="category_hide">숨기기</string>
+    <string name="category_set">카테고리\n설정</string>
+    <string name="category_add">카테고리 추가</string>
+    <string name="category_seq">카테고리 순서 변경</string>
 
     <!--  결제  -->
     <string name="payment">결제</string>
@@ -360,7 +379,7 @@
     <string name="order_btn_merge">주문 합치기</string>
     <string name="print">프 린 트</string>
     <string name="order_total">TOTAL</string>
-    <string name="complete">완 료</string>
+    <string name="complete">완료</string>
     <string name="order_sel_merge">이 항목으로 합치기</string>
     <string name="order_merge">주문항목 합치기</string>
     <string name="order_merge_info">해당 항목으로 선택된 주문 정보를 합칩니다.\n합쳐진 이후에는 복구가 불가능합니다.</string>
@@ -444,8 +463,9 @@
     <string name="title_store_detail">매장 정보 : 세부정보</string>
     <string name="title_store_hours">매장 정보 : 영업시간</string>
     <string name="title_store_img">매장 정보 : 매장 대표 사진</string>
-    <string name="title_cate_add">카테고리 입력</string>
-    <string name="title_cate_udt">카테고리 수정</string>
+    <string name="title_cate">카테고리</string>
+    <string name="title_cate_add">카테고리입력</string>
+    <string name="title_cate_udt">카테고리수정</string>
     <string name="title_map">지도 검색</string>
 
     <!--  비어있는 목록  -->

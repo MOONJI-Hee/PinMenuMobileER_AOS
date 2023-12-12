@@ -4,77 +4,187 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/title_black"
-        android:id="@+id/title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/icNew"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="6dp"
-            android:visibility="gone"
-            android:src="@drawable/ic_pay_new"
-            app:layout_constraintTop_toTopOf="@+id/tvTitle"
-            app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
-            app:layout_constraintEnd_toStartOf="@+id/tvTitle"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_title_category_black"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             style="@style/text22w"
-            android:id="@+id/tvTitle"
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
             android:text="@string/order_mgmt"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="@+id/title"
+            app:layout_constraintTop_toTopOf="@+id/title"
+            app:layout_constraintBottom_toBottomOf="@+id/title">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/btn_back_black"/>
+        </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/back"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:gravity="center"
-        app:layout_constraintStart_toStartOf="@+id/title"
-        app:layout_constraintTop_toTopOf="@+id/title"
-        app:layout_constraintBottom_toBottomOf="@+id/title">
+        <TextView
+            style="@style/text16"
+            android:id="@+id/total"
+            android:text="@string/order_total"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginEnd="9dp"
+            app:layout_constraintEnd_toStartOf="@+id/btnClear"
+            app:layout_constraintTop_toTopOf="@+id/btnClear"
+            app:layout_constraintBottom_toBottomOf="@+id/btnClear"/>
+
         <ImageView
+            android:id="@+id/btnClear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/btn_back_black"/>
-    </LinearLayout>
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/btn_orderlist_info"
+            app:layout_constraintEnd_toEndOf="@+id/title"
+            app:layout_constraintTop_toTopOf="@+id/title"
+            app:layout_constraintBottom_toBottomOf="@+id/title"/>
 
-    <TextView
-        style="@style/text14w"
-        android:id="@+id/tv"
-        android:text="@string/order_total"
-        android:layout_marginEnd="6dp"
-        app:layout_constraintEnd_toStartOf="@+id/total"
-        app:layout_constraintTop_toTopOf="@+id/total"
-        app:layout_constraintBottom_toBottomOf="@+id/total"/>
-    <TextView
-        style="@style/text_num_b"
-        android:id="@+id/total"
-        android:text="@string/zero"
-        android:textSize="17sp"
-        android:textColor="@color/white"
-        android:layout_marginEnd="7dp"
-        app:layout_constraintEnd_toStartOf="@+id/btnClear"
-        app:layout_constraintTop_toTopOf="@+id/title"
-        app:layout_constraintBottom_toBottomOf="@+id/title"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/tabOrder"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintEnd_toStartOf="@+id/tl1"
+            app:layout_constraintStart_toStartOf="parent">
+            <TextView
+                style="@style/text16w"
+                android:id="@+id/tvOrder"
+                android:text="@string/order"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+            <View
+                style="@style/new_badge"
+                android:id="@+id/newOrder"
+                android:layout_marginStart="5dp"
+                android:visibility="invisible"
+                app:layout_constraintTop_toTopOf="@+id/tvOrder"
+                app:layout_constraintStart_toEndOf="@+id/tvOrder"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/btnClear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:src="@drawable/btn_orderlist_info"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@+id/title"
-        app:layout_constraintTop_toTopOf="@+id/title"
-        app:layout_constraintBottom_toBottomOf="@+id/title"/>
+        <View
+            android:id="@+id/tl1"
+            android:layout_width="1dp"
+            android:layout_height="18dp"
+            android:background="#4DFFFFFF"
+            app:layout_constraintTop_toTopOf="@+id/tabOrder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tabCall"
+            app:layout_constraintStart_toEndOf="@+id/tabOrder"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/tabCall"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintEnd_toStartOf="@+id/tl2"
+            app:layout_constraintStart_toEndOf="@+id/tl1">
+            <TextView
+                style="@style/text16w"
+                android:id="@+id/tvCall"
+                android:text="@string/call"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+            <View
+                style="@style/new_badge"
+                android:id="@+id/newCall"
+                android:layout_marginStart="5dp"
+                android:visibility="invisible"
+                app:layout_constraintTop_toTopOf="@+id/tvCall"
+                app:layout_constraintStart_toEndOf="@+id/tvCall"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/tl2"
+            android:layout_width="1dp"
+            android:layout_height="18dp"
+            android:background="#4DFFFFFF"
+            app:layout_constraintTop_toTopOf="@+id/tabCall"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tabCall"
+            app:layout_constraintEnd_toStartOf="@+id/tabCmplt"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/tabCmplt"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintEnd_toStartOf="@+id/tl3"
+            app:layout_constraintStart_toEndOf="@+id/tl2">
+            <TextView
+                style="@style/text16w"
+                android:id="@+id/tvCmplt"
+                android:text="@string/complete"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+            <View
+                style="@style/new_badge"
+                android:id="@+id/newCmplt"
+                android:layout_marginStart="5dp"
+                android:visibility="invisible"
+                app:layout_constraintTop_toTopOf="@+id/tvCmplt"
+                app:layout_constraintStart_toEndOf="@+id/tvCmplt"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/tl3"
+            android:layout_width="1dp"
+            android:layout_height="18dp"
+            android:background="#4DFFFFFF"
+            app:layout_constraintTop_toTopOf="@+id/tabCmplt"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tabPos"
+            app:layout_constraintStart_toEndOf="@+id/tabCmplt"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/tabPos"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tl3"
+            app:layout_constraintEnd_toEndOf="parent">
+            <TextView
+                style="@style/text16w"
+                android:id="@+id/tvPos"
+                android:text="@string/pos"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+            <View
+                style="@style/new_badge"
+                android:id="@+id/newPos"
+                android:layout_marginStart="5dp"
+                android:visibility="invisible"
+                app:layout_constraintTop_toTopOf="@+id/tvPos"
+                app:layout_constraintStart_toEndOf="@+id/tvPos"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         style="@style/text17"
@@ -83,7 +193,7 @@
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/header"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -92,7 +202,7 @@
         android:layout_height="0dp"
         android:background="@color/btn_cancel"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/header"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/list_order" />
 

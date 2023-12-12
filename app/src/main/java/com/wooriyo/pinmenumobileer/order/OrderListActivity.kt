@@ -17,6 +17,7 @@ import com.wooriyo.pinmenumobileer.MyApplication.Companion.store
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
+import com.wooriyo.pinmenumobileer.call.adapter.CallListAdapter
 import com.wooriyo.pinmenumobileer.common.dialog.ConfirmDialog
 import com.wooriyo.pinmenumobileer.common.dialog.ClearDialog
 import com.wooriyo.pinmenumobileer.config.AppProperties
@@ -34,6 +35,8 @@ import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.TITLE_MENU_SAM
 import com.wooriyo.pinmenumobileer.databinding.ActivityOrderListBinding
 import com.wooriyo.pinmenumobileer.listener.DialogListener
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
+import com.wooriyo.pinmenumobileer.model.CallHistoryDTO
+import com.wooriyo.pinmenumobileer.model.CallListDTO
 import com.wooriyo.pinmenumobileer.model.OrderDTO
 import com.wooriyo.pinmenumobileer.model.OrderHistoryDTO
 import com.wooriyo.pinmenumobileer.model.OrderListDTO
@@ -58,8 +61,13 @@ class OrderListActivity : BaseActivity() {
     val TAG = "OrderListActivity"
     val mActivity = this@OrderListActivity
 
+    // 주문 리스트
     val orderList = ArrayList<OrderHistoryDTO>()
     val orderAdapter = OrderAdapter(orderList)
+
+    // 호출 리스트
+    val callHistory = ArrayList<CallHistoryDTO>()
+    val callListAdapter = CallListAdapter(callHistory)
 
     var hyphen = StringBuilder()    // 하이픈
     var hyphen_num = 0              // 하이픈 개수
@@ -181,10 +189,6 @@ class OrderListActivity : BaseActivity() {
         binding.rv.adapter = orderAdapter
 
         binding.back.setOnClickListener { AppHelper.leaveStore(mActivity) }
-        binding.icNew.setOnClickListener {
-            getOrderList()
-            it.visibility = View.GONE
-        }
         binding.btnClear.setOnClickListener { clearDialog.show(supportFragmentManager, "ClearDialog") }
     }
 
@@ -225,9 +229,95 @@ class OrderListActivity : BaseActivity() {
             getString(R.string.btn_confirm),
             View.OnClickListener {
                 clearConfirmDialog.dismiss()
-                clear()
+                clearCall()
             }
         )
+    }
+
+
+    // 호출 리스트 (히스토리) 조회
+    fun getCallList() {
+        ApiClient.service.getCallHistory(useridx, storeidx).enqueue(object: Callback<CallListDTO>{
+            override fun onResponse(call: Call<CallListDTO>, response: Response<CallListDTO>) {
+                Log.d(TAG, "호출 목록 조회 url : $response")
+                if(!response.isSuccessful) return
+
+                val result = response.body()
+                if(result != null) {
+                    when(result.status){
+                        1 -> {
+                            callHistory.clear()
+                            callHistory.addAll(result.callList)
+
+                            if(callHistory.isEmpty()) {
+                                binding.empty.visibility = View.VISIBLE
+                                binding.rv.visibility = View.GONE
+                            }else {
+//                                callHistory.sortBy { it.iscompleted }
+                                binding.empty.visibility = View.GONE
+                                binding.rv.visibility = View.VISIBLE
+                                callListAdapter.notifyDataSetChanged()
+                            }
+                        }
+                        else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            override fun onFailure(call: Call<CallListDTO>, t: Throwable) {
+                Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "호출 목록 조회 오류 > $t")
+                Log.d(TAG, "호출 목록 조회 오류 > ${call.request()}")
+            }
+        })
+    }
+
+    // 호출 완료 처리
+    fun setComplete(position: Int) {
+        ApiClient.service.completeCall(storeidx, callHistory[position].idx, "Y")
+            .enqueue(object : Callback<ResultDTO> {
+                override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                    Log.d(TAG, "호출 완료 url : $response")
+                    if (!response.isSuccessful) return
+
+                    val result = response.body() ?: return
+                    when (result.status) {
+                        1 -> {
+                            callHistory[position].iscompleted = 1
+//                            callHistory.sortBy { it.iscompleted }
+
+                            callListAdapter.notifyItemChanged(position)
+                        }
+                        else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                    Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "호출 완료 실패 > $t")
+                    Log.d(TAG, "호출 완료 실패 오류 > ${call.request()}")
+                }
+            })
+    }
+
+    // 호출 초기화
+    fun clearCall() {
+        ApiClient.service.clearCall(useridx, storeidx).enqueue(object:Callback<ResultDTO>{
+            override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                Log.d(TAG, "직원호출 초기화 url : $response")
+                if(!response.isSuccessful) return
+
+                val result = response.body() ?: return
+                Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                if(result.status == 1){
+                    getCallList()
+                }
+            }
+            override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "직원호출 초기화 실패 > $t")
+                Log.d(TAG, "직원호출 초기화 실패 > ${call.request()}")
+            }
+        })
     }
 
     // 주문 목록 조회
@@ -250,7 +340,6 @@ class OrderListActivity : BaseActivity() {
                                 binding.rv.visibility = View.GONE
                             }else {
 //                                orderList.sortBy { it.iscompleted }
-                                binding.total.text = result.totalCnt.toString()
                                 binding.empty.visibility = View.GONE
                                 binding.rv.visibility = View.VISIBLE
                                 orderAdapter.notifyDataSetChanged()
@@ -282,7 +371,7 @@ class OrderListActivity : BaseActivity() {
                     val result = response.body() ?: return
                     when(result.status){
                         1 -> {
-                            Toast.makeText(mActivity, R.string.complete, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(mActivity, R.string.msg_complete, Toast.LENGTH_SHORT).show()
                             orderList[position].iscompleted = isCompleted
     //                        orderList.sortBy { it.iscompleted }
                             orderAdapter.notifyItemChanged(position)
@@ -330,7 +419,7 @@ class OrderListActivity : BaseActivity() {
     }
 
     // 주문 초기화
-    fun clear() {
+    fun clearOrder() {
         ApiClient.service.clearOrder(useridx, storeidx).enqueue(object:Callback<ResultDTO>{
             override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                 Log.d(TAG, "주문 초기화 url : $response")

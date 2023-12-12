@@ -108,7 +108,7 @@ class ContentSetActivity : BaseActivity() {
                     val result = response.body() ?: return
                     when(result.status) {
                         1 -> {
-                            Toast.makeText(mActivity, R.string.complete, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(mActivity, R.string.msg_complete, Toast.LENGTH_SHORT).show()
                             setView(result)
                         }
                         else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()

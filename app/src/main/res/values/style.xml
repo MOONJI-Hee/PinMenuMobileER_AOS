@@ -95,6 +95,13 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <style name="new_badge">
+        <item name="android:layout_width">6dp</item>
+        <item name="android:layout_height">6dp</item>
+        <item name="android:background">@drawable/bg_circle</item>
+        <item name="android:backgroundTint">#FF6200</item>
+    </style>
+
     <style name="toggle">
         <item name="android:layout_width">60dp</item>
         <item name="android:layout_height">42dp</item>
@@ -132,18 +139,6 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <style name="edittext">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">48dp</item>
-        <item name="android:paddingStart">15dp</item>
-        <item name="android:paddingEnd">15dp</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:textSize">17sp</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textColorHint">@color/hint</item>
-        <item name="android:background">@drawable/bg_edittext</item>
-    </style>
-
     <style name="tv_nick">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">36dp</item>
@@ -157,6 +152,17 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <style name="edittext">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/hint</item>
+        <item name="android:background">@drawable/bg_edittext</item>
+    </style>
     <style name="subtext">
         <item name="android:fontFamily">@font/notosans_light</item>
         <item name="android:layout_width">wrap_content</item>
@@ -248,6 +254,13 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/black</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="text16w">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/selector_text_white</item>
         <item name="android:includeFontPadding">false</item>
     </style>
     <style name="text17">

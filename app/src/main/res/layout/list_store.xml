@@ -16,13 +16,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:paddingHorizontal="28dp"
-        android:background="@drawable/bg_r6w10">
+        android:background="@drawable/bg_r6w10"
+        android:paddingHorizontal="28dp">
 
         <LinearLayout
             android:id="@+id/btnOrder"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -52,7 +52,7 @@
             android:gravity="center"
             android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@+id/btnOrder"
-            app:layout_constraintEnd_toStartOf="@+id/btnPayHistory"
+            app:layout_constraintEnd_toStartOf="@+id/btnMenu"
             app:layout_constraintStart_toEndOf="@+id/btnOrder"
             app:layout_constraintTop_toTopOf="@+id/btnOrder">
 
@@ -71,15 +71,40 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/btnMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/btnCall"
+            app:layout_constraintEnd_toStartOf="@+id/btnPayHistory"
+            app:layout_constraintStart_toEndOf="@+id/btnCall"
+            app:layout_constraintTop_toTopOf="@+id/btnCall">
+
+            <TextView
+                android:id="@+id/menuCnt"
+                style="@style/text_num_b"
+                android:textColor="@color/selector_text_white"
+                android:textSize="22sp"
+                tools:text="20" />
+
+            <TextView
+                android:id="@+id/menuTxt"
+                style="@style/text15w"
+                android:layout_marginTop="10dp"
+                android:text="@string/manage_menu" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/btnPayHistory"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="@+id/btnOrder"
+            app:layout_constraintBottom_toBottomOf="@+id/btnMenu"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btnCall"
-            app:layout_constraintTop_toTopOf="@+id/btnOrder">
+            app:layout_constraintStart_toEndOf="@+id/btnMenu"
+            app:layout_constraintTop_toTopOf="@+id/btnMenu">
 
             <TextView
                 android:id="@+id/payCnt"

@@ -30,6 +30,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PinmenuMobileER">
         <activity
+            android:name=".menu.AddCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".menu.SetCategoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".pg.PgCancelActivity"
             android:exported="false" />
         <activity
@@ -128,6 +134,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -137,12 +144,14 @@
         <activity
             android:name=".order.OrderListActivity"
             android:exported="false" />
+
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_appKey" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_noti" />
+
         <service
             android:name=".fcm.MyFirebaseService"
             android:exported="false">

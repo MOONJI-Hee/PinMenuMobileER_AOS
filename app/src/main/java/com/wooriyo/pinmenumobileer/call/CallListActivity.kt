@@ -42,8 +42,6 @@ class CallListActivity : BaseActivity() {
         setContentView(binding.root)
 
         // OrderList와 layout 같이 쓰기 때문에 Call에 맞게 뷰 변경
-        binding.tvTitle.text = getString(R.string.call_emp)
-        binding.tv.visibility = View.GONE
         binding.total.visibility = View.GONE
         binding.empty.text = getString(R.string.no_call_list)
 
@@ -61,10 +59,7 @@ class CallListActivity : BaseActivity() {
         binding.back.setOnClickListener{ // 뒤로가기 > 매장 밖으로 나가기 때문에 이용자수 차감 Api 태움
             AppHelper.leaveStore(mActivity)
         }
-        binding.icNew.setOnClickListener {
-            getCallList()
-            it.visibility = View.GONE
-        }
+
         binding.btnClear.setOnClickListener { clearDialog.show(supportFragmentManager, "ClearDialog") }
     }
 
