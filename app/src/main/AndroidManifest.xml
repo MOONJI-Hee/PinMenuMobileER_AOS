@@ -30,6 +30,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PinmenuMobileER">
         <activity
+            android:name=".menu.SetGoodsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".menu.SetCategorySeqActivity"
+            android:exported="false" />
+        <activity
             android:name=".menu.AddCategoryActivity"
             android:exported="false" />
         <activity

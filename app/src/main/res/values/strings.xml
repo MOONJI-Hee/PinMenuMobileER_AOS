@@ -201,7 +201,14 @@
     <string name="event_mgmt_sub">재방문 이벤트 관리</string>
 
     <!--  메뉴 관리  -->
-    <string name="manage_menu">메뉴관리</string>
+    <string name="menu_manage">메뉴관리</string>
+
+    <!--  카테고리 / 메뉴 삭제 다이얼로그  -->
+    <string name="menu_delete">메뉴삭제</string>
+    <string name="dialog_delete_name">[ %s ]</string>
+    <string name="dialog_delete_confirm">%s를 삭제하시겠습니까?</string>
+    <string name="category_delete_info">삭제를 누르면 해당 카테고리에 속한 모든 메뉴가 삭제되며, 삭제 이후에는 복원하실 수 없습니다.</string>
+    <string name="menu_delete_info">삭제를 누르면 입력한 모든 정보가 삭제되며,\n삭제 이후에는 복원하실 수 없습니다.</string>
 
     <!--  카테고리 설정  -->
     <string name="category_info_seq"><b>카테고리 순서 변경</b>은\n변경하고자하는 카테고리를 누른 후 좌우 버튼을 눌러 순서를 변경합니다.\n변경 후에는 [ 저장 ] 버튼을 눌러주셔야 변경된 내용이 적용됩니다.</string>
@@ -215,7 +222,9 @@
     <string name="category_hide">숨기기</string>
     <string name="category_set">카테고리\n설정</string>
     <string name="category_add">카테고리 추가</string>
-    <string name="category_seq">카테고리 순서 변경</string>
+
+    <string name="category_seq">카테고리순서 변경</string>
+    <string name="category_seq_change_way">변경방법 : 변경할 카테고리를 눌러 상하로 드래그</string>
 
     <!--  결제  -->
     <string name="payment">결제</string>
