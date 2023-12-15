@@ -33,7 +33,7 @@
             android:name=".menu.AddOptActivity"
             android:exported="false" />
         <activity
-            android:name=".menu.AddMenuActivity"
+            android:name=".menu.AddGoodsActivity"
             android:exported="false" />
         <activity
             android:name=".menu.SetGoodsActivity"

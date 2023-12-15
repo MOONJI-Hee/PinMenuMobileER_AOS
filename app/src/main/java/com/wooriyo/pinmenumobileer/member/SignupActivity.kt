@@ -27,8 +27,8 @@ import java.util.regex.Pattern
 
 class SignupActivity : BaseActivity(), View.OnClickListener {
     lateinit var binding: ActivitySignupBinding
-    val TAG = "SignUpActivity"
-    val mActivity = this@SignupActivity
+//    val TAG = "SignUpActivity"
+//    val mActivity = this@SignupActivity
 
     var idChecked = false
     var arpaLinked = false

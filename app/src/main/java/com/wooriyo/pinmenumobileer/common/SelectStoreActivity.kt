@@ -17,9 +17,6 @@ import com.wooriyo.pinmenumobileer.printer.adapter.StoreAdapter
 class SelectStoreActivity : BaseActivity() {
     lateinit var binding: ActivitySelectStoreBinding
 
-    val TAG = "SelectStoreActivity"
-    val mActivity = this@SelectStoreActivity
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySelectStoreBinding.inflate(layoutInflater)

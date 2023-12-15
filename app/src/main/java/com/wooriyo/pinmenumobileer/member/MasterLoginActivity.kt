@@ -18,8 +18,8 @@ import retrofit2.Response
 class MasterLoginActivity : BaseActivity() {
     lateinit var binding: ActivityMasterLoginBinding
 
-    val mActivity = this@MasterLoginActivity
-    val TAG = "MasterLoginActivity"
+//    val mActivity = this@MasterLoginActivity
+//    val TAG = "MasterLoginActivity"
 
     var id = ""
     var pw = ""

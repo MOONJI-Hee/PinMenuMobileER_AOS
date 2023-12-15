@@ -35,8 +35,6 @@ import kotlin.concurrent.thread
 
 class MainActivity : BaseActivity() {
     lateinit var binding: ActivityMainBinding
-    val TAG = "MainActivity"
-    val mActivity = this
 
     var isMain = true
 

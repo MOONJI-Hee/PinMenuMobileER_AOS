@@ -22,8 +22,8 @@ import retrofit2.Call
 import retrofit2.Response
 
 class StartActivity : BaseActivity() {
-    val TAG = "StartActivity"
-    val mActivity = this@StartActivity
+//    val TAG = "StartActivity"
+//    val mActivity = this@StartActivity
 
     var id = ""
     var pw = ""

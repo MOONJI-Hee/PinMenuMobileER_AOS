@@ -20,8 +20,8 @@ import retrofit2.Response
 class LoginActivity: BaseActivity() {
     lateinit var binding: ActivityLoginBinding
 
-    val TAG = "LoginActivity"
-    val mActivity = this@LoginActivity
+//    val TAG = "LoginActivity"
+//    val mActivity = this@LoginActivity
 
     var waitTime = 0L
     var id = ""

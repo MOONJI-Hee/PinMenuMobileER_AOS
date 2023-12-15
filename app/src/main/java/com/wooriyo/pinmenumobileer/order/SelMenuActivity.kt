@@ -14,8 +14,8 @@ import com.wooriyo.pinmenumobileer.util.AppHelper
 class SelMenuActivity : BaseActivity() {
     lateinit var binding: ActivitySelMenuBinding
 
-    val TAG = "SelMenuActivity"
-    val mActivity = this@SelMenuActivity
+//    val TAG = "SelMenuActivity"
+//    val mActivity = this@SelMenuActivity
 
     lateinit var order : OrderHistoryDTO
     lateinit var olist : ArrayList<OrderDTO>

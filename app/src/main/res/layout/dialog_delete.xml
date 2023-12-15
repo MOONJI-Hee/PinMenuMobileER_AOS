@@ -55,13 +55,13 @@
             android:layout_width="0dp"
             android:text="@string/btn_cancel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/go"
-            app:layout_constraintTop_toTopOf="@+id/go"
+            app:layout_constraintEnd_toStartOf="@+id/delete"
+            app:layout_constraintTop_toTopOf="@+id/delete"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
             style="@style/btn_dialog_right"
-            android:id="@+id/go"
+            android:id="@+id/delete"
             android:layout_width="0dp"
             android:layout_marginTop="40dp"
             android:text="@string/btn_delete"

@@ -58,8 +58,8 @@ class OrderListActivity : BaseActivity() {
     lateinit var clearDialog: ClearDialog
     lateinit var clearConfirmDialog: ConfirmDialog
 
-    val TAG = "OrderListActivity"
-    val mActivity = this@OrderListActivity
+//    val TAG = "OrderListActivity"
+//    val mActivity = this@OrderListActivity
 
     // 주문 리스트
     val orderList = ArrayList<OrderHistoryDTO>()

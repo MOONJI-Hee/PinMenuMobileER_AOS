@@ -3,9 +3,7 @@ package com.wooriyo.pinmenumobileer.util
 import com.wooriyo.pinmenumobileer.model.*
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.model.StoreListDTO
-import com.wooriyo.pinmenumobileer.pos.model.KpnResultDTO
 import okhttp3.MultipartBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -131,6 +129,123 @@ interface Api {
         @Query("useridx") useridx: Int,
         @Query("storeidx") storeidx: Int,
     ): Call<CateListDTO>
+
+    // 카테고리 등록
+    @GET("m/inscate.php")
+    fun insCate(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("name") name : String,
+        @Query("memo") subName : String,
+        @Query("buse") buse : String
+    ): Call<ResultDTO>
+
+    // 카테고리 수정
+    @GET("m/udtcate.php")
+    fun udtCate(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("idx") cateidx: Int,
+        @Query("name") name : String,
+        @Query("memo") memo : String,
+        @Query("buse") buse : String
+    ): Call<ResultDTO>
+
+    // 카테고리 삭제
+    @GET("m/delcate.php")
+    fun delCate(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("idx") cateidx: Int,
+        @Query("code") code: String
+    ): Call<ResultDTO>
+
+    // 카테고리 순서 변경
+    @GET("m/udtseq.php")
+    fun udtCateSeq(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("JSON") JSON: String
+    ): Call<CateListDTO>
+
+    // 메뉴 조회
+    @GET("m/goods.list.php")
+    fun getGoods(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("cate") cate: String
+    ): Call<GoodsListDTO>
+
+    // 메뉴 등록
+    @GET("m/ins_goods.php")
+    fun insGoods(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("code") code: String,
+        @Query("name") name : String,
+        @Query("content") content : String,
+        @Query("cooking_time_min") cooking_time_min : String,
+        @Query("cooking_time_max") cooking_time_max : String,
+        @Query("price") price : Int,
+        @Query("adDisplay") adDisplay : String,
+        @Query("icon") icon : Int,
+        @Query("boption") boption : String,
+        @Query("option_name") option_name: String,
+        @Query("option_value") option_value: String,
+        @Query("option_mark") option_mark: String,
+        @Query("option_price") option_price: String,
+        @Query("option_req") option_req: String
+    ): Call<ResultDTO>
+
+    // 메뉴 이미지 등록
+    @Multipart
+    @POST("upload_image.php")
+    fun uploadImg(
+        @Part("useridx") useridx: Int,
+        @Part("gidx") gidx: Int,
+        @Part img1: MultipartBody.Part?,
+        @Part img2: MultipartBody.Part?,
+        @Part img3: MultipartBody.Part?
+    ): Call<ResultDTO>
+
+    // 메뉴 수정
+    @GET("m/udt_goods.php")
+    fun udtGoods(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("gidx") gidx: Int,
+        @Query("code") code: String,
+        @Query("name") name : String,
+        @Query("content") content : String,
+        @Query("cooking_time_min") cooking_time_min : String,
+        @Query("cooking_time_max") cooking_time_max : String,
+        @Query("price") price : Int,
+        @Query("adDisplay") adDisplay : String,
+        @Query("icon") icon : Int,
+        @Query("boption") boption : String,
+        @Query("option_code") option_code: String,
+        @Query("option_name") option_name: String,
+        @Query("option_value") option_value: String,
+        @Query("option_mark") option_mark: String,
+        @Query("option_price") option_price: String,
+        @Query("option_req") option_req: String
+    ): Call<ResultDTO>
+
+    // 메뉴 삭제
+    @GET("m/del_goods.php")
+    fun delGoods(
+        @Query("useridx") useridx: Int,
+        @Query("idx") storeidx: Int,
+        @Query("gidx") gidx: Int
+    ): Call<ResultDTO>
+
+    // 메뉴 순서 변경
+    @GET("m/udt_goodseq.php")
+    fun udtGoodSeq(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("JSON") JSON: String
+    ): Call<ResultDTO>
 
     // 주문 목록(히스토리) 조회
     @GET("m/order.list.php")

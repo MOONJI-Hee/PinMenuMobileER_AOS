@@ -18,8 +18,8 @@ import retrofit2.Response
 
 class SetPgInfoActivity : BaseActivity() {
     lateinit var binding: ActivitySetPgInfoBinding
-    val mActivity = this@SetPgInfoActivity
-    val TAG = "SetPgInfoActivity"
+//    val mActivity = this@SetPgInfoActivity
+//    val TAG = "SetPgInfoActivity"
 
     var fromOrder = ""
 

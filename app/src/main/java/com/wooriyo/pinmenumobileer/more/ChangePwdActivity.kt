@@ -17,8 +17,8 @@ import retrofit2.Response
 class ChangePwdActivity : BaseActivity() {
     lateinit var binding: ActivityChangePwdBinding
 
-    val mActivity = this@ChangePwdActivity
-    val TAG = "ChangePwdActivity"
+//    val mActivity = this@ChangePwdActivity
+//    val TAG = "ChangePwdActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

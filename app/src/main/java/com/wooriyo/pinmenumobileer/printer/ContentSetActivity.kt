@@ -22,8 +22,8 @@ import retrofit2.Response
 class ContentSetActivity : BaseActivity() {
     lateinit var binding: ActivityContentSetBinding
 
-    val mActivity = this@ContentSetActivity
-    val TAG = "ContentSetActivity"
+//    val mActivity = this@ContentSetActivity
+//    val TAG = "ContentSetActivity"
 
     var cnt = 0
     var strCate = ""    // 주방영수증에 출력될 카테고리 리스트 (String형, 콤마로 구분)

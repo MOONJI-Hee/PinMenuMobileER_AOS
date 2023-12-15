@@ -9,6 +9,8 @@ import com.wooriyo.pinmenumobileer.util.AppHelper
 
 open class BaseActivity: AppCompatActivity() {
     open lateinit var loadingDialog : LoadingDialog
+    open lateinit var mActivity: Activity
+    open lateinit var TAG: String
 
     companion object {
         var currentActivity: Activity? = null
@@ -24,9 +26,8 @@ open class BaseActivity: AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-//        resources.displayMetrics.density = MyApplication.density
-//        resources.displayMetrics.densityDpi = MyApplication.dpi
-//        resources.displayMetrics.scaledDensity = MyApplication.density
+        mActivity = this
+        TAG = mActivity.localClassName
         loadingDialog = LoadingDialog()
         super.onCreate(savedInstanceState)
     }

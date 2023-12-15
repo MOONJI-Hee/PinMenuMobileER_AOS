@@ -30,9 +30,6 @@ class CallListActivity : BaseActivity() {
     lateinit var clearDialog: ClearDialog
     lateinit var clearConfirmDialog: ConfirmDialog
 
-    val TAG = "CallListActivity"
-    val mActivity = this@CallListActivity
-
     val callHistory = ArrayList<CallHistoryDTO>()
     val callListAdapter = CallListAdapter(callHistory)
 

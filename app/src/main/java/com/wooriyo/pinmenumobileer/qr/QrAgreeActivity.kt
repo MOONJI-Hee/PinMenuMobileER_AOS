@@ -17,8 +17,8 @@ import retrofit2.Response
 
 class QrAgreeActivity : BaseActivity() {
     lateinit var binding: ActivityQrAgreeBinding
-    val mActivity = this@QrAgreeActivity
-    val TAG = "QrAgreeActivity"
+//    val mActivity = this@QrAgreeActivity
+//    val TAG = "QrAgreeActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

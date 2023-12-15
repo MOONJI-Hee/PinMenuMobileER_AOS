@@ -27,8 +27,8 @@ import retrofit2.Response
 
 class QrDetailActivity : BaseActivity() {
     lateinit var binding: ActivityQrDetailBinding
-    val mActivity = this@QrDetailActivity
-    val TAG = "QrDetailActivity"
+//    val mActivity = this@QrDetailActivity
+//    val TAG = "QrDetailActivity"
     var seq = 1
     var strSeq = ""
     var qrCode : QrDTO? = null

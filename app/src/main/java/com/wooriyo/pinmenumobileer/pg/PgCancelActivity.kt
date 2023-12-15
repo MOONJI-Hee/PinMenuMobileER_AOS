@@ -22,8 +22,8 @@ import retrofit2.Response
 
 class PgCancelActivity : BaseActivity() {
     lateinit var binding: ActivityPgCancelBinding
-    val mActivity = this@PgCancelActivity
-    val TAG = "PgCancelActivity"
+//    val mActivity = this@PgCancelActivity
+//    val TAG = "PgCancelActivity"
 
     val goodsList = ArrayList<PgDetailDTO>()
     val goodsAdapter = PgGoodsAdapter(goodsList)

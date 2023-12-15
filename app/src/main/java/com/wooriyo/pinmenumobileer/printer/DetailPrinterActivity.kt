@@ -25,8 +25,8 @@ import retrofit2.Response
 
 class DetailPrinterActivity : BaseActivity() {
     lateinit var binding: ActivityDetailPrinterBinding
-    val mActivity = this@DetailPrinterActivity
-    val TAG = "DetailPrinterActivity"
+//    val mActivity = this@DetailPrinterActivity
+//    val TAG = "DetailPrinterActivity"
 
 //    lateinit var printer: PrintDTO
     var printer_sw : BluetoothDevice ?= null

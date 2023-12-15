@@ -12,6 +12,7 @@ import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.call.CallListActivity
 import com.wooriyo.pinmenumobileer.databinding.ListStoreBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
+import com.wooriyo.pinmenumobileer.menu.SetCategoryActivity
 import com.wooriyo.pinmenumobileer.model.StoreDTO
 import com.wooriyo.pinmenumobileer.order.OrderListActivity
 import com.wooriyo.pinmenumobileer.pg.PgHistoryActivity
@@ -60,6 +61,12 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
                     callCnt.isPressed = true
                     callTxt.isPressed = true
                     itemClickListener.onStoreClick(data, Intent(context, CallListActivity::class.java))
+                }
+
+                btnMenu.setOnClickListener {
+                    menuCnt.isPressed = true
+                    menuTxt.isPressed = true
+                    itemClickListener.onStoreClick(data, Intent(context, SetCategoryActivity::class.java))
                 }
 
                 btnPayHistory.setOnClickListener {

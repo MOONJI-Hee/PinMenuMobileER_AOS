@@ -20,8 +20,8 @@ import retrofit2.Response
 class SelectPrinterActivity : BaseActivity() {
     lateinit var binding: ActivitySupportPrinterBinding
 
-    val TAG = "SelectPrinterActivity"
-    val mActivity = this@SelectPrinterActivity
+//    val TAG = "SelectPrinterActivity"
+//    val mActivity = this@SelectPrinterActivity
 
     var type = 0
 

@@ -12,5 +12,8 @@ class AddOptActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddOptBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.back.setOnClickListener { finish() }
+
     }
 }

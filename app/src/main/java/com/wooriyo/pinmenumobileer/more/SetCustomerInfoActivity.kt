@@ -28,8 +28,8 @@ import retrofit2.Response
 
 class SetCustomerInfoActivity : BaseActivity() {
     lateinit var binding: ActivitySetCustomerInfoBinding
-    val mActivity = this@SetCustomerInfoActivity
-    val TAG = "SetCustomerInfoActivity"
+//    val mActivity = this@SetCustomerInfoActivity
+//    val TAG = "SetCustomerInfoActivity"
 
     val tableList = ArrayList<PgTableDTO>()
     val tableAdapter = PgTableAdapter(tableList)

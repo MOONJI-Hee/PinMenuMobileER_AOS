@@ -10,6 +10,6 @@ data class CategoryDTO (
     @SerializedName("subname") var subname : String,
     @SerializedName("code") var code : String,
     @SerializedName("seq") var seq : Int,
-    @SerializedName("buse") var buse : String,
+    @SerializedName("buse") var buse : String,  // 사용 여부 Y: 사용(=숨기기X), N: 미사용(=숨기기)
     @SerializedName("checked") var checked: Int // 0: 선택 안됨, 1: 선택됨
 ): Serializable

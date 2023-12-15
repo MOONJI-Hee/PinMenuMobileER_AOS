@@ -21,8 +21,8 @@ import retrofit2.Response
 
 class RegStoreActivity : BaseActivity() {
     lateinit var binding: ActivityRegStoreBinding
-    val mActivity = this@RegStoreActivity
-    val TAG = "RegStoreActivity"
+//    val mActivity = this@RegStoreActivity
+//    val TAG = "RegStoreActivity"
 
     var pre = ""
 

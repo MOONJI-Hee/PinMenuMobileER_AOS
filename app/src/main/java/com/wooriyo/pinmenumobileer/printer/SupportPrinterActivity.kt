@@ -18,8 +18,8 @@ import retrofit2.Response
 class SupportPrinterActivity : BaseActivity() {
     lateinit var binding: ActivitySupportPrinterBinding
 
-    val TAG = "SupportPrinterActivity"
-    val mActivity = this@SupportPrinterActivity
+//    val TAG = "SupportPrinterActivity"
+//    val mActivity = this@SupportPrinterActivity
 
     val modelList = ArrayList<PrintModelDTO>()
 

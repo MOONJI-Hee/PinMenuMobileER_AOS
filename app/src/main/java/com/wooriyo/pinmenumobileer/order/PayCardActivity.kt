@@ -25,8 +25,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class PayCardActivity : BaseActivity() {
-    val TAG = "PayCardActivity"
-    val mActivity = this@PayCardActivity
+//    val TAG = "PayCardActivity"
+//    val mActivity = this@PayCardActivity
 
     lateinit var binding: ActivityPayCardBinding
     lateinit var order : OrderHistoryDTO

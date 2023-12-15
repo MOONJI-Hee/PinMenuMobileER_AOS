@@ -10,5 +10,8 @@ class ChangeSeqActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityChangeSeqBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.back.setOnClickListener { finish() }
+
     }
 }

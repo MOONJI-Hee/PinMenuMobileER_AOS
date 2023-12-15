@@ -32,8 +32,8 @@ import kotlin.collections.ArrayList
 class SetConnActivity : BaseActivity() {
     lateinit var binding: ActivitySetConnBinding
 
-    val TAG = "SetConnActivity"
-    val mActivity = this@SetConnActivity
+//    val TAG = "SetConnActivity"
+//    val mActivity = this@SetConnActivity
 
     lateinit var cubeList : ArrayList<SocketInfo>
     lateinit var sam4sAdapter: Sam4sAdapter

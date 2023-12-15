@@ -15,7 +15,7 @@ import retrofit2.Response
 
 class FindPwdActivity : BaseActivity() {
     lateinit var binding: ActivityFindPwBinding
-    val TAG = "FindPwdActivity"
+//    val TAG = "FindPwdActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
