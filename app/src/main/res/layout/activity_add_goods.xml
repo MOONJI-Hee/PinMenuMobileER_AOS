@@ -30,13 +30,13 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="#F9F9F9"
         android:scrollbars="none"
         app:layout_constraintTop_toBottomOf="@+id/title"
         app:layout_constraintBottom_toTopOf="@+id/bottom">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#F9F9F9">
+            android:layout_height="wrap_content">
 
             <EditText
                 style="@style/edittext_menu"
@@ -239,6 +239,7 @@
             <TextView
                 style="@style/text17b"
                 android:text="@string/option"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="@+id/img_info2"
                 app:layout_constraintTop_toTopOf="@+id/useOpt"
                 app:layout_constraintBottom_toBottomOf="@+id/useOpt"/>
@@ -247,11 +248,12 @@
                 android:id="@+id/useOpt"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/status"
                 app:layout_constraintEnd_toEndOf="parent"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvOpt"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="9dp"
@@ -263,6 +265,7 @@
                 android:layout_width="0dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="15dp"
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/rvOpt"
                 app:layout_constraintStart_toStartOf="@+id/img_info2"
                 app:layout_constraintEnd_toStartOf="@+id/optChoice">
@@ -280,6 +283,7 @@
                 android:id="@+id/optChoice"
                 android:layout_width="0dp"
                 android:layout_marginBottom="10dp"
+                android:visibility="gone"
                 app:layout_constraintTop_toTopOf="@+id/optReq"
                 app:layout_constraintStart_toEndOf="@+id/optReq"
                 app:layout_constraintEnd_toEndOf="@+id/useOpt"

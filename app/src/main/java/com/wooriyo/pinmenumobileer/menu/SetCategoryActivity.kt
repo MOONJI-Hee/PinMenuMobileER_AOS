@@ -1,5 +1,6 @@
 package com.wooriyo.pinmenumobileer.menu
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -35,6 +36,11 @@ class SetCategoryActivity : BaseActivity() {
         binding.rvCate.adapter = cateAdapter
 
         binding.back.setOnClickListener { finish() }
+        binding.changeSeq.setOnClickListener {
+            val intent = Intent(mActivity, ChangeSeqActivity::class.java)
+            intent.putExtra("cateList", cateList)
+            startActivity(intent)
+        }
     }
 
     override fun onResume() {

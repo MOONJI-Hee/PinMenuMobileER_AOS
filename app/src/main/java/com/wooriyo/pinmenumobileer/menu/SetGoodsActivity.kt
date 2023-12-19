@@ -20,19 +20,23 @@ import retrofit2.Response
 class SetGoodsActivity : BaseActivity() {
     lateinit var binding: ActivitySetGoodsBinding
 
-    var cate = ""
+    lateinit var goodsList: ArrayList<GoodsDTO>
+    lateinit var goodsAdapter: GoodsAdapter
 
-    val goodsList = ArrayList<GoodsDTO>()
-    val goodsAdapter = GoodsAdapter(goodsList)
+    var cate = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySetGoodsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.title.text = intent.getStringExtra("catename") ?: ""
+
         cate = intent.getStringExtra("catecode") ?: ""
 
-        binding.title.text = intent.getStringExtra("catename") ?: ""
+        goodsList = ArrayList<GoodsDTO>()
+        goodsAdapter = GoodsAdapter(goodsList, cate)
+
         binding.rvGoods.layoutManager = GridLayoutManager(mActivity, 2)
         binding.rvGoods.adapter = goodsAdapter
 

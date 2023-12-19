@@ -31,8 +31,6 @@ class AddCategoryActivity : BaseActivity() {
 
         type = intent.getIntExtra("type", type)
 
-        binding.back.setOnClickListener { finish() }
-
         if(type == 2) {
             binding.title.text = getText(R.string.title_cate_udt)
             binding.delete.visibility = View.VISIBLE
@@ -56,6 +54,8 @@ class AddCategoryActivity : BaseActivity() {
         }else if(type == 1) {
             binding.save.setOnClickListener{ save() }
         }
+
+        binding.back.setOnClickListener { finish() }
     }
 
 
@@ -87,6 +87,8 @@ class AddCategoryActivity : BaseActivity() {
                     }
                 }
                 override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                    Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "카테고리 등록 실패> ${call.request()}")
                     Log.d(TAG, "카테고리 등록 실패 > $t")
                 }
             })
@@ -129,6 +131,8 @@ class AddCategoryActivity : BaseActivity() {
                     }
                 }
                 override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                    Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "카테고리 수정 실패> ${call.request()}")
                     Log.d(TAG, "카테고리 수정 실패 > $t")
                 }
             })
@@ -139,7 +143,7 @@ class AddCategoryActivity : BaseActivity() {
             .enqueue(object: Callback<ResultDTO> {
                 override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                     Log.d(TAG, "카테고리 삭제 url : $response")
-                    if(!response.isSuccessful) {return}
+                    if(!response.isSuccessful) return
                     val resultDTO = response.body()
                     if(resultDTO != null) {
                         when(resultDTO.status) {
@@ -152,6 +156,8 @@ class AddCategoryActivity : BaseActivity() {
                     }
                 }
                 override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                    Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "카테고리 삭제 실패 > ${call.request()}")
                     Log.d(TAG, "카테고리 삭제 실패 > $t")
                 }
             })

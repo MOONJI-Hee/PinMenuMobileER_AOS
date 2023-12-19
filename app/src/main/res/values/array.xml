@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="menu_icon">
+        <item>None</item>
+        <item>Hide</item>
+        <item>Best</item>
+        <item>Sold Out</item>
+        <item>New</item>
+    </array>
+    <array name="opt_mark">
+        <item>+</item>
+        <item>-</item>
+    </array>
+</resources>

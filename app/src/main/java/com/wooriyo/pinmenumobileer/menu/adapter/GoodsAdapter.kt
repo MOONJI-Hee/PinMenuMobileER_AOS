@@ -18,13 +18,13 @@ import com.wooriyo.pinmenumobileer.menu.AddGoodsActivity
 import com.wooriyo.pinmenumobileer.model.GoodsDTO
 import com.wooriyo.pinmenumobileer.util.AppHelper
 
-class GoodsAdapter(val dataSet: ArrayList<GoodsDTO>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class GoodsAdapter(val dataSet: ArrayList<GoodsDTO>, val cate: String): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = ListMenuSetBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val bindingAdd = ListMenuAddBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        return if(viewType == AppProperties.VIEW_TYPE_ADD) ViewHolderAdd(bindingAdd, parent.context) else ViewHolder(binding, parent.context)
+        return if(viewType == AppProperties.VIEW_TYPE_ADD) ViewHolderAdd(bindingAdd, parent.context, cate) else ViewHolder(binding, parent.context)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -91,11 +91,12 @@ class GoodsAdapter(val dataSet: ArrayList<GoodsDTO>): RecyclerView.Adapter<Recyc
         }
     }
 
-    class ViewHolderAdd(val binding: ListMenuAddBinding, val context: Context): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolderAdd(val binding: ListMenuAddBinding, val context: Context, val cate: String): RecyclerView.ViewHolder(binding.root) {
         fun bind() {
             binding.add.setOnClickListener {
                 val intent = Intent(context, AddGoodsActivity::class.java)
                 intent.putExtra("type", 1)
+                intent.putExtra("cate", cate)
                 context.startActivity(intent)
             }
         }

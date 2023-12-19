@@ -24,5 +24,5 @@ data class GoodsDTO (
     @SerializedName("boption") var boption : String,
     @SerializedName("stropt") var opt : ArrayList<OptionDTO>?
 ):Serializable {
-    constructor():this(0, 0,"", "", "", "0", "0", 0, "", "", "", null, null, null, "N", 1, "N", ArrayList<OptionDTO>())
+    constructor(category: String):this(0, 0,"", "", category, "0", "0", 0, "", "", "", null, null, null, "N", 1, "N", ArrayList<OptionDTO>())
 }
