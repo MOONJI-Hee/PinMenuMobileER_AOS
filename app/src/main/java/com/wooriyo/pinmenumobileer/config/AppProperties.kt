@@ -29,6 +29,7 @@ class AppProperties {
                 const val REQUEST_LOCATION = 0
                 const val REQUEST_ENABLE_BT = 1
                 const val REQUEST_NOTIFICATION = 2
+                const val REQUEST_STORAGE = 3
 
                 // 세우 프린터 관련
                 const val BT_PRINTER = 1536

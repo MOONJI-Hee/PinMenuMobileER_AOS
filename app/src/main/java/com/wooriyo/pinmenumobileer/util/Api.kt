@@ -166,7 +166,7 @@ interface Api {
         @Query("useridx") useridx: Int,
         @Query("storeidx") storeidx: Int,
         @Query("JSON") JSON: String
-    ): Call<CateListDTO>
+    ): Call<ResultDTO>
 
     // 메뉴 조회
     @GET("m/goods.list.php")

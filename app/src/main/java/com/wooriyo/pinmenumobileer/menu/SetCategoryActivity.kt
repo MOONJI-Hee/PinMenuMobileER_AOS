@@ -1,7 +1,6 @@
 package com.wooriyo.pinmenumobileer.menu
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -19,7 +18,6 @@ import com.wooriyo.pinmenumobileer.util.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.Bidi
 
 class SetCategoryActivity : BaseActivity() {
     lateinit var binding: ActivitySetCategoryBinding
@@ -37,7 +35,7 @@ class SetCategoryActivity : BaseActivity() {
 
         binding.back.setOnClickListener { finish() }
         binding.changeSeq.setOnClickListener {
-            val intent = Intent(mActivity, ChangeSeqActivity::class.java)
+            val intent = Intent(mActivity, ChangeCateSeqActivity::class.java)
             intent.putExtra("cateList", cateList)
             startActivity(intent)
         }

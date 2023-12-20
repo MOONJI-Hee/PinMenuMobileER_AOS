@@ -39,6 +39,7 @@
         app:layout_constraintBottom_toTopOf="@+id/save">
         <TextView
             style="@style/subtext"
+            android:id="@+id/info"
             android:layout_marginVertical="20dp"
             android:text="@string/category_seq_change_way"/>
         <androidx.recyclerview.widget.RecyclerView

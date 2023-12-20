@@ -4,31 +4,39 @@
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="90dp"
-    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
     android:paddingHorizontal="20dp"
     android:background="@drawable/bg_r6w">
 
     <TextView
-        android:id="@+id/name"
         style="@style/text17b"
-        android:layout_marginBottom="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/sub"
+        android:id="@+id/name"
+        android:layout_marginBottom="6dp"
+        app:layout_constraintBottom_toTopOf="@+id/price"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/sub"
-        style="@style/text15d"
+        android:id="@+id/price"
+        style="@style/text_num"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name" />
-    
+    <TextView
+        style="@style/text17d"
+        android:id="@+id/won"
+        android:layout_marginStart="2dp"
+        android:text="@string/won"
+        app:layout_constraintBottom_toBottomOf="@+id/price"
+        app:layout_constraintStart_toEndOf="@+id/price" />
+
     <ImageView
         android:id="@+id/icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/btn_category_set"
+        android:src="@drawable/btn_category_list_move"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>

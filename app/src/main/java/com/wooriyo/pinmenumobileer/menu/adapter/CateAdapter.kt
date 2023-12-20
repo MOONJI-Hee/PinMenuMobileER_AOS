@@ -3,11 +3,12 @@ package com.wooriyo.pinmenumobileer.menu.adapter
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.wooriyo.pinmenumobileer.config.AppProperties
-import com.wooriyo.pinmenumobileer.databinding.ListAddCateBinding
-import com.wooriyo.pinmenumobileer.databinding.ListSetCateBinding
+import com.wooriyo.pinmenumobileer.databinding.ListCateSetBinding
+import com.wooriyo.pinmenumobileer.databinding.ListCateAddBinding
 import com.wooriyo.pinmenumobileer.menu.AddCategoryActivity
 import com.wooriyo.pinmenumobileer.menu.SetGoodsActivity
 import com.wooriyo.pinmenumobileer.model.CategoryDTO
@@ -15,9 +16,9 @@ import com.wooriyo.pinmenumobileer.model.CategoryDTO
 class CateAdapter(val dataSet: ArrayList<CategoryDTO>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val binding = ListSetCateBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ListCateSetBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        val bindingAdd = ListAddCateBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val bindingAdd = ListCateAddBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         return if(viewType == AppProperties.VIEW_TYPE_COM) ViewHolder(binding, parent.context) else ViewHolderAdd(bindingAdd, parent.context)
     }
@@ -43,7 +44,7 @@ class CateAdapter(val dataSet: ArrayList<CategoryDTO>) : RecyclerView.Adapter<Re
         return if(position == dataSet.size) AppProperties.VIEW_TYPE_ADD else AppProperties.VIEW_TYPE_COM
     }
 
-    class ViewHolder(val binding: ListSetCateBinding, val context: Context) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(val binding: ListCateSetBinding, val context: Context) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: CategoryDTO) {
             binding.name.text = data.name
             binding.sub.text = data.subname
@@ -55,6 +56,11 @@ class CateAdapter(val dataSet: ArrayList<CategoryDTO>) : RecyclerView.Adapter<Re
                 binding.name.isEnabled = true
                 binding.sub.isEnabled = true
             }
+
+            if(adapterPosition == 0) {
+                binding.margin.visibility = View.VISIBLE
+            }else
+                binding.margin.visibility = View.GONE
 
             binding.icon.setOnClickListener {
                 val intent = Intent(context, AddCategoryActivity::class.java)
@@ -73,8 +79,13 @@ class CateAdapter(val dataSet: ArrayList<CategoryDTO>) : RecyclerView.Adapter<Re
         }
     }
 
-    class ViewHolderAdd(val binding: ListAddCateBinding, val context: Context): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolderAdd(val binding: ListCateAddBinding, val context: Context): RecyclerView.ViewHolder(binding.root) {
         fun bind() {
+            if(adapterPosition == 0) {
+                binding.margin.visibility = View.VISIBLE
+            }else
+                binding.margin.visibility = View.GONE
+
             binding.add.setOnClickListener {
                 val intent = Intent(context, AddCategoryActivity::class.java)
                 intent.putExtra("type", 1)

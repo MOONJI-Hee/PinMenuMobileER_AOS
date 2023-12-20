@@ -15,8 +15,17 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="29" />
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_IMAGES"
+        android:minSdkVersion="33" />
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_VIDEO"
+        android:minSdkVersion="33" />
 
     <application
         android:name=".MyApplication"
@@ -39,7 +48,10 @@
             android:name=".menu.SetGoodsActivity"
             android:exported="false" />
         <activity
-            android:name=".menu.ChangeSeqActivity"
+            android:name=".menu.ChangeMenuSeqActivity"
+            android:exported="false" />
+        <activity
+            android:name=".menu.ChangeCateSeqActivity"
             android:exported="false" />
         <activity
             android:name=".menu.AddCategoryActivity"

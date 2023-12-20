@@ -1,5 +1,6 @@
 package com.wooriyo.pinmenumobileer.menu
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -41,6 +42,11 @@ class SetGoodsActivity : BaseActivity() {
         binding.rvGoods.adapter = goodsAdapter
 
         binding.back.setOnClickListener { finish() }
+        binding.changeSeq.setOnClickListener {
+            val intent = Intent(mActivity, ChangeMenuSeqActivity::class.java)
+            intent.putExtra("goodsList", goodsList)
+            startActivity(intent)
+        }
     }
 
     override fun onResume() {
