@@ -76,6 +76,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/btnCall"
             app:layout_constraintEnd_toStartOf="@+id/btnPayHistory"
             app:layout_constraintStart_toEndOf="@+id/btnCall"
