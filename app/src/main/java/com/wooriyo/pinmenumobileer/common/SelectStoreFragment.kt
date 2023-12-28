@@ -42,6 +42,8 @@ class SelectStoreFragment : Fragment() {
                     (activity as MainActivity).insPrintSetting(position)
                 else if (type == "qr") {
                     (activity as MainActivity).checkQrAgree(position)
+                }else if (type == "menu") {
+                    (activity as MainActivity).checkDeviceLimit(position)
                 }
             }
         })

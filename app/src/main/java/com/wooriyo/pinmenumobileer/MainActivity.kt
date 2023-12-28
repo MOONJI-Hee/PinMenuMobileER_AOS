@@ -19,7 +19,9 @@ import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeList
 import com.wooriyo.pinmenumobileer.common.SelectStoreFragment
 import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.databinding.ActivityMainBinding
+import com.wooriyo.pinmenumobileer.menu.SetCategoryActivity
 import com.wooriyo.pinmenumobileer.model.ResultDTO
+import com.wooriyo.pinmenumobileer.model.StoreDTO
 import com.wooriyo.pinmenumobileer.more.MoreFragment
 import com.wooriyo.pinmenumobileer.payment.fragment.SetPayFragment
 import com.wooriyo.pinmenumobileer.printer.PrinterMenuFragment
@@ -86,9 +88,10 @@ class MainActivity : BaseActivity() {
 
         if(type == null || type == 0) {
             goMain()
-        }else if(type == 1) {
-            setNavi(binding.icPay.id)
         }
+//        else if(type == 1) {
+//            setNavi(binding.icPay.id)
+//        }
 
         // 알림 권한 확인
         if(MyApplication.osver >= 33) {
@@ -99,7 +102,7 @@ class MainActivity : BaseActivity() {
 
         binding.run {
             icMain.setOnClickListener { goMain() }
-            icPay.setOnClickListener { setNavi(it.id) }
+            icMenu.setOnClickListener { setNavi(it.id) }
             icQr.setOnClickListener { setNavi(it.id) }
             icPrint.setOnClickListener { setNavi(it.id) }
             icMore.setOnClickListener { setNavi(it.id) }
@@ -256,12 +259,12 @@ class MainActivity : BaseActivity() {
             binding.run{
                 bottomNav.setBackgroundResource(R.drawable.bg_main_tabbar)
                 ivMain.setImageResource(R.drawable.ic_main_tabar_main_s)
-                ivPay.setImageResource(R.drawable.icon_card_n_white)
+                ivMenu.setImageResource(R.drawable.icon_menuset_n_white)
                 ivQr.setImageResource(R.drawable.icon_qr_n_white)
                 ivPrint.setImageResource(R.drawable.icon_print_n_white)
                 ivMore.setImageResource(R.drawable.ic_main_tabar_more_n)
                 tvMain.setTextColor(getColor(R.color.main))
-                setTxtWhite(tvPay)
+                setTxtWhite(tvMenu)
                 setTxtWhite(tvQr)
                 setTxtWhite(tvPrint)
                 setTxtWhite(tvMore)
@@ -275,9 +278,13 @@ class MainActivity : BaseActivity() {
         replace(SelectStoreFragment.newInstance(type))
     }
 
-    private fun goPay() {
-        binding.ivPay.setImageResource(R.drawable.icon_card_p)
-        replace(SetPayFragment.newInstance())
+//    private fun goPay() {
+//        binding.ivMenu.setImageResource()
+//        replace(SetPayFragment.newInstance())
+//    }
+
+    private fun goMenuSet() {
+        binding.ivMenu.setImageResource(R.drawable.icon_menuset_p)
     }
 
     private fun goQr() {
@@ -310,7 +317,7 @@ class MainActivity : BaseActivity() {
                 bottomNav.setBackgroundColor(getColor(R.color.white))
                 ivMain.setImageResource(R.drawable.ic_main_tabar_main_n_white)
                 setTxtBlack(tvMain)
-                setTxtBlack(tvPay)
+                setTxtBlack(tvMenu)
                 setTxtBlack(tvQr)
                 setTxtBlack(tvPrint)
                 setTxtBlack(tvMore)
@@ -319,20 +326,30 @@ class MainActivity : BaseActivity() {
         isMain = false
 
         binding.run {
-            ivPay.setImageResource(R.drawable.icon_card_n_black)
+            ivMenu.setImageResource(R.drawable.icon_menuset_n_black)
             ivQr.setImageResource(R.drawable.icon_qr_n_black)
             ivPrint.setImageResource(R.drawable.icon_print_n_black)
             ivMore.setImageResource(R.drawable.ic_main_tabar_more_n_black)
         }
 
         when(id) {
-            R.id.icPay -> {
+//            R.id.icPay -> {
+//                when(MyApplication.storeList.size) {
+//                    0 -> Toast.makeText(mActivity, R.string.msg_no_store, Toast.LENGTH_SHORT).show()
+//                    1 -> insPaySetting(0)
+//                    else ->  {
+//                        binding.ivPay.setImageResource(R.drawable.icon_card_p)
+//                        goSelStore("pay")
+//                    }
+//                }
+//            }
+            R.id.icMenu -> {
                 when(MyApplication.storeList.size) {
                     0 -> Toast.makeText(mActivity, R.string.msg_no_store, Toast.LENGTH_SHORT).show()
-                    1 -> insPaySetting(0)
-                    else ->  {
-                        binding.ivPay.setImageResource(R.drawable.icon_card_p)
-                        goSelStore("pay")
+                    1 -> checkDeviceLimit(0)
+                    else -> {
+                        binding.ivMenu.setImageResource(R.drawable.icon_menuset_p)
+                        goSelStore("menu")
                     }
                 }
             }
@@ -384,7 +401,7 @@ class MainActivity : BaseActivity() {
                         MyApplication.store = MyApplication.storeList[position]
                         MyApplication.storeidx = MyApplication.storeList[position].idx
                         MyApplication.bidx = result.bidx
-                        goPay()
+//                        goPay()
                     }else
                         Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                 }
@@ -418,6 +435,32 @@ class MainActivity : BaseActivity() {
                     Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, "프린터 설정 최초 진입 시 row 추가 오류 >> $t")
                     Log.d(TAG, "프린터 설정 최초 진입 시 row 추가 오류 >> ${call.request()}")
+                }
+            })
+    }
+
+    fun checkDeviceLimit(position: Int) {
+        ApiClient.service.checkDeviceLimit(
+            MyApplication.useridx, storeList[position].idx, MyApplication.pref.getToken().toString(), MyApplication.androidId, 0)
+            .enqueue(object : Callback<ResultDTO> {
+                override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                    Log.d(TAG, "이용자수 체크 url : $response")
+                    if(!response.isSuccessful) return
+
+                    val result = response.body() ?: return
+                    if(result.status == 1){
+                        goMenuSet()
+                        MyApplication.store = storeList[position]
+                        MyApplication.storeidx = storeList[position].idx
+
+                        startActivity(Intent(mActivity, SetCategoryActivity::class.java))
+                    }else
+                        Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                }
+                override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                    Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "이용자수 체크 오류 > $t")
+                    Log.d(TAG, "이용자수 체크 오류 > ${call.request()}")
                 }
             })
     }

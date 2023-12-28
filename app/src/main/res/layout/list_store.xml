@@ -42,7 +42,7 @@
                 android:id="@+id/ordTxt"
                 style="@style/text15w"
                 android:layout_marginTop="10dp"
-                android:text="@string/order_history" />
+                android:text="@string/title_order" />
         </LinearLayout>
 
         <LinearLayout
@@ -51,6 +51,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/btnOrder"
             app:layout_constraintEnd_toStartOf="@+id/btnMenu"
             app:layout_constraintStart_toEndOf="@+id/btnOrder"
@@ -76,7 +77,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/btnCall"
             app:layout_constraintEnd_toStartOf="@+id/btnPayHistory"
             app:layout_constraintStart_toEndOf="@+id/btnCall"

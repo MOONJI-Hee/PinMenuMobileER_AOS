@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".store.StoreListActivity">
+    android:layout_height="match_parent">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment"
@@ -27,7 +26,7 @@
             android:layout_marginBottom="22dp"
             android:orientation="vertical"
             android:gravity="center"
-            app:layout_constraintEnd_toStartOf="@+id/icPay"
+            app:layout_constraintEnd_toStartOf="@+id/icMenu"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
@@ -43,8 +42,29 @@
                 android:text="@string/main"/>
         </LinearLayout>
 
+<!--        <LinearLayout-->
+<!--            android:id="@+id/icPay"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:gravity="center"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/icQr"-->
+<!--            app:layout_constraintStart_toEndOf="@id/icMain"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/icMain">-->
+<!--            <ImageView-->
+<!--                android:id="@+id/ivPay"-->
+<!--                android:layout_width="36dp"-->
+<!--                android:layout_height="36dp"-->
+<!--                android:src="@drawable/icon_card_n_white" />-->
+<!--            <TextView-->
+<!--                android:id="@+id/tvPay"-->
+<!--                style="@style/text12d"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:text="@string/payment"/>-->
+<!--        </LinearLayout>-->
+
         <LinearLayout
-            android:id="@+id/icPay"
+            android:id="@+id/icMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -53,15 +73,15 @@
             app:layout_constraintStart_toEndOf="@id/icMain"
             app:layout_constraintBottom_toBottomOf="@id/icMain">
             <ImageView
-                android:id="@+id/ivPay"
+                android:id="@+id/ivMenu"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:src="@drawable/icon_card_n_white" />
+                android:src="@drawable/icon_menuset_n_white" />
             <TextView
-                android:id="@+id/tvPay"
+                android:id="@+id/tvMenu"
                 style="@style/text12d"
                 android:textColor="@color/white"
-                android:text="@string/payment"/>
+                android:text="@string/menu_manage"/>
         </LinearLayout>
 
         <LinearLayout
@@ -71,7 +91,7 @@
             android:orientation="vertical"
             android:gravity="center"
             app:layout_constraintEnd_toStartOf="@+id/icPrint"
-            app:layout_constraintStart_toEndOf="@id/icPay"
+            app:layout_constraintStart_toEndOf="@id/icMenu"
             app:layout_constraintBottom_toBottomOf="@+id/icMain">
             <ImageView
                 android:id="@+id/ivQr"
