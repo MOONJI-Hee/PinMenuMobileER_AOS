@@ -247,6 +247,20 @@ interface Api {
         @Query("JSON") JSON: String
     ): Call<ResultDTO>
 
+    // 전체 목록(히스토리)(주문,호출) 조회
+    @GET("m/allorder.list.php")
+    fun getTotalList(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int
+    ): Call<OrderListDTO>
+
+    // 완료 목록 조회
+    @GET("m/orderCompleted.list.php")
+    fun getCompletedList(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int
+    ): Call<OrderListDTO>
+
     // 주문 목록(히스토리) 조회
     @GET("m/order.list.php")
     fun getOrderList(
@@ -265,8 +279,7 @@ interface Api {
     fun udtComplete(
         @Query("storeidx") storeidx: Int,
         @Query("ordidx") ordidx: Int,
-        @Query("iscompleted") iscompleted: String,
-        @Query("popup") popup: Int                   // 1: 핍업 다시보지않기 클릭, 0 : 팝업 다시보지않기 미클릭
+        @Query("iscompleted") iscompleted: String
     ): Call<ResultDTO>
 
     // 주문 결제 완료
@@ -286,20 +299,6 @@ interface Api {
     // 주문 목록 초기화
     @GET("m/del_order.php")
     fun clearOrder(
-        @Query("useridx") useridx: Int,
-        @Query("storeidx") storeidx: Int
-    ): Call<ResultDTO>
-
-    // 새로운 직원 호출 유무 확인
-    @GET("m/udtCallStatus.php")
-    fun getCallStatus(
-        @Query("useridx") useridx: Int,
-        @Query("storeidx") storeidx: Int
-    ): Call<ResultDTO>
-
-    // 직원 호출 확인 처리
-    @GET("m/udtCallUpdate.php")
-    fun udtCallStatus(
         @Query("useridx") useridx: Int,
         @Query("storeidx") storeidx: Int
     ): Call<ResultDTO>

@@ -112,7 +112,7 @@ class OrderListActivity : BaseActivity() {
             hyphen.append("-")
         }
 
-        orderAdapter.setOnPayClickListener(object: ItemClickListener{
+        orderAdapter.setOnCompleteListener(object: ItemClickListener{
             override fun onItemClick(position: Int) {
                 if(orderList[position].iscompleted == 1) {
                     complete(position, 0, store.popup)
@@ -359,7 +359,7 @@ class OrderListActivity : BaseActivity() {
     // 주문 완료 처리
     fun complete(position: Int, isCompleted: Int, popup: Int) {
         val status = if(isCompleted == 1) "Y" else "N"
-        ApiClient.service.udtComplete(storeidx, orderList[position].idx, status, popup)
+        ApiClient.service.udtComplete(storeidx, orderList[position].idx, status)
             .enqueue(object:Callback<ResultDTO>{
                 override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                     Log.d(TAG, "주문 완료 url : $response")

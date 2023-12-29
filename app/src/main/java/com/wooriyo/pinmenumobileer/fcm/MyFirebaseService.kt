@@ -24,6 +24,7 @@ import com.wooriyo.pinmenumobileer.call.CallListActivity
 import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.CHANNEL_ID_ORDER
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.NOTIFICATION_ID_ORDER
+import com.wooriyo.pinmenumobileer.history.ByHistoryActivity
 import com.wooriyo.pinmenumobileer.listener.NotiEventListener
 import com.wooriyo.pinmenumobileer.member.StartActivity
 import com.wooriyo.pinmenumobileer.model.ReceiptDTO
@@ -55,18 +56,23 @@ class MyFirebaseService: FirebaseMessagingService() {
         if(currentActivity != null) {
             Log.d(TAG, "currentActivity.localClassName >> ${currentActivity!!.localClassName}")
 
-            if (currentActivity!!.localClassName == "call.CallListActivity")
-                (currentActivity as CallListActivity).getCallList()
-            else if (currentActivity!!.localClassName == "order.OrderListActivity")
-                (currentActivity as OrderListActivity).getOrderList()
-            else if (currentActivity!!.localClassName == "MainActivity") {
+            if(currentActivity!!.localClassName == "history.ByHistoryActivity") {
+                if(message.data["chk_udt"] == "1") {
+                    when(message.data["moredata"]) {
+                        "call" -> {
+                            (currentActivity as ByHistoryActivity).newCall()
+                        }
+                        else -> {
+                            (currentActivity as ByHistoryActivity).newOrder()
+                        }
+                    }
+                }
+            }else if (currentActivity!!.localClassName == "MainActivity") {
                 val currentFragment = (currentActivity as MainActivity).supportFragmentManager.findFragmentById(R.id.fragment)
                 if(currentFragment?.id == StoreListFragment.newInstance().id) {
                     (currentFragment as StoreListFragment).getStoreList()
                 }
             }
-        }else{
-            Log.d(TAG, "currentActivity == null")
         }
 
         if(message.data["moredata"] == "call") {

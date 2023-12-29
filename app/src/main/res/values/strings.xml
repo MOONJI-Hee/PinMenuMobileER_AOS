@@ -65,6 +65,7 @@
     <string name="btn_link">연&#160;&#160;동</string>
     <string name="btn_clear">초&#160;기&#160;화</string>
     <string name="btn_add">추&#160;&#160;가</string>
+    <string name="btn_close">닫&#160;&#160;기</string>
 
     <string name="udt_info">정보변경</string>
     <string name="back">돌아가기</string>
@@ -427,6 +428,9 @@
     <string name="merge">합치기</string>
     <string name="order_dialog_clear">주문정보는 3일간 보관되며,\n\'초기화\'버튼을 누르면 모든 주문정보가\n삭제됩니다.</string>
 
+    <string name="dialog_clear">주문/호출 정보는 3일간 보관되며,\n\'초기화\'버튼을 누르면\n모든 주문/호출 정보가 삭제됩니다.</string>
+    <string name="dialog_clear_warning">한번 초기화된 내역은 복원되지 않습니다.</string>
+
     <!--  결제 내역  -->
     <string name="payment_history">결제내역</string>
     <string name="payment_cancel">결제취소</string>
@@ -471,6 +475,7 @@
     <string name="order_pay_sel_done">선택완료</string>
 
     <string name="order_complete_info">결제 과정 없이 완료 상태로 변경합니다.\n완료 후 완료된 목록의 ‘복원’버튼을 누르면\n다시 결제할 수 있는 상태로 돌아갑니다.</string>
+    <string name="dialog_complete">선택하신 %s정보를 완료처리 하시겠습니까?</string>
 
     <!--  결제 비활성화 다이얼로그  -->
     <string name="order_enable_qr">QR코드 결제를 사용하시려면\n‘결제방식 설정’에서 ‘후결제 사용’을\n활성화해 주시기 바랍니다.</string>
@@ -517,8 +522,8 @@
     <!--  확인 다이얼로그  -->
     <string name="dialog_logout">로그아웃 하시겠습니까?</string>
     <string name="dialog_drop">탈퇴 시 등록한 모든 정보가 사라집니다.\n정말 탈퇴하시겠습니까?</string>
-    <string name="dialog_order_clear_title">주문정보 초기화</string>
-    <string name="dialog_call_clear_title">직원호출 초기화</string>
+    <string name="dialog_order_clear_title">주문내역 초기화</string>
+    <string name="dialog_call_clear_title">호출내역 초기화</string>
     <string name="dialog_confrim_clear">한번 초기화 된 내역은 복원되지 않습니다.\n그래도 초기화를 진행하시겠습니까?</string>
     <string name="dialog_delete">한번 삭제된 내역은 복원되지 않습니다.\n그래도 삭제를 진행하시겠습니까?</string>
 

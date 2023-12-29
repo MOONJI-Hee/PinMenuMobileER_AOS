@@ -37,17 +37,6 @@
                 android:src="@drawable/btn_back_black"/>
         </LinearLayout>
 
-        <TextView
-            style="@style/text16"
-            android:id="@+id/total"
-            android:text="@string/order_total"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:layout_marginEnd="9dp"
-            app:layout_constraintEnd_toStartOf="@+id/btnClear"
-            app:layout_constraintTop_toTopOf="@+id/btnClear"
-            app:layout_constraintBottom_toBottomOf="@+id/btnClear"/>
-
         <ImageView
             android:id="@+id/btnClear"
             android:layout_width="wrap_content"
@@ -155,6 +144,7 @@
             android:layout_width="1dp"
             android:layout_height="18dp"
             android:background="#4DFFFFFF"
+            android:visibility="gone"
             app:layout_constraintTop_toTopOf="@+id/tabCmplt"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tabPos"
@@ -164,6 +154,7 @@
             android:id="@+id/tabPos"
             android:layout_width="0dp"
             android:layout_height="48dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tl3"
             app:layout_constraintEnd_toEndOf="parent">

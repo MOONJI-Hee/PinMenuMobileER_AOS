@@ -9,19 +9,24 @@ import com.wooriyo.pinmenumobileer.BaseDialogFragment
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.DialogClearBinding
 
-class ClearDialog(val type: String, val onClickListener: OnClickListener): BaseDialogFragment() {
+class ClearDialog(val callClickListener: OnClickListener, val ordClickListener: OnClickListener): BaseDialogFragment() {
     lateinit var binding: DialogClearBinding
     val TAG = "ConfirmDialog"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DialogClearBinding.inflate(layoutInflater)
 
-        if(type == "call") {
-            binding.content.text = getString(R.string.call_dialog_clear)
+        binding.close.setOnClickListener { dismiss() }
+
+        binding.clearCall.setOnClickListener {
+            callClickListener.onClick(it)
+            dismiss()
         }
 
-        binding.clear.setOnClickListener(onClickListener)
-        binding.confirm.setOnClickListener{ dismiss() }
+        binding.clearOrder.setOnClickListener {
+            ordClickListener.onClick(it)
+            dismiss()
+        }
 
         return binding.root
     }

@@ -5,21 +5,24 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
+import com.wooriyo.pinmenumobileer.common.dialog.AlertDialog
 import com.wooriyo.pinmenumobileer.databinding.ListOrderBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.OrderHistoryDTO
 import com.wooriyo.pinmenumobileer.util.AppHelper
 
 class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapter<OrderAdapter.ViewHolder>() {
-    lateinit var payClickListener: ItemClickListener
+    lateinit var completeListener: ItemClickListener
     lateinit var deleteListener: ItemClickListener
     lateinit var printClickListener: ItemClickListener
 
-    fun setOnPayClickListener(payClickListener: ItemClickListener) {
-        this.payClickListener = payClickListener
+    fun setOnCompleteListener(completeListener: ItemClickListener) {
+        this.completeListener = completeListener
     }
 
     fun setOnDeleteListener(deleteListener: ItemClickListener) {
@@ -32,7 +35,7 @@ class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapte
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ListOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         binding.rv.layoutManager = LinearLayoutManager(parent.context, LinearLayoutManager.VERTICAL, false)
-        return ViewHolder(binding, parent.context, payClickListener, deleteListener, printClickListener)
+        return ViewHolder(binding, parent.context, completeListener, deleteListener, printClickListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -43,7 +46,7 @@ class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapte
         return dataSet.size
     }
 
-    class ViewHolder(val binding: ListOrderBinding, val context: Context, val payClickListener: ItemClickListener, val deleteListener: ItemClickListener, val printClickListener: ItemClickListener): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(val binding: ListOrderBinding, val context: Context, val completeListener: ItemClickListener, val deleteListener: ItemClickListener, val printClickListener: ItemClickListener): RecyclerView.ViewHolder(binding.root) {
         fun bind (data : OrderHistoryDTO) {
             binding.run {
                 rv.adapter = OrderDetailAdapter(data.olist)
@@ -65,15 +68,15 @@ class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapte
                     tableNo.setBackgroundResource(R.color.main)
                     clPrice.setBackgroundResource(R.drawable.bg_r6g)
                     btnComplete.setBackgroundResource(R.drawable.bg_r6y)
-                    btnComplete.text = "확인"
+                    btnComplete.text = "완료"
                     complete.visibility = View.GONE
                     completeQr.visibility = View.VISIBLE
                     completePos.visibility = View.GONE
                 }else if (data.paytype == 4) {
                     tableNo.setBackgroundResource(R.color.main)
-                    clPrice.setBackgroundResource(R.drawable.bg_r6g)
+                    clPrice.setBackgroundResource(R.drawable.bg_r6y)
                     btnComplete.setBackgroundResource(R.drawable.bg_r6y)
-                    btnComplete.text = "확인"
+                    btnComplete.text = "완료"
                     complete.visibility = View.GONE
                     completeQr.visibility = View.GONE
                     completePos.visibility = View.VISIBLE
@@ -81,7 +84,7 @@ class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapte
                     tableNo.setBackgroundResource(R.color.main)
                     clPrice.setBackgroundResource(R.drawable.bg_r6y)
                     btnComplete.setBackgroundResource(R.drawable.bg_r6y)
-                    btnComplete.text = "결제"
+                    btnComplete.text = "완료"
                     complete.visibility = View.GONE
                     completeQr.visibility = View.GONE
                 }
@@ -89,15 +92,14 @@ class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapte
                 delete.setOnClickListener { deleteListener.onItemClick(adapterPosition) }
                 print.setOnClickListener {
                     printClickListener.onItemClick(adapterPosition)
-
-//                    if(MyApplication.bluetoothPort.isConnected) {
-//                        printClickListener.onItemClick(adapterPosition)
-//                    }else {
-//                        val fragmentActivity = context as FragmentActivity
-//                        AlertDialog("", context.getString(R.string.dialog_no_printer), 0).show(fragmentActivity.supportFragmentManager, "AlertDialog")
-//                    }
+                    if(MyApplication.bluetoothPort.isConnected) {
+                        printClickListener.onItemClick(adapterPosition)
+                    }else{
+                        val fragmentActivity = context as FragmentActivity
+                        AlertDialog("", context.getString(R.string.dialog_no_printer), 1).show(fragmentActivity.supportFragmentManager, "AlertDialog")
+                    }
                 }
-                btnComplete.setOnClickListener { payClickListener.onItemClick(adapterPosition) }
+                btnComplete.setOnClickListener { completeListener.onItemClick(adapterPosition) }
             }
         }
     }
