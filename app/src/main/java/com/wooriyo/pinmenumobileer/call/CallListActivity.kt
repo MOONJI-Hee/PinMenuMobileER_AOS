@@ -39,7 +39,6 @@ class CallListActivity : BaseActivity() {
         setContentView(binding.root)
 
         // OrderList와 layout 같이 쓰기 때문에 Call에 맞게 뷰 변경
-        binding.total.visibility = View.GONE
         binding.empty.text = getString(R.string.no_call_list)
 
         // 호출어댑터 리스너 설정 (완료 버튼 눌렀을 때 position 가져오기)
@@ -67,19 +66,19 @@ class CallListActivity : BaseActivity() {
 
     // 초기화 / 초기화 확인 다이얼로그 초기화
     fun setClearDialog() {
-        clearDialog = ClearDialog("call", View.OnClickListener {
-            clearDialog.dismiss()
-            clearConfirmDialog.show(supportFragmentManager, "ClearConfirmDialog")
-        })
-        clearConfirmDialog = ConfirmDialog(
-            getString(R.string.dialog_call_clear_title),
-            getString(R.string.dialog_confrim_clear),
-            getString(R.string.btn_confirm),
-            View.OnClickListener {
-                clearConfirmDialog.dismiss()
-                clear()
-            }
-        )
+//        clearDialog = ClearDialog("call", View.OnClickListener {
+//            clearDialog.dismiss()
+//            clearConfirmDialog.show(supportFragmentManager, "ClearConfirmDialog")
+//        })
+//        clearConfirmDialog = ConfirmDialog(
+//            getString(R.string.dialog_call_clear_title),
+//            getString(R.string.dialog_confrim_clear),
+//            getString(R.string.btn_confirm),
+//            View.OnClickListener {
+//                clearConfirmDialog.dismiss()
+//                clear()
+//            }
+//        )
     }
 
     // 호출 리스트 (히스토리) 조회

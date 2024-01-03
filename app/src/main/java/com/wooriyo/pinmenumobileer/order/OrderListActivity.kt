@@ -216,19 +216,19 @@ class OrderListActivity : BaseActivity() {
 
     // 초기화 / 초기화 확인 다이얼로그 초기화
     fun setClearDialog() {
-        clearDialog = ClearDialog("order", View.OnClickListener {
-            clearDialog.dismiss()
-            clearConfirmDialog.show(supportFragmentManager, "ClearConfirmDialog")
-        })
-        clearConfirmDialog = ConfirmDialog(
-            getString(R.string.dialog_order_clear_title),
-            getString(R.string.dialog_confrim_clear),
-            getString(R.string.btn_confirm),
-            View.OnClickListener {
-                clearConfirmDialog.dismiss()
-                clearCall()
-            }
-        )
+//        clearDialog = ClearDialog("order", View.OnClickListener {
+//            clearDialog.dismiss()
+//            clearConfirmDialog.show(supportFragmentManager, "ClearConfirmDialog")
+//        })
+//        clearConfirmDialog = ConfirmDialog(
+//            getString(R.string.dialog_order_clear_title),
+//            getString(R.string.dialog_confrim_clear),
+//            getString(R.string.btn_confirm),
+//            View.OnClickListener {
+//                clearConfirmDialog.dismiss()
+//                clearCall()
+//            }
+//        )
     }
 
 

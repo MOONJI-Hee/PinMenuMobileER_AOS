@@ -160,7 +160,7 @@
                 <TextView
                     style="@style/text15b"
                     android:id="@+id/img_hint1"
-                    android:text="@string/menu_vid_reg"
+                    android:text="@string/menu_img_reg"
                     android:textColor="@color/hint"
                     android:gravity="center"/>
             </LinearLayout>
@@ -213,6 +213,7 @@
             <TextView
                 style="@style/text17b"
                 android:text="@string/menu_sleep"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="@+id/img_info2"
                 app:layout_constraintTop_toTopOf="@+id/useSleep"
                 app:layout_constraintBottom_toBottomOf="@+id/useSleep"/>
@@ -221,6 +222,7 @@
                 android:id="@+id/useSleep"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/img_info2"
                 app:layout_constraintEnd_toEndOf="parent"/>
             <TextView
