@@ -91,6 +91,9 @@
             android:name=".MainActivity"
             android:exported="true" />
         <activity
+            android:name=".history.ByHistoryActivity"
+            android:exported="false"/>
+        <activity
             android:name=".payment.NicepayJoinWayActivity"
             android:exported="false" />
         <activity

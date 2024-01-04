@@ -55,7 +55,7 @@
             android:paddingBottom="11dp"
             android:background="@drawable/bg_r6y"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/payment"
+            app:layout_constraintEnd_toStartOf="@+id/btnComplete"
             app:layout_constraintBottom_toTopOf="@+id/print">
 
             <TextView

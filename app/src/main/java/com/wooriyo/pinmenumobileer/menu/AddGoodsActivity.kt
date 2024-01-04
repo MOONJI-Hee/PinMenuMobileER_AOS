@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.wooriyo.pinmenumobileer.BaseActivity
+import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
@@ -38,6 +39,24 @@ class AddGoodsActivity : BaseActivity() {
         binding = ActivityAddGoodsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.price.addTextChangedListener(object: TextWatcher{
+            var result = ""
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(!s.isNullOrEmpty() && s.toString() != result) {
+                    result = AppHelper.price(s.toString().replace(",", "").toInt())
+                    binding.price.setText(result)
+                    binding.price.setSelection(result.length)
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        binding.status.adapter = ArrayAdapter(mActivity, R.layout.spinner_menu_status, R.id.item, resources.getStringArray(R.array.menu_icon))
+
+        binding.back.setOnClickListener { finish() }
+        binding.save.setOnClickListener { getMenu() }
+
         type = intent.getIntExtra("type", type)
 
         if(type == 2) {
@@ -57,24 +76,6 @@ class AddGoodsActivity : BaseActivity() {
         }else {
             cate = intent.getStringExtra("cate") ?: ""
         }
-
-        binding.price.addTextChangedListener(object: TextWatcher{
-            var result = ""
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(!s.isNullOrEmpty() && s.toString() != result) {
-                    result = AppHelper.price(s.toString().replace(",", "").toInt())
-                    binding.price.setText(result)
-                    binding.price.setSelection(result.length)
-                }
-            }
-            override fun afterTextChanged(s: Editable?) {}
-        })
-
-        binding.status.adapter = ArrayAdapter(mActivity, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.menu_icon))
-
-        binding.back.setOnClickListener { finish() }
-        binding.save.setOnClickListener { getMenu() }
     }
 
     fun setMenu(gd: GoodsDTO?) {
@@ -88,34 +89,41 @@ class AddGoodsActivity : BaseActivity() {
 
                 price.setText(AppHelper.price(gd.price))
 
+                val radius = (6 * MyApplication.density).toInt()
+
                 if(!gd.img1.isNullOrEmpty()) {
                     Glide.with(mActivity)
                         .load(gd.img1)
-                        .transform(CenterCrop(), RoundedCorners(6))
+                        .transform(CenterCrop(), RoundedCorners(radius))
                         .into(img1)
                     imgHint1.visibility = View.GONE
+                    binding.img1.visibility = View.VISIBLE
                 }
 
                 if(!gd.img2.isNullOrEmpty()) {
                     Glide.with(mActivity)
                         .load(gd.img2)
-                        .transform(CenterCrop(), RoundedCorners(6))
+                        .transform(CenterCrop(), RoundedCorners(radius))
                         .into(img2)
                     imgHint2.visibility = View.GONE
+                    binding.img2.visibility = View.VISIBLE
                 }
 
                 if(!gd.img3.isNullOrEmpty()) {
                     Glide.with(mActivity)
                         .load(gd.img3)
-                        .transform(CenterCrop(), RoundedCorners(6))
+                        .transform(CenterCrop(), RoundedCorners(radius))
                         .into(img3)
                     imgHint3.visibility = View.GONE
+                    binding.img3.visibility = View.VISIBLE
                 }
 
                 useSleep.isChecked = gd.adDisplay == "Y"
                 useOpt.isChecked = gd.boption == "Y"
 
                 status.setSelection(gd.icon - 1)
+                Log.d(TAG, "gd.icon -1 >> ${gd.icon - 1}")
+                Log.d(TAG, "Selected Item >> ${status.selectedItemPosition}")
             }
         }
     }

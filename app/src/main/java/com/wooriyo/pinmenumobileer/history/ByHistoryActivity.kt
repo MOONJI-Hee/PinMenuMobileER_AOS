@@ -39,9 +39,6 @@ import retrofit2.Response
 class ByHistoryActivity: BaseActivity() {
     lateinit var binding: ActivityOrderListBinding
 
-    private val totalList = ArrayList<OrderHistoryDTO>()
-    val totalAdapter = HistoryAdapter(totalList)
-
     private val orderList = ArrayList<OrderHistoryDTO>()
     val orderAdapter = OrderAdapter(orderList)
 
@@ -87,13 +84,12 @@ class ByHistoryActivity: BaseActivity() {
 
         selectTab(binding.tvOrder)
 
-        setAdapterListener(totalAdapter, totalList)
         setAdapterListener(completeAdapter, completeList)
         setOrderAdapter()
         setCallAdapter()
 
         binding.rv.layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false)
-        binding.rv.adapter = totalAdapter
+        binding.rv.adapter = orderAdapter
 
         binding.tabOrder.setOnClickListener {
             selectTab(binding.tvOrder)

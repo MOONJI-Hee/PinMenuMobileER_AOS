@@ -35,6 +35,7 @@
         <TextView
             style="@style/btn_sub"
             android:id="@+id/clearOrder"
+            android:layout_width="match_parent"
             android:layout_marginTop="30dp"
             android:layout_marginHorizontal="20dp"
             android:text="@string/dialog_order_clear_title"
@@ -45,9 +46,9 @@
         <TextView
             style="@style/btn_sub"
             android:id="@+id/clearCall"
+            android:layout_width="match_parent"
             android:layout_marginTop="20dp"
             android:layout_marginHorizontal="20dp"
-
             android:text="@string/dialog_call_clear_title"
             app:layout_constraintTop_toBottomOf="@+id/clearOrder"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,8 +57,9 @@
         <TextView
             style="@style/btn_dialog"
             android:id="@+id/close"
-            android:text="@string/btn_close"
+            android:layout_width="match_parent"
             android:layout_marginTop="30dp"
+            android:text="@string/btn_close"
             app:layout_constraintTop_toBottomOf="@+id/clearCall"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

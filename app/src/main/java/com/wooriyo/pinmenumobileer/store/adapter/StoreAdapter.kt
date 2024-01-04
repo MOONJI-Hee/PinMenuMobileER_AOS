@@ -11,6 +11,7 @@ import com.google.android.material.tabs.TabLayout
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.call.CallListActivity
 import com.wooriyo.pinmenumobileer.databinding.ListStoreBinding
+import com.wooriyo.pinmenumobileer.history.ByHistoryActivity
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.menu.SetCategoryActivity
 import com.wooriyo.pinmenumobileer.model.StoreDTO
@@ -55,13 +56,13 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
                 btnOrder.setOnClickListener{
                     ordCnt.isPressed = true
                     ordTxt.isPressed = true
-                    itemClickListener.onStoreClick(data, Intent(context, OrderListActivity::class.java))
+                    itemClickListener.onStoreClick(data, Intent(context, ByHistoryActivity::class.java))
                 }
-                btnCall.setOnClickListener {
-                    callCnt.isPressed = true
-                    callTxt.isPressed = true
-                    itemClickListener.onStoreClick(data, Intent(context, CallListActivity::class.java))
-                }
+//                btnCall.setOnClickListener {
+//                    callCnt.isPressed = true
+//                    callTxt.isPressed = true
+//                    itemClickListener.onStoreClick(data, Intent(context, CallListActivity::class.java))
+//                }
 
                 btnMenu.setOnClickListener {
                     menuCnt.isPressed = true
@@ -91,9 +92,9 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
                     ordCnt.isEnabled = true
                     ordTxt.isEnabled = true
                     btnOrder.isEnabled = true
-                    callCnt.isEnabled = true
-                    callTxt.isEnabled = true
-                    btnCall.isEnabled = true
+                    menuCnt.isEnabled = true
+                    menuTxt.isEnabled = true
+                    btnMenu.isEnabled = true
                     payCnt.isEnabled = true
                     payTxt.isEnabled = true
                     btnPayHistory.isEnabled = true
@@ -102,9 +103,9 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
                     ordCnt.isEnabled = false
                     ordTxt.isEnabled = false
                     btnOrder.isEnabled = false
-                    callCnt.isEnabled = false
-                    callTxt.isEnabled = false
-                    btnCall.isEnabled = false
+                    menuCnt.isEnabled = false
+                    menuTxt.isEnabled = false
+                    btnMenu.isEnabled = false
                     payCnt.isEnabled = false
                     payTxt.isEnabled = false
                     btnPayHistory.isEnabled = false
