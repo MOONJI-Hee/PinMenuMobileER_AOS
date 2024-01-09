@@ -156,7 +156,6 @@
                     android:id="@+id/img1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bg_r6w"
                     android:visibility="gone" />
                 <TextView
                     style="@style/text15b"

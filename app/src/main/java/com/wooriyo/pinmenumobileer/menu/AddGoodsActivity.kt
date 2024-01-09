@@ -8,8 +8,11 @@ import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
@@ -33,6 +36,21 @@ class AddGoodsActivity : BaseActivity() {
     var cate: String = ""
     var type: Int = 1   // 1: 추가, 2: 수정
     var goods: GoodsDTO ?=  null
+
+    val pickImg = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
+        if(it != null) {
+            val radius = (6 * MyApplication.density).toInt()
+
+            Glide.with(mActivity)
+                .load(it)
+                .transform(CenterCrop(), RoundedCorners(radius))
+                .into(binding.img1)
+            binding.imgHint1.visibility = View.GONE
+            binding.img1.visibility = View.VISIBLE
+
+            Log.d(TAG, "이미지 Uri >> $it")
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +93,12 @@ class AddGoodsActivity : BaseActivity() {
             }
         }else {
             cate = intent.getStringExtra("cate") ?: ""
+        }
+
+
+        // 사진 선택 도구
+        binding.thum1.setOnClickListener {
+            pickImg.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
     }
 
