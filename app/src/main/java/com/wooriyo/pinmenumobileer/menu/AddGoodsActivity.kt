@@ -1,7 +1,10 @@
 package com.wooriyo.pinmenumobileer.menu
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -10,25 +13,30 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
+import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.databinding.ActivityAddGoodsBinding
 import com.wooriyo.pinmenumobileer.menu.dialog.DeleteDialog
 import com.wooriyo.pinmenumobileer.model.GoodsDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.util.AppHelper
+import okhttp3.MediaType
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 class AddGoodsActivity : BaseActivity() {
     lateinit var binding: ActivityAddGoodsBinding
@@ -36,6 +44,14 @@ class AddGoodsActivity : BaseActivity() {
     var cate: String = ""
     var type: Int = 1   // 1: 추가, 2: 수정
     var goods: GoodsDTO ?=  null
+
+    var file1: File ?= null
+    var file2: File ?= null
+    var file3: File ?= null
+
+    var name = ""
+
+    private val permission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
     val pickImg = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
         if(it != null) {
@@ -49,6 +65,36 @@ class AddGoodsActivity : BaseActivity() {
             binding.img1.visibility = View.VISIBLE
 
             Log.d(TAG, "이미지 Uri >> $it")
+
+            var path = ""
+
+            contentResolver.query(it, null, null, null, null)?.use { cursor ->
+
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+                    val id = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DOCUMENT_ID)
+                    val type = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE)
+                    val displayName = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
+                    val flags = cursor.getColumnIndexOrThrow("flags")
+
+                    Log.d(TAG, "id >>>>> $id")
+                    Log.d(TAG, "type >>>>> $type")
+                    Log.d(TAG, "displayName >>>>> $displayName")
+                    Log.d(TAG, "flags >>>>> $flags")
+
+                }else {
+                    // Cache column indices.
+                    val dataColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                    val nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
+
+                    while (cursor.moveToNext()) {
+                        path = cursor.getString(dataColumn)
+                        name = cursor.getString(nameColumn)
+                        Log.d(TAG, "name >>>>> $name")
+                        Log.d(TAG, "path >>>>> $path")
+                    }
+                }
+            }
+            file1 = File(path)
         }
     }
 
@@ -56,6 +102,10 @@ class AddGoodsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddGoodsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+            checkPermissions()
+        }
 
         binding.price.addTextChangedListener(object: TextWatcher{
             var result = ""
@@ -204,7 +254,7 @@ class AddGoodsActivity : BaseActivity() {
 
                 if(result.status == 1) {
                     Toast.makeText(mActivity, R.string.msg_complete, Toast.LENGTH_SHORT).show()
-//                    uploadImage(gd.idx, media1, media2, media3)
+                    uploadImage(result.idx)
                 }
             }
 
@@ -227,7 +277,7 @@ class AddGoodsActivity : BaseActivity() {
 
                 if(result.status == 1) {
                     Toast.makeText(mActivity, R.string.msg_complete, Toast.LENGTH_SHORT).show()
-//                    uploadImage(gd.idx, media1, media2, media3)
+                    uploadImage(gd.idx)
                     // TODO 등록된 사진 중 삭제할 것 태우기
                 }else {
                     Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
@@ -265,8 +315,12 @@ class AddGoodsActivity : BaseActivity() {
 
     }
 
-    fun uploadImage(gidx: Int, media1: MultipartBody.Part?, media2: MultipartBody.Part?, media3: MultipartBody.Part?) {
-        ApiClient.imgService.uploadImg(useridx, gidx, media1, media2, media3)
+    fun uploadImage(gidx: Int) {
+        val mmtp = MediaType.parse("image/*") // 임시
+        val body = RequestBody.create(mmtp, file1)
+        val media1 = MultipartBody.Part.createFormData("img1", name, body)
+
+        ApiClient.imgService.uploadImg(useridx, gidx, media1, null, null)
             .enqueue(object : Callback<ResultDTO>{
                 override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                     Log.d(TAG, "이미지 등록 url : $response")
@@ -288,5 +342,39 @@ class AddGoodsActivity : BaseActivity() {
                     Log.d(TAG, "이미지 등록 실패 > ${call.request()}")
                 }
             })
+    }
+
+
+    // 이미지 접근 권한 확인
+    fun checkPermissions() {
+        val deniedPms = ArrayList<String>()
+
+        for (pms in permission) {
+            if(ActivityCompat.checkSelfPermission(mActivity, pms) != PackageManager.PERMISSION_GRANTED) {
+                if(ActivityCompat.shouldShowRequestPermissionRationale(mActivity, pms)) {
+                    AlertDialog.Builder(mActivity)
+                        .setTitle(R.string.pms_location_content)
+                        .setMessage(R.string.pms_location_content)
+                        .setPositiveButton(R.string.confirm) { dialog, _ ->
+                            dialog.dismiss()
+                            getStoragePms()
+                        }
+                        .setNegativeButton(R.string.cancel) {dialog, _ -> dialog.dismiss()}
+                        .show()
+                    return
+                }else {
+                    deniedPms.add(pms)
+                }
+            }
+        }
+
+        if(deniedPms.isNotEmpty()) {
+            getStoragePms()
+        }
+    }
+
+    //권한 받아오기
+    fun getStoragePms() {
+        ActivityCompat.requestPermissions(mActivity, permission, AppProperties.REQUEST_STORAGE)
     }
 }
