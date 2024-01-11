@@ -14,13 +14,9 @@ import android.widget.CheckBox
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.gson.annotations.SerializedName
 import com.wooriyo.pinmenumobileer.MainActivity
-import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.engStoreName
-import com.wooriyo.pinmenumobileer.MyApplication.Companion.setStoreDTO
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.store
-import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeList
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
@@ -31,7 +27,7 @@ import com.wooriyo.pinmenumobileer.model.QrDTO
 import com.wooriyo.pinmenumobileer.model.QrListDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.qr.adapter.QrAdapter
-import com.wooriyo.pinmenumobileer.store.StoreListFragment
+import com.wooriyo.pinmenumobileer.qr.dialog.QrInfoDialog
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.util.AppHelper
 import retrofit2.Call
@@ -96,6 +92,9 @@ class SetQrcodeFragment : Fragment() {
                 val buse = if(it.isChecked) "Y" else "N"
                 setAllCheck(buse)
                 setAllPostPay(buse)
+            }
+            btnInfo.setOnClickListener {
+                QrInfoDialog().show((activity as MainActivity).supportFragmentManager, "QrInfoDialog")
             }
         }
 

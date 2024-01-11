@@ -71,7 +71,7 @@ class Sam4sAdapter(val dataSet: ArrayList<SocketInfo>): RecyclerView.Adapter<Sam
 
                 binding.btnTest.setOnClickListener {
                     val fragmentActivity = context as FragmentActivity
-                    AlertDialog("", context.getString(R.string.dialog_check_conn), 1).show(fragmentActivity.supportFragmentManager, "AlertDialog")
+                    AlertDialog("", context.getString(R.string.dialog_check_conn)).show(fragmentActivity.supportFragmentManager, "AlertDialog")
                 }
             }
 
@@ -92,7 +92,7 @@ class Sam4sAdapter(val dataSet: ArrayList<SocketInfo>): RecyclerView.Adapter<Sam
                 } catch (e: Exception) {
                     e.printStackTrace()
                     val fragmentActivity = context as FragmentActivity
-                    AlertDialog("", context.getString(R.string.dialog_check_conn), 1).show(fragmentActivity.supportFragmentManager, "AlertDialog")
+                    AlertDialog("", context.getString(R.string.dialog_check_conn)).show(fragmentActivity.supportFragmentManager, "AlertDialog")
                 }
 
 //                if(AppHelper.checkCubeConn(context) == 1) {
@@ -108,7 +108,7 @@ class Sam4sAdapter(val dataSet: ArrayList<SocketInfo>): RecyclerView.Adapter<Sam
 //                    }
 //                }else {
 //                    val fragmentActivity = context as FragmentActivity
-//                    AlertDialog("", context.getString(R.string.dialog_check_conn), 1).show(fragmentActivity.supportFragmentManager, "AlertDialog")
+//                    AlertDialog("", context.getString(R.string.dialog_check_conn)).show(fragmentActivity.supportFragmentManager, "AlertDialog")
 //                }
             }
 

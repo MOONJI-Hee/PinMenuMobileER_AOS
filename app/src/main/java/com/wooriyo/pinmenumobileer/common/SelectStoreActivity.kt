@@ -33,7 +33,7 @@ class SelectStoreActivity : BaseActivity() {
                     MyApplication.storeidx = storeList[position].idx
                     startActivity(Intent(mActivity, SetCustomerInfoActivity::class.java))
                 }else {
-                    AlertDialog("", getString(R.string.dialog_no_business), 1).show(supportFragmentManager, "NoBusinessDialog")
+                    AlertDialog("", getString(R.string.dialog_no_business)).show(supportFragmentManager, "NoBusinessDialog")
                 }
             }
         })

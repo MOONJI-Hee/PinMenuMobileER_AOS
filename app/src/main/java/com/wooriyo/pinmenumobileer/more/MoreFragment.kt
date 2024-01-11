@@ -47,7 +47,7 @@ class MoreFragment : Fragment() {
                             MyApplication.storeidx = MyApplication.storeList[0].idx
                             startActivity(Intent(context, SetCustomerInfoActivity::class.java))
                         }else {
-                            AlertDialog("", getString(R.string.dialog_no_business), 1).show((activity as MainActivity).supportFragmentManager, "NoBusinessDialog")
+                            AlertDialog("", getString(R.string.dialog_no_business)).show((activity as MainActivity).supportFragmentManager, "NoBusinessDialog")
                         }
                     }
                     else ->  {
@@ -58,7 +58,7 @@ class MoreFragment : Fragment() {
             udtMbr.setOnClickListener { startActivity(Intent(context, MemberSetActivity::class.java)) }
             versionInfo.setOnClickListener {
                 val content = getString(R.string.dialog_version).format(MyApplication.appver)
-                AlertDialog("", content, 0).show((activity as MainActivity).supportFragmentManager, "VersionDialog")
+                AlertDialog("", content).show((activity as MainActivity).supportFragmentManager, "VersionDialog")
             }
             logout.setOnClickListener {
                 val onClickListener = View.OnClickListener {logout()}

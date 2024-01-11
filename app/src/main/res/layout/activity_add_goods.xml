@@ -203,6 +203,30 @@
                     android:text="@string/menu_img_reg"
                     android:textColor="@color/hint"/>
             </LinearLayout>
+            <ImageView
+                android:id="@+id/del1"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/btn_menu_del"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@+id/thum2"
+                app:layout_constraintEnd_toEndOf="@+id/thum1"/>
+            <ImageView
+                android:id="@+id/del2"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/btn_menu_del"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@+id/thum2"
+                app:layout_constraintEnd_toEndOf="@+id/thum2"/>
+            <ImageView
+                android:id="@+id/del3"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/btn_menu_del"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@+id/thum3"
+                app:layout_constraintEnd_toEndOf="@+id/thum3"/>
             <TextView
                 style="@style/text15d"
                 android:id="@+id/img_info2"

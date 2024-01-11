@@ -1,5 +1,6 @@
 package com.wooriyo.pinmenumobileer.order.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,14 @@ class OrderDetailAdapter(val dataSet: ArrayList<OrderDTO>): RecyclerView.Adapter
                 name.text = data.name
                 gea.text = data.gea.toString()
                 price.text = AppHelper.price(data.price)
+
+                if(data.ispos == 2) {
+                    noPos.visibility = View.VISIBLE
+                    layout.setBackgroundColor(Color.parseColor("#F2F2F2"))
+                }else {
+                    noPos.visibility = View.GONE
+                    layout.setBackgroundColor(Color.parseColor("#FFFFFF"))
+                }
 
                 if(data.opt.isNotEmpty()) {
                     var strOpt = ""

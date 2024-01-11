@@ -220,8 +220,11 @@ interface Api {
         @Query("cooking_time_min") cooking_time_min : String,
         @Query("cooking_time_max") cooking_time_max : String,
         @Query("price") price : Int,
-        @Query("adDisplay") adDisplay : String,
         @Query("icon") icon : Int,
+        @Query("img1") img1: Int,       // 이미지 삭제 여부 1:삭제, 0: 유지
+        @Query("img2") img2: Int,
+        @Query("img3") img3: Int,
+        @Query("adDisplay") adDisplay : String,
         @Query("boption") boption : String,
         @Query("option_code") option_code: String,
         @Query("option_name") option_name: String,

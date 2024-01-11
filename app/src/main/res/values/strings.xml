@@ -388,7 +388,7 @@
     <string name="qr_cnt">QR-%d</string>
     <string name="table_no">Table No.</string>
     <string name="table_no_hint">테이블 번호 입력</string>
-    <string name="qr_setting_info1">QR오더는 결제가 완료된 후 주문내역이 전송됩니다.\n(단, 결제를 하지 못하는 외국인 주문 제외)</string>
+    <string name="qr_setting_info1">QR오더는 결제가 완료된 후 주문내역이 전송됩니다.\n(단, 후불결제 기능을 설정했을 경우 제외)</string>
     <string name="qr_setting_info2">이 페이지에서 QR코드를 생성한 후 테이블번호 저장과 변경이 가능하며 QR코드 삭제가 가능합니다.</string>
 
     <string name="qr_detail_info1">생성된 QR코드는 변경할 수 없고, 삭제만 가능합니다.</string>
@@ -430,6 +430,7 @@
 
     <string name="dialog_clear">주문/호출 정보는 3일간 보관되며,\n\'초기화\'버튼을 누르면\n모든 주문/호출 정보가 삭제됩니다.</string>
     <string name="dialog_clear_warning">한번 초기화된 내역은 복원되지 않습니다.</string>
+    <string name="order_no_pos">포스 미연동</string>
 
     <!--  결제 내역  -->
     <string name="payment_history">결제내역</string>

@@ -10,6 +10,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -41,60 +42,80 @@ import java.io.File
 class AddGoodsActivity : BaseActivity() {
     lateinit var binding: ActivityAddGoodsBinding
 
+    private val permission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    val radius = (6 * MyApplication.density).toInt()
+
     var cate: String = ""
     var type: Int = 1   // 1: 추가, 2: 수정
-    var goods: GoodsDTO ?=  null
+    var goods: GoodsDTO ?= null
 
     var file1: File ?= null
     var file2: File ?= null
     var file3: File ?= null
 
-    var name = ""
+    var media1: MultipartBody.Part? = null
+    var media2: MultipartBody.Part? = null
+    var media3: MultipartBody.Part? = null
 
-    private val permission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    var delImg1 = 0
+    var delImg2 = 0
+    var delImg3 = 0
+
+    var selThum = 0
 
     val pickImg = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
         if(it != null) {
-            val radius = (6 * MyApplication.density).toInt()
-
-            Glide.with(mActivity)
-                .load(it)
-                .transform(CenterCrop(), RoundedCorners(radius))
-                .into(binding.img1)
-            binding.imgHint1.visibility = View.GONE
-            binding.img1.visibility = View.VISIBLE
-
             Log.d(TAG, "이미지 Uri >> $it")
 
             var path = ""
 
             contentResolver.query(it, null, null, null, null)?.use { cursor ->
+                val dataColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
 
-                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-                    val id = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DOCUMENT_ID)
-                    val type = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE)
-                    val displayName = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
-                    val flags = cursor.getColumnIndexOrThrow("flags")
-
-                    Log.d(TAG, "id >>>>> $id")
-                    Log.d(TAG, "type >>>>> $type")
-                    Log.d(TAG, "displayName >>>>> $displayName")
-                    Log.d(TAG, "flags >>>>> $flags")
-
-                }else {
-                    // Cache column indices.
-                    val dataColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-                    val nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
-
-                    while (cursor.moveToNext()) {
-                        path = cursor.getString(dataColumn)
-                        name = cursor.getString(nameColumn)
-                        Log.d(TAG, "name >>>>> $name")
-                        Log.d(TAG, "path >>>>> $path")
-                    }
+                while (cursor.moveToNext()) {
+                    path = cursor.getString(dataColumn)
+                    Log.d(TAG, "path >>>>> $path")
                 }
             }
-            file1 = File(path)
+
+            when(selThum) {
+                1 -> {
+                    Glide.with(mActivity)
+                        .load(it)
+                        .transform(CenterCrop(), RoundedCorners(radius))
+                        .into(binding.img1)
+                    binding.imgHint1.visibility = View.GONE
+                    binding.img1.visibility = View.VISIBLE
+                    binding.del1.visibility = View.VISIBLE
+
+                    file1 = File(path)
+                    delImg1 = 0
+                }
+                2 -> {
+                    Glide.with(mActivity)
+                        .load(it)
+                        .transform(CenterCrop(), RoundedCorners(radius))
+                        .into(binding.img2)
+                    binding.imgHint2.visibility = View.GONE
+                    binding.img2.visibility = View.VISIBLE
+                    binding.del2.visibility = View.VISIBLE
+
+                    file2 = File(path)
+                    delImg2 = 0
+                }
+                3 -> {
+                    Glide.with(mActivity)
+                        .load(it)
+                        .transform(CenterCrop(), RoundedCorners(radius))
+                        .into(binding.img3)
+                    binding.imgHint3.visibility = View.GONE
+                    binding.img3.visibility = View.VISIBLE
+                    binding.del3.visibility = View.VISIBLE
+
+                    file3 = File(path)
+                    delImg3 = 0
+                }
+            }
         }
     }
 
@@ -143,12 +164,76 @@ class AddGoodsActivity : BaseActivity() {
             }
         }else {
             cate = intent.getStringExtra("cate") ?: ""
+            goods = GoodsDTO(cate)
         }
 
-
         // 사진 선택 도구
-        binding.thum1.setOnClickListener {
+        binding.thum1.setOnClickListener {getImage(1)}
+        binding.thum2.setOnClickListener {getImage(2)}
+        binding.thum3.setOnClickListener {getImage(3)}
+
+        // 사진 삭제
+        binding.del1.setOnClickListener {
+            binding.imgHint1.visibility = View.VISIBLE
+            binding.img1.visibility = View.GONE
+            binding.del1.visibility = View.GONE
+            file1 = null
+            delImg1 = 1
+        }
+        binding.del2.setOnClickListener {
+            binding.imgHint2.visibility = View.VISIBLE
+            binding.img2.visibility = View.GONE
+            binding.del2.visibility = View.GONE
+            file2 = null
+            delImg2 = 1
+        }
+        binding.del3.setOnClickListener {
+            binding.imgHint3.visibility = View.VISIBLE
+            binding.img3.visibility = View.GONE
+            binding.del3.visibility = View.GONE
+            file3 = null
+            delImg3 = 1
+        }
+    }
+
+    // 이미지 접근 권한 확인
+    fun checkPermissions() {
+        val deniedPms = ArrayList<String>()
+
+        for (pms in permission) {
+            if(ActivityCompat.checkSelfPermission(mActivity, pms) != PackageManager.PERMISSION_GRANTED) {
+                if(ActivityCompat.shouldShowRequestPermissionRationale(mActivity, pms)) {
+                    AlertDialog.Builder(mActivity)
+                        .setTitle(R.string.pms_location_content)
+                        .setMessage(R.string.pms_location_content)
+                        .setPositiveButton(R.string.confirm) { dialog, _ ->
+                            dialog.dismiss()
+                            getStoragePms()
+                        }
+                        .setNegativeButton(R.string.cancel) {dialog, _ -> dialog.dismiss()}
+                        .show()
+                    return
+                }else {
+                    deniedPms.add(pms)
+                }
+            }
+        }
+        if(deniedPms.isNotEmpty()) {
+            getStoragePms()
+        }
+    }
+
+    //권한 받아오기
+    fun getStoragePms() {
+        ActivityCompat.requestPermissions(mActivity, permission, AppProperties.REQUEST_STORAGE)
+    }
+
+    fun getImage(position: Int) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            selThum = position
             pickImg.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        } else {
+            Toast.makeText(mActivity, "지원하지 않는 버전입니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -163,33 +248,40 @@ class AddGoodsActivity : BaseActivity() {
 
                 price.setText(AppHelper.price(gd.price))
 
-                val radius = (6 * MyApplication.density).toInt()
-
                 if(!gd.img1.isNullOrEmpty()) {
-                    Glide.with(mActivity)
-                        .load(gd.img1)
-                        .transform(CenterCrop(), RoundedCorners(radius))
-                        .into(img1)
-                    imgHint1.visibility = View.GONE
-                    binding.img1.visibility = View.VISIBLE
+                    if(!gd.img1!!.contains("noimage.png")) {
+                        Glide.with(mActivity)
+                            .load(gd.img1)
+                            .transform(CenterCrop(), RoundedCorners(radius))
+                            .into(img1)
+                        imgHint1.visibility = View.GONE
+                        binding.img1.visibility = View.VISIBLE
+                        binding.del1.visibility = View.VISIBLE
+                    }
                 }
 
                 if(!gd.img2.isNullOrEmpty()) {
-                    Glide.with(mActivity)
-                        .load(gd.img2)
-                        .transform(CenterCrop(), RoundedCorners(radius))
-                        .into(img2)
-                    imgHint2.visibility = View.GONE
-                    binding.img2.visibility = View.VISIBLE
+                    if(!gd.img2!!.contains("noimage.png")) {
+                        Glide.with(mActivity)
+                            .load(gd.img2)
+                            .transform(CenterCrop(), RoundedCorners(radius))
+                            .into(img2)
+                        imgHint2.visibility = View.GONE
+                        binding.img2.visibility = View.VISIBLE
+                        binding.del2.visibility = View.VISIBLE
+                    }
                 }
 
                 if(!gd.img3.isNullOrEmpty()) {
-                    Glide.with(mActivity)
-                        .load(gd.img3)
-                        .transform(CenterCrop(), RoundedCorners(radius))
-                        .into(img3)
-                    imgHint3.visibility = View.GONE
-                    binding.img3.visibility = View.VISIBLE
+                    if(!gd.img3!!.contains("noimage.png")) {
+                        Glide.with(mActivity)
+                            .load(gd.img3)
+                            .transform(CenterCrop(), RoundedCorners(radius))
+                            .into(img3)
+                        imgHint3.visibility = View.GONE
+                        binding.img3.visibility = View.VISIBLE
+                        binding.del3.visibility = View.VISIBLE
+                    }
                 }
 
                 useSleep.isChecked = gd.adDisplay == "Y"
@@ -203,6 +295,8 @@ class AddGoodsActivity : BaseActivity() {
     }
 
     fun getMenu() {
+        loadingDialog.show(supportFragmentManager, "LoadingDialog")
+
         val gd = goods ?: GoodsDTO(cate)
 
         binding.run {
@@ -243,6 +337,15 @@ class AddGoodsActivity : BaseActivity() {
         }
     }
 
+    // 신규 등록 모드 -> 수정 모드로 변경 (*메뉴 등록 성공했으나, 이미지 등록 실패했을 때 중복 등록 방지하기 위해 추가)
+    fun changeMode() {
+        if(type == 1) {
+            type = 2
+            Log.d(TAG, "goods.idx >> ${goods?.idx}")
+            Log.d(TAG, "goods.name >> ${goods?.name}")
+        }
+    }
+
     fun save(gd: GoodsDTO) {
         ApiClient.service.insGoods(useridx, storeidx, gd.category, gd.name, gd.content?:"", gd.cooking_time_min, gd.cooking_time_max, gd.price,
         gd.adDisplay, gd.icon, gd.boption, "", "", "", "", "").enqueue(object: Callback<ResultDTO>{
@@ -253,8 +356,12 @@ class AddGoodsActivity : BaseActivity() {
                 val result = response.body() ?: return
 
                 if(result.status == 1) {
-                    Toast.makeText(mActivity, R.string.msg_complete, Toast.LENGTH_SHORT).show()
+                    gd.idx = result.idx
+                    Log.d(TAG, "result.idx >> ${result.idx}")
+                    Log.d(TAG, "gd.idx >> ${gd.idx}")
                     uploadImage(result.idx)
+                }else {
+                    Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -268,7 +375,7 @@ class AddGoodsActivity : BaseActivity() {
 
     fun modify(gd: GoodsDTO) {
         ApiClient.service.udtGoods(useridx, storeidx, gd.idx, gd.category, gd.name, gd.content?:"", gd.cooking_time_min, gd.cooking_time_max, gd.price,
-        gd.adDisplay, gd.icon, gd.boption, "", "", "", "", "", "").enqueue(object: Callback<ResultDTO>{
+         gd.icon, delImg1, delImg2, delImg3, gd.adDisplay, gd.boption, "", "", "", "", "", "").enqueue(object: Callback<ResultDTO>{
             override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                 Log.d(TAG, "메뉴 수정 url : $response")
                 if(!response.isSuccessful) return
@@ -276,7 +383,6 @@ class AddGoodsActivity : BaseActivity() {
                 val result = response.body() ?: return
 
                 if(result.status == 1) {
-                    Toast.makeText(mActivity, R.string.msg_complete, Toast.LENGTH_SHORT).show()
                     uploadImage(gd.idx)
                     // TODO 등록된 사진 중 삭제할 것 태우기
                 }else {
@@ -316,9 +422,20 @@ class AddGoodsActivity : BaseActivity() {
     }
 
     fun uploadImage(gidx: Int) {
-        val mmtp = MediaType.parse("image/*") // 임시
-        val body = RequestBody.create(mmtp, file1)
-        val media1 = MultipartBody.Part.createFormData("img1", name, body)
+        val mmtp = MediaType.parse("image/*")
+
+        if(file1 != null) {
+            val body = RequestBody.create(mmtp, file1!!)
+            media1 = MultipartBody.Part.createFormData("img1", file1!!.name, body)
+        }
+        if(file2 != null) {
+            val body = RequestBody.create(mmtp, file2!!)
+            media2 = MultipartBody.Part.createFormData("img2", file2!!.name, body)
+        }
+        if(file3 != null) {
+            val body = RequestBody.create(mmtp, file3!!)
+            media3 = MultipartBody.Part.createFormData("img3", file3!!.name, body)
+        }
 
         ApiClient.imgService.uploadImg(useridx, gidx, media1, null, null)
             .enqueue(object : Callback<ResultDTO>{
@@ -332,49 +449,22 @@ class AddGoodsActivity : BaseActivity() {
                             1 -> {
                                 Toast.makeText(mActivity, R.string.msg_complete, Toast.LENGTH_SHORT).show()
                             }
-                            else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                            else -> {
+                                changeMode()
+                                Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
+                    loadingDialog.dismiss()
                 }
                 override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
                     Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, "이미지 등록 실패 > $t")
                     Log.d(TAG, "이미지 등록 실패 > ${call.request()}")
+
+                    changeMode()
+                    loadingDialog.dismiss()
                 }
             })
-    }
-
-
-    // 이미지 접근 권한 확인
-    fun checkPermissions() {
-        val deniedPms = ArrayList<String>()
-
-        for (pms in permission) {
-            if(ActivityCompat.checkSelfPermission(mActivity, pms) != PackageManager.PERMISSION_GRANTED) {
-                if(ActivityCompat.shouldShowRequestPermissionRationale(mActivity, pms)) {
-                    AlertDialog.Builder(mActivity)
-                        .setTitle(R.string.pms_location_content)
-                        .setMessage(R.string.pms_location_content)
-                        .setPositiveButton(R.string.confirm) { dialog, _ ->
-                            dialog.dismiss()
-                            getStoragePms()
-                        }
-                        .setNegativeButton(R.string.cancel) {dialog, _ -> dialog.dismiss()}
-                        .show()
-                    return
-                }else {
-                    deniedPms.add(pms)
-                }
-            }
-        }
-
-        if(deniedPms.isNotEmpty()) {
-            getStoragePms()
-        }
-    }
-
-    //권한 받아오기
-    fun getStoragePms() {
-        ActivityCompat.requestPermissions(mActivity, permission, AppProperties.REQUEST_STORAGE)
     }
 }

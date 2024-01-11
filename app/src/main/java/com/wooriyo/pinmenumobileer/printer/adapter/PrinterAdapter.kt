@@ -119,7 +119,7 @@ class PrinterAdapter(val dataSet: ArrayList<PrintDTO>): RecyclerView.Adapter<Rec
                     }
                 }else {
                     val fragmentActivity = context as FragmentActivity
-                    AlertDialog("", context.getString(R.string.dialog_check_conn), 1).show(fragmentActivity.supportFragmentManager, "AlertDialog")
+                    AlertDialog("", context.getString(R.string.dialog_check_conn)).show(fragmentActivity.supportFragmentManager, "AlertDialog")
                 }
             }
             binding.btnConn.setOnClickListener {

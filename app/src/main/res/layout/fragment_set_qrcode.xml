@@ -37,6 +37,15 @@
         app:layout_constraintTop_toTopOf="@+id/tv1"
         app:layout_constraintBottom_toBottomOf="@+id/tv1"/>
     
+    <ImageView
+        android:id="@+id/btnInfo"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:src="@drawable/btn_qroder_info"
+        app:layout_constraintTop_toTopOf="@+id/tv1"
+        app:layout_constraintBottom_toBottomOf="@+id/tv1"
+        app:layout_constraintEnd_toEndOf="@+id/saveName"/>
+    
     <TextView
         style="@style/text15d"
         android:id="@+id/tv2"
@@ -71,8 +80,9 @@
         style="@style/text15"
         android:text="@string/essential"
         android:textColor="#FF6200"
+        android:layout_marginStart="8dp"
         android:layout_marginBottom="9dp"
-        app:layout_constraintEnd_toEndOf="@+id/saveName"
+        app:layout_constraintStart_toEndOf="@+id/tv2"
         app:layout_constraintBottom_toTopOf="@+id/saveName"/>
 
     <TextView

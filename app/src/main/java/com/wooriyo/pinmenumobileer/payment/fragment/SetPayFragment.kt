@@ -42,10 +42,10 @@ class SetPayFragment : Fragment() {
         binding.usableDevice.setOnClickListener { startActivity(Intent(context, ReaderModelActivity::class.java)) }
 
         binding.infoQR.setOnClickListener{
-            AlertDialog(getString(R.string.use_post_QR), getString(R.string.use_post_QR_info), 1).show((activity as MainActivity).supportFragmentManager, "AlertDialog")
+            AlertDialog(getString(R.string.use_post_QR), getString(R.string.use_post_QR_info)).show((activity as MainActivity).supportFragmentManager, "AlertDialog")
         }
         binding.infoCard.setOnClickListener{
-            AlertDialog(getString(R.string.use_post_card), getString(R.string.use_post_card_info), 1).show((activity as MainActivity).supportFragmentManager, "AlertDialog")
+            AlertDialog(getString(R.string.use_post_card), getString(R.string.use_post_card_info)).show((activity as MainActivity).supportFragmentManager, "AlertDialog")
         }
 
         return binding.root

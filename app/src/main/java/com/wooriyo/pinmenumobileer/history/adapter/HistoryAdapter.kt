@@ -125,7 +125,7 @@ class HistoryAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adap
                         printClickListener.onItemClick(adapterPosition)
                     }else{
                         val fragmentActivity = context as FragmentActivity
-                        AlertDialog("", context.getString(R.string.dialog_no_printer), 1).show(fragmentActivity.supportFragmentManager, "AlertDialog")
+                        AlertDialog("", context.getString(R.string.dialog_no_printer)).show(fragmentActivity.supportFragmentManager, "AlertDialog")
                     }
                 }
                 btnComplete.setOnClickListener { completeListener.onItemClick(adapterPosition) }
