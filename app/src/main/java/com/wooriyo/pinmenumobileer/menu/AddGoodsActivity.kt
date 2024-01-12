@@ -1,7 +1,10 @@
 package com.wooriyo.pinmenumobileer.menu
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -64,58 +67,67 @@ class AddGoodsActivity : BaseActivity() {
 
     var selThum = 0
 
-    val pickImg = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
-        if(it != null) {
-            Log.d(TAG, "이미지 Uri >> $it")
+    private val pickImg = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
+        if(it != null) { setImage(it) }
+    }
 
-            var path = ""
+    private val pickImgLgc = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if(it.resultCode == Activity.RESULT_OK) {
+            val imgUri = it.data?.data
+            if(imgUri != null) setImage(imgUri)
+        }
+    }
 
-            contentResolver.query(it, null, null, null, null)?.use { cursor ->
-                val dataColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+    private fun setImage (uri: Uri) {
+        Log.d(TAG, "이미지 Uri >> $uri")
 
-                while (cursor.moveToNext()) {
-                    path = cursor.getString(dataColumn)
-                    Log.d(TAG, "path >>>>> $path")
-                }
+        var path = ""
+
+        contentResolver.query(uri, null, null, null, null)?.use { cursor ->
+            val dataColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+
+            while (cursor.moveToNext()) {
+                path = cursor.getString(dataColumn)
+                Log.d(TAG, "path >>>>> $path")
             }
+        }
 
-            when(selThum) {
-                1 -> {
-                    Glide.with(mActivity)
-                        .load(it)
-                        .transform(CenterCrop(), RoundedCorners(radius))
-                        .into(binding.img1)
-                    binding.imgHint1.visibility = View.GONE
-                    binding.img1.visibility = View.VISIBLE
-                    binding.del1.visibility = View.VISIBLE
+        when(selThum) {
+            1 -> {
+                Glide.with(mActivity)
+                    .load(uri)
+                    .transform(CenterCrop(), RoundedCorners(radius))
+                    .into(binding.img1)
+                binding.imgHint1.visibility = View.GONE
+                binding.img1.visibility = View.VISIBLE
+                binding.del1.visibility = View.VISIBLE
 
-                    file1 = File(path)
-                    delImg1 = 0
-                }
-                2 -> {
-                    Glide.with(mActivity)
-                        .load(it)
-                        .transform(CenterCrop(), RoundedCorners(radius))
-                        .into(binding.img2)
-                    binding.imgHint2.visibility = View.GONE
-                    binding.img2.visibility = View.VISIBLE
-                    binding.del2.visibility = View.VISIBLE
+                file1 = File(path)
+                delImg1 = 0
+            }
+            2 -> {
+                Glide.with(mActivity)
+                    .load(uri)
+                    .transform(CenterCrop(), RoundedCorners(radius))
+                    .into(binding.img2)
+                binding.imgHint2.visibility = View.GONE
+                binding.img2.visibility = View.VISIBLE
+                binding.del2.visibility = View.VISIBLE
 
-                    file2 = File(path)
-                    delImg2 = 0
-                }
-                3 -> {
-                    Glide.with(mActivity)
-                        .load(it)
-                        .transform(CenterCrop(), RoundedCorners(radius))
-                        .into(binding.img3)
-                    binding.imgHint3.visibility = View.GONE
-                    binding.img3.visibility = View.VISIBLE
-                    binding.del3.visibility = View.VISIBLE
+                file2 = File(path)
+                delImg2 = 0
+            }
+            3 -> {
+                Glide.with(mActivity)
+                    .load(uri)
+                    .transform(CenterCrop(), RoundedCorners(radius))
+                    .into(binding.img3)
+                binding.imgHint3.visibility = View.GONE
+                binding.img3.visibility = View.VISIBLE
+                binding.del3.visibility = View.VISIBLE
 
-                    file3 = File(path)
-                    delImg3 = 0
-                }
+                file3 = File(path)
+                delImg3 = 0
             }
         }
     }
@@ -230,11 +242,12 @@ class AddGoodsActivity : BaseActivity() {
     }
 
     fun getImage(position: Int) {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            selThum = position
+        selThum = position
+
+        if(ActivityResultContracts.PickVisualMedia.isPhotoPickerAvailable(mActivity)) {
             pickImg.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-        } else {
-            Toast.makeText(mActivity, "지원하지 않는 버전입니다.", Toast.LENGTH_SHORT).show()
+        }else {
+            pickImgLgc.launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
         }
     }
 
@@ -385,7 +398,6 @@ class AddGoodsActivity : BaseActivity() {
 
                 if(result.status == 1) {
                     uploadImage(gd.idx)
-                    // TODO 등록된 사진 중 삭제할 것 태우기
                 }else {
                     Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                 }
@@ -449,6 +461,7 @@ class AddGoodsActivity : BaseActivity() {
                         when(result.status){
                             1 -> {
                                 Toast.makeText(mActivity, R.string.msg_complete, Toast.LENGTH_SHORT).show()
+                                finish()
                             }
                             else -> {
                                 changeMode()
