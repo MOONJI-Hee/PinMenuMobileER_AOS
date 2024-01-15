@@ -450,7 +450,7 @@ class AddGoodsActivity : BaseActivity() {
             media3 = MultipartBody.Part.createFormData("img3", file3!!.name, body)
         }
 
-        ApiClient.imgService.uploadImg(useridx, gidx, media1, null, null)
+        ApiClient.imgService.uploadImg(useridx, gidx, media1, media2, media3)
             .enqueue(object : Callback<ResultDTO>{
                 override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                     Log.d(TAG, "이미지 등록 url : $response")
