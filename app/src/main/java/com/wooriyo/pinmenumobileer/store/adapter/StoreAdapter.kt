@@ -50,7 +50,7 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
             binding.run {
                 storeName.text = data.name
                 ordCnt.text = data.ordCnt.toString()
-                callCnt.text = data.callCnt.toString()
+                menuCnt.text = data.menuCnt.toString()
                 payCnt.text = data.pgCnt.toString()
 
                 btnOrder.setOnClickListener{

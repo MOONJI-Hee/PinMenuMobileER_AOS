@@ -17,6 +17,7 @@ data class StoreDTO(
     @SerializedName("ordCnt") var ordCnt: Int,
     @SerializedName("callCnt") var callCnt: Int,
     @SerializedName("pgCnt") var pgCnt: Int,        // 결제내역 갯수
+    @SerializedName("menuCnt") var menuCnt: Int,
     @SerializedName("paytype") var paytype: Int,    // 0 : 요금제 없음 , 1: 기본 , 2: 비즈니스
     @SerializedName("agree") var agree: String,     // QR오더 관련 이행보증보험 관련 동의 여부
     @SerializedName("mid") var mid : String,
@@ -61,6 +62,6 @@ data class StoreDTO(
 //    @SerializedName("breakList")  var breaktime: BrkTimeDTO?,
 //    @SerializedName("holidayList")  var spcHoliday: ArrayList<SpcHolidayDTO>?
 ):Serializable {
-    constructor(useridx: Int) :  this(0, useridx, "", "", "", "N", "", "", 1, 0, 0, 0, 0, 0, "N", "", "", "", "", "", "", "", "N", "N", "N", "N", "N", "", "", "", "", "", "", "", "", "", null, null, null, null, null, null, null,
+    constructor(useridx: Int) :  this(0, useridx, "", "", "", "N", "", "", 1, 0, 0, 0, 0, 0, 0, "N", "", "", "", "", "", "", "", "N", "N", "N", "N", "N", "", "", "", "", "", "", "", "", "", null, null, null, null, null, null, null,
         "d", "b", "N", "N", "N", "N", "N", "N", "N", "N")
 }
