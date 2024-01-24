@@ -1,5 +1,6 @@
 package com.wooriyo.pinmenumobileer.common
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +12,13 @@ import com.wooriyo.pinmenumobileer.MainActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.databinding.FragmentSelectStoreBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
+import com.wooriyo.pinmenumobileer.menu.SetCategoryActivity
+import com.wooriyo.pinmenumobileer.menu.adapter.MenuStoreAdapter
 import com.wooriyo.pinmenumobileer.printer.adapter.StoreAdapter
 
 class SelectStoreFragment : Fragment() {
     lateinit var binding: FragmentSelectStoreBinding
+
     private var type: String? = null
 
     private val arg_type = "type"
@@ -29,27 +33,37 @@ class SelectStoreFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSelectStoreBinding.inflate(layoutInflater)
 
-        val storeAdapter = StoreAdapter(MyApplication.storeList)
-        storeAdapter.setOnItemClickListener(object : ItemClickListener {
-            override fun onItemClick(position: Int) {
-                super.onItemClick(position)
-                if(type == "pay")
-                    (activity as MainActivity).insPaySetting(position)
-                else if (type == "print")
-                    (activity as MainActivity).insPrintSetting(position)
-                else if (type == "qr") {
-                    (activity as MainActivity).checkQrAgree(position)
-                }else if (type == "menu") {
-                    (activity as MainActivity).checkDeviceLimit(position)
-                }
-            }
-        })
-
         binding.rvStore.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        binding.rvStore.adapter = storeAdapter
+
+        if(type == "menu") {
+            val storeAdapter = MenuStoreAdapter(MyApplication.storeList)
+            storeAdapter.setOnItemClickListener(object : ItemClickListener {
+                override fun onItemClick(position: Int) {
+                    super.onItemClick(position)
+                    MyApplication.store = MyApplication.storeList[position]
+                    MyApplication.storeidx = MyApplication.storeList[position].idx
+
+                    startActivity(Intent(context, SetCategoryActivity::class.java))
+                }
+            })
+            binding.rvStore.adapter = storeAdapter
+        }else {
+            val storeAdapter = StoreAdapter(MyApplication.storeList)
+            storeAdapter.setOnItemClickListener(object : ItemClickListener {
+                override fun onItemClick(position: Int) {
+                    super.onItemClick(position)
+                    when (type) {
+                        "pay"   ->  (activity as MainActivity).insPaySetting(position)
+                        "print" ->  (activity as MainActivity).insPrintSetting(position)
+                        "qr"    ->  (activity as MainActivity).checkQrAgree(position)
+                    }
+                }
+            })
+            binding.rvStore.adapter = storeAdapter
+        }
 
         return binding.root
     }

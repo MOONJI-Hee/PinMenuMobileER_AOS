@@ -568,6 +568,7 @@
     <string name="msg_no_cart">주문 목록을 확인해주세요</string>
     <string name="msg_no_table_no">테이블 번호를 입력해주세요.</string>
     <string name="msg_preparing">준비 중입니다.</string>
+    <string name="msg_no_pay">결제 후 이용 가능합니다.</string>
 
     <string name="msg_no_store">매장 등록 후 이용할 수 있습니다.</string>
 

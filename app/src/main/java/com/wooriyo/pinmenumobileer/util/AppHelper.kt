@@ -194,6 +194,7 @@ class AppHelper {
 
                         val result = response.body() ?: return
                         if(result.status == 1){
+                            MyApplication.setStoreDTO()
                             MyApplication.storeidx = 0
                             activity.finish()
                         }else

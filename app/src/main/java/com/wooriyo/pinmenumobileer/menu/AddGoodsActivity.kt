@@ -24,6 +24,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.store
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
@@ -181,9 +182,9 @@ class AddGoodsActivity : BaseActivity() {
         }
 
         // 사진 선택 도구
-        binding.thum1.setOnClickListener {getImage(1)}
-        binding.thum2.setOnClickListener {getImage(2)}
-        binding.thum3.setOnClickListener {getImage(3)}
+        binding.thum1.setOnClickListener {checkUsePay(1)}
+        binding.thum2.setOnClickListener {checkUsePay(2)}
+        binding.thum3.setOnClickListener {checkUsePay(3)}
 
         // 사진 삭제
         binding.del1.setOnClickListener {
@@ -239,6 +240,14 @@ class AddGoodsActivity : BaseActivity() {
     //권한 받아오기
     fun getStoragePms() {
         ActivityCompat.requestPermissions(mActivity, permission, AppProperties.REQUEST_STORAGE)
+    }
+
+    fun checkUsePay(position: Int) {
+        if((store.payuse == "Y" && AppHelper.dateNowCompare(store.paydate))) {
+            getImage(position)
+        }else {
+            Toast.makeText(mActivity, R.string.msg_no_pay, Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun getImage(position: Int) {

@@ -346,7 +346,14 @@ class MainActivity : BaseActivity() {
             R.id.icMenu -> {
                 when(MyApplication.storeList.size) {
                     0 -> Toast.makeText(mActivity, R.string.msg_no_store, Toast.LENGTH_SHORT).show()
-                    1 -> checkDeviceLimit(0)
+                    1 -> {
+                        goMenuSet()
+                        MyApplication.store = storeList[0]
+                        MyApplication.storeidx = storeList[0].idx
+
+                        startActivity(Intent(mActivity, SetCategoryActivity::class.java))
+//                    checkDeviceLimit(0)
+                    }
                     else -> {
                         binding.ivMenu.setImageResource(R.drawable.icon_menuset_p)
                         goSelStore("menu")

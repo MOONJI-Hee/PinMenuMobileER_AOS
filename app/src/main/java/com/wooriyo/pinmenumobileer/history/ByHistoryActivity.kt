@@ -115,7 +115,7 @@ class ByHistoryActivity: BaseActivity() {
             ClearDialog({ clearCall() }, { clearOrder() }).show(supportFragmentManager, "ClearDialog")
         }
 
-        binding.back.setOnClickListener { finish() }
+        binding.back.setOnClickListener { AppHelper.leaveStore(mActivity) }
     }
 
     override fun onResume() {

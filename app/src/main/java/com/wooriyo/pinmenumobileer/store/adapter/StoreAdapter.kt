@@ -67,7 +67,13 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
                 btnMenu.setOnClickListener {
                     menuCnt.isPressed = true
                     menuTxt.isPressed = true
-                    itemClickListener.onStoreClick(data, Intent(context, SetCategoryActivity::class.java))
+
+                    if((data.payuse == "Y" && dateNowCompare(data.paydate)) || adapterPosition == 0) {
+                        MyApplication.store = MyApplication.storeList[adapterPosition]
+                        MyApplication.storeidx = MyApplication.storeList[adapterPosition].idx
+
+                        context.startActivity(Intent(context, SetCategoryActivity::class.java))
+                    }
                 }
 
                 btnPayHistory.setOnClickListener {
@@ -94,7 +100,6 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
                     btnOrder.isEnabled = true
                     menuCnt.isEnabled = true
                     menuTxt.isEnabled = true
-                    btnMenu.isEnabled = true
                     payCnt.isEnabled = true
                     payTxt.isEnabled = true
                     btnPayHistory.isEnabled = true
@@ -105,7 +110,6 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
                     btnOrder.isEnabled = false
                     menuCnt.isEnabled = false
                     menuTxt.isEnabled = false
-                    btnMenu.isEnabled = false
                     payCnt.isEnabled = false
                     payTxt.isEnabled = false
                     btnPayHistory.isEnabled = false
