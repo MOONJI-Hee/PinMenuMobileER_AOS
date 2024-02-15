@@ -142,9 +142,6 @@ class MyApplication: Application() {
             .setUsage(AudioAttributes.USAGE_NOTIFICATION)
             .build()
 
-        val delete_id: String = AppProperties.CHANNEL_ID_ORDER
-        notificationManager.deleteNotificationChannel(delete_id)
-
         // 알림 채널 생성
         val ordChannel = NotificationChannel(AppProperties.CHANNEL_ID_ORDER, "새 주문 알림", NotificationManager.IMPORTANCE_HIGH)
         ordChannel.enableLights(true)
