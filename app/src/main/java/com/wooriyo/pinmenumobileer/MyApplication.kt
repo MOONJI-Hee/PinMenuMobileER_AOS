@@ -49,6 +49,7 @@ class MyApplication: Application() {
         var width = 0
         var height = 0
         var density = 1.0F
+        var dpi = 160
 
         val os = "A"
         var osver = 0
@@ -89,6 +90,8 @@ class MyApplication: Application() {
         pref = SharedDTO(applicationContext)
 //        db = AppDatabase.getInstance(applicationContext)
 
+        density = resources.displayMetrics.density
+
         osver = Build.VERSION.SDK_INT
         appver = applicationContext.packageManager.getPackageInfo(applicationContext.packageName, 0).versionName
         md = Build.MODEL
@@ -106,8 +109,6 @@ class MyApplication: Application() {
             width = realpoint.x
             height = realpoint.y
         }
-
-        density = resources.displayMetrics.density
 
         //블루투스
         bluetoothManager = this.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager

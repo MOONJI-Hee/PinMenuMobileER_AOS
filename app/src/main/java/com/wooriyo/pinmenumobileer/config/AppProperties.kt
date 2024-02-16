@@ -60,20 +60,5 @@ class AppProperties {
 
                 const val TITLE_MENU = "메     뉴     명                                수량     구분"
                 const val TITLE_MENU_SAM4S = "메   뉴   명                   수량   구분"
-
-                // POS 관련
-                // 1. KPN (FirstPOS)
-                const val KPN_SERVICE_ID_ORDER = "Order"
-                const val KPN_API_ID_ORDER = "OrderDetail"
-
-                const val KPN_VENDOR_ID = ""
-                const val KPN_VENDOR_NM = ""
-                const val KPN_SYSTEM_ID = ""
-                const val KPN_SYSTEM_NM = ""
-
-                const val KPN_ORDER_TYPE_TABLE = "TABLE_ORDER"
-                const val KPN_ORDER_TYPE_PICK = "PICK_UP"
-                const val KPN_ORDER_TYPE_DELI = "DELIVERY"
-                const val KPN_ORDER_TYPE_COUNTER = "COUNTER_ORDER"
         }
 }
