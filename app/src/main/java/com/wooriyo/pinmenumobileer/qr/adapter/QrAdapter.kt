@@ -8,7 +8,10 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.wooriyo.pinmenumobileer.MainActivity
+import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
+import com.wooriyo.pinmenumobileer.common.dialog.AlertDialog
 import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.databinding.ListQrBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
@@ -82,7 +85,13 @@ class QrAdapter(val dataSet: ArrayList<QrDTO>): RecyclerView.Adapter<RecyclerVie
             }
 
             binding.postPay.setOnClickListener {
-                postPayClickListener.onQrClick(adapterPosition, (it as CheckBox).isChecked)
+                it as CheckBox
+                if(MyApplication.store.paytype == 2) {
+                    postPayClickListener.onQrClick(adapterPosition, it.isChecked)
+                }else {
+                    it.isChecked = false
+                    AlertDialog("", context.getString(R.string.dialog_no_business)).show((context as MainActivity).supportFragmentManager, "NoBusinessDialog")
+                }
             }
         }
     }

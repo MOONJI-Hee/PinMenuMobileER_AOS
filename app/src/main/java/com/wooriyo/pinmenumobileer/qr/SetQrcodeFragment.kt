@@ -1,6 +1,7 @@
 package com.wooriyo.pinmenumobileer.qr
 
 import android.app.DownloadManager
+import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
@@ -15,17 +16,20 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.wooriyo.pinmenumobileer.MainActivity
+import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.engStoreName
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.store
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.broadcast.DownloadReceiver
+import com.wooriyo.pinmenumobileer.common.dialog.AlertDialog
 import com.wooriyo.pinmenumobileer.databinding.FragmentSetQrcodeBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.QrDTO
 import com.wooriyo.pinmenumobileer.model.QrListDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
+import com.wooriyo.pinmenumobileer.more.SetCustomerInfoActivity
 import com.wooriyo.pinmenumobileer.qr.adapter.QrAdapter
 import com.wooriyo.pinmenumobileer.qr.dialog.QrInfoDialog
 import com.wooriyo.pinmenumobileer.util.ApiClient
@@ -44,11 +48,19 @@ class SetQrcodeFragment : Fragment() {
     var qrCnt = 0
     var storeName = ""
 
+    var bisBus = false  // 비즈니스 요금제 사용 여부
     var bisAll = false
     var bisCnt = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        bisBus = store.paytype == 2
+
+        if(!bisBus) {
+            store.qrbuse = "N"
+            setAllPostPay("N")
+        }
     }
 
     override fun onCreateView(
@@ -88,14 +100,25 @@ class SetQrcodeFragment : Fragment() {
             saveName.setOnClickListener { udtStoreName() }
             downAll.setOnClickListener { downloadAll() }
             postPayAll.setOnClickListener {
-                it as CheckBox
-                val buse = if(it.isChecked) "Y" else "N"
-                setAllCheck(buse)
-                setAllPostPay(buse)
+                if(bisBus) {
+                    it as CheckBox
+                    val buse = if(it.isChecked) "Y" else "N"
+                    setAllCheck(buse)
+                    setAllPostPay(buse)
+                }else {
+                    it as CheckBox
+                    it.isChecked = false
+                    AlertDialog("", getString(R.string.dialog_no_business)).show((activity as MainActivity).supportFragmentManager, "NoBusinessDialog")
+                }
             }
             btnInfo.setOnClickListener {
                 QrInfoDialog().show((activity as MainActivity).supportFragmentManager, "QrInfoDialog")
             }
+            useEvent.setOnCheckedChangeListener { _, isChecked ->
+                val buse = if(isChecked) "Y" else "N"
+                setUseEvent(buse)
+            }
+            SetEvent.setOnClickListener { startActivity(Intent(context, SetEventActivity::class.java)) }
         }
 
         return binding.root
@@ -250,17 +273,21 @@ class SetQrcodeFragment : Fragment() {
         })
     }
 
-    fun setAllCheck(buse: String) {
+    private fun setAllCheck(buse: String) {
         bisCnt = if(buse == "Y") qrList.size else 0
 
         for(i in 0 until qrList.size) {
-            if(qrList[i].qrbuse != buse){
+            if(qrList[i].qrbuse != buse) {
                 qrList[i].qrbuse = buse
                 qrAdapter.notifyItemChanged(i)
             }
         }
 //        qrList.forEach { it.qrbuse = buse }
 //        qrAdapter.notifyItemRangeChanged(0, qrList.size)
+    }
+
+    private fun setUseEvent(buse: String) {
+
     }
 
     companion object {

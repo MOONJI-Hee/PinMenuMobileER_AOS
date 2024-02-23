@@ -112,19 +112,43 @@
 
     <CheckBox style="@style/toggle"
         android:id="@+id/postPayAll"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="17dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/downAll" />
 
+    <TextView
+        style="@style/text17d"
+        android:text="@string/event_popup"
+        app:layout_constraintStart_toStartOf="@+id/downAll"
+        app:layout_constraintTop_toTopOf="@+id/useEvent"
+        app:layout_constraintBottom_toBottomOf="@+id/useEvent"/>
+
+    <ImageView
+        android:id="@+id/SetEvent"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginEnd="11dp"
+        android:src="@drawable/icon_set"
+        app:layout_constraintTop_toTopOf="@+id/useEvent"
+        app:layout_constraintBottom_toBottomOf="@+id/useEvent"
+        app:layout_constraintEnd_toStartOf="@+id/useEvent"/>
+
+    <CheckBox style="@style/toggle"
+        android:id="@+id/useEvent"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/postPayAll" />
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="17dp"
         android:paddingHorizontal="12.5dp"
         android:background="@color/f9"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/postPayAll">
+        app:layout_constraintTop_toBottomOf="@+id/useEvent">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvQr"
             android:layout_width="match_parent"
