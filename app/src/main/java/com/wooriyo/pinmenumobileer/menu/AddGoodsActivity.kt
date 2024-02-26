@@ -46,7 +46,7 @@ import java.io.File
 class AddGoodsActivity : BaseActivity() {
     lateinit var binding: ActivityAddGoodsBinding
 
-    private val permission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    private val permission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
 
     val radius = (6 * MyApplication.density).toInt()
 
@@ -214,24 +214,27 @@ class AddGoodsActivity : BaseActivity() {
     fun checkPermissions() {
         val deniedPms = ArrayList<String>()
 
-        for (pms in permission) {
-            if(ActivityCompat.checkSelfPermission(mActivity, pms) != PackageManager.PERMISSION_GRANTED) {
-                if(ActivityCompat.shouldShowRequestPermissionRationale(mActivity, pms)) {
-                    AlertDialog.Builder(mActivity)
-                        .setTitle(R.string.pms_storage_title)
-                        .setMessage(R.string.pms_storage_content)
-                        .setPositiveButton(R.string.confirm) { dialog, _ ->
-                            dialog.dismiss()
-                            getStoragePms()
-                        }
-                        .setNegativeButton(R.string.cancel) {dialog, _ -> dialog.dismiss()}
-                        .show()
-                    return
-                }else {
-                    deniedPms.add(pms)
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
+            for (pms in permission) {
+                if(ActivityCompat.checkSelfPermission(mActivity, pms) != PackageManager.PERMISSION_GRANTED) {
+                    if(ActivityCompat.shouldShowRequestPermissionRationale(mActivity, pms)) {
+                        AlertDialog.Builder(mActivity)
+                            .setTitle(R.string.pms_storage_title)
+                            .setMessage(R.string.pms_storage_content)
+                            .setPositiveButton(R.string.confirm) { dialog, _ ->
+                                dialog.dismiss()
+                                getStoragePms()
+                            }
+                            .setNegativeButton(R.string.cancel) {dialog, _ -> dialog.dismiss()}
+                            .show()
+                        return
+                    }else {
+                        deniedPms.add(pms)
+                    }
                 }
             }
         }
+
         if(deniedPms.isNotEmpty()) {
             getStoragePms()
         }

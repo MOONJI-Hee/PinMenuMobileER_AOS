@@ -15,6 +15,9 @@ import android.widget.CheckBox
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.wooriyo.pinmenumobileer.MainActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.engStoreName
@@ -26,6 +29,7 @@ import com.wooriyo.pinmenumobileer.broadcast.DownloadReceiver
 import com.wooriyo.pinmenumobileer.common.dialog.AlertDialog
 import com.wooriyo.pinmenumobileer.databinding.FragmentSetQrcodeBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
+import com.wooriyo.pinmenumobileer.model.PopupDTO
 import com.wooriyo.pinmenumobileer.model.QrDTO
 import com.wooriyo.pinmenumobileer.model.QrListDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
@@ -51,6 +55,8 @@ class SetQrcodeFragment : Fragment() {
     var bisBus = false  // 비즈니스 요금제 사용 여부
     var bisAll = false
     var bisCnt = 0
+
+    var event : PopupDTO? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,11 +120,16 @@ class SetQrcodeFragment : Fragment() {
             btnInfo.setOnClickListener {
                 QrInfoDialog().show((activity as MainActivity).supportFragmentManager, "QrInfoDialog")
             }
-            useEvent.setOnCheckedChangeListener { _, isChecked ->
-                val buse = if(isChecked) "Y" else "N"
+            useEvent.setOnClickListener {
+                it as CheckBox
+                val buse = if(it.isChecked) "Y" else "N"
                 setUseEvent(buse)
             }
-            SetEvent.setOnClickListener { startActivity(Intent(context, SetEventActivity::class.java)) }
+            SetEvent.setOnClickListener {
+                val intent = Intent(context, SetEventActivity::class.java)
+                intent.putExtra("event", event)
+                startActivity(intent)
+            }
         }
 
         return binding.root
@@ -127,6 +138,7 @@ class SetQrcodeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         getQrList()
+        getEvent()
     }
 
     fun downloadAll() {
@@ -286,8 +298,52 @@ class SetQrcodeFragment : Fragment() {
 //        qrAdapter.notifyItemRangeChanged(0, qrList.size)
     }
 
-    private fun setUseEvent(buse: String) {
 
+    // 주문 완료 후 이벤트 팝업
+    private fun getEvent() {
+        ApiClient.service.getEventPopup(useridx, storeidx)
+            .enqueue(object : Callback<PopupDTO> {
+                override fun onResponse(call: Call<PopupDTO>, response: Response<PopupDTO>) {
+                    Log.d(TAG, "주문완료 후 팝업 정보 조회 url : $response")
+                    if(!response.isSuccessful) return
+
+                    event = response.body() ?: return
+
+                    when(event?.status) {
+                        1 -> {
+                            binding.useEvent.isChecked = event?.buse == "Y"
+                        }
+//                        else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<PopupDTO>, t: Throwable) {
+                    Toast.makeText(context, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "주문완료 후 팝업 정보 조회 실페 > $t")
+                    Log.d(TAG, "주문완료 후 팝업 정보 조회 실패 > ${call.request()}")
+                }
+            })
+    }
+
+    private fun setUseEvent(buse: String) {
+        ApiClient.service.setEventUse(useridx, storeidx, buse).enqueue(object : Callback<ResultDTO>{
+            override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                Log.d(TAG, "주문완료 후 팝업 사용 여부 설정 url : $response")
+                if(!response.isSuccessful) return
+
+                val result = response.body() ?: return
+                when(result.status) {
+                    1 -> Toast.makeText(context, R.string.msg_complete, Toast.LENGTH_SHORT).show()
+                    else -> Toast.makeText(context, result.msg, Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                Toast.makeText(context, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "주문완료 후 팝업 사용 여부 설정 > $t")
+                Log.d(TAG, "주문완료 후 팝업 사용 여부 설정 > ${call.request()}")
+            }
+        })
     }
 
     companion object {

@@ -4,6 +4,7 @@ import com.wooriyo.pinmenumobileer.model.*
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.model.StoreListDTO
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -556,6 +557,34 @@ interface Api {
         @Query("qidx") qidx: Int,
         @Query("buse") buse: String
     ): Call<ResultDTO>
+
+    // 주문 완료 후 이벤트 팝업
+    // QR오더에서 이벤트 팝업 사용 여부 설정
+    @GET("m/event.use.php")
+    fun setEventUse(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("buse") buse: String
+    ): Call<ResultDTO>
+
+    // 이벤트 팝업 설정
+    @Multipart
+    @POST("m/event.setting.php")
+    fun setEventPopup (
+        @Part("useridx") useridx: Int,
+        @Part("storeidx") storeidx: Int,
+        @Part("content") content: RequestBody,
+        @Part("link") link: RequestBody,
+        @Part("delImg") delImg: Int,
+        @Part img: MultipartBody.Part?
+    ): Call<ResultDTO>
+
+    // 이벤트 팝업 정보 조회
+    @GET("getEvent.php")
+    fun getEventPopup (
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int
+    ): Call<PopupDTO>
 
     // pg 결제 고객 정보 받기 설정
     @GET("m/set_qrcustominfo.php")

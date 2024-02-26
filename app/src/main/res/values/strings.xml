@@ -583,14 +583,12 @@
     <string name="msg_no_table_no">테이블 번호를 입력해주세요.</string>
     <string name="msg_preparing">준비 중입니다.</string>
     <string name="msg_no_pay">결제 후 이용 가능합니다.</string>
-
     <string name="msg_no_store">매장 등록 후 이용할 수 있습니다.</string>
-
     <string name="msg_no_card_reader">연결된 카드리더기가 없습니다.</string>
     <string name="msg_no_mid">MID를 입력해주세요.</string>
     <string name="msg_no_key">Key를 입력해주세요.</string>
-
     <string name="msg_payment_cancel">결제가 취소되었습니다.</string>
+    <string name="msg_no_event_exp">이벤트 설명을 입력해 주세요.</string>
 
     <!--  테스트 인쇄 문구  -->
     <string name="print_test">오리지널 스마트 전자메뉴판 핀메뉴 테스트 인쇄 입니다.\n1234567890\n가나다라마바사아자차카타파하\nABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
