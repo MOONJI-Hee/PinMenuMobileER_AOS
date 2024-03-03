@@ -1,6 +1,5 @@
 package com.wooriyo.pinmenumobileer.menu
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.R
@@ -12,6 +11,12 @@ class AddOptActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddOptBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val req = intent.getIntExtra("optreq", 0)
+
+        if(req == 0) {
+            binding.title.text = resources.getString(R.string.option_choice)
+        }
 
         binding.back.setOnClickListener { finish() }
 

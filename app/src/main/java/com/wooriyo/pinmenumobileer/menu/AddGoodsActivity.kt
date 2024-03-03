@@ -208,6 +208,17 @@ class AddGoodsActivity : BaseActivity() {
             file3 = null
             delImg3 = 1
         }
+
+        binding.optReq.setOnClickListener {
+            val intent = Intent(mActivity, AddOptActivity::class.java)
+            intent.putExtra("optreq", 1)
+            startActivity(intent)
+        }
+        binding.optChoice.setOnClickListener {
+            val intent = Intent(mActivity, AddOptActivity::class.java)
+            intent.putExtra("optreq", 0)
+            startActivity(intent)
+        }
     }
 
     // 이미지 접근 권한 확인
@@ -352,7 +363,8 @@ class AddGoodsActivity : BaseActivity() {
             gd.cooking_time_max = strCookTimeMax
             gd.price = strPrice.toInt()
 
-            if(useSleep.isChecked) gd.adDisplay = "Y" else gd.adDisplay = "N"
+            gd.boption = if(useOpt.isChecked) "Y" else "N"
+            gd.adDisplay = if(useSleep.isChecked) "Y" else "N"
 
             gd.icon = status.selectedItemPosition + 1
         }
