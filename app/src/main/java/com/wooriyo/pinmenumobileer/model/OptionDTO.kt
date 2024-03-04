@@ -4,13 +4,33 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class OptionDTO (
-    @SerializedName("optidx") var idx : Int,
-    @SerializedName("optnm") var name : String,
-    @SerializedName("optcd") var optcd : String,
-    @SerializedName("optreq") var optreq : Int,                     // 0 : 선택 옵션, 1 : 필수 옵션
-    @SerializedName("optval") var optval : ArrayList<String>,
-    @SerializedName("optpay") var optpay : ArrayList<Int>,
-    @SerializedName("optmark") var optmark : ArrayList<String>,
+    @SerializedName("opt_idx") var idx : Int,
+    @SerializedName("opt_title") var name : St                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ring,
+    @SerializedName("opt_req") var optreq : Int,                 // 0 : 선택 옵션, 1 : 필수 옵션
+    @SerializedName("optlist") var optval : ArrayList<ValueDTO>
 ):Serializable {
     constructor(type: Int) : this(0, "", "", type, ArrayList<String>(), ArrayList<Int>(), ArrayList<String>())
 }
+
+
+"stropt": [
+{
+    "opt_title": "123",
+    "opt_idx": 82,
+    "opt_req": 1,
+    "optlist": [
+    {
+        "optidx": 83,
+        "optnm": "123",
+        "optmark": "+",
+        "optpay": ""
+    },
+    {
+        "optidx": 84,
+        "optnm": "717",
+        "optmark": "+",
+        "optpay": ""
+    }
+    ]
+}
+]
