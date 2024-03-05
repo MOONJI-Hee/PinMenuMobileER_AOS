@@ -22,11 +22,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
     <Spinner
+        style="@style/spinner_mark"
         android:id="@+id/mark"
         android:layout_width="68dp"
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/bg_edittext"
+        android:dropDownWidth="68dp"
+        android:popupElevation="3dp"
+        android:popupBackground="@drawable/bg_r6w"
         app:layout_constraintStart_toStartOf="@+id/value"
         app:layout_constraintTop_toBottomOf="@+id/value"/>
     <EditText

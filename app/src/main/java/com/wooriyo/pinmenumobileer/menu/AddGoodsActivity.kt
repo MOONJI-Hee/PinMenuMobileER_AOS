@@ -32,6 +32,7 @@ import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.databinding.ActivityAddGoodsBinding
 import com.wooriyo.pinmenumobileer.menu.dialog.DeleteDialog
 import com.wooriyo.pinmenumobileer.model.GoodsDTO
+import com.wooriyo.pinmenumobileer.model.OptionDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.util.AppHelper
@@ -211,12 +212,12 @@ class AddGoodsActivity : BaseActivity() {
 
         binding.optReq.setOnClickListener {
             val intent = Intent(mActivity, AddOptActivity::class.java)
-            intent.putExtra("optreq", 1)
+            intent.putExtra("opt", OptionDTO(1))
             startActivity(intent)
         }
         binding.optChoice.setOnClickListener {
             val intent = Intent(mActivity, AddOptActivity::class.java)
-            intent.putExtra("optreq", 0)
+            intent.putExtra("opt", OptionDTO(0))
             startActivity(intent)
         }
     }

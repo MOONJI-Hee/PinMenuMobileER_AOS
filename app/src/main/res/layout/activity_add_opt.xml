@@ -46,6 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv1"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingHorizontal="20dp"
@@ -69,14 +70,25 @@
             android:text="@string/btn_delete"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/add"
+            app:layout_constraintEnd_toStartOf="@+id/modify"
             app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            style="@style/btn"
+            android:id="@+id/modify"
+            android:layout_width="0dp"
+            android:text="@string/btn_update"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/delete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
             style="@style/btn"
             android:id="@+id/add"
             android:layout_width="0dp"
             android:text="@string/btn_add"
+            android:visibility="visible"
             app:layout_constraintStart_toEndOf="@+id/delete"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
