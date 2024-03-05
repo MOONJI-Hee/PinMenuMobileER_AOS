@@ -28,6 +28,10 @@ class AppProperties {
                 const val VIEW_TYPE_ORDER = 3
                 const val VIEW_TYPE_CALL = 4
 
+                // Activity Result Code
+                const val RESULT_DELETE = 10
+                const val RESULT_MODIFY = 11
+
                 // 권한 관련
                 const val REQUEST_LOCATION = 0
                 const val REQUEST_ENABLE_BT = 1

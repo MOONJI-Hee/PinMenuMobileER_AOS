@@ -10,4 +10,7 @@ data class OptionDTO (
     @SerializedName("optlist") var optval : ArrayList<ValueDTO>
 ):Serializable {
     constructor(req: Int) : this(0, "", req, ArrayList<ValueDTO>())
+    fun deepCopy() : OptionDTO {
+        return OptionDTO(idx, title, optreq, ArrayList<ValueDTO>().apply{addAll(optval)})
+    }
 }

@@ -19,6 +19,8 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -30,6 +32,8 @@ import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.databinding.ActivityAddGoodsBinding
+import com.wooriyo.pinmenumobileer.listener.ItemClickListener
+import com.wooriyo.pinmenumobileer.menu.adapter.OptAdapter
 import com.wooriyo.pinmenumobileer.menu.dialog.DeleteDialog
 import com.wooriyo.pinmenumobileer.model.GoodsDTO
 import com.wooriyo.pinmenumobileer.model.OptionDTO
@@ -50,6 +54,9 @@ class AddGoodsActivity : BaseActivity() {
     private val permission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
 
     val radius = (6 * MyApplication.density).toInt()
+
+    val optList = ArrayList<OptionDTO>()
+    val optAdapter = OptAdapter(optList)
 
     var cate: String = ""
     var type: Int = 1   // 1: 추가, 2: 수정
@@ -77,6 +84,40 @@ class AddGoodsActivity : BaseActivity() {
         if(it.resultCode == Activity.RESULT_OK) {
             val imgUri = it.data?.data
             if(imgUri != null) setImage(imgUri)
+        }
+    }
+
+    private val setOption = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        when(it.resultCode) {
+            Activity.RESULT_OK -> {
+                val resultOpt = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    it.data?.getSerializableExtra("opt", OptionDTO::class.java) as OptionDTO
+                } else {
+                    it.data?.getSerializableExtra("opt") as OptionDTO
+                }
+                optList.add(resultOpt)
+                optAdapter.notifyItemInserted(optList.size - 1)
+            }
+            AppProperties.RESULT_MODIFY -> {
+                val resultOpt = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    it.data?.getSerializableExtra("opt", OptionDTO::class.java) as OptionDTO
+                } else {
+                    it.data?.getSerializableExtra("opt") as OptionDTO
+                }
+                val position = intent.getIntExtra("position", -1)
+
+                if(position >= 0) {
+                    optList[position] = resultOpt
+                    optAdapter.notifyItemChanged(position)
+                }
+            }
+            AppProperties.RESULT_DELETE -> {
+                val position = intent.getIntExtra("position", -1)
+                if(position >= 0) {
+                    optList.removeAt(position)
+                    optAdapter.notifyItemRemoved(position)
+                }
+            }
         }
     }
 
@@ -143,6 +184,19 @@ class AddGoodsActivity : BaseActivity() {
             checkPermissions()
         }
 
+        optAdapter.setOnItemClickListener(object : ItemClickListener{
+            override fun onItemClick(position: Int) {
+                val intent = Intent(mActivity, AddOptActivity::class.java)
+                intent.putExtra("opt", optList[position].deepCopy())
+                intent.putExtra("position", position)
+                setOption.launch(intent)
+            }
+        })
+        binding.rvOpt.layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false)
+        binding.rvOpt.adapter = optAdapter
+
+        binding.status.adapter = ArrayAdapter(mActivity, R.layout.spinner_menu_status, R.id.item, resources.getStringArray(R.array.menu_icon))
+
         binding.price.addTextChangedListener(object: TextWatcher{
             var result = ""
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -155,8 +209,6 @@ class AddGoodsActivity : BaseActivity() {
             }
             override fun afterTextChanged(s: Editable?) {}
         })
-
-        binding.status.adapter = ArrayAdapter(mActivity, R.layout.spinner_menu_status, R.id.item, resources.getStringArray(R.array.menu_icon))
 
         binding.back.setOnClickListener { finish() }
         binding.save.setOnClickListener { getMenu() }
@@ -213,12 +265,12 @@ class AddGoodsActivity : BaseActivity() {
         binding.optReq.setOnClickListener {
             val intent = Intent(mActivity, AddOptActivity::class.java)
             intent.putExtra("opt", OptionDTO(1))
-            startActivity(intent)
+            setOption.launch(intent)
         }
         binding.optChoice.setOnClickListener {
             val intent = Intent(mActivity, AddOptActivity::class.java)
             intent.putExtra("opt", OptionDTO(0))
-            startActivity(intent)
+            setOption.launch(intent)
         }
     }
 
@@ -328,6 +380,11 @@ class AddGoodsActivity : BaseActivity() {
                 status.setSelection(gd.icon - 1)
                 Log.d(TAG, "gd.icon -1 >> ${gd.icon - 1}")
                 Log.d(TAG, "Selected Item >> ${status.selectedItemPosition}")
+
+                if(!gd.opt.isNullOrEmpty()) {
+                    optList.addAll(gd.opt!!)
+                    optAdapter.notifyDataSetChanged()
+                }
             }
         }
     }
@@ -368,6 +425,8 @@ class AddGoodsActivity : BaseActivity() {
             gd.adDisplay = if(useSleep.isChecked) "Y" else "N"
 
             gd.icon = status.selectedItemPosition + 1
+
+            gd.opt = optList
         }
 
         when(type) {

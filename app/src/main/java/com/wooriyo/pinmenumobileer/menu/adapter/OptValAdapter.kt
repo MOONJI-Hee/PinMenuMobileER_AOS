@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.SpinnerAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.config.AppProperties
@@ -34,7 +33,6 @@ class OptValAdapter(val dataSet: ArrayList<ValueDTO>): RecyclerView.Adapter<Recy
         val binding = ListOptEditBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val bindingAdd = ListOptAddBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        val marks = parent.context.resources.getStringArray(R.array.opt_mark)
         val arrayAdapter = ArrayAdapter.createFromResource(parent.context, R.array.opt_mark, R.layout.spinner_opt_mark)
         binding.mark.adapter = arrayAdapter
 
@@ -82,8 +80,7 @@ class OptValAdapter(val dataSet: ArrayList<ValueDTO>): RecyclerView.Adapter<Recy
             }
 
             binding.value.addTextChangedListener(object : TextWatcher{
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int
-                ) {}
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
                 override fun afterTextChanged(s: Editable?) {
                     data.name = s.toString()
