@@ -8,14 +8,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.ListOptBinding
+import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.menu.AddOptActivity
 import com.wooriyo.pinmenumobileer.model.OptionDTO
 
 class OptAdapter(val dataSet: ArrayList<OptionDTO>): RecyclerView.Adapter<OptAdapter.ViewHolder>() {
+    lateinit var itemClickListener: ItemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ListOptBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding, parent.context)
+        return ViewHolder(binding, parent.context, itemClickListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -26,7 +28,11 @@ class OptAdapter(val dataSet: ArrayList<OptionDTO>): RecyclerView.Adapter<OptAda
         return dataSet.size
     }
 
-    class ViewHolder(val binding: ListOptBinding, val context: Context): RecyclerView.ViewHolder(binding.root) {
+    fun setOnItemClickListener(itemClickListener: ItemClickListener) {
+        this.itemClickListener = itemClickListener
+    }
+
+    class ViewHolder(val binding: ListOptBinding, val context: Context, val itemClickListener: ItemClickListener): RecyclerView.ViewHolder(binding.root) {
         val strOpt = context.getString(R.string.option_choice)
         val strReq = context.getString(R.string.option_require)
         val colOpt = Color.parseColor("#FF0000")
@@ -46,9 +52,7 @@ class OptAdapter(val dataSet: ArrayList<OptionDTO>): RecyclerView.Adapter<OptAda
             }
 
             binding.layout.setOnClickListener {
-                val intent = Intent(context, AddOptActivity::class.java)
-                intent.putExtra("opt", data)
-                context.startActivity(intent)
+                itemClickListener.onItemClick(adapterPosition)
             }
         }
     }
