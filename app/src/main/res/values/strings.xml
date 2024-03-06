@@ -27,6 +27,7 @@
     <string name="tablepass">테이블 비밀번호</string>
 
     <string name="essential">필수</string>
+    <string name="choice">선택</string>
     <string name="empty">없음</string>
 
     <string name="order">주문</string>

@@ -33,10 +33,10 @@ class OptAdapter(val dataSet: ArrayList<OptionDTO>): RecyclerView.Adapter<OptAda
     }
 
     class ViewHolder(val binding: ListOptBinding, val context: Context, val itemClickListener: ItemClickListener): RecyclerView.ViewHolder(binding.root) {
-        val strOpt = context.getString(R.string.option_choice)
-        val strReq = context.getString(R.string.option_require)
-        val colOpt = Color.parseColor("#FF0000")
-        val colReq = Color.parseColor("#FFA701")
+        val strOpt = context.getString(R.string.choice)
+        val strReq = context.getString(R.string.essential)
+        val colOpt = Color.parseColor("#FFA701")
+        val colReq = Color.parseColor("#FF0000")
         fun bind(data: OptionDTO) {
             binding.name.text = data.title
 

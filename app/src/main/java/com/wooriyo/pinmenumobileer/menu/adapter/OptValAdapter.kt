@@ -88,10 +88,11 @@ class OptValAdapter(val dataSet: ArrayList<ValueDTO>): RecyclerView.Adapter<Recy
             })
 
             binding.price.addTextChangedListener(object : TextWatcher{
+                var result = ""
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if(!s.isNullOrEmpty()) {
-                        val result = AppHelper.price(s.toString().replace(",", "").toInt())
+                    if(!s.isNullOrEmpty() && s.toString() != result) {
+                        result = AppHelper.price(s.toString().replace(",", "").toInt())
                         binding.price.setText(result)
                         binding.price.setSelection(result.length)
                     }

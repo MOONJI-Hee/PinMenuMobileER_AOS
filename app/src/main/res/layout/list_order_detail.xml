@@ -54,10 +54,11 @@
             app:layout_constraintStart_toEndOf="@+id/price"
             app:layout_constraintBottom_toBottomOf="@+id/price"/>
         <TextView
-            style="@style/subtext"
+            style="@style/text16"
             android:id="@+id/option"
             android:layout_width="match_parent"
             android:layout_marginTop="4dp"
+            android:textColor="#696969"
             android:visibility="gone"
             tools:text="코코팜추가"
             app:layout_constraintTop_toBottomOf="@+id/price"/>

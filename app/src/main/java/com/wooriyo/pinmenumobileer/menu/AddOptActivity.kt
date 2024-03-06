@@ -2,6 +2,7 @@ package com.wooriyo.pinmenumobileer.menu
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,10 +23,18 @@ class AddOptActivity : BaseActivity() {
     lateinit var valueAdapter: OptValAdapter
 
     var type = 0        // 0: 추가, 1: 수정
+    var position = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddOptBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        option = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getSerializableExtra("opt", OptionDTO::class.java) as OptionDTO
+        }else {
+            intent.getSerializableExtra("opt") as OptionDTO
+        }
 
         type = intent.getIntExtra("type", 0)
 
@@ -35,12 +44,8 @@ class AddOptActivity : BaseActivity() {
             binding.modify.visibility = View.VISIBLE
 
             binding.optName.setText(option.title)
-        }
 
-        option = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getSerializableExtra("opt", OptionDTO::class.java) as OptionDTO
-        }else {
-            intent.getSerializableExtra("opt") as OptionDTO
+            position = intent.getIntExtra("position", -1)
         }
 
         if(option.optreq == 0) {
@@ -61,7 +66,7 @@ class AddOptActivity : BaseActivity() {
             override fun onItemClick(position: Int) {
                 option.optval.removeAt(position)
                 valueAdapter.notifyItemRemoved(position)
-                valueAdapter.notifyItemRangeChanged(position, option.optval.size - position)
+                valueAdapter.notifyItemRangeChanged(position, valueAdapter.itemCount - position)
             }
         })
 
@@ -70,7 +75,8 @@ class AddOptActivity : BaseActivity() {
 
         binding.back.setOnClickListener { finish() }
         binding.delete.setOnClickListener {
-            setResult(AppProperties.RESULT_DELETE)
+            intent.putExtra("position", position)
+            setResult(AppProperties.RESULT_DELETE, intent)
             finish()
         }
         binding.modify.setOnClickListener { save() }
@@ -86,7 +92,11 @@ class AddOptActivity : BaseActivity() {
         option.title = title
 
         intent.putExtra("result_opt", option)
-        if(type == 0) setResult(RESULT_OK) else setResult(RESULT_MODIFY)
+        if(type == 0) setResult(RESULT_OK, intent)
+        else {
+            intent.putExtra("position", position)
+            setResult(RESULT_MODIFY, intent)
+        }
         finish()
     }
 }

@@ -43,6 +43,8 @@ import com.wooriyo.pinmenumobileer.util.AppHelper
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONArray
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -91,28 +93,30 @@ class AddGoodsActivity : BaseActivity() {
         when(it.resultCode) {
             Activity.RESULT_OK -> {
                 val resultOpt = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    it.data?.getSerializableExtra("opt", OptionDTO::class.java) as OptionDTO
+                    it.data?.getSerializableExtra("result_opt", OptionDTO::class.java) ?: return@registerForActivityResult
                 } else {
-                    it.data?.getSerializableExtra("opt") as OptionDTO
+                    it.data?.getSerializableExtra("result_opt") ?: return@registerForActivityResult
                 }
-                optList.add(resultOpt)
+                optList.add(resultOpt as OptionDTO)
+//                Log.d(TAG, "추가한 option > $resultOpt")
                 optAdapter.notifyItemInserted(optList.size - 1)
             }
             AppProperties.RESULT_MODIFY -> {
                 val resultOpt = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    it.data?.getSerializableExtra("opt", OptionDTO::class.java) as OptionDTO
+                    it.data?.getSerializableExtra("result_opt", OptionDTO::class.java) ?: return@registerForActivityResult
                 } else {
-                    it.data?.getSerializableExtra("opt") as OptionDTO
+                    it.data?.getSerializableExtra("result_opt") ?: return@registerForActivityResult
                 }
-                val position = intent.getIntExtra("position", -1)
+
+                val position = it.data?.getIntExtra("position", -1) ?: -1
 
                 if(position >= 0) {
-                    optList[position] = resultOpt
+                    optList[position] = resultOpt as OptionDTO
                     optAdapter.notifyItemChanged(position)
                 }
             }
             AppProperties.RESULT_DELETE -> {
-                val position = intent.getIntExtra("position", -1)
+                val position = it.data?.getIntExtra("position", -1) ?: -1
                 if(position >= 0) {
                     optList.removeAt(position)
                     optAdapter.notifyItemRemoved(position)
@@ -187,6 +191,7 @@ class AddGoodsActivity : BaseActivity() {
         optAdapter.setOnItemClickListener(object : ItemClickListener{
             override fun onItemClick(position: Int) {
                 val intent = Intent(mActivity, AddOptActivity::class.java)
+                intent.putExtra("type", 1)
                 intent.putExtra("opt", optList[position].deepCopy())
                 intent.putExtra("position", position)
                 setOption.launch(intent)
@@ -394,6 +399,8 @@ class AddGoodsActivity : BaseActivity() {
 
         val gd = goods ?: GoodsDTO(cate)
 
+        val jsonArray = JSONArray()
+
         binding.run {
             val strName = name.text.toString()
 
@@ -427,11 +434,39 @@ class AddGoodsActivity : BaseActivity() {
             gd.icon = status.selectedItemPosition + 1
 
             gd.opt = optList
+
+            if(!gd.opt.isNullOrEmpty()) {
+                gd.opt!!.forEach {
+                    val jsonObject = JSONObject()
+
+                    jsonObject.put("optidx", it.idx)
+                    jsonObject.put("optionTitle", it.title)
+
+                    if(it.optreq == 0)
+                        jsonObject.put("optionType", "선택")
+                    else
+                        jsonObject.put("optionType", "필수")
+
+                    val jsonArray2 = JSONArray()
+                    it.optval.forEach { value ->
+                        val jsonObject2 = JSONObject()
+                        jsonObject2.put("optionidx", value.idx)
+                        jsonObject2.put("optionName", value.name)
+                        jsonObject2.put("optionMark", value.mark)
+                        jsonObject2.put("optionPrice", value.price)
+
+                        jsonArray2.put(jsonObject2)
+                    }
+                    jsonObject.put("optionDetails", jsonArray2)
+
+                    jsonArray.put(jsonObject)
+                }
+            }
         }
 
         when(type) {
-            1 -> save(gd)
-            2 -> modify(gd)
+            1 -> save(gd, jsonArray.toString())
+            2 -> modify(gd, jsonArray.toString())
         }
     }
 
@@ -444,9 +479,11 @@ class AddGoodsActivity : BaseActivity() {
         }
     }
 
-    fun save(gd: GoodsDTO) {
+    fun save(gd: GoodsDTO, strJson : String) {
+        Log.d(TAG, "strJson >>> $strJson")
+
         ApiClient.service.insGoods(useridx, storeidx, gd.category, gd.name, gd.content?:"", gd.cooking_time_min, gd.cooking_time_max, gd.price,
-        gd.adDisplay, gd.icon, gd.boption, "", "", "", "", "").enqueue(object: Callback<ResultDTO>{
+        gd.adDisplay, gd.icon, gd.boption, strJson).enqueue(object: Callback<ResultDTO>{
             override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                 Log.d(TAG, "메뉴 등록 url : $response")
                 if(!response.isSuccessful) return
@@ -471,9 +508,11 @@ class AddGoodsActivity : BaseActivity() {
         })
     }
 
-    fun modify(gd: GoodsDTO) {
+    fun modify(gd: GoodsDTO, strJson : String) {
+        Log.d(TAG, "strJson >>> $strJson")
+
         ApiClient.service.udtGoods(useridx, storeidx, gd.idx, gd.category, gd.name, gd.content?:"", gd.cooking_time_min, gd.cooking_time_max, gd.price,
-         gd.icon, delImg1, delImg2, delImg3, gd.adDisplay, gd.boption, "", "", "", "", "", "").enqueue(object: Callback<ResultDTO>{
+         gd.icon, delImg1, delImg2, delImg3, gd.adDisplay, gd.boption, strJson).enqueue(object: Callback<ResultDTO>{
             override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                 Log.d(TAG, "메뉴 수정 url : $response")
                 if(!response.isSuccessful) return
