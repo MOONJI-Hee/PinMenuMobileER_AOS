@@ -36,21 +36,39 @@ class OptValAdapter(val dataSet: ArrayList<ValueDTO>): RecyclerView.Adapter<Recy
         val arrayAdapter = ArrayAdapter.createFromResource(parent.context, R.array.opt_mark, R.layout.spinner_opt_mark)
         binding.mark.adapter = arrayAdapter
 
-        return if(viewType == AppProperties.VIEW_TYPE_COM) ViewHolder(binding, parent.context, deleteClickListener)
+//        return if(viewType == AppProperties.VIEW_TYPE_COM) ViewHolder(binding, parent.context, deleteClickListener)
+//        else ViewHolderAdd(bindingAdd, parent.context, plusClickListener)
+
+        return if(viewType < dataSet.size) ViewHolder(binding, parent.context, deleteClickListener)
         else ViewHolderAdd(bindingAdd, parent.context, plusClickListener)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+//        when(getItemViewType(position)){
+//            AppProperties.VIEW_TYPE_COM -> {
+//                holder as ViewHolder
+//                holder.bind(dataSet[position])
+//            }
+//            AppProperties.VIEW_TYPE_ADD -> {
+//                holder as ViewHolderAdd
+//                holder.bind()
+//            }
+//        }
+
         when(getItemViewType(position)){
-            AppProperties.VIEW_TYPE_COM -> {
-                holder as ViewHolder
-                holder.bind(dataSet[position])
-            }
-            AppProperties.VIEW_TYPE_ADD -> {
+            dataSet.size -> {
                 holder as ViewHolderAdd
                 holder.bind()
             }
+            else -> {
+                holder as ViewHolder
+                holder.bind(dataSet[position])
+            }
         }
+    }
+
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
+        super.onViewRecycled(holder)
     }
 
     override fun getItemCount(): Int {
@@ -58,16 +76,23 @@ class OptValAdapter(val dataSet: ArrayList<ValueDTO>): RecyclerView.Adapter<Recy
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if(position == dataSet.size) AppProperties.VIEW_TYPE_ADD else AppProperties.VIEW_TYPE_COM
+//        return if(position == dataSet.size) AppProperties.VIEW_TYPE_ADD else AppProperties.VIEW_TYPE_COM
+        return position
     }
 
     class ViewHolder(val binding: ListOptEditBinding, val context: Context, val deleteClickListener: ItemClickListener): RecyclerView.ViewHolder(binding.root) {
         fun bind(data: ValueDTO) {
             binding.num.text = String.format(context.getString(R.string.opt_num), adapterPosition+1)
 
-            binding.value.setText(data.name)
+            if(data.name.isNotEmpty())
+                binding.value.setText(data.name)
+            else
+                binding.value.text.clear()
+
             if(data.price.isNotEmpty() && data.price != "0") {
                 binding.price.setText(AppHelper.price(data.price.toInt()))
+            }else {
+                binding.price.text.clear()
             }
 
             if (data.mark == "-")

@@ -39,7 +39,10 @@ class OrderDetailAdapter(val dataSet: ArrayList<OrderDTO>): RecyclerView.Adapter
                     layout.setBackgroundColor(Color.parseColor("#FFFFFF"))
                 }
 
-                if(data.opt.isNotEmpty()) {
+                if(data.opt.isNullOrEmpty()) {
+                    option.visibility = View.GONE
+                    setHeight(layout, 100)
+                }else {
                     var strOpt = ""
 
                     data.opt.forEach {
@@ -49,19 +52,19 @@ class OrderDetailAdapter(val dataSet: ArrayList<OrderDTO>): RecyclerView.Adapter
                             strOpt += "\n$it"
                     }
 
-                    var height = 100
+                    option.text = strOpt
 
-                    val multiple = (data.opt.size - 1) / 4
+                    var height = 100
+                    val cnt = data.opt.size
+
+                    val multiple = if(cnt <= 1) 0 else ((cnt - 2) / 4) + 1
 
                     height += (104 * multiple)
 
                     setHeight(layout, height)
 
-                    option.text = strOpt
                     option.visibility = View.VISIBLE
-                }else{
-                    option.visibility = View.GONE
-                    setHeight(layout, 100)
+
                 }
             }
         }

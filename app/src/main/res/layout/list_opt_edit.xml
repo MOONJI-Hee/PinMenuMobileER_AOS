@@ -10,13 +10,14 @@
         android:id="@+id/num"
         android:text="@string/opt_num"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toTopOf="@+id/value"
+        app:layout_constraintBottom_toBottomOf="@+id/value"/>
     <EditText
         style="@style/edittext"
         android:id="@+id/value"
         android:layout_width="270dp"
         android:hint="@string/opt_hint"
+        android:imeOptions="actionNext"
         android:inputType="text"
         android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,6 +44,7 @@
         android:maxLines="1"
         android:maxLength="11"
         android:inputType="number"
+        android:imeOptions="actionDone"
         android:textAlignment="viewEnd"
         android:fontFamily="@font/sf_pro_dis_regular"
         app:layout_constraintTop_toTopOf="@+id/mark"
