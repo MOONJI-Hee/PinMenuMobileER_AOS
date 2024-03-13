@@ -2,23 +2,18 @@ package com.wooriyo.pinmenumobileer.store.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.tabs.TabLayout
 import com.wooriyo.pinmenumobileer.MyApplication
-import com.wooriyo.pinmenumobileer.call.CallListActivity
 import com.wooriyo.pinmenumobileer.databinding.ListStoreBinding
 import com.wooriyo.pinmenumobileer.history.ByHistoryActivity
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.menu.SetCategoryActivity
 import com.wooriyo.pinmenumobileer.model.StoreDTO
-import com.wooriyo.pinmenumobileer.order.OrderListActivity
 import com.wooriyo.pinmenumobileer.pg.PgHistoryActivity
 import com.wooriyo.pinmenumobileer.pg.dialog.NoPgInfoDialog
-import com.wooriyo.pinmenumobileer.util.AppHelper
 import com.wooriyo.pinmenumobileer.util.AppHelper.Companion.dateNowCompare
 
 class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
