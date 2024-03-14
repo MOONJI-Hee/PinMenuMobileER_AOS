@@ -395,8 +395,6 @@ class AddGoodsActivity : BaseActivity() {
     }
 
     fun getMenu() {
-        loadingDialog.show(supportFragmentManager, "LoadingDialog")
-
         val gd = goods ?: GoodsDTO(cate)
 
         val jsonArray = JSONArray()
@@ -408,6 +406,8 @@ class AddGoodsActivity : BaseActivity() {
                 Toast.makeText(mActivity, R.string.msg_no_goods_name, Toast.LENGTH_SHORT).show()
                 return
             }
+
+            loadingDialog.show(supportFragmentManager, "LoadingDialog")
 
             var strCookTimeMin = cookingTimeMin.text.toString()
             var strCookTimeMax = cookingTimeMax.text.toString()
