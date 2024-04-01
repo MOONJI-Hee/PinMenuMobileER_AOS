@@ -15,11 +15,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.sewoo.request.android.RequestHandler
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.pref
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeList
 import com.wooriyo.pinmenumobileer.common.SelectStoreFragment
+import com.wooriyo.pinmenumobileer.common.dialog.WelcomeDialog
 import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.databinding.ActivityMainBinding
 import com.wooriyo.pinmenumobileer.menu.SetCategoryActivity
+import com.wooriyo.pinmenumobileer.model.PopupListDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.model.StoreDTO
 import com.wooriyo.pinmenumobileer.more.MoreFragment
@@ -99,6 +102,9 @@ class MainActivity : BaseActivity() {
         }
         // 위치 권한 확인
         checkPermissions()
+
+        // 전면 팝업 조회
+        getWelcomePopup()
 
         binding.run {
             icMain.setOnClickListener { goMain() }
@@ -393,6 +399,28 @@ class MainActivity : BaseActivity() {
 
     fun setTxtWhite(tv:TextView) {
         tv.setTextColor(getColor(R.color.white))
+    }
+
+    fun getWelcomePopup() {
+        ApiClient.service.getWelcomePopup(0, 0, 0)?.enqueue(object : Callback<PopupListDTO?>{
+            override fun onResponse(call: Call<PopupListDTO?>, response: Response<PopupListDTO?>) {
+                Log.d(TAG, "전면 팝업 조회  url : $response")
+                if(!response.isSuccessful) return
+                val result = response.body() ?: return
+
+                if(result.status != 1 || result.popupList.isNullOrEmpty()) return
+
+                if(!AppHelper.CompareToday(pref.getNoPopupDate())) {
+                    WelcomeDialog(result.popupList[0]).show(supportFragmentManager, "WelcomeDialog")
+                }
+            }
+
+            override fun onFailure(call: Call<PopupListDTO?>, t: Throwable) {
+                Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "전면 팝업 조회 실패 >> $t")
+                Log.d(TAG, "전면 팝업 조회 실패 >> ${call.request()}")
+            }
+        })
     }
 
     fun insPaySetting(position: Int) {

@@ -9,7 +9,6 @@ import android.os.Build
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewDebug.IntToString
 import android.view.ViewOutlineProvider
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -17,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity.INPUT_METHOD_SERVICE
 import androidx.recyclerview.widget.RecyclerView
 import com.sam4s.io.ethernet.SocketInfo
 import com.sam4s.printer.Sam4sFinder
-import com.sewoo.request.android.RequestHandler
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.appver
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.bluetoothAdapter
@@ -29,28 +27,26 @@ import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.BT_PRINTER
 import com.wooriyo.pinmenumobileer.model.OrderDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.printer.sam4s.EthernetConnection
-import com.wooriyo.pinmenumobileer.printer.sam4s.NetworkPrinterInfo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
-import java.lang.reflect.Method
 import java.text.DecimalFormat
 import java.text.NumberFormat
-import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
+import java.util.Calendar
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 // 자주 쓰는 메소드 모음 - 문지희 (2023.05 갱신)
 class AppHelper {
     val TAG = "AppHelper"
     companion object {
+        private val dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         private val datetimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         private val appCallFormatter = DateTimeFormatter.ofPattern("yyMMddHHmmss")
         private val emailReg = "^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$".toRegex()
@@ -154,6 +150,22 @@ class AppHelper {
                 val cmp = day.compareTo(now)
 
                 cmp >= 0
+            }
+        }
+
+        // 오늘 날짜와 비교 - true: 오늘, false : 오늘 아님
+        fun CompareToday(strDate: String?): Boolean {
+            return if (strDate.isNullOrEmpty()) {
+                false
+            } else {
+                val list = strDate.split("-".toRegex()).dropLastWhile { it.isEmpty() }
+                val year = list[0].toInt()
+                val month = list[1].toInt()
+                val day = list[2].toInt()
+
+                val today = LocalDate.now()
+                val date = LocalDate.of(year, month, day)
+                today.isEqual(date)
             }
         }
 

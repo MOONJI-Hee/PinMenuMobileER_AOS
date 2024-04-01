@@ -24,7 +24,7 @@ import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.databinding.ActivitySetEventBinding
-import com.wooriyo.pinmenumobileer.model.PopupDTO
+import com.wooriyo.pinmenumobileer.model.EventDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import okhttp3.MediaType
@@ -38,7 +38,7 @@ import java.io.File
 class SetEventActivity : BaseActivity() {
     lateinit var binding: ActivitySetEventBinding
 
-    lateinit var event: PopupDTO
+    lateinit var event: EventDTO
 
     private var imgUri: Uri? = null
     var file: File? = null
@@ -71,9 +71,9 @@ class SetEventActivity : BaseActivity() {
         setContentView(binding.root)
 
         event = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getSerializableExtra("event", PopupDTO::class.java) as PopupDTO
+            intent.getSerializableExtra("event", EventDTO::class.java) as EventDTO
         }else
-            intent.getSerializableExtra("event") as PopupDTO
+            intent.getSerializableExtra("event") as EventDTO
 
 
         if(!(event.img.isNullOrEmpty() || (event.img?:"").contains("noimage.png"))) {

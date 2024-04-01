@@ -1,8 +1,6 @@
 package com.wooriyo.pinmenumobileer.util
 
 import com.wooriyo.pinmenumobileer.model.*
-import com.wooriyo.pinmenumobileer.model.ResultDTO
-import com.wooriyo.pinmenumobileer.model.StoreListDTO
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -88,6 +86,14 @@ interface Api {
     fun dropMbr(
         @Query("useridx") useridx: Int
     ): Call<ResultDTO>
+
+    //전면팝업 목록 조회
+    @GET("popup_list.php")
+    fun getWelcomePopup(
+        @Query("APP") nApp: Int,        // 앱 종류 0.근로자용 1.관리자용
+        @Query("PAGE") nPage: Int,      // 배너 위치 0.메인 1.더보기
+        @Query("TARGET") nTarget: Int   // TARGET 모바일 0 ,태블릿 1
+    ): Call<PopupListDTO?>?
 
     // 매장 목록 조회
     @GET("m/store.list.php")
@@ -575,7 +581,7 @@ interface Api {
     fun getEventPopup (
         @Query("useridx") useridx: Int,
         @Query("storeidx") storeidx: Int
-    ): Call<PopupDTO>
+    ): Call<EventDTO>
 
     // pg 결제 고객 정보 받기 설정
     @GET("m/set_qrcustominfo.php")

@@ -67,6 +67,7 @@
     <string name="btn_clear">초&#160;기&#160;화</string>
     <string name="btn_add">추&#160;&#160;가</string>
     <string name="btn_close">닫&#160;&#160;기</string>
+    <string name="btn_not_today">오늘 그만 보기</string>
 
     <string name="udt_info">정보변경</string>
     <string name="back">돌아가기</string>

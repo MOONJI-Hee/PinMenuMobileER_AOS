@@ -43,6 +43,14 @@ class SharedDTO(context: Context) {
         pref.edit().putString("push_token", push_token).apply()
     }
 
+    fun getNoPopupDate(): String? {
+        return pref.getString("not_today", "")
+    }
+
+    fun setNoPopupDate(notToday: String) {
+        pref.edit().putString("not_today", notToday).apply()
+    }
+
     fun logout() {
         pref.edit().remove("mbrData").apply()
         pref.edit().remove("useridx").apply()

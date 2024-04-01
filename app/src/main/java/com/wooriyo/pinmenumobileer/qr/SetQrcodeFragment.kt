@@ -15,11 +15,7 @@ import android.widget.CheckBox
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.wooriyo.pinmenumobileer.MainActivity
-import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.engStoreName
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.store
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
@@ -29,11 +25,10 @@ import com.wooriyo.pinmenumobileer.broadcast.DownloadReceiver
 import com.wooriyo.pinmenumobileer.common.dialog.AlertDialog
 import com.wooriyo.pinmenumobileer.databinding.FragmentSetQrcodeBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
-import com.wooriyo.pinmenumobileer.model.PopupDTO
+import com.wooriyo.pinmenumobileer.model.EventDTO
 import com.wooriyo.pinmenumobileer.model.QrDTO
 import com.wooriyo.pinmenumobileer.model.QrListDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
-import com.wooriyo.pinmenumobileer.more.SetCustomerInfoActivity
 import com.wooriyo.pinmenumobileer.qr.adapter.QrAdapter
 import com.wooriyo.pinmenumobileer.qr.dialog.QrInfoDialog
 import com.wooriyo.pinmenumobileer.util.ApiClient
@@ -56,7 +51,7 @@ class SetQrcodeFragment : Fragment() {
     var bisAll = false
     var bisCnt = 0
 
-    var event : PopupDTO? = null
+    var event : EventDTO? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -302,8 +297,8 @@ class SetQrcodeFragment : Fragment() {
     // 주문 완료 후 이벤트 팝업
     private fun getEvent() {
         ApiClient.service.getEventPopup(useridx, storeidx)
-            .enqueue(object : Callback<PopupDTO> {
-                override fun onResponse(call: Call<PopupDTO>, response: Response<PopupDTO>) {
+            .enqueue(object : Callback<EventDTO> {
+                override fun onResponse(call: Call<EventDTO>, response: Response<EventDTO>) {
                     Log.d(TAG, "주문완료 후 팝업 정보 조회 url : $response")
                     if(!response.isSuccessful) return
 
@@ -317,7 +312,7 @@ class SetQrcodeFragment : Fragment() {
                     }
                 }
 
-                override fun onFailure(call: Call<PopupDTO>, t: Throwable) {
+                override fun onFailure(call: Call<EventDTO>, t: Throwable) {
                     Toast.makeText(context, R.string.msg_retry, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, "주문완료 후 팝업 정보 조회 실페 > $t")
                     Log.d(TAG, "주문완료 후 팝업 정보 조회 실패 > ${call.request()}")

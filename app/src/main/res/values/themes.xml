@@ -32,4 +32,11 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:backgroundDimEnabled">false</item>     <!-- true - 반투명 검정 /  false - 완전 투명 -->
     </style>
+    <!--  전면 팝업  -->
+    <style name="FullScreenDialog" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+    </style>
 </resources>
