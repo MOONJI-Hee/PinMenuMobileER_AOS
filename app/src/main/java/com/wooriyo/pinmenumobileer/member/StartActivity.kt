@@ -20,11 +20,14 @@ import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.util.AppHelper
 import retrofit2.Call
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.util.Calendar
+import java.util.Locale
 
 class StartActivity : BaseActivity() {
-//    val TAG = "StartActivity"
-//    val mActivity = this@StartActivity
-
     var id = ""
     var pw = ""
     var token = ""
@@ -32,7 +35,6 @@ class StartActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
-
         checkVersion()
     }
 
