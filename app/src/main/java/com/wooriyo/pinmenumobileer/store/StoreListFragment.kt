@@ -123,7 +123,7 @@ class StoreListFragment : Fragment() {
                                 binding.empty.visibility = View.GONE
                                 binding.rvStore.visibility = View.VISIBLE
                                 storeAdapter.notifyDataSetChanged()
-                                AppHelper.setRvHeight(binding.rvStore, MyApplication.storeList.size, 200)
+                                AppHelper.setRvHeight(binding.rvStore, MyApplication.storeList.size, 155)
                             }
                         }else Toast.makeText(context, storeListDTO.msg, Toast.LENGTH_SHORT).show()
                     }

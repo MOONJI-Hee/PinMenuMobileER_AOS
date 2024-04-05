@@ -50,7 +50,9 @@ class SetActivity : BaseActivity() {
                         }
                     }
                     else ->  {
-                        startActivity(Intent(mActivity, SelectStoreActivity::class.java))
+                        val intent = Intent(mActivity, SelectStoreActivity::class.java)
+                        intent.putExtra("type", "customer_info")
+                        startActivity(intent)
                     }
                 }
             }

@@ -21,7 +21,7 @@
             android:id="@+id/appIcon"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="20dp"
             android:src="@drawable/img_design_appicon_er"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
@@ -29,7 +29,7 @@
         <TextView
             style="@style/text17d"
             android:id="@+id/userid"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="18dp"
             android:layout_marginStart="20dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@+id/appIcon"

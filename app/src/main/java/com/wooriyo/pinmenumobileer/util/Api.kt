@@ -130,6 +130,42 @@ interface Api {
         @Query("uuid") androidId : String
     ): Call<ResultDTO>
 
+    // 매장 대표 이미지 설정
+    @Multipart
+    @POST("m/uploadstore.php")
+    fun udtStoreImg (
+        @Part("useridx") useridx: Int,
+        @Part("idx") storeidx: Int,
+        @Part img: MultipartBody.Part?,
+        @Part("delImg") delImg: Int,
+        @Part("content") exp: RequestBody
+    ): Call<ResultDTO>
+
+    // 메뉴판 테마색 설정
+    @GET("m/setbg.php")
+    fun setBgColor(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("thema_color") color: String // d : 어두운 배경(디폴트), g : 은색 배경, l : 밝은 배경
+    ): Call<ResultDTO>
+
+    // 메뉴판 뷰 모드 설정
+    @GET("m/setviewmode.php")
+    fun setViewMode(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("viewmode") viewmode: String // b : 기본, p: 3x3
+    ): Call<ResultDTO>
+
+    // 메뉴판 디자인(테마) 설정
+    @GET("m/set_thema.php")
+    fun setThema(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("thema_color") color: String, // d : 어두운 배경(디폴트), g : 은색 배경, l : 밝은 배경
+        @Query("viewmode") viewmode: String // b : 기본, p: 3x3, l : 리스트
+    ): Call<ResultDTO>
+
     // 카테고리 목록 조희
     @GET("m/getcategory.php")
     fun getCateList(
