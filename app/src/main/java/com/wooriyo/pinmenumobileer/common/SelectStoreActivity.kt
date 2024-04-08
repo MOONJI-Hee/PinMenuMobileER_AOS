@@ -14,6 +14,7 @@ import com.wooriyo.pinmenumobileer.common.dialog.AlertDialog
 import com.wooriyo.pinmenumobileer.databinding.ActivitySelectStoreBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.more.SetCustomerInfoActivity
+import com.wooriyo.pinmenumobileer.more.SetMenuUi
 import com.wooriyo.pinmenumobileer.more.SetStoreImgActivity
 import com.wooriyo.pinmenumobileer.util.AppHelper
 
@@ -50,7 +51,7 @@ class SelectStoreActivity : BaseActivity() {
                         if(storeList[position].payuse == "Y" && AppHelper.dateNowCompare(storeList[position].paydate)) {
                             MyApplication.store = storeList[position]
                             MyApplication.storeidx = storeList[position].idx
-                            startActivity(Intent(mActivity, SetCustomerInfoActivity::class.java))
+                            startActivity(Intent(mActivity, SetMenuUi::class.java))
                         }else {
                             Toast.makeText(mActivity, R.string.msg_no_pay, Toast.LENGTH_SHORT).show()
                         }

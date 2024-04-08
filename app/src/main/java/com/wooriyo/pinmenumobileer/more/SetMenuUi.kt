@@ -21,6 +21,12 @@ class SetMenuUi : BaseActivity() {
         binding = ActivitySetMenuUiBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        when(MyApplication.store.viewmode) {
+            "b" -> binding.checkBasic.isChecked = true
+            "p" -> binding.check3x3.isChecked = true
+            "l" -> binding.checkList.isChecked = true
+        }
+
         binding.run{
             checkBasic.setOnCheckedChangeListener { _, isChecked ->
                 if(isChecked) {
@@ -42,12 +48,6 @@ class SetMenuUi : BaseActivity() {
                     check3x3.isChecked = false
                     save()
                 }
-            }
-
-            when(MyApplication.store.viewmode) {
-                "b" -> binding.checkBasic.isChecked = true
-                "p" -> binding.check3x3.isChecked = true
-                "l" -> binding.checkList.isChecked = true
             }
 
             back.setOnClickListener { finish() }

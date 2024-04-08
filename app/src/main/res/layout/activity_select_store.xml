@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/title"
         style="@style/title"
-        android:text="@string/more"
+        android:text="@string/printer_title_store"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

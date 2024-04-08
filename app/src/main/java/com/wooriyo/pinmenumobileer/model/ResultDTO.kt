@@ -15,5 +15,6 @@ data class ResultDTO(
     @SerializedName("useridx") var useridx : Int,
     @SerializedName("bidx") var bidx : Int,
     @SerializedName("qidx") var qidx : Int,
+    @SerializedName("img") var img : String,
     @SerializedName("filepath") var filePath: String
 )

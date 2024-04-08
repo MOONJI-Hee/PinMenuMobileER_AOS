@@ -96,7 +96,6 @@
                 style="@style/toggle"
                 android:id="@+id/checkBasic"
                 android:layout_marginStart="28dp"
-                android:checked="true"
                 app:layout_constraintStart_toEndOf="@+id/ivBasic"
                 app:layout_constraintTop_toTopOf="@+id/ivBasic"
                 app:layout_constraintBottom_toBottomOf="@+id/ivBasic"/>
