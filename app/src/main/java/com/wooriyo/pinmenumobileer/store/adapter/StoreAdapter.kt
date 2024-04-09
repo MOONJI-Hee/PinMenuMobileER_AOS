@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.wooriyo.pinmenumobileer.MyApplication
+import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.ListStoreBinding
 import com.wooriyo.pinmenumobileer.history.ByHistoryActivity
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
@@ -42,16 +44,26 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
 
     class ViewHolder(val binding: ListStoreBinding, val context: Context, val itemClickListener: ItemClickListener): RecyclerView.ViewHolder(binding.root) {
         fun bind(data: StoreDTO) {
+            if(data.paydate.isNotEmpty() && data.payuse == "N") {
+                AlertDialog.Builder(context)
+                    .setTitle(R.string.dialog_notice)
+                    .setMessage("${data.name}\n이용기간이 만료되었습니다.\n정기결제 후 이용을 부탁드립니다.")
+                    .setPositiveButton(R.string.confirm) { dialog, _ -> dialog.dismiss()}
+                    .show()
+            }
             binding.run {
                 storeName.text = data.name
                 ordCnt.text = data.ordCnt.toString()
                 menuCnt.text = data.menuCnt.toString()
                 payCnt.text = data.pgCnt.toString()
 
-                btnOrder.setOnClickListener{
+                btnOrder.setOnClickListener {
                     ordCnt.isPressed = true
                     ordTxt.isPressed = true
-                    itemClickListener.onStoreClick(data, Intent(context, ByHistoryActivity::class.java))
+                    itemClickListener.onStoreClick(
+                        data,
+                        Intent(context, ByHistoryActivity::class.java)
+                    )
                 }
 //                btnCall.setOnClickListener {
 //                    callCnt.isPressed = true
@@ -63,7 +75,7 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
                     menuCnt.isPressed = true
                     menuTxt.isPressed = true
 
-                    if((data.payuse == "Y" && dateNowCompare(data.paydate)) || adapterPosition == 0) {
+                    if ((data.payuse == "Y" && dateNowCompare(data.paydate)) || adapterPosition == 0) {
                         MyApplication.store = MyApplication.storeList[adapterPosition]
                         MyApplication.storeidx = MyApplication.storeList[adapterPosition].idx
 
@@ -72,23 +84,26 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
                 }
 
                 btnPayHistory.setOnClickListener {
-                    if(data.pg_storenm.isEmpty() || data.pg_snum.isEmpty()) {
-                        NoPgInfoDialog().show((context as FragmentActivity).supportFragmentManager, "NoPgInfoDialog")
-                    }else {
+                    if (data.pg_storenm.isEmpty() || data.pg_snum.isEmpty()) {
+                        NoPgInfoDialog().show(
+                            (context as FragmentActivity).supportFragmentManager,
+                            "NoPgInfoDialog"
+                        )
+                    } else {
                         MyApplication.storeidx = data.idx
                         context.startActivity(Intent(context, PgHistoryActivity::class.java))
                     }
                 }
 
-                if(data.pg_storenm.isEmpty() || data.pg_snum.isEmpty()) {
+                if (data.pg_storenm.isEmpty() || data.pg_snum.isEmpty()) {
                     payCnt.isEnabled = false
                     payTxt.isEnabled = false
-                }else {
+                } else {
                     payCnt.isEnabled = true
                     payTxt.isEnabled = true
                 }
 
-                if(data.payuse == "Y" && dateNowCompare(data.paydate)) {
+                if (data.payuse == "Y" && dateNowCompare(data.paydate)) {
                     storeName.isEnabled = true
                     ordCnt.isEnabled = true
                     ordTxt.isEnabled = true
@@ -98,7 +113,7 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
                     payCnt.isEnabled = true
                     payTxt.isEnabled = true
                     btnPayHistory.isEnabled = true
-                }else {
+                } else {
                     storeName.isEnabled = false
                     ordCnt.isEnabled = false
                     ordTxt.isEnabled = false
