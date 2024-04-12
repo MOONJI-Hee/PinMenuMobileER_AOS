@@ -1,10 +1,10 @@
-package com.wooriyo.pinmenumobileer.printer.adapter
+package com.wooriyo.pinmenumobileer.common.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.wooriyo.pinmenumobileer.databinding.ListPrinterStoreBinding
+import com.wooriyo.pinmenumobileer.databinding.ListStoreSelectBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.StoreDTO
 import com.wooriyo.pinmenumobileer.util.AppHelper
@@ -12,13 +12,19 @@ import com.wooriyo.pinmenumobileer.util.AppHelper
 class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
     lateinit var itemClickListener: ItemClickListener
 
+    var isFree: Boolean = false
+
+    fun setIsFree(isFree: Boolean) {
+        this.isFree = isFree
+    }
+
     fun setOnItemClickListener(itemClickListener: ItemClickListener) {
         this.itemClickListener = itemClickListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ListPrinterStoreBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding, parent.context, itemClickListener)
+        val binding = ListStoreSelectBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding, parent.context, itemClickListener, isFree)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -33,12 +39,13 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
         return dataSet.size
     }
 
-    class ViewHolder(val binding: ListPrinterStoreBinding, val context: Context, val itemClickListener: ItemClickListener): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(val binding: ListStoreSelectBinding, val context: Context, val itemClickListener: ItemClickListener, val isFree: Boolean): RecyclerView.ViewHolder(binding.root) {
         fun bind(data: StoreDTO) {
             binding.run {
                 storeName.text = data.name
 
-                storeName.isEnabled = data.payuse == "Y" && AppHelper.dateNowCompare(data.paydate)
+                if(!isFree)
+                    storeName.isEnabled = data.payuse == "Y" && AppHelper.dateNowCompare(data.paydate)
 
                 storeName.setOnClickListener {
                     itemClickListener.onItemClick(adapterPosition)

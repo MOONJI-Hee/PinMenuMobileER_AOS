@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/f9">
+    <TextView
+        style="@style/title"
+        android:id="@+id/title"
+        android:text="@string/setting"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <LinearLayout
+        android:id="@+id/back"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="@+id/title"
+        app:layout_constraintTop_toTopOf="@+id/title">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_back_white"/>
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/title">
+
+        <TextView
+            style="@style/more_menu"
+            android:id="@+id/qrCustomerInfo"
+            android:text="@string/qr_customer_info_title"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_list_arrow_right"
+            app:layout_constraintTop_toTopOf="@+id/qrCustomerInfo"
+            app:layout_constraintBottom_toBottomOf="@+id/qrCustomerInfo"
+            app:layout_constraintEnd_toEndOf="@+id/qrCustomerInfo"/>
+
+        <TextView
+            style="@style/more_menu"
+            android:id="@+id/udtMbr"
+            android:text="@string/title_udt_mbr"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/qrCustomerInfo"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_list_arrow_right"
+            app:layout_constraintTop_toTopOf="@+id/udtMbr"
+            app:layout_constraintBottom_toBottomOf="@+id/udtMbr"
+            app:layout_constraintEnd_toEndOf="@+id/udtMbr"/>
+
+        <TextView
+            style="@style/more_menu"
+            android:id="@+id/versionInfo"
+            android:text="@string/version_info"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/udtMbr"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_list_arrow_right"
+            app:layout_constraintTop_toTopOf="@+id/versionInfo"
+            app:layout_constraintBottom_toBottomOf="@+id/versionInfo"
+            app:layout_constraintEnd_toEndOf="@+id/versionInfo"/>
+
+        <TextView
+            style="@style/more_menu"
+            android:id="@+id/logout"
+            android:text="@string/logout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/versionInfo"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_list_arrow_right"
+            app:layout_constraintTop_toTopOf="@+id/logout"
+            app:layout_constraintBottom_toBottomOf="@+id/logout"
+            app:layout_constraintEnd_toEndOf="@+id/logout"/>
+
+        <TextView
+            style="@style/more_menu"
+            android:id="@+id/drop"
+            android:text="@string/drop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logout"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_list_arrow_right"
+            app:layout_constraintTop_toTopOf="@+id/drop"
+            app:layout_constraintBottom_toBottomOf="@+id/drop"
+            app:layout_constraintEnd_toEndOf="@+id/drop"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

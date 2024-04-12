@@ -185,12 +185,6 @@
     <string name="store_holiday_name">휴일 명칭</string>
     <string name="store_holiday_name_hint">명칭을 입력해주세요.</string>
     <string name="store_holiday_set_info">‘월’을 입력하지 않으면 ‘매월’로 표시합니다.</string>
-    <!--  매장 대표 사진 -->
-    <string name="store_img">매장사진</string>
-    <string name="store_rep_img">대표 사진</string>
-    <string name="store_img_reg">등록 및 관리</string>
-    <string name="store_img_reg_hint">[ 등록 및 관리 ] 버튼으로\n이미지를 등록해주세요</string>
-    <string name="store_img_info"><b>매장 대표 사진</b>\n매장을 대표할 이미지를 올려주세요.\n음식 사진 혹은 매장 내부 혹은 외부 사진을 올려주세요.</string>
 
     <!--  메뉴 선택 (메인)  -->
     <string name="order_mgmt">주문정보</string>
@@ -415,6 +409,25 @@
 
     <!-- 더보기 -->
     <string name="more">더보기</string>
+    <string name="pinmenu_manual">핀메뉴 사용 설명서</string>
+    <string name="more_menu_ui">메뉴판 형태</string>
+    <string name="more_store_img">매장사진</string>
+
+    <!--  메뉴판 형태 설정  -->
+    <string name="title_viewmode">고객용 메뉴판 형태</string>
+    <string name="viewmode_basic">기본형</string>
+    <string name="viewmode_pic">사진형</string>
+    <string name="viewmode_list">글자형</string>
+    <string name="viewmode_info">매장에서 사용될 주문용 메뉴판의\n디자인을 선택해 주세요.</string>
+
+    <!--  매장 대표 사진 설정  -->
+    <string name="store_img_exp">매장 사진/설명</string>
+    <string name="store_img_info">매장을 대표할 이미지와 매장 설명을 작성해 주세요.\n음식 사진 혹은 매장 내부 혹은 외부 사진을 올려주세요.</string>
+    <string name="store_img_rep">매장 대표 사진</string>
+    <string name="store_exp">매장 설명</string>
+    <string name="store_exp_reg_hint">매장 설명을 입력해 주세요.\n(최대 100자)</string>
+
+    <!--  설정  -->
     <string name="change_pwd">비밀번호 변경</string>
     <string name="pwd_now">현재 비밀번호</string>
     <string name="pwd_new">새로운 비밀번호</string>

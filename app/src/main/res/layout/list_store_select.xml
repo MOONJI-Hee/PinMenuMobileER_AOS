@@ -13,7 +13,7 @@
         android:layout_marginHorizontal="20dp"
         android:paddingHorizontal="20dp"
         android:gravity="center_vertical"
-        android:elevation="8dp"
+        android:elevation="5dp"
         android:textSize="18sp"
         android:textColor="@color/selector_text_black"
         android:background="@drawable/bg_r6w"

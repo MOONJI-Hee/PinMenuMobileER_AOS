@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.wooriyo.pinmenumobileer.databinding.ListPrinterStoreBinding
+import com.wooriyo.pinmenumobileer.databinding.ListStoreSelectBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.StoreDTO
 import com.wooriyo.pinmenumobileer.util.AppHelper
@@ -18,7 +18,7 @@ class MenuStoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<M
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ListPrinterStoreBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ListStoreSelectBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding, parent.context, itemClickListener)
     }
 
@@ -34,7 +34,7 @@ class MenuStoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<M
         return dataSet.size
     }
 
-    class ViewHolder(val binding: ListPrinterStoreBinding, val context: Context, val itemClickListener: ItemClickListener): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(val binding: ListStoreSelectBinding, val context: Context, val itemClickListener: ItemClickListener): RecyclerView.ViewHolder(binding.root) {
         fun bind(data: StoreDTO) {
             binding.run {
                 storeName.text = data.name

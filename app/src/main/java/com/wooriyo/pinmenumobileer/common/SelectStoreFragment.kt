@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wooriyo.pinmenumobileer.MainActivity
 import com.wooriyo.pinmenumobileer.MyApplication
+import com.wooriyo.pinmenumobileer.common.adapter.StoreAdapter
 import com.wooriyo.pinmenumobileer.databinding.FragmentSelectStoreBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.menu.SetCategoryActivity
 import com.wooriyo.pinmenumobileer.menu.adapter.MenuStoreAdapter
-import com.wooriyo.pinmenumobileer.printer.adapter.StoreAdapter
 
 class SelectStoreFragment : Fragment() {
     lateinit var binding: FragmentSelectStoreBinding
