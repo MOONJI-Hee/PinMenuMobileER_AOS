@@ -14,7 +14,7 @@ import com.wooriyo.pinmenumobileer.util.ApiClient
 import retrofit2.Call
 import retrofit2.Response
 
-class SetMenuUi : BaseActivity() {
+class SetMenuUiActivity : BaseActivity() {
     lateinit var binding: ActivitySetMenuUiBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

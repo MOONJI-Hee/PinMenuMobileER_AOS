@@ -45,7 +45,7 @@ class MoreFragment : Fragment() {
                         if(storeList[0].payuse == "Y" && AppHelper.dateNowCompare(storeList[0].paydate)) {
                             MyApplication.store = storeList[0]
                             MyApplication.storeidx = storeList[0].idx
-                            startActivity(Intent(context, SetMenuUi::class.java))
+                            startActivity(Intent(context, SetMenuUiActivity::class.java))
                         }else {
                             Toast.makeText(context, R.string.msg_no_pay, Toast.LENGTH_SHORT).show()
                         }

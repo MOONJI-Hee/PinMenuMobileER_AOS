@@ -34,7 +34,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PinmenuMobileER">
         <activity
-            android:name=".more.SetMenuUi"
+            android:name=".more.SetMenuUiActivity"
             android:exported="false" />
         <activity
             android:name=".more.SetStoreImgActivity"
