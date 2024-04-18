@@ -57,6 +57,7 @@ class MemberSetActivity: BaseActivity(), View.OnClickListener {
         binding.etId.visibility = View.GONE
         binding.btnCheckId.visibility = View.GONE
         binding.checkResult.visibility = View.GONE
+        binding.info1.visibility = View.GONE
 
         binding.save.text = getText(R.string.btn_save)
         binding.clTerms.visibility = View.GONE

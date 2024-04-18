@@ -48,7 +48,7 @@ class SelectStoreActivity : BaseActivity() {
                         }
                     }
                     "viewmode" -> {
-                        if(storeList[position].payuse == "Y" && AppHelper.dateNowCompare(storeList[position].paydate)) {
+                        if(storeList[position].payuse == "Y" && AppHelper.dateNowCompare(storeList[position].endDate)) {
                             MyApplication.store = storeList[position]
                             MyApplication.storeidx = storeList[position].idx
                             startActivity(Intent(mActivity, SetMenuUiActivity::class.java))

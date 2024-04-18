@@ -44,6 +44,8 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
 
     class ViewHolder(val binding: ListStoreBinding, val context: Context, val itemClickListener: ItemClickListener): RecyclerView.ViewHolder(binding.root) {
         fun bind(data: StoreDTO) {
+            val usePay = data.payuse == "Y" && dateNowCompare(data.endDate)
+
             if(data.paydate.isNotEmpty() && data.payuse == "N") {
                 AlertDialog.Builder(context)
                     .setTitle(R.string.dialog_notice)
@@ -51,6 +53,7 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
                     .setPositiveButton(R.string.confirm) { dialog, _ -> dialog.dismiss()}
                     .show()
             }
+
             binding.run {
                 storeName.text = data.name
                 ordCnt.text = data.ordCnt.toString()
@@ -75,7 +78,7 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
                     menuCnt.isPressed = true
                     menuTxt.isPressed = true
 
-                    if ((data.payuse == "Y" && dateNowCompare(data.paydate)) || adapterPosition == 0) {
+                    if (usePay || data.paytype == 4) {
                         MyApplication.store = MyApplication.storeList[adapterPosition]
                         MyApplication.storeidx = MyApplication.storeList[adapterPosition].idx
 
@@ -103,7 +106,8 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
                     payTxt.isEnabled = true
                 }
 
-                if (data.payuse == "Y" && dateNowCompare(data.paydate)) {
+
+                if (usePay || data.paytype == 4) {
                     storeName.isEnabled = true
                     ordCnt.isEnabled = true
                     ordTxt.isEnabled = true

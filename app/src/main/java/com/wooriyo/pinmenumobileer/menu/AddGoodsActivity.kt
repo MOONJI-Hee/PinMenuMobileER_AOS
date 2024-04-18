@@ -315,7 +315,7 @@ class AddGoodsActivity : BaseActivity() {
     }
 
     fun checkUsePay(position: Int) {
-        if((store.payuse == "Y" && AppHelper.dateNowCompare(store.paydate))) {
+        if((store.payuse == "Y" && AppHelper.dateNowCompare(store.endDate))) {
             getImage(position)
         }else {
             Toast.makeText(mActivity, R.string.msg_no_pay, Toast.LENGTH_SHORT).show()

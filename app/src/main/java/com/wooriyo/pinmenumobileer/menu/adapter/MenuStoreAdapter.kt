@@ -39,7 +39,7 @@ class MenuStoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<M
             binding.run {
                 storeName.text = data.name
 
-                val usePay = data.payuse == "Y" && AppHelper.dateNowCompare(data.paydate)
+                val usePay = data.payuse == "Y" && AppHelper.dateNowCompare(data.endDate)
 
                 if(usePay) {
                     storeName.setTextColor(Color.BLACK)
@@ -48,7 +48,7 @@ class MenuStoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<M
                 }
 
                 storeName.setOnClickListener {
-                    if(usePay || adapterPosition == 0){
+                    if(usePay || data.paytype == 4){
                         itemClickListener.onItemClick(adapterPosition)
                     }else {
                         //TODO 팝업 띄우기

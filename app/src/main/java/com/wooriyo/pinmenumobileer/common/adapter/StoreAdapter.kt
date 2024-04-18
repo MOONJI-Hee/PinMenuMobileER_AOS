@@ -44,8 +44,8 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
             binding.run {
                 storeName.text = data.name
 
-                if(!isFree)
-                    storeName.isEnabled = data.payuse == "Y" && AppHelper.dateNowCompare(data.paydate)
+                if(!isFree && data.paytype != 4)
+                    storeName.isEnabled = data.payuse == "Y" && AppHelper.dateNowCompare(data.endDate)
 
                 storeName.setOnClickListener {
                     itemClickListener.onItemClick(adapterPosition)

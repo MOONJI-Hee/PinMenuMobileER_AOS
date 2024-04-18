@@ -42,7 +42,7 @@ class MoreFragment : Fragment() {
                 when(storeList.size) {
                     0 -> Toast.makeText(context, R.string.msg_no_store, Toast.LENGTH_SHORT).show()
                     1 -> {
-                        if(storeList[0].payuse == "Y" && AppHelper.dateNowCompare(storeList[0].paydate)) {
+                        if((storeList[0].payuse == "Y" && AppHelper.dateNowCompare(storeList[0].endDate)) || storeList[0].paytype == 4) {
                             MyApplication.store = storeList[0]
                             MyApplication.storeidx = storeList[0].idx
                             startActivity(Intent(context, SetMenuUiActivity::class.java))
