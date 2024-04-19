@@ -47,7 +47,7 @@ interface Api {
     ): Call<ResultDTO>
 
     //알파요 ID 연동
-    @GET("m/checkalpha.php")
+    @GET("checkalpha.php")
     fun checkArpayo(
         @Query("userid") arpayoId: String
     ): Call<ResultDTO>

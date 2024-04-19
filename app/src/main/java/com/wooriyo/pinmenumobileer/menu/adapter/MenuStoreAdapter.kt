@@ -41,7 +41,7 @@ class MenuStoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<M
 
                 val usePay = data.payuse == "Y" && AppHelper.dateNowCompare(data.endDate)
 
-                if(usePay) {
+                if(usePay || data.paytype == 4) {
                     storeName.setTextColor(Color.BLACK)
                 }else {
                     storeName.setTextColor(Color.parseColor("#33000000"))

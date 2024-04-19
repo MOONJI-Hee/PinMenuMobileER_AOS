@@ -42,11 +42,11 @@ class CallListAdapter(val dataSet: ArrayList<CallHistoryDTO>): RecyclerView.Adap
                 regdt.text = data.regDt
 
                 if(data.iscompleted == 1) {
-                    tableNo.setBackgroundColor(Color.parseColor("#E0E0E0"))
+                    top.setBackgroundColor(Color.parseColor("#E0E0E0"))
                     done.visibility = View.VISIBLE
                     complete.isEnabled = false
                 }else {
-                    tableNo.setBackgroundResource(R.color.main)
+                    top.setBackgroundResource(R.color.main)
                     done.visibility = View.GONE
                     complete.isEnabled = true
                 }

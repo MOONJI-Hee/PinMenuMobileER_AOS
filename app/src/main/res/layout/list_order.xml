@@ -7,32 +7,63 @@
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        style="@style/text_num_b"
-        android:id="@+id/tableNo"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:paddingHorizontal="10dp"
         android:background="@color/main"
-        android:gravity="center_vertical"
-        android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="185" />
-
-    <TextView
-        style="@style/text_num"
-        android:id="@+id/regdt"
-        android:layout_marginEnd="10dp"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tableNo"
-        app:layout_constraintBottom_toBottomOf="@+id/tableNo"/>
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            style="@style/text_num"
+            android:id="@+id/tvTableNo"
+            android:textSize="12sp"
+            android:text="Table No."
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tableNo"
+            app:layout_constraintVertical_chainStyle="packed"/>
+        <TextView
+            style="@style/text_num_b"
+            android:id="@+id/tableNo"
+            android:layout_marginTop="1dp"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTableNo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="185" />
+        <TextView
+            style="@style/text_num"
+            android:id="@+id/regdt"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/orderNo"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="2022.07.28.18:08" />
+        <TextView
+            style="@style/text_num"
+            android:layout_marginEnd="3dp"
+            android:textSize="12sp"
+            android:text="Order No."
+            app:layout_constraintEnd_toStartOf="@+id/orderNo"
+            app:layout_constraintBottom_toBottomOf="@+id/orderNo"/>
+        <TextView
+            style="@style/text_num_b"
+            android:id="@+id/orderNo"
+            android:layout_marginTop="1dp"
+            android:textSize="18sp"
+            tools:text="A10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/regdt"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/tableNo"
+        app:layout_constraintTop_toBottomOf="@+id/top"
         app:layout_constraintBottom_toTopOf="@+id/bottom"
         tools:listitem="@layout/list_order_detail"
         tools:itemCount="5"/>

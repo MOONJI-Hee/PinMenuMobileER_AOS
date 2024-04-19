@@ -143,13 +143,21 @@ class ByHistoryActivity: BaseActivity() {
 
     fun newOrder() {
         runOnUiThread{
-            binding.newOrder.visibility = View.VISIBLE
+            if(selText == binding.tvOrder) {
+                getOrderList()
+            }else {
+                binding.newOrder.visibility = View.VISIBLE
+            }
         }
     }
 
     fun newCall() {
         runOnUiThread {
-            binding.newCall.visibility = View.VISIBLE
+            if(selText == binding.tvCall) {
+                getCallList()
+            }else {
+                binding.newCall.visibility = View.VISIBLE
+            }
         }
     }
 

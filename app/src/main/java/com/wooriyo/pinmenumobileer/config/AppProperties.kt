@@ -10,6 +10,7 @@ class AppProperties {
                 const val SERVER: String = REAL_SERVER
         //        const val IMG_SERVER: String = "http://49.247.22.8/api/"
                 const val IMG_SERVER: String = "http://img.pinmenu.biz/api/"
+                const val CP_SERVER: String = "http://cp.wooriyo.com/api/"
 
                 const val KAKAO_URL : String = "https://dapi.kakao.com"
 

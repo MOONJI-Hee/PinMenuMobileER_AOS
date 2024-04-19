@@ -486,6 +486,7 @@
     <string name="qr_select_table">테이블 선택</string>
     <string name="qr_select_all">전체</string>
     <string name="dialog_no_business">본 기능은 비즈니스 상품 이용 고객에게 제공됩니다. 이용을 위해서는 비즈니스 상품으로 변경해주세요.</string>
+    <string name="dialog_disable_qr">이용 가능한 QR 갯수 초과</string>
 
     <!-- 주문 결제 -->
     <string name="order_select_pay">다음 중 하나를 선택해 주세요</string>

@@ -206,7 +206,7 @@ class SignupActivity : BaseActivity(), View.OnClickListener {
             return
         }
 
-        ApiClient.service.checkArpayo(arpayoId)
+        ApiClient.arpaService.checkArpayo(arpayoId)
             .enqueue(object : Callback<ResultDTO> {
                 override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                     Log.d(TAG, "알파요 아이디 연동 url : $response")

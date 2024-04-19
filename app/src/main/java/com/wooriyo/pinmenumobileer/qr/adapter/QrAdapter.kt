@@ -84,6 +84,10 @@ class QrAdapter(val dataSet: ArrayList<QrDTO>): RecyclerView.Adapter<RecyclerVie
                 context.startActivity(intent)
             }
 
+            binding.disable.setOnClickListener {
+                AlertDialog("", context.getString(R.string.dialog_disable_qr)).show((context as MainActivity).supportFragmentManager, "DisableQrDialog")
+            }
+
             binding.postPay.setOnClickListener {
                 it as CheckBox
                 if(MyApplication.store.paytype == 2) {
