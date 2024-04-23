@@ -2,12 +2,15 @@ package com.wooriyo.pinmenumobileer.qr
 
 import android.app.DownloadManager
 import android.content.IntentFilter
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.widget.Toast
+import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
@@ -23,6 +26,8 @@ import com.wooriyo.pinmenumobileer.util.AppHelper.Companion.getToday
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
+import java.io.FileOutputStream
 
 
 class QrDetailActivity : BaseActivity() {
@@ -82,24 +87,57 @@ class QrDetailActivity : BaseActivity() {
                         fileName = "${engStoreName}_" + fileName
                     }
 
-                    val request = DownloadManager.Request(uri)
+                    capture()
 
-                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED) //진행 중, 완료 모두 노티 보여줌
-                    request.setTitle("핀메뉴 관리")
-                    request.setDescription("QR코드 다운로드 중") // [다운로드 중 표시되는 내용]
-                    request.setNotificationVisibility(1) // [앱 상단에 다운로드 상태 표시]
-                    request.setTitle(fileName) // [다운로드 제목 표시]
-                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName) // [다운로드 폴더 지정]
+//                    val request = DownloadManager.Request(uri)
+//                    val request = DownloadManager.Request(capture()?.toUri())
 
-                    val manager = mActivity.getSystemService(DOWNLOAD_SERVICE) as DownloadManager
-                    val downloadID = manager.enqueue(request) // [다운로드 수행 및 결과 값 지정]
-
-                    val intentFilter = IntentFilter()
-                    intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
-                    registerReceiver(DownloadReceiver(mActivity), intentFilter)
+//                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED) //진행 중, 완료 모두 노티 보여줌
+//                    request.setTitle("핀메뉴 관리")
+//                    request.setDescription("QR코드 다운로드 중") // [다운로드 중 표시되는 내용]
+//                    request.setNotificationVisibility(1) // [앱 상단에 다운로드 상태 표시]
+//                    request.setTitle(fileName) // [다운로드 제목 표시]
+//                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName) // [다운로드 폴더 지정]
+//
+//                    val manager = mActivity.getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+//                    val downloadID = manager.enqueue(request) // [다운로드 수행 및 결과 값 지정]
+//
+//                    val intentFilter = IntentFilter()
+//                    intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+//                    registerReceiver(DownloadReceiver(mActivity), intentFilter)
                 }
             }
         }
+    }
+
+    fun capture(): String? {
+        var fileName = "${strSeq}_${qrCode!!.tableNo}.png"
+        if(engStoreName.isNotEmpty()) {
+            fileName = "${engStoreName}_" + fileName
+        }
+
+        val mPath = cacheDir.absolutePath+"/$fileName"
+
+        var bitmap: Bitmap? = null
+//        val captureView = window.decorView.rootView	//캡처할 뷰
+        val captureView = binding.llQr
+
+        bitmap = Bitmap.createBitmap(captureView.width, captureView.height, Bitmap.Config.ARGB_8888)
+
+        var canvas = Canvas(bitmap)
+        captureView.draw(canvas)
+
+        if(bitmap == null) {
+            return null
+        }else {
+            val imageFile = File(mPath)
+            val outputStream = FileOutputStream(imageFile)
+            outputStream.use {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                outputStream.flush()
+            }
+        }
+        return mPath
     }
 
     fun createQr() {

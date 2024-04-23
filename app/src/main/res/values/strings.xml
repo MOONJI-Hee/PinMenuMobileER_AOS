@@ -422,7 +422,7 @@
 
     <!--  매장 대표 사진 설정  -->
     <string name="store_img_exp">매장 사진/설명</string>
-    <string name="store_img_info">매장을 대표할 이미지와 매장 설명을 작성해 주세요.\n음식 사진 혹은 매장 내부 혹은 외부 사진을 올려주세요.</string>
+    <string name="store_img_info">매장을 대표할 이미지(음식 사진이나 매장 사진)와 설명을 작성해 주세요.\n단, 고객용 메뉴판 형태를 글자형으로 선택 시에만 보여집니다.</string>
     <string name="store_img_rep">매장 대표 사진</string>
     <string name="store_exp">매장 설명</string>
     <string name="store_exp_reg_hint">매장 설명을 입력해 주세요.\n(최대 100자)</string>

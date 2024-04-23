@@ -83,6 +83,7 @@
         android:layout_marginTop="20dp"
         android:hint="@string/table_no_hint"
         android:gravity="center"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/tv1"
         app:layout_constraintEnd_toEndOf="@+id/llQr"
         app:layout_constraintTop_toBottomOf="@+id/llQr"/>

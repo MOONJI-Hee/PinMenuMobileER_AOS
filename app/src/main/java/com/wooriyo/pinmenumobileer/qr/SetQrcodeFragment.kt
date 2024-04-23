@@ -139,11 +139,15 @@ class SetQrcodeFragment : Fragment() {
     fun downloadAll() {
         val manager = context?.getSystemService(AppCompatActivity.DOWNLOAD_SERVICE) as DownloadManager
 
-        qrList.forEach {
+        qrList.forEachIndexed { i, it ->
             val uri = Uri.parse(it.filePath.trim())
             var fileName = "${AppHelper.intToString(it.seq)}_${it.tableNo}.png"
             if(engStoreName.isNotEmpty()) {
                 fileName = "${engStoreName}_" + fileName
+            }
+
+            if(qrCnt < i+1) {
+                return
             }
 
             val request = DownloadManager.Request(uri)
