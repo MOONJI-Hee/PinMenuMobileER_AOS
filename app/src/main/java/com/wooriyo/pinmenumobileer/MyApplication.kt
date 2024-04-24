@@ -143,11 +143,14 @@ class MyApplication: Application() {
             .setUsage(AudioAttributes.USAGE_NOTIFICATION)
             .build()
 
+        notificationManager.deleteNotificationChannel(AppProperties.CHANNEL_ID_ORDER)
+
         // 알림 채널 생성
         val ordChannel = NotificationChannel(AppProperties.CHANNEL_ID_ORDER, "새 주문 알림", NotificationManager.IMPORTANCE_HIGH)
         ordChannel.enableLights(true)
         ordChannel.enableVibration(true)
         ordChannel.setSound(uri, audioAttributes)
+        ordChannel.lockscreenVisibility = 1
         notificationManager.createNotificationChannel(ordChannel)
     }
 }

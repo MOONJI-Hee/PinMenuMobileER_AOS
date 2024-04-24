@@ -18,6 +18,7 @@ import com.sewoo.request.android.RequestHandler
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.pref
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeList
 import com.wooriyo.pinmenumobileer.common.SelectStoreFragment
+import com.wooriyo.pinmenumobileer.common.adapter.BannerAdapter
 import com.wooriyo.pinmenumobileer.common.dialog.WelcomeDialog
 import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.databinding.ActivityMainBinding
@@ -105,6 +106,8 @@ class MainActivity : BaseActivity() {
 
         // 전면 팝업 조회
         getWelcomePopup()
+        // 배너 리스트 조회
+        getBannerList()
 
         binding.run {
             icMain.setOnClickListener { goMain() }
@@ -419,6 +422,27 @@ class MainActivity : BaseActivity() {
                 Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "전면 팝업 조회 실패 >> $t")
                 Log.d(TAG, "전면 팝업 조회 실패 >> ${call.request()}")
+            }
+        })
+    }
+
+    fun getBannerList() {
+        ApiClient.service.getBannerList(0, 0, 0)?.enqueue(object : Callback<PopupListDTO?>{
+            override fun onResponse(call: Call<PopupListDTO?>, response: Response<PopupListDTO?>) {
+                Log.d(TAG, "배너 리스트 조회  url : $response")
+                if(!response.isSuccessful) return
+                val result = response.body() ?: return
+
+                if(result.status != 1 || result.bannerList.isNullOrEmpty()) return
+
+                val bannerAdapter = BannerAdapter(result.bannerList)
+                binding.banner.adapter = bannerAdapter
+            }
+
+            override fun onFailure(call: Call<PopupListDTO?>, t: Throwable) {
+                Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "배너 리스트 조회 실패 >> $t")
+                Log.d(TAG, "배너 리스트 조회 실패 >> ${call.request()}")
             }
         })
     }

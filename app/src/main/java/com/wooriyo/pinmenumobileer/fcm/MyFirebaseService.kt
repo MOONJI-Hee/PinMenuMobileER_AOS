@@ -150,7 +150,7 @@ class MyFirebaseService: FirebaseMessagingService() {
             .setContentTitle(message.notification?.title)
             .setContentText(message.notification?.body)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setSound(uri, AudioManager.STREAM_NOTIFICATION)
+//            .setSound(uri, AudioManager.STREAM_NOTIFICATION)
 //            .setContentIntent(createPendingIntent())
             .setAutoCancel(true)
 
