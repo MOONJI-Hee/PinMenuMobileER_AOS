@@ -31,7 +31,7 @@ class BannerAdapter(val bannerList: ArrayList<PopupDTO>) : RecyclerView.Adapter<
     class ViewHolder(val binding: ListBannerBinding, val context: Context): RecyclerView.ViewHolder(binding.root) {
         fun bind (banner: PopupDTO) {
             Glide.with(context)
-                .load(banner.link)
+                .load(banner.img)
                 .into(binding.img)
 
             binding.img.setOnClickListener {
@@ -39,5 +39,4 @@ class BannerAdapter(val bannerList: ArrayList<PopupDTO>) : RecyclerView.Adapter<
             }
         }
     }
-
 }

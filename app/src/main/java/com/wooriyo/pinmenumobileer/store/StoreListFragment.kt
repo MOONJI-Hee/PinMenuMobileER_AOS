@@ -79,7 +79,8 @@ class StoreListFragment : Fragment() {
         binding.rvStore.adapter = storeAdapter
 
         // 매장리스트 배경 최소 높이 지정 (최소 화면을 덮을 정도로)
-        binding.storeArea.minHeight = MyApplication.height - (84 * MyApplication.density).toInt()
+//        binding.storeArea.minHeight = MyApplication.height - (84 * MyApplication.density).toInt()
+        binding.storeArea.minHeight = binding.root.height
 
         // 우측 상단에 userid, 알파요 연동여부 출력
         val member = MyApplication.pref.getMbrDTO()
@@ -91,6 +92,10 @@ class StoreListFragment : Fragment() {
         }
 
         binding.version.text = "Ver ${MyApplication.appver}"
+
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener {
+            binding.storeArea.minHeight = binding.root.height
+        }
 
         return binding.root
     }

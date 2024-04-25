@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -277,6 +278,7 @@ class MainActivity : BaseActivity() {
                 setTxtWhite(tvQr)
                 setTxtWhite(tvPrint)
                 setTxtWhite(tvMore)
+                binding.banner.visibility = View.VISIBLE
             }
         }
         isMain = true
@@ -284,6 +286,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun goSelStore(type: String) {
+        binding.banner.visibility = View.GONE
         replace(SelectStoreFragment.newInstance(type))
     }
 
@@ -293,20 +296,24 @@ class MainActivity : BaseActivity() {
 //    }
 
     private fun goMenuSet() {
+        binding.banner.visibility = View.GONE
         binding.ivMenu.setImageResource(R.drawable.icon_menuset_p)
     }
 
     private fun goQr() {
+        binding.banner.visibility = View.GONE
         binding.ivQr.setImageResource(R.drawable.icon_qr_p)
         replace(SetQrcodeFragment.newInstance())
     }
 
     private fun goPrint() {
+        binding.banner.visibility = View.GONE
         binding.ivPrint.setImageResource(R.drawable.icon_print_p)
         replace(PrinterMenuFragment.newInstance())
     }
 
     private fun goMore() {
+        binding.banner.visibility = View.GONE
         binding.ivMore.setImageResource(R.drawable.ic_main_tabar_more_s)
         replace(MoreFragment.newInstance())
     }

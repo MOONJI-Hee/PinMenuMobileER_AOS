@@ -12,7 +12,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/banner"/>
 
-    <com.wooriyo.pinmenumobileer.customview.AutoScrollViewPager
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
