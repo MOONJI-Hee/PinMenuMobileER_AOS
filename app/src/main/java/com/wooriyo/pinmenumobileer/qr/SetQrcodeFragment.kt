@@ -182,10 +182,12 @@ class SetQrcodeFragment : Fragment() {
                         binding.qrCnt.text = (qrCnt - qrList.size).toString()
 
                         storeName = result.enname
-                        if(storeName != null && storeName != "") {
+                        engStoreName = storeName
+
+                        if(!storeName.isNullOrEmpty()) {
                             binding.etStoreName.setText(storeName)
-                            engStoreName = storeName
                         }
+
                         qrAdapter.setQrCount(qrCnt)
                         qrAdapter.notifyDataSetChanged()
 

@@ -1,7 +1,9 @@
 package com.wooriyo.pinmenumobileer.qr
 
+import android.Manifest
 import android.app.DownloadManager
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.net.Uri
@@ -9,7 +11,10 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.wooriyo.pinmenumobileer.BaseActivity
@@ -17,6 +22,7 @@ import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.engStoreName
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.broadcast.DownloadReceiver
+import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.databinding.ActivityQrDetailBinding
 import com.wooriyo.pinmenumobileer.model.QrDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
@@ -28,15 +34,17 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 
 
 class QrDetailActivity : BaseActivity() {
     lateinit var binding: ActivityQrDetailBinding
-//    val mActivity = this@QrDetailActivity
-//    val TAG = "QrDetailActivity"
+
     var seq = 1
     var strSeq = ""
     var qrCode : QrDTO? = null
+
+    private val permission = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,65 +87,90 @@ class QrDetailActivity : BaseActivity() {
                 if(qrCode != null) delQr(qrCode!!.idx)
             }
             download.setOnClickListener {
-                if(qrCode != null) {
-                    val uri = Uri.parse(qrCode!!.filePath.trim()) // 파일 주소 : 확장자명 포함되어야함
+                if(qrCode == null) return@setOnClickListener
 
-                    var fileName = "${strSeq}_${qrCode!!.tableNo}.png"
-                    if(engStoreName.isNotEmpty()) {
-                        fileName = "${engStoreName}_" + fileName
-                    }
-
-                    capture()
-
-//                    val request = DownloadManager.Request(uri)
-//                    val request = DownloadManager.Request(capture()?.toUri())
-
-//                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED) //진행 중, 완료 모두 노티 보여줌
-//                    request.setTitle("핀메뉴 관리")
-//                    request.setDescription("QR코드 다운로드 중") // [다운로드 중 표시되는 내용]
-//                    request.setNotificationVisibility(1) // [앱 상단에 다운로드 상태 표시]
-//                    request.setTitle(fileName) // [다운로드 제목 표시]
-//                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName) // [다운로드 폴더 지정]
-//
-//                    val manager = mActivity.getSystemService(DOWNLOAD_SERVICE) as DownloadManager
-//                    val downloadID = manager.enqueue(request) // [다운로드 수행 및 결과 값 지정]
-//
-//                    val intentFilter = IntentFilter()
-//                    intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
-//                    registerReceiver(DownloadReceiver(mActivity), intentFilter)
+                if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+                    checkPermissions()
+                }else {
+                    saveViewToImg(binding.qrArea)
                 }
             }
         }
     }
 
-    fun capture(): String? {
-        var fileName = "${strSeq}_${qrCode!!.tableNo}.png"
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if(grantResults.isEmpty()) return
+
+        if(requestCode == AppProperties.REQUEST_STORAGE) {saveViewToImg(binding.qrArea)}
+    }
+
+    // 이미지 접근 권한 확인
+    private fun checkPermissions() {
+        val deniedPms = ArrayList<String>()
+
+        for (pms in permission) {
+//            when {
+//                ActivityCompat.checkSelfPermission(mActivity, pms) != PackageManager.PERMISSION_GRANTED -> deniedPms.add(pms)
+//
+//                ActivityCompat.shouldShowRequestPermissionRationale(mActivity, pms) -> {
+//                    AlertDialog.Builder(mActivity)
+//                        .setTitle(R.string.pms_storage_title)
+//                        .setMessage(R.string.pms_storage_content)
+//                        .setPositiveButton(R.string.confirm) { dialog, _ ->
+//                            dialog.dismiss()
+//                            getStoragePms()
+//                        }
+//                        .setNegativeButton(R.string.cancel) {dialog, _ -> dialog.dismiss()}
+//                        .show()
+//                    return
+//                }
+//            }
+
+            if(ActivityCompat.checkSelfPermission(mActivity, pms) != PackageManager.PERMISSION_GRANTED) {
+                deniedPms.add(pms)
+            }
+        }
+
+        if(deniedPms.isNotEmpty()) {
+            getStoragePms()
+        }else {
+            saveViewToImg(binding.qrArea)
+        }
+    }
+
+    //권한 받아오기
+    fun getStoragePms() {
+        ActivityCompat.requestPermissions(mActivity, permission, AppProperties.REQUEST_STORAGE)
+    }
+
+    fun saveViewToImg (view: View) {
+        val bitmap = Bitmap.createBitmap(view.measuredWidth, view.measuredHeight, Bitmap.Config.ARGB_8888)
+        view.draw(Canvas(bitmap))
+
+        var fileName = "${strSeq}_${qrCode!!.tableNo}.jpg"
         if(engStoreName.isNotEmpty()) {
             fileName = "${engStoreName}_" + fileName
         }
+        Log.d(TAG, "fileName > $fileName")
 
-        val mPath = cacheDir.absolutePath+"/$fileName"
+        val folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString()
+        val filePath = "$folder/$fileName"
 
-        var bitmap: Bitmap? = null
-//        val captureView = window.decorView.rootView	//캡처할 뷰
-        val captureView = binding.llQr
+        Log.d(TAG, "filePath > $filePath")
 
-        bitmap = Bitmap.createBitmap(captureView.width, captureView.height, Bitmap.Config.ARGB_8888)
+        val fos: FileOutputStream
+        try{
+            fos = FileOutputStream(File(filePath))
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100,fos)
+            fos.close()
 
-        var canvas = Canvas(bitmap)
-        captureView.draw(canvas)
-
-        if(bitmap == null) {
-            return null
-        }else {
-            val imageFile = File(mPath)
-            val outputStream = FileOutputStream(imageFile)
-            outputStream.use {
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-                outputStream.flush()
-            }
+            Toast.makeText(mActivity, R.string.msg_success_down, Toast.LENGTH_SHORT).show()
+        }catch (e: IOException) {
+            Toast.makeText(mActivity, R.string.msg_fail_down, Toast.LENGTH_SHORT).show()
+            e.printStackTrace()
         }
-        return mPath
     }
 
     fun createQr() {
