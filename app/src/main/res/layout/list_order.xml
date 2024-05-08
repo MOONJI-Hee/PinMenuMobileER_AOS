@@ -71,8 +71,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottom"
         android:layout_width="match_parent"
-        android:layout_height="128dp"
-        android:paddingBottom="30dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
         android:paddingHorizontal="10dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
@@ -182,7 +182,7 @@
         android:layout_height="0dp"
         android:background="@color/white70"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/tableNo"
+        app:layout_constraintTop_toBottomOf="@+id/top"
         app:layout_constraintBottom_toTopOf="@+id/bottom">
         <ImageView
             android:layout_width="wrap_content"
@@ -217,7 +217,7 @@
         android:background="@color/white"
         android:gravity="center"
         android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@+id/tableNo">
+        app:layout_constraintTop_toBottomOf="@+id/top">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

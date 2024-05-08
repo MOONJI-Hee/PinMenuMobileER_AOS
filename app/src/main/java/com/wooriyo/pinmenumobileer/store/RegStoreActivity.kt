@@ -58,13 +58,12 @@ class RegStoreActivity : BaseActivity() {
             setAddr.launch(intent)
         }
 
-
-
         Log.d(TAG, "store 생성 useridx >> $useridx")
     }
 
     fun save() {
         store.name = binding.etName.text.toString()
+        store.subname = binding.etName2.text.toString()
         store.address = binding.etAddr.text.toString()
 
         if(store.name.isEmpty()) {
@@ -74,7 +73,7 @@ class RegStoreActivity : BaseActivity() {
 //            Toast.makeText(mActivity, R.string.msg_no_addr, Toast.LENGTH_SHORT).show()
 //        }
         else {
-            ApiClient.service.regStore(useridx, store.name, store.address, store.long, store.lat)
+            ApiClient.service.regStore(useridx, store.name, store.subname, store.address, store.long, store.lat)
                 .enqueue(object : Callback<ResultDTO> {
                     override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                         Log.d(TAG, "매장 등록 url : $response")

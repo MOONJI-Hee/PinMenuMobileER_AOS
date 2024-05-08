@@ -194,6 +194,17 @@ class ByHistoryActivity: BaseActivity() {
                 showCompleteDialog("호출") { completeCall(list[position].idx) }
             }
         })
+
+        adapter.setOnCallDeleteListener(object : ItemClickListener{
+            override fun onItemClick(position: Int) {
+                super.onItemClick(position)
+                ConfirmDialog(
+                    getString(R.string.btn_delete),
+                    getString(R.string.dialog_delete),
+                    getString(R.string.btn_delete)
+                ) { deleteCall(list[position].idx) }.show(supportFragmentManager, "DeleteCallDialog")
+            }
+        })
     }
 
     fun setOrderAdapter() {
@@ -229,6 +240,16 @@ class ByHistoryActivity: BaseActivity() {
             override fun onItemClick(position: Int) {
                 super.onItemClick(position)
                 showCompleteDialog("호출") { completeCall(callList[position].idx) }
+            }
+        })
+        callAdapter.setOnDeleteListener(object : ItemClickListener{
+            override fun onItemClick(position: Int) {
+                super.onItemClick(position)
+                ConfirmDialog(
+                    getString(R.string.btn_delete),
+                    getString(R.string.dialog_delete),
+                    getString(R.string.btn_delete)
+                ) { deleteCall(callList[position].idx) }.show(supportFragmentManager, "DeleteCallDialog")
             }
         })
     }
@@ -460,6 +481,31 @@ class ByHistoryActivity: BaseActivity() {
                 Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "주문 삭제 실패 > $t")
                 Log.d(TAG, "주문 삭제 실패 > ${call.request()}")
+            }
+        })
+    }
+
+    // 호촐 삭제
+    fun deleteCall(idx: Int) {
+        ApiClient.service.deleteCall(storeidx, idx).enqueue(object:Callback<ResultDTO>{
+            override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                Log.d(TAG, "호출 삭제 url : $response")
+                if(!response.isSuccessful) return
+
+                val result = response.body() ?: return
+                when(result.status){
+                    1 -> {
+                        Toast.makeText(mActivity, R.string.msg_complete, Toast.LENGTH_SHORT).show()
+                        reload()
+                    }
+                    else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "호출 삭제 실패 > $t")
+                Log.d(TAG, "호출 삭제 실패 > ${call.request()}")
             }
         })
     }

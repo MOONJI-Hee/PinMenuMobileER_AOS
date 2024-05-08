@@ -23,6 +23,7 @@ class HistoryAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adap
     lateinit var orderCompleteListener: ItemClickListener
     lateinit var callCompleteListener: ItemClickListener
     lateinit var deleteListener: ItemClickListener
+    lateinit var callDeleteListener: ItemClickListener
     lateinit var printClickListener: ItemClickListener
 
     fun setOnOrderCompleteListener(orderCompleteListener: ItemClickListener) {
@@ -41,6 +42,10 @@ class HistoryAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adap
         this.callCompleteListener = callCompleteListener
     }
 
+    fun setOnCallDeleteListener(callDeleteListener: ItemClickListener) {
+        this.callDeleteListener = callDeleteListener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val bindingOrder = ListOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val bindingCall = ListCallBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -51,7 +56,7 @@ class HistoryAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adap
         return if(viewType == AppProperties.VIEW_TYPE_ORDER)
             ViewHolderOrder(parent.context, bindingOrder, orderCompleteListener, deleteListener, printClickListener)
         else
-            ViewHolderCall(bindingCall, callCompleteListener)
+            ViewHolderCall(bindingCall, callCompleteListener, callDeleteListener)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -134,7 +139,7 @@ class HistoryAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adap
         }
     }
 
-    class ViewHolderCall(val binding: ListCallBinding, val callCompleteListener: ItemClickListener): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolderCall(val binding: ListCallBinding, val callCompleteListener: ItemClickListener, val callDeleteListener: ItemClickListener): RecyclerView.ViewHolder(binding.root) {
         fun bind (data: OrderHistoryDTO) {
             binding.run {
                 rv.adapter = HisCallAdapter(data.olist)
@@ -152,6 +157,7 @@ class HistoryAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adap
                     complete.isEnabled = true
                 }
 
+                delete.setOnClickListener { callDeleteListener.onItemClick(adapterPosition) }
                 complete.setOnClickListener { callCompleteListener.onItemClick(adapterPosition) }
             }
         }

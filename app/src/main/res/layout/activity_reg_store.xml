@@ -42,8 +42,20 @@
             android:layout_marginTop="10dp"
             android:hint="@string/store_name_hint"
             android:inputType="text"
+            android:maxLines="1"
             app:layout_constraintTop_toBottomOf="@+id/tv_email"
             app:layout_constraintStart_toStartOf="parent"/>
+
+        <EditText
+            android:id="@+id/et_name2"
+            style="@style/edittext"
+            android:layout_marginTop="10dp"
+            android:hint="@string/store_name_hint"
+            android:inputType="text"
+            android:maxLines="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_name" />
 
         <TextView
             style="@style/text15"
@@ -51,7 +63,7 @@
             android:layout_marginTop="20dp"
             android:text="@string/store_addr"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_name"/>
+            app:layout_constraintTop_toBottomOf="@+id/et_name2"/>
 
 <!--        <TextView-->
 <!--            style="@style/text15"-->

@@ -7,7 +7,7 @@ data class StoreDTO(
     @SerializedName("idx") var idx : Int,
     @SerializedName("pidx") var useridx : Int,
     @SerializedName("name") var name : String,
-    @SerializedName("name2") var name2 : String,
+    @SerializedName("subname") var subname : String,
     @SerializedName("buse") var buse : String,
     @SerializedName("payuse") var payuse : String,
     @SerializedName("paydt") var paydt : String,

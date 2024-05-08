@@ -115,6 +115,7 @@ interface Api {
     fun regStore(
         @Query("useridx") useridx: Int,
         @Query("storenm") storenm: String,
+        @Query("storenm2") storenm2: String,
         @Query("addr") addr: String,                // 주소
         @Query("lclong") lclong: String,           // 매장 경도
         @Query("lclat") lclat: String                  // 매장 위도
@@ -362,6 +363,13 @@ interface Api {
         @Query("storeidx") storeidx: Int,
         @Query("ordidx") ordidx: Int,
         @Query("iscompleted") iscompleted: String
+    ): Call<ResultDTO>
+
+    // 직원 호출 삭제
+    @GET("m/delete_call.php")
+    fun deleteCall(
+        @Query("storeidx") storeidx: Int,
+        @Query("gidx") cidx: Int
     ): Call<ResultDTO>
 
     // 직원 호출 목록 초기화

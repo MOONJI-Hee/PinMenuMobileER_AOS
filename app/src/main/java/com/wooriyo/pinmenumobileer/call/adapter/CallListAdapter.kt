@@ -14,9 +14,14 @@ import com.wooriyo.pinmenumobileer.model.CallHistoryDTO
 
 class CallListAdapter(val dataSet: ArrayList<CallHistoryDTO>): RecyclerView.Adapter<ViewHolder>() {
     lateinit var itemClickListener: ItemClickListener
+    lateinit var deleteListener: ItemClickListener
 
     fun setOnItemClickListener(itemClickListener: ItemClickListener) {
         this.itemClickListener = itemClickListener
+    }
+
+    fun setOnDeleteListener(deleteListener: ItemClickListener) {
+        this.deleteListener = deleteListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,7 +31,7 @@ class CallListAdapter(val dataSet: ArrayList<CallHistoryDTO>): RecyclerView.Adap
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(dataSet[position], itemClickListener)
+        holder.bind(dataSet[position], itemClickListener, deleteListener)
     }
 
     override fun getItemCount(): Int {
@@ -34,7 +39,7 @@ class CallListAdapter(val dataSet: ArrayList<CallHistoryDTO>): RecyclerView.Adap
     }
 
     class ViewHolder(val binding: ListCallBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind (data : CallHistoryDTO, itemClickListener : ItemClickListener) {
+        fun bind (data : CallHistoryDTO, itemClickListener : ItemClickListener, deleteListener: ItemClickListener) {
             binding.run {
                 rv.adapter = CallDetailAdapter(data.clist)
 
@@ -51,6 +56,7 @@ class CallListAdapter(val dataSet: ArrayList<CallHistoryDTO>): RecyclerView.Adap
                     complete.isEnabled = true
                 }
 
+                delete.setOnClickListener { deleteListener.onItemClick(adapterPosition) }
                 complete.setOnClickListener { itemClickListener.onItemClick(adapterPosition) }
             }
         }
