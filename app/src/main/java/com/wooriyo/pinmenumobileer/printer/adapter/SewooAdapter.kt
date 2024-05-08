@@ -128,6 +128,10 @@ class SewooAdapter(val dataSet: ArrayList<BluetoothDevice>): RecyclerView.Adapte
             binding.btnConn.setOnClickListener {
                 itemClickListener.onItemClick(adapterPosition)
             }
+
+            binding.btnClear.setOnClickListener {
+
+            }
         }
     }
 }
