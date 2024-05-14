@@ -141,7 +141,7 @@ class SetQrcodeFragment : Fragment() {
 
         qrList.forEachIndexed { i, it ->
             val uri = Uri.parse(it.filePath.trim())
-            var fileName = "${AppHelper.intToString(it.seq)}_${it.tableNo}.png"
+            var fileName = "${AppHelper.intToString(i+1)}_${it.tableNo}.png"
             if(engStoreName.isNotEmpty()) {
                 fileName = "${engStoreName}_" + fileName
             }
