@@ -48,7 +48,7 @@ class SewooAdapter(val dataSet: ArrayList<BluetoothDevice>): RecyclerView.Adapte
 //            when(data.printType) {
 //                1 -> {
 //                    cmp = "세우테크"
-//                    img = R.drawable.skl_ts400b
+//                    img = R.drawable.skl_ts400bㅃㅃㅃ
 //                }
 //                2-> {
 //                    cmp = "세우테크"
@@ -130,6 +130,7 @@ class SewooAdapter(val dataSet: ArrayList<BluetoothDevice>): RecyclerView.Adapte
             }
 
             binding.btnClear.setOnClickListener {
+                // 프린터 연결 해제
 
             }
         }

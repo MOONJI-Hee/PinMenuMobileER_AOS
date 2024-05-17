@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import com.sewoo.request.android.RequestHandler
 import com.wooriyo.pinmenumobileer.MyApplication

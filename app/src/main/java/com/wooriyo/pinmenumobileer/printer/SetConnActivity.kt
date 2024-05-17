@@ -1,5 +1,10 @@
 package com.wooriyo.pinmenumobileer.printer
 
+import android.bluetooth.BluetoothDevice
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -10,10 +15,13 @@ import com.sewoo.request.android.RequestHandler
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.androidId
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.bluetoothAdapter
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.remoteDevices
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
+import com.wooriyo.pinmenumobileer.broadcast.BtDiscoveryReceiver
+import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.databinding.ActivitySetConnBinding
 import com.wooriyo.pinmenumobileer.listener.DialogListener
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
@@ -31,9 +39,6 @@ import kotlin.collections.ArrayList
 
 class SetConnActivity : BaseActivity() {
     lateinit var binding: ActivitySetConnBinding
-
-//    val TAG = "SetConnActivity"
-//    val mActivity = this@SetConnActivity
 
     lateinit var cubeList : ArrayList<SocketInfo>
     lateinit var sam4sAdapter: Sam4sAdapter
@@ -69,7 +74,43 @@ class SetConnActivity : BaseActivity() {
 //        getPairedDevice()
 
         // BroadCast Receiver
-//        registerReceiver(BtDiscoveryReceiver(), IntentFilter(BluetoothDevice.ACTION_FOUND))
+        registerReceiver(object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                if (intent == null) return
+
+                var bFlag = true
+                var btDev: BluetoothDevice
+                val remoteDevice = intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
+                if (remoteDevice != null) {
+                    val devNum = remoteDevice.bluetoothClass.majorDeviceClass
+                    if (devNum != AppProperties.BT_PRINTER) return
+
+                    if (MyApplication.bluetoothPort.isValidAddress(remoteDevice.address)) {
+                        for (i in remoteDevices.indices) {
+                            btDev = remoteDevices.elementAt(i)
+                            if (remoteDevice.address == btDev.address) {
+                                bFlag = false
+                                break
+                            }
+                        }
+                        if (bFlag) {
+                            remoteDevices.add(remoteDevice)
+                        }
+                    }
+
+                    sewooAdapter.notifyDataSetChanged()
+                    val retVal = AppHelper.connDevice(0)
+
+                    if (retVal == 0) { // Connection success.
+                        val rh = RequestHandler()
+                        MyApplication.btThread = Thread(rh)
+                        MyApplication.btThread!!.start()
+                    } else // Connection failed.
+                        Toast.makeText(context, "블루투스 연결 실패", Toast.LENGTH_SHORT).show()
+                }else
+                    Toast.makeText(context, "검색된 블루투스 기기가 없습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }, IntentFilter(BluetoothDevice.ACTION_FOUND))
 //        registerReceiver(connectDevice, IntentFilter(BluetoothDevice.ACTION_ACL_CONNECTED))
 //        registerReceiver(connectDevice, IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED))
 
@@ -145,6 +186,9 @@ class SetConnActivity : BaseActivity() {
 
         binding.back.setOnClickListener { finish() }
         binding.phoneNick.setOnClickListener { nickDialog.show(supportFragmentManager, "SetNickDialog") }
+        binding.plus.setOnClickListener {
+            bluetoothAdapter.startDiscovery()
+        }
     }
 
     override fun onResume() {

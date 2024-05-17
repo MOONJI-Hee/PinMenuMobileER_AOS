@@ -109,6 +109,17 @@
                     android:id="@+id/rvSam4s"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
+                <LinearLayout
+                    style="@style/btn_sub"
+                    android:id="@+id/plus"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_margin="20dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_print_plus_small" />
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
