@@ -15,6 +15,8 @@ import android.widget.CheckBox
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.wooriyo.pinmenumobileer.MainActivity
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.engStoreName
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.store
@@ -44,7 +46,9 @@ class SetQrcodeFragment : Fragment() {
     val qrList = ArrayList<QrDTO>()
     val qrAdapter = QrAdapter(qrList)
 
-    var qrCnt = 0
+    var qrReserv : QrDTO? = null
+
+    var qrCnt = 0       // 사용가능한 전체 QR 개수
     var storeName = ""
 
     var bisBus = false  // 비즈니스 요금제 사용 여부
@@ -125,6 +129,18 @@ class SetQrcodeFragment : Fragment() {
                 intent.putExtra("event", event)
                 startActivity(intent)
             }
+            plus.setOnClickListener{
+                if(qrList.size < qrCnt) {
+                    val intent = Intent(context, QrDetailActivity::class.java)
+                    intent.putExtra("seq", qrList.size)
+                    startActivity(intent)
+                }else {
+                    AlertDialog("", getString(R.string.dialog_disable_qr)).show((context as MainActivity).supportFragmentManager, "DisableQrDialog")
+                }
+            }
+            useReserv.setOnClickListener{
+
+            }
         }
 
         return binding.root
@@ -134,6 +150,11 @@ class SetQrcodeFragment : Fragment() {
         super.onResume()
         getQrList()
         getEvent()
+    }
+
+    fun setQrReserv() {
+        binding.useReserv.isChecked = qrReserv?.qrbuse == "Y"
+        Glide.with(requireContext()).load(qrReserv?.filePath).into(binding.ivReservQr)
     }
 
     fun downloadAll() {
@@ -175,11 +196,21 @@ class SetQrcodeFragment : Fragment() {
                 val result = response.body() ?: return
                 when (result.status) {
                     1 -> {
+                        qrCnt = result.qrCnt
+
+                        if(result.qrList.size > 0 && result.qrList[0].seq == 0) {
+                            qrReserv = result.qrList[0]
+                            result.qrList.removeAt(0)
+
+                            setQrReserv()
+                        }
                         qrList.clear()
                         qrList.addAll(result.qrList)
 
-                        qrCnt = result.qrCnt
-                        binding.qrCnt.text = (qrCnt - qrList.size).toString()
+                        qrAdapter.setQrCount(qrCnt)
+                        qrAdapter.notifyDataSetChanged()
+
+                        binding.tvQrCnt.text = (qrCnt - qrList.size).toString()
 
                         storeName = result.enname
                         engStoreName = storeName
@@ -187,9 +218,6 @@ class SetQrcodeFragment : Fragment() {
                         if(!storeName.isNullOrEmpty()) {
                             binding.etStoreName.setText(storeName)
                         }
-
-                        qrAdapter.setQrCount(qrCnt)
-                        qrAdapter.notifyDataSetChanged()
 
                         bisCnt = 0
                         qrList.forEach {

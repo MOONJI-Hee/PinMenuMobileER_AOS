@@ -98,6 +98,7 @@ interface Api {
     //배너 목록 조회
     @GET("banner_list.php")
     fun getBannerList(
+        @Query("useridx") useridx: Int,
         @Query("APP") nApp: Int,        // 앱 종류 0.근로자용 1.관리자용
         @Query("PAGE") nPage: Int,      // 배너 위치 0.메인 1.더보기
         @Query("TARGET") nTarget: Int   // TARGET 모바일 0 ,태블릿 1
