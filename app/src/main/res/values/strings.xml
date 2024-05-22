@@ -380,8 +380,9 @@
     <string name="qr_down_all">전체 QR코드 사진첩에 저장하기</string>
     <string name="qr_down_one">QR코드 사진첩에 저장하기</string>
     <string name="qr_post_pay_all">QR코드 전체 후불결제 적용</string>
+    <string name="qr_post_pay_one">QR코드 후불결제 적용</string>
     <string name="qr_post_pay">후불결제</string>
-    <string name="qr_cnt">QR-%d</string>
+    <string name="qr_cnt">QR-%s</string>
     <string name="table_no">Table No.</string>
     <string name="table_no_hint">테이블 번호 입력</string>
     <string name="qr_setting_info1">QR오더는 결제가 완료된 후 주문내역이 전송됩니다.\n(단, 후불결제 기능을 설정했을 경우 제외)</string>
@@ -480,6 +481,7 @@
     <!--  결제 내역  -->
     <string name="payment_history">결제내역</string>
     <string name="payment_cancel">결제취소</string>
+    <string name="payment_cancel_complete">취소완료</string>
     <string name="pg_history">PG결제 내역</string>
     <string name="pg_cancel">PG결제 취소</string>
     <string name="pg_history_search_hint">금액(원)</string>

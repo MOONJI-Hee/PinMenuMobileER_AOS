@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,25 +45,26 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tv1"
-                style="@style/subtext"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/table_no"
-                app:layout_constraintBottom_toTopOf="@+id/postPay"
-                app:layout_constraintEnd_toStartOf="@+id/tableNo"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                style="@style/text15"
-                android:id="@+id/tableNo"
-                android:layout_marginStart="6dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/tv1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv1"
-                app:layout_constraintTop_toTopOf="@+id/tv1"/>
+                android:orientation="horizontal"
+                android:gravity="center"
+                app:layout_constraintBottom_toTopOf="@+id/postPay">
+                <TextView
+                    android:id="@+id/tv1"
+                    style="@style/subtext"
+                    android:text="@string/table_no" />
+                <TextView
+                    style="@style/text15"
+                    android:id="@+id/tableNo"
+                    android:layout_marginStart="6dp"
+                    android:textStyle="bold"
+                    android:ellipsize="end"
+                    android:maxLines="1" />
+            </LinearLayout>
 
             <TextView
                 style="@style/text17d"

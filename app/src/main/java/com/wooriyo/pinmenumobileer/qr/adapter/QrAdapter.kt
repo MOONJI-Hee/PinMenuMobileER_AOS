@@ -16,6 +16,7 @@ import com.wooriyo.pinmenumobileer.databinding.ListQrBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.QrDTO
 import com.wooriyo.pinmenumobileer.qr.QrDetailActivity
+import com.wooriyo.pinmenumobileer.util.AppHelper
 
 class QrAdapter(val dataSet: ArrayList<QrDTO>): RecyclerView.Adapter<QrAdapter.ViewHolder>() {
     lateinit var postPayClickListener: ItemClickListener
@@ -49,7 +50,7 @@ class QrAdapter(val dataSet: ArrayList<QrDTO>): RecyclerView.Adapter<QrAdapter.V
             binding.plus.visibility = View.GONE
 
             binding.tableNo.text = data.tableNo
-            binding.seq.text = String.format(context.getString( R.string.qr_cnt), adapterPosition+1)
+            binding.seq.text = String.format(context.getString( R.string.qr_cnt), AppHelper.intToString(adapterPosition+1))
 
             Glide.with(context)
                 .load(data.filePath)

@@ -9,6 +9,7 @@ data class QrDTO(
     @SerializedName("seq") var seq : Int,
     @SerializedName("status") var status: Int,          // QR코드 0 : 사융불가 , 1: 사용가능
     @SerializedName("filepath") var filePath: String,
+    @SerializedName("qrurl") var url: String?,
     @SerializedName("tableNo") var tableNo: String,
     @SerializedName("regdt") var regdt: String,
     @SerializedName("qrbuse") var qrbuse: String

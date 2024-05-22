@@ -52,7 +52,7 @@ class QrDetailActivity : BaseActivity() {
         setContentView(binding.root)
 
         seq = intent.getIntExtra("seq", seq)
-        strSeq = AppHelper.intToString(seq)
+        strSeq = if(seq == 0) "예약" else AppHelper.intToString(seq)
         binding.tvSeq.text = strSeq
 
         qrCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -72,8 +72,26 @@ class QrDetailActivity : BaseActivity() {
                 .into(binding.ivQr)
         }
 
+        if(seq == 0) {
+            binding.etTableNo.setText(R.string.reservation)
+            binding.etTableNo.isEnabled = false
+
+            binding.download.text = getString(R.string.qr_down_reserv)
+            binding.copyLink.visibility = View.VISIBLE
+            binding.delete.visibility = View.GONE
+            binding.save.visibility = View.INVISIBLE
+            binding.confirm.visibility = View.VISIBLE
+
+            binding.qrInfoArea.layoutResource = R.layout.qr_info_reserv
+        }else {
+            binding.qrInfoArea.layoutResource = R.layout.qr_info
+        }
+
+        binding.qrInfoArea.inflate()
+
         binding.run {
             back.setOnClickListener { finish() }
+            confirm.setOnClickListener { finish() }
             save.setOnClickListener {
                 val tableNo = binding.etTableNo.text.toString()
 
@@ -94,6 +112,9 @@ class QrDetailActivity : BaseActivity() {
                 }else {
                     saveViewToImg(binding.qrArea)
                 }
+            }
+            copyLink.setOnClickListener {
+
             }
         }
     }
@@ -182,7 +203,7 @@ class QrDetailActivity : BaseActivity() {
                 val result = response.body() ?: return
                 when (result.status) {
                     1 -> {
-                        qrCode = QrDTO(result.qidx, MyApplication.storeidx, seq, 1, result.filePath, "", getToday(), "N")
+                        qrCode = QrDTO(result.qidx, MyApplication.storeidx, seq, 1, result.filePath, "", "", getToday(), "N")
 
                         binding.delete.isEnabled = true
                         binding.save.isEnabled = true

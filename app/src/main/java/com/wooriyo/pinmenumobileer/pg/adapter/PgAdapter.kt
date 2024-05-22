@@ -2,10 +2,12 @@ package com.wooriyo.pinmenumobileer.pg.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.ListPgBinding
 import com.wooriyo.pinmenumobileer.model.PgDetailDTO
 import com.wooriyo.pinmenumobileer.pg.PgCancelActivity
@@ -35,10 +37,14 @@ class PgAdapter(val dataSet: ArrayList<PgDetailDTO>): RecyclerView.Adapter<PgAda
 
                 if(data.cancel == 0) {
                     cancelComplete.visibility = View.GONE
-                    btnCancel.visibility = View.VISIBLE
+                    btnCancel.setTextColor(Color.BLACK)
+                    btnCancel.setBackgroundResource(R.drawable.bg_r6_grd)
+                    btnCancel.text = context.getString(R.string.payment_cancel)
                 }else {
                     cancelComplete.visibility = View.VISIBLE
-                    btnCancel.visibility = View.GONE
+                    btnCancel.setTextColor(Color.RED)
+                    btnCancel.setBackgroundResource(R.drawable.bg_r6g)
+                    btnCancel.text = context.getString(R.string.payment_cancel_complete)
                 }
 
                 btnCancel.setOnClickListener {

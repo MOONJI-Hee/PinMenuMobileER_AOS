@@ -40,7 +40,14 @@
         android:text="@string/won"
         app:layout_constraintBottom_toBottomOf="@+id/price"
         app:layout_constraintEnd_toEndOf="parent"/>
-    
+
+    <View
+        android:id="@+id/cancelComplete"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#BFFFFFFF"
+        android:visibility="gone"/>
+
     <TextView
         style="@style/btn"
         android:id="@+id/btnCancel"
@@ -51,19 +58,5 @@
         android:text="@string/payment_cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-    
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cancelComplete"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#BFFFFFFF"
-        android:visibility="gone">
-        <ImageView
-            android:layout_width="88dp"
-            android:layout_height="62dp"
-            android:src="@drawable/img_pg_cancel_complete"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

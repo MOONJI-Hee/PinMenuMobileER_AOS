@@ -33,6 +33,7 @@ import com.wooriyo.pinmenumobileer.model.QrListDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.qr.adapter.QrAdapter
 import com.wooriyo.pinmenumobileer.qr.dialog.QrInfoDialog
+import com.wooriyo.pinmenumobileer.util.Api
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.util.AppHelper
 import retrofit2.Call
@@ -138,8 +139,20 @@ class SetQrcodeFragment : Fragment() {
                     AlertDialog("", getString(R.string.dialog_disable_qr)).show((context as MainActivity).supportFragmentManager, "DisableQrDialog")
                 }
             }
-            useReserv.setOnClickListener{
+            reservQr.setOnClickListener {
+                if(qrReserv == null) return@setOnClickListener
 
+                val intent = Intent(context, QrDetailActivity::class.java)
+                intent.putExtra("seq", 0)
+                intent.putExtra("qrcode", qrReserv)
+                startActivity(intent)
+            }
+            useReserv.setOnClickListener{
+                if(qrReserv == null) return@setOnClickListener
+
+                it as CheckBox
+                var status = if(it.isChecked) "Y" else "N"
+                setUseReservation(status)
             }
         }
 
@@ -196,21 +209,19 @@ class SetQrcodeFragment : Fragment() {
                 val result = response.body() ?: return
                 when (result.status) {
                     1 -> {
-                        qrCnt = result.qrCnt
-
-                        if(result.qrList.size > 0 && result.qrList[0].seq == 0) {
-                            qrReserv = result.qrList[0]
-                            result.qrList.removeAt(0)
-
-                            setQrReserv()
-                        }
                         qrList.clear()
                         qrList.addAll(result.qrList)
+
+                        qrCnt = result.qrCnt
+                        binding.tvQrCnt.text = (qrCnt - qrList.size).toString()
 
                         qrAdapter.setQrCount(qrCnt)
                         qrAdapter.notifyDataSetChanged()
 
-                        binding.tvQrCnt.text = (qrCnt - qrList.size).toString()
+                        if(!result.reservList.isNullOrEmpty()) {
+                            qrReserv = result.reservList[0]
+                            setQrReserv()
+                        }
 
                         storeName = result.enname
                         engStoreName = storeName
@@ -265,6 +276,30 @@ class SetQrcodeFragment : Fragment() {
                 }
             })
         }
+    }
+
+    fun setUseReservation(status: String) {
+        ApiClient.service.setReservUse(useridx, storeidx, qrReserv!!.idx, status).enqueue(object : Callback<ResultDTO>{
+            override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                Log.d(TAG, "예약 QR 사용 설정 url : $response")
+                if(!response.isSuccessful) return
+
+                val result = response.body() ?: return
+                when (result.status) {
+                    1 -> {
+                        Toast.makeText(context, R.string.msg_complete, Toast.LENGTH_SHORT).show()
+                        qrReserv!!.qrbuse = status
+                    }
+                    else -> Toast.makeText(context, result.msg, Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                Toast.makeText(context, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "예약 QR 사용 설정 실패 >> $t")
+                Log.d(TAG, "예약 QR 사용 설정 실패 >> ${call.request()}")
+            }
+        })
     }
 
     fun setPostPay(qidx: Int, buse: String, position: Int) {

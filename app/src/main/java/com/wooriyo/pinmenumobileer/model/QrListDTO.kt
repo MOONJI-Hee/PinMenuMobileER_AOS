@@ -8,5 +8,6 @@ data class QrListDTO(
     @SerializedName("totalrows") var totalrows: Int,
     @SerializedName("qrCnt") var qrCnt: Int,
     @SerializedName("enname") var enname: String,   // 영문 매장명
-    @SerializedName("qrlist") var qrList: ArrayList<QrDTO>
+    @SerializedName("qrlist") var qrList: ArrayList<QrDTO>,
+    @SerializedName("reserlist") var reservList: ArrayList<QrDTO>
 )

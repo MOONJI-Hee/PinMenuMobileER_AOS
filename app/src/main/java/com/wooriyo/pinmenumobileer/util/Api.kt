@@ -608,6 +608,15 @@ interface Api {
         @Query("buse") buse: String
     ): Call<ResultDTO>
 
+    // 예약 QR 사용 여부 설정
+    @GET("m/udt_qrbuse.php")
+    fun setReservUse(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("idx") qidx: Int,
+        @Query("buse") buse: String
+    ): Call<ResultDTO>
+
     // 주문 완료 후 이벤트 팝업
     // QR오더에서 이벤트 팝업 사용 여부 설정
     @GET("m/event.use.php")
