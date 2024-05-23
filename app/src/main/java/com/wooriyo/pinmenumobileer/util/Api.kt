@@ -572,7 +572,8 @@ interface Api {
         @Query("useridx") useridx: Int,
         @Query("storeidx") storeidx: Int,
         @Query("qidx") qidx: Int,
-        @Query("tableNo") tableNo: String
+        @Query("tableNo") tableNo: String,
+        @Query("buse") buse: String
     ): Call<ResultDTO>
 
     // QR 삭제
@@ -613,7 +614,7 @@ interface Api {
     fun setReservUse(
         @Query("useridx") useridx: Int,
         @Query("storeidx") storeidx: Int,
-        @Query("idx") qidx: Int,
+        @Query("qidx") qidx: Int,
         @Query("buse") buse: String
     ): Call<ResultDTO>
 

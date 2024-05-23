@@ -166,7 +166,7 @@ class SetQrcodeFragment : Fragment() {
     }
 
     fun setQrReserv() {
-        binding.useReserv.isChecked = qrReserv?.qrbuse == "Y"
+        binding.useReserv.isChecked = qrReserv?.buse == "Y"
         Glide.with(requireContext()).load(qrReserv?.filePath).into(binding.ivReservQr)
     }
 
@@ -233,6 +233,7 @@ class SetQrcodeFragment : Fragment() {
                         bisCnt = 0
                         qrList.forEach {
                             if(it.qrbuse == "Y") bisCnt++
+                            //TODO 전체 체크 되어있을 때 전체 체크 설정
                         }
                     }
 
@@ -288,7 +289,7 @@ class SetQrcodeFragment : Fragment() {
                 when (result.status) {
                     1 -> {
                         Toast.makeText(context, R.string.msg_complete, Toast.LENGTH_SHORT).show()
-                        qrReserv!!.qrbuse = status
+                        qrReserv!!.buse = status
                     }
                     else -> Toast.makeText(context, result.msg, Toast.LENGTH_SHORT).show()
                 }

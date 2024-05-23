@@ -1,29 +1,30 @@
 package com.wooriyo.pinmenumobileer.qr
 
 import android.Manifest
-import android.app.DownloadManager
-import android.content.IntentFilter
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.view.View
+import android.widget.CheckBox
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
-import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.wooriyo.pinmenumobileer.BaseActivity
+import com.wooriyo.pinmenumobileer.MainActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.engStoreName
 import com.wooriyo.pinmenumobileer.R
-import com.wooriyo.pinmenumobileer.broadcast.DownloadReceiver
+import com.wooriyo.pinmenumobileer.common.dialog.AlertDialog
 import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.databinding.ActivityQrDetailBinding
+import com.wooriyo.pinmenumobileer.databinding.QrInfoBinding
+import com.wooriyo.pinmenumobileer.databinding.QrInfoReservBinding
 import com.wooriyo.pinmenumobileer.model.QrDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.util.ApiClient
@@ -43,6 +44,7 @@ class QrDetailActivity : BaseActivity() {
     var seq = 1
     var strSeq = ""
     var qrCode : QrDTO? = null
+    var oriBuse: String = ""
 
     private val permission = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
@@ -83,8 +85,28 @@ class QrDetailActivity : BaseActivity() {
             binding.confirm.visibility = View.VISIBLE
 
             binding.qrInfoArea.layoutResource = R.layout.qr_info_reserv
+
+            binding.qrInfoArea.setOnInflateListener { stub, inflated ->
+                val bindingInfo = QrInfoReservBinding.bind(inflated)
+                bindingInfo.pgStatus.text =
+                    if(MyApplication.store.mid.isNullOrEmpty() || MyApplication.store.mid_key.isNullOrEmpty()) getString(R.string.qr_reserv_pg_unable) else getString(R.string.able)
+            }
         }else {
             binding.qrInfoArea.layoutResource = R.layout.qr_info
+
+            binding.qrInfoArea.setOnInflateListener { stub, inflated ->
+                val bindingInfo = QrInfoBinding.bind(inflated)
+                bindingInfo.postPay.isChecked = qrCode?.qrbuse == "Y"
+                bindingInfo.postPay.setOnClickListener {
+                    it as CheckBox
+                    if(MyApplication.store.paytype == 2) {
+                        qrCode?.qrbuse = if(it.isChecked) "Y" else "N"
+                    }else {
+                        it.isChecked = false
+                        AlertDialog("", getString(R.string.dialog_no_business)).show(supportFragmentManager, "NoBusinessDialog")
+                    }
+                }
+            }
         }
 
         binding.qrInfoArea.inflate()
@@ -114,7 +136,11 @@ class QrDetailActivity : BaseActivity() {
                 }
             }
             copyLink.setOnClickListener {
+                val clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                clipboardManager.setPrimaryClip(ClipData.newPlainText("url", qrCode?.url))
 
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2)
+                    Toast.makeText(mActivity, R.string.msg_copy, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -203,7 +229,7 @@ class QrDetailActivity : BaseActivity() {
                 val result = response.body() ?: return
                 when (result.status) {
                     1 -> {
-                        qrCode = QrDTO(result.qidx, MyApplication.storeidx, seq, 1, result.filePath, "", "", getToday(), "N")
+                        qrCode = QrDTO(result.qidx, MyApplication.storeidx, seq, 1, result.filePath, "", "", getToday(), "N", "Y")
 
                         binding.delete.isEnabled = true
                         binding.save.isEnabled = true
@@ -225,7 +251,7 @@ class QrDetailActivity : BaseActivity() {
     }
 
     fun udtQr(qidx: Int, tableNo: String) {
-        ApiClient.imgService.udtQr(MyApplication.useridx, MyApplication.storeidx, qidx, tableNo).enqueue(object : Callback<ResultDTO> {
+        ApiClient.imgService.udtQr(MyApplication.useridx, MyApplication.storeidx, qidx, tableNo, qrCode!!.qrbuse).enqueue(object : Callback<ResultDTO> {
             override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                 Log.d(TAG, "Qr 등록 url : $response")
                 if(!response.isSuccessful) return

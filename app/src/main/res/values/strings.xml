@@ -401,7 +401,7 @@
     <string name="qr_copy_url_reserv">예약 URL 복사</string>
 
     <string name="qr_reserv_info1">예약 QR 선불결제만 가능</string>
-    <string name="qr_reserv_info2">PG가입 후 사용가능</string>
+    <string name="qr_reserv_pg_unable">PG가입 후 사용가능</string>
     <string name="qr_reserv_info3">PG 가입 완료 후 예약 기능이 활성화 됩니다.</string>
     <string name="qr_reserv_info4">예약 QR코드는 테이블 수에 포함되지 않습니다.</string>
     <string name="qr_reserv_info5">예약 테이블명은 변경이 불가능합니다.</string>
@@ -601,6 +601,7 @@
     <string name="msg_success_down">다운로드가 완료되었습니다.</string>
     <string name="msg_fail_down">다운로드가 실패하였습니다.</string>
     <string name="msg_find_pwd">임시 비밀번호가 이메일로 전송되었습니다.</string>
+    <string name="msg_copy">클립보드에 복사되었습니다.</string>
     <string name="backpress">뒤로 가기 버튼을 한 번 더 누르시면 종료됩니다.</string>
 
     <string name="msg_no_addr">주소를 입력해주세요.</string>

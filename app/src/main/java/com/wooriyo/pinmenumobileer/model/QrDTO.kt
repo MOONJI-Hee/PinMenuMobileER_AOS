@@ -12,5 +12,6 @@ data class QrDTO(
     @SerializedName("qrurl") var url: String?,
     @SerializedName("tableNo") var tableNo: String,
     @SerializedName("regdt") var regdt: String,
-    @SerializedName("qrbuse") var qrbuse: String
+    @SerializedName("qrbuse") var qrbuse: String,
+    @SerializedName("buse") var buse: String
 ):Serializable

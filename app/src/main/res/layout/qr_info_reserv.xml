@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"/>
     <TextView
         style="@style/text15"
-        android:text="@string/qr_reserv_info2"
+        android:id="@+id/pgStatus"
         android:textColor="#FF6200"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/info1"
