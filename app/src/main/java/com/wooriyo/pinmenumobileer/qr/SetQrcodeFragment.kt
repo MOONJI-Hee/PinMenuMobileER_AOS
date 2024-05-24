@@ -233,7 +233,14 @@ class SetQrcodeFragment : Fragment() {
                         bisCnt = 0
                         qrList.forEach {
                             if(it.qrbuse == "Y") bisCnt++
-                            //TODO 전체 체크 되어있을 때 전체 체크 설정
+                        }
+
+                        binding.postPayAll.isChecked = bisCnt == qrList.size
+
+                        val strBuse = if(binding.postPayAll.isChecked) "Y" else "N"
+
+                        if(store.qrbuse != strBuse) {
+                            setPostPayStore(strBuse)
                         }
                     }
 
@@ -346,6 +353,29 @@ class SetQrcodeFragment : Fragment() {
                 Toast.makeText(context, R.string.msg_retry, Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "QR 후불 결제 전체 설정 실패 >> $t")
                 Log.d(TAG, "QR 후불 결제 전체 설정 실패 >> ${call.request()}")
+            }
+        })
+    }
+
+    fun setPostPayStore(buse: String) {
+        ApiClient.service.setPostPayStore(useridx, storeidx, buse).enqueue(object : Callback<ResultDTO>{
+            override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                Log.d(TAG, "QR 후불 결제 매장 설정 url : $response")
+                if(!response.isSuccessful) return
+
+                val result = response.body() ?: return
+                when (result.status) {
+                    1 -> {
+                        store.qrbuse = buse
+                    }
+                    else -> Toast.makeText(context, result.msg, Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                Toast.makeText(context, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "QR 후불 결제 매장 설정 실패 >> $t")
+                Log.d(TAG, "QR 후불 결제 매장 설정 실패 >> ${call.request()}")
             }
         })
     }

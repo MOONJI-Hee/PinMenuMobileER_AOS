@@ -609,6 +609,14 @@ interface Api {
         @Query("buse") buse: String
     ): Call<ResultDTO>
 
+    // QR 후결제 매장 사용 설정 (개별 QR과 독립적으로 sw_store의 qrbuse만 update)
+    @GET("m/udt_StoreNonePay.php")
+    fun setPostPayStore(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("buse") buse: String
+    ): Call<ResultDTO>
+
     // 예약 QR 사용 여부 설정
     @GET("m/udt_qrbuse.php")
     fun setReservUse(
