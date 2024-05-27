@@ -323,6 +323,22 @@
         <item name="android:textColor">@color/selector_text_white</item>
         <item name="android:includeFontPadding">false</item>
     </style>
+    <style name="text16l">
+        <item name="android:fontFamily">@font/notosans_light</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="text16b">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
     <style name="text17">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

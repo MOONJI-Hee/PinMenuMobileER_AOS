@@ -473,10 +473,23 @@
     <string name="order_merge_info">해당 항목으로 선택된 주문 정보를 합칩니다.\n합쳐진 이후에는 복구가 불가능합니다.</string>
     <string name="merge">합치기</string>
     <string name="order_dialog_clear">주문정보는 3일간 보관되며,\n\'초기화\'버튼을 누르면 모든 주문정보가\n삭제됩니다.</string>
-
     <string name="dialog_clear">주문/호출 정보는 3일간 보관되며,\n\'초기화\'버튼을 누르면\n모든 주문/호출 정보가 삭제됩니다.</string>
     <string name="dialog_clear_warning">한번 초기화된 내역은 복원되지 않습니다.</string>
     <string name="order_no_pos">포스 미연동</string>
+
+    <string name="table_no_kr">테이블번호</string>
+    <string name="order_no">주문번호</string>
+
+    <!--  예약 정보  -->
+    <string name="reserv_no">예약번호</string>
+    <string name="reserv_store">매\n장</string>
+    <string name="reserv_togo">포\n장</string>
+    <string name="reserv_paid">선결제</string>
+    <string name="reserv_tel">전화번호</string>
+    <string name="reserv_name">예약자명</string>
+    <string name="reserv_request">요청사항</string>
+    <string name="reserv_addr">배송지 주소</string>
+    <string name="reserv_date">%s 예약일시</string>
 
     <!--  결제 내역  -->
     <string name="payment_history">결제내역</string>

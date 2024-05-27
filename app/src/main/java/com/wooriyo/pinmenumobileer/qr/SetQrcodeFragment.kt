@@ -84,15 +84,17 @@ class SetQrcodeFragment : Fragment() {
 
                 Log.d(TAG, "checked Toggle Cnt > $bisCnt")
 
+                val buse = if(status) "Y" else "N"
+                setPostPay(qrList[position].idx, buse, position)
+
                 if(bisCnt == qrList.size) {
                     binding.postPayAll.isChecked = true
-                    setAllPostPay("Y")
+                    store.qrbuse = "Y"
                 }else {
                     if(binding.postPayAll.isChecked) {
                         binding.postPayAll.isChecked = false
+                        store.qrbuse = "N"
                     }
-                    val buse = if(status) "Y" else "N"
-                    setPostPay(qrList[position].idx, buse, position)
                 }
             }
         })
