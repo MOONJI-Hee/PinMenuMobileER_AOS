@@ -9,7 +9,6 @@ import com.wooriyo.pinmenumobileer.MyApplication.Companion.store
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.ActivitySetPgInfoBinding
 import com.wooriyo.pinmenumobileer.model.ResultDTO
-import com.wooriyo.pinmenumobileer.order.dialog.SetNicepayDialog
 import com.wooriyo.pinmenumobileer.payment.dialog.PgBlinkDialog
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import retrofit2.Call
@@ -69,7 +68,7 @@ class SetPgInfoActivity : BaseActivity() {
                                 store.pg_addr = storeAddr
 
                                 if(fromOrder == "Y") {
-                                    SetNicepayDialog().show(supportFragmentManager, "SetNicepayDialog")
+//                                    SetNicepayDialog().show(supportFragmentManager, "SetNicepayDialog")
                                 }else {
                                     Toast.makeText(mActivity, R.string.msg_complete, Toast.LENGTH_SHORT).show()
                                     finish()

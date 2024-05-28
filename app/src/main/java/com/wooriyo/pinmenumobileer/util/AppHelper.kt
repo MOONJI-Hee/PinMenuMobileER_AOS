@@ -41,6 +41,7 @@ import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
+import java.util.regex.Pattern
 
 // 자주 쓰는 메소드 모음 - 문지희 (2023.05 갱신)
 class AppHelper {
@@ -279,7 +280,6 @@ class AppHelper {
 
         // 주문내역(상세내역) 영수증 형태 String으로 받기 - 세우전자
         fun getPrint(ord: OrderDTO) : String {
-            var hangul_size = AppProperties.HANGUL_SIZE_BIG
             var one_line = AppProperties.ONE_LINE_BIG
             var space = AppProperties.SPACE_BIG
 
@@ -290,6 +290,7 @@ class AppHelper {
             val underline2 = StringBuilder()
 
             ord.name.forEach {
+                val charSize = getSewooCharSize(it)
                 if (total < one_line)
                     result.append(it)
                 else if (total < (one_line * 2))
@@ -300,13 +301,13 @@ class AppHelper {
                 if (it == ' ') {
                     total++
                 } else
-                    total += hangul_size
+                    total += charSize
             }
 
             val mlength = result.toString().length
             val mHangul = result.toString().replace(" ", "").length
             val mSpace = mlength - mHangul
-            val mLine = mHangul * hangul_size + mSpace
+            val mLine = mHangul * 3.8 + mSpace
 
             var diff = (one_line - mLine + 0.5).toInt()
 
@@ -348,7 +349,33 @@ class AppHelper {
             if (underline2.toString() != "")
                 result.append("\n$underline2")
 
+            if(!ord.opt.isNullOrEmpty()) {
+                ord.opt.forEach {
+                    result.append("\n -$it")
+                }
+            }
+
             return result.toString()
+        }
+
+        fun getSewooCharSize(c: Char): Double {
+            if(Pattern.matches("^[ㄱ-ㅎ가-힣]*\$", c.toString())) {
+                return AppProperties.HANGUL_SIZE
+            }
+            if(Pattern.matches("^[A-Z]*\$", c.toString())) {
+                return AppProperties.ENG_SIZE_UPPER
+            }
+            if(Pattern.matches("^[a-z]*\$", c.toString())) {
+                return AppProperties.ENG_SIZE_LOWER
+            }
+            if(Pattern.matches("^[0-9]*\$", c.toString())) {
+                return AppProperties.NUM_SIZE
+            }
+            if(c.toString() == " ") {
+                return AppProperties.SPACE.toDouble()
+            }
+
+            return 2.4
         }
 
         // 주문내역(상세내역) 영수증 형태 String으로 받기 - SAM4S

@@ -13,7 +13,6 @@ import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.databinding.ActivityQrBinding
-import com.wooriyo.pinmenumobileer.order.OrderListActivity
 import java.net.URISyntaxException
 
 class QrActivity : AppCompatActivity() {
@@ -62,7 +61,8 @@ class QrActivity : AppCompatActivity() {
                 if (status != null) {
                     when (status) {
                         1 -> {
-                            context.startActivity(Intent(context, OrderListActivity::class.java))
+                            // OrderListActivity >> ByHistoryActivity
+//                            context.startActivity(Intent(context, OrderListActivity::class.java))
                         }
                         2 -> {
                             Toast.makeText(context, R.string.msg_payment_cancel, Toast.LENGTH_SHORT).show()

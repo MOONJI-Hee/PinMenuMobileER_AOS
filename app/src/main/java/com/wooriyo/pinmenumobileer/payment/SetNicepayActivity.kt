@@ -8,7 +8,6 @@ import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.databinding.ActivitySetNicepayBinding
 import com.wooriyo.pinmenumobileer.model.ResultDTO
-import com.wooriyo.pinmenumobileer.order.dialog.SetNicepayDialog
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -65,7 +64,7 @@ class SetNicepayActivity : BaseActivity() {
                 when(result.status) {
                     1 -> {
                         if(fromOrder == "Y") {
-                            SetNicepayDialog().show(supportFragmentManager, "SetNicepayDialog")
+//                            SetNicepayDialog().show(supportFragmentManager, "SetNicepayDialog")
                         }else
                             Toast.makeText(mActivity, R.string.msg_complete, Toast.LENGTH_SHORT).show()
                     }
