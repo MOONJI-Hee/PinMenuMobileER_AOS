@@ -261,6 +261,16 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <View
+                    android:id="@+id/notyet"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="#E6FFFFFF"
+                    app:layout_constraintStart_toStartOf="@+id/reservQr"
+                    app:layout_constraintEnd_toEndOf="@+id/reservQr"
+                    app:layout_constraintTop_toTopOf="@+id/reservQr"
+                    app:layout_constraintBottom_toBottomOf="@+id/reservQr"/>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvQr"
                     android:layout_width="match_parent"

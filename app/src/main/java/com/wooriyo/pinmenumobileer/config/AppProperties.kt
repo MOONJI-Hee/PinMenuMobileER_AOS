@@ -47,27 +47,26 @@ class AppProperties {
                 const val FONT_SMALL = 28
                 const val FONT_WIDTH = 512
 
-                //3.6
-                const val HANGUL_SIZE_BIG = 3.6
+                const val HANGUL_SIZE_BIG = 3.8
                 const val HANGUL_SIZE_SMALL = 3.5
                 const val HANGUL_SIZE_SAM4S = 2
 
                 const val HANGUL_SIZE = HANGUL_SIZE_BIG
 
-                const val ENG_SIZE_UPPER_BIG = 2.4
-                const val ENG_SIZE_LOWER_BIG= 1.8
+                const val ENG_SIZE_UPPER_BIG = 2.53
+                const val ENG_SIZE_LOWER_BIG= 1.9
                 const val ENG_SIZE_UPPER_SMALL = 2.4
                 const val ENG_SIZE_LOWER_SMALL = 1.8
 
                 const val ENG_SIZE_UPPER = ENG_SIZE_UPPER_BIG
                 const val ENG_SIZE_LOWER= ENG_SIZE_LOWER_BIG
 
-                const val NUM_SIZE_BIG= 1.8
+                const val NUM_SIZE_BIG= 2.3
                 const val NUM_SIZE_SMALL= 1.8
 
                 const val NUM_SIZE= NUM_SIZE_BIG
 
-                const val ONE_LINE_BIG = 41
+                const val ONE_LINE_BIG = 38
                 const val ONE_LINE_SMALL = 53
                 const val ONE_LINE_SAM4S = 31
 
@@ -81,7 +80,7 @@ class AppProperties {
 
                 const val SPACE = SPACE_BIG
 
-                const val TITLE_MENU = "메     뉴     명                                수량     금액"
+                const val TITLE_MENU = "메     뉴     명                          수량         금액  "
                 const val TITLE_MENU_SAM4S = "메   뉴   명                   수량   금액"
         }
 }

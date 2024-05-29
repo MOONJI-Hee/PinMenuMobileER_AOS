@@ -281,9 +281,10 @@ class AppHelper {
         // 주문내역(상세내역) 영수증 형태 String으로 받기 - 세우전자
         fun getPrint(ord: OrderDTO) : String {
             var one_line = AppProperties.ONE_LINE_BIG
-            var space = AppProperties.SPACE_BIG
+            var space = AppProperties.SPACE
 
             var total = 0.0
+            var name = 0.0
 
             val result: StringBuilder = StringBuilder()
             val underline1 = StringBuilder()
@@ -291,9 +292,13 @@ class AppHelper {
 
             ord.name.forEach {
                 val charSize = getSewooCharSize(it)
-                if (total < one_line)
+//                Log.d("AppHelper", "charSize $it >> $charSize")
+
+                if (total + 1 < one_line){
                     result.append(it)
-                else if (total < (one_line * 2))
+                    name += charSize
+                }
+                else if (total + 1 < (one_line * 2))
                     underline1.append(it)
                 else
                     underline2.append(it)
@@ -304,20 +309,25 @@ class AppHelper {
                     total += charSize
             }
 
-            val mlength = result.toString().length
-            val mHangul = result.toString().replace(" ", "").length
-            val mSpace = mlength - mHangul
-            val mLine = mHangul * 3.8 + mSpace
+            var diff = (one_line - name + 1.5).toInt()
 
-            var diff = (one_line - mLine + 0.5).toInt()
+//            Log.d("AppHelper", "total >> $total")
+//            Log.d("AppHelper", "name >> $name")
+//            Log.d("AppHelper", "diff >> $diff")
 
             if (MyApplication.store.fontsize == 1) {
-                if (ord.gea < 10) {
-                    diff += 1
-                    space = 4
-                } else if (ord.gea >= 100) {
-                    space = 1
+                space = if(ord.price >= 100000) 1
+                        else if(ord.price >= 10000) 2
+                        else if (ord.price >= 1000) 3
+                        else if (ord.price >= 100) 6
+                        else if (ord.price >= 10) 7
+                        else if (ord.price >= 0) 8
+                        else 1
+
+                if(ord.gea < 10) {
+                    space++
                 }
+
             } else if (MyApplication.store.fontsize == 2) {
                 if (ord.gea < 10) {
                     diff += 1
@@ -330,18 +340,21 @@ class AppHelper {
             for (i in 1..diff) {
                 result.append(" ")
             }
+
             result.append(ord.gea.toString())
 
             for (i in 1..space) {
                 result.append(" ")
             }
 
-            var togo = ""
-            when (ord.togotype) {
-                1 -> togo = "신규"
-                2 -> togo = "포장"
-            }
-            result.append(togo)
+//            var togo = ""
+//            when (ord.togotype) {
+//                1 -> togo = "신규"
+//                2 -> togo = "포장"
+//            }
+//            result.append(togo)
+
+            result.append(price(ord.price))
 
             if (underline1.toString() != "")
                 result.append("\n$underline1")
@@ -371,76 +384,73 @@ class AppHelper {
             if(Pattern.matches("^[0-9]*\$", c.toString())) {
                 return AppProperties.NUM_SIZE
             }
-            if(c.toString() == " ") {
-                return AppProperties.SPACE.toDouble()
-            }
 
-            return 2.4
+            return 1.0
         }
 
         // 주문내역(상세내역) 영수증 형태 String으로 받기 - SAM4S
-        fun getSam4sPrint(ord: OrderDTO) : String {
-            var hangul_size = AppProperties.HANGUL_SIZE_SAM4S
-            var one_line = AppProperties.ONE_LINE_SAM4S
-            var space = AppProperties.SPACE_SAM4S
-
-            var total = 0.0
-
-            val result: StringBuilder = StringBuilder()
-            val underline1 = StringBuilder()
-            val underline2 = StringBuilder()
-
-            ord.name.forEach {
-                if(total + hangul_size <= one_line)
-                    result.append(it)
-                else if(total + hangul_size <= (one_line * 2))
-                    underline1.append(it)
-                else
-                    underline2.append(it)
-
-                if(it == ' ') {
-                    total++
-                }else
-                    total += hangul_size
-            }
-
-            val mlength = result.toString().length
-            val mHangul = result.toString().replace(" ", "").length
-            val mSpace = mlength - mHangul
-            val mLine = mHangul * hangul_size + mSpace
-
-            val diff = one_line - mLine + 1
-
-            if (ord.gea >= 100) {
-                space = 0
-            }else if(ord.gea >= 10) {
-                space = 1
-            }
-
-            for(i in 1..diff) {
-                result.append(" ")
-            }
-            result.append(ord.gea.toString())
-
-            for (i in 1..space) {
-                result.append(" ")
-            }
-
-            var togo = ""
-            when(ord.togotype) {
-                1-> togo = "신규"
-                2-> togo = "포장"
-            }
-            result.append(togo)
-
-            if(underline1.toString() != "")
-                result.append("\n$underline1")
-
-            if(underline2.toString() != "")
-                result.append("\n$underline2")
-
-            return result.toString()
-        }
+//        fun getSam4sPrint(ord: OrderDTO) : String {
+//            var hangul_size = AppProperties.HANGUL_SIZE_SAM4S
+//            var one_line = AppProperties.ONE_LINE_SAM4S
+//            var space = AppProperties.SPACE_SAM4S
+//
+//            var total = 0.0
+//
+//            val result: StringBuilder = StringBuilder()
+//            val underline1 = StringBuilder()
+//            val underline2 = StringBuilder()
+//
+//            ord.name.forEach {
+//                if(total + hangul_size <= one_line)
+//                    result.append(it)
+//                else if(total + hangul_size <= (one_line * 2))
+//                    underline1.append(it)
+//                else
+//                    underline2.append(it)
+//
+//                if(it == ' ') {
+//                    total++
+//                }else
+//                    total += hangul_size
+//            }
+//
+//            val mlength = result.toString().length
+//            val mHangul = result.toString().replace(" ", "").length
+//            val mSpace = mlength - mHangul
+//            val mLine = mHangul * hangul_size + mSpace
+//
+//            val diff = one_line - mLine + 1
+//
+//            if (ord.gea >= 100) {
+//                space = 0
+//            }else if(ord.gea >= 10) {
+//                space = 1
+//            }
+//
+//            for(i in 1..diff) {
+//                result.append(" ")
+//            }
+//            result.append(ord.gea.toString())
+//
+//            for (i in 1..space) {
+//                result.append(" ")
+//            }
+//
+//            var togo = ""
+//            when(ord.togotype) {
+//                1-> togo = "신규"
+//                2-> togo = "포장"
+//            }
+//            result.append(togo)
+//
+//            if(underline1.toString() != "")
+//                result.append("\n$underline1")
+//
+//            if(underline2.toString() != "")
+//                result.append("\n$underline2")
+//
+//            return result.toString()
+//        }
 
         // SAM4S 프린터기 관련 메소드
         val finder: Sam4sFinder = Sam4sFinder()

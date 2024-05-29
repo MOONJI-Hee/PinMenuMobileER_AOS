@@ -156,6 +156,11 @@ class SetQrcodeFragment : Fragment() {
                 var status = if(it.isChecked) "Y" else "N"
                 setUseReservation(status)
             }
+
+            // 예약 QR 중간에 출시해야해서.. 임시로 추가한 뷰
+            notyet.setOnClickListener{
+                Toast.makeText(context, "준비 중입니다.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         return binding.root

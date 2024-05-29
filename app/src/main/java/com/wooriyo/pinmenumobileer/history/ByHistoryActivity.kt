@@ -538,7 +538,7 @@ class ByHistoryActivity: BaseActivity() {
                 AppProperties.FONT_WIDTH, font_size, ESCPOSConst.LK_ALIGNMENT_LEFT)
 
             orderList[position].olist.forEach {
-                val pOrder = getPrint(it)
+                val pOrder = AppHelper.getPrint(it)
                 MyApplication.escposPrinter.printAndroidFont(pOrder,
                     AppProperties.FONT_WIDTH, font_size, ESCPOSConst.LK_ALIGNMENT_LEFT)
             }
@@ -547,101 +547,101 @@ class ByHistoryActivity: BaseActivity() {
         }
 
         //SAM4S
-        MyApplication.cubeBuilder.createCommandBuffer()
-        MyApplication.cubeBuilder.addText("${MyApplication.store.name}\n")
-        MyApplication.cubeBuilder.addText("주문날짜 : $pOrderDt\n")
-        MyApplication.cubeBuilder.addText("주문번호 : $pOrderNo\n")
-        MyApplication.cubeBuilder.addText("테이블번호 : $pTableNo\n")
-        MyApplication.cubeBuilder.addText(AppProperties.TITLE_MENU_SAM4S)
-        MyApplication.cubeBuilder.addText(hyphen.toString())
-
-        orderList[position].olist.forEach {
-            val pOrder = AppHelper.getSam4sPrint(it)
-            MyApplication.cubeBuilder.addText("$pOrder\n")
-        }
-        MyApplication.cubeBuilder.addFeedLine(4)
-        MyApplication.cubeBuilder.addCut(Sam4sBuilder.CUT_NO_FEED)
-
-        //send builder data
-        try {
-            //cl_Menu.mPrinter.sendData(builder);
-            MyApplication.INSTANCE.mPrinterConnection?.sendData(MyApplication.cubeBuilder)
-            MyApplication.cubeBuilder.clearCommandBuffer()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        if(AppHelper.checkCubeConn(mActivity) == 1) {
-
-        }
+//        MyApplication.cubeBuilder.createCommandBuffer()
+//        MyApplication.cubeBuilder.addText("${MyApplication.store.name}\n")
+//        MyApplication.cubeBuilder.addText("주문날짜 : $pOrderDt\n")
+//        MyApplication.cubeBuilder.addText("주문번호 : $pOrderNo\n")
+//        MyApplication.cubeBuilder.addText("테이블번호 : $pTableNo\n")
+//        MyApplication.cubeBuilder.addText(AppProperties.TITLE_MENU_SAM4S)
+//        MyApplication.cubeBuilder.addText(hyphen.toString())
+//
+//        orderList[position].olist.forEach {
+//            val pOrder = AppHelper.getSam4sPrint(it)
+//            MyApplication.cubeBuilder.addText("$pOrder\n")
+//        }
+//        MyApplication.cubeBuilder.addFeedLine(4)
+//        MyApplication.cubeBuilder.addCut(Sam4sBuilder.CUT_NO_FEED)
+//
+//        //send builder data
+//        try {
+//            //cl_Menu.mPrinter.sendData(builder);
+//            MyApplication.INSTANCE.mPrinterConnection?.sendData(MyApplication.cubeBuilder)
+//            MyApplication.cubeBuilder.clearCommandBuffer()
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
+//
+//        if(AppHelper.checkCubeConn(mActivity) == 1) {
+//
+//        }
     }
 
-    fun getPrint(ord: OrderDTO) : String {
-        var total = 0.0
-
-        val result: StringBuilder = StringBuilder()
-        val underline1 = StringBuilder()
-        val underline2 = StringBuilder()
-
-        ord.name.forEach {
-            if(total < one_line)
-                result.append(it)
-            else if(total < (one_line * 2))
-                underline1.append(it)
-            else
-                underline2.append(it)
-
-            if(it == ' ') {
-                total++
-            }else
-                total += hangul_size
-        }
-
-        val mlength = result.toString().length
-        val mHangul = result.toString().replace(" ", "").length
-        val mSpace = mlength - mHangul
-        val mLine = mHangul * hangul_size + mSpace
-
-        var diff = (one_line - mLine + 0.5).toInt()
-
-        if(MyApplication.store.fontsize == 1) {
-            if(ord.gea < 10) {
-                diff += 1
-                space = 4
-            } else if (ord.gea >= 100) {
-                space = 1
-            }
-        }else if(MyApplication.store.fontsize == 2) {
-            if(ord.gea < 10) {
-                diff += 1
-                space += 2
-            } else if (ord.gea < 100) {
-                space += 1
-            }
-        }
-
-        for(i in 1..diff) {
-            result.append(" ")
-        }
-        result.append(ord.gea.toString())
-
-        for (i in 1..space) {
-            result.append(" ")
-        }
-
-        var togo = ""
-        when(ord.togotype) {
-            1-> togo = "신규"
-            2-> togo = "포장"
-        }
-        result.append(togo)
-
-        if(underline1.toString() != "")
-            result.append("\n$underline1")
-
-        if(underline2.toString() != "")
-            result.append("\n$underline2")
-
-        return result.toString()
-    }
+//    fun getPrint(ord: OrderDTO) : String {
+//        var total = 0.0
+//
+//        val result: StringBuilder = StringBuilder()
+//        val underline1 = StringBuilder()
+//        val underline2 = StringBuilder()
+//
+//        ord.name.forEach {
+//            if(total < one_line)
+//                result.append(it)
+//            else if(total < (one_line * 2))
+//                underline1.append(it)
+//            else
+//                underline2.append(it)
+//
+//            if(it == ' ') {
+//                total++
+//            }else
+//                total += hangul_size
+//        }
+//
+//        val mlength = result.toString().length
+//        val mHangul = result.toString().replace(" ", "").length
+//        val mSpace = mlength - mHangul
+//        val mLine = mHangul * hangul_size + mSpace
+//
+//        var diff = (one_line - mLine + 0.5).toInt()
+//
+//        if(MyApplication.store.fontsize == 1) {
+//            if(ord.gea < 10) {
+//                diff += 1
+//                space = 4
+//            } else if (ord.gea >= 100) {
+//                space = 1
+//            }
+//        }else if(MyApplication.store.fontsize == 2) {
+//            if(ord.gea < 10) {
+//                diff += 1
+//                space += 2
+//            } else if (ord.gea < 100) {
+//                space += 1
+//            }
+//        }
+//
+//        for(i in 1..diff) {
+//            result.append(" ")
+//        }
+//        result.append(ord.gea.toString())
+//
+//        for (i in 1..space) {
+//            result.append(" ")
+//        }
+//
+//        var togo = ""
+//        when(ord.togotype) {
+//            1-> togo = "신규"
+//            2-> togo = "포장"
+//        }
+//        result.append(togo)
+//
+//        if(underline1.toString() != "")
+//            result.append("\n$underline1")
+//
+//        if(underline2.toString() != "")
+//            result.append("\n$underline2")
+//
+//        return result.toString()
+//    }
 }
