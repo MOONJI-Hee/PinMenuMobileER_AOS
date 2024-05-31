@@ -45,6 +45,9 @@ class AppProperties {
                 //프린트 관련
                 const val FONT_BIG = 37
                 const val FONT_SMALL = 28
+
+                const val FONT_SIZE = FONT_BIG
+
                 const val FONT_WIDTH = 512
 
                 const val HANGUL_SIZE_BIG = 3.8
@@ -73,6 +76,8 @@ class AppProperties {
                 const val HYPHEN_NUM_BIG = 50
                 const val HYPHEN_NUM_SMALL = 66
                 const val HYPHEN_NUM_SAM4S = 42
+
+                const val HYPHEN_NUM =HYPHEN_NUM_BIG
 
                 const val SPACE_BIG = 3
                 const val SPACE_SMALL = 5

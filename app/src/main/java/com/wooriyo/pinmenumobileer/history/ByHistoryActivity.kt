@@ -51,32 +51,14 @@ class ByHistoryActivity: BaseActivity() {
     var selText: TextView?= null
 
     // 프린트 관련 변수
-    var hyphen = StringBuilder()    // 하이픈
-    var hyphen_num = 0              // 하이픈 개수
-    var font_size = 0
-    var hangul_size = 0.0
-    var one_line = 0
-    var space = 0
+    var hyphen = StringBuilder()                // 하이픈
+    var hyphen_num = AppProperties.HYPHEN_NUM   // 하이픈 개수
+    var font_size = AppProperties.FONT_SIZE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOrderListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // 영수증에 들어가는 하이픈 문자열 초기화, 설정값 초기화
-        if(MyApplication.store.fontsize == 2) {
-            hyphen_num = AppProperties.HYPHEN_NUM_SMALL
-            font_size = AppProperties.FONT_SMALL
-            hangul_size = AppProperties.HANGUL_SIZE_SMALL
-            one_line = AppProperties.ONE_LINE_SMALL
-            space = AppProperties.SPACE_SMALL
-        }else if(MyApplication.store.fontsize == 1) {
-            hyphen_num = AppProperties.HYPHEN_NUM_BIG
-            font_size = AppProperties.FONT_BIG
-            hangul_size = AppProperties.HANGUL_SIZE_BIG
-            one_line = AppProperties.ONE_LINE_BIG
-            space = AppProperties.SPACE_BIG
-        }
 
         for (i in 1..hyphen_num) {
             hyphen.append("-")
