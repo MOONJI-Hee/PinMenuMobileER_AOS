@@ -152,5 +152,7 @@ class MyApplication: Application() {
         ordChannel.setSound(uri, audioAttributes)
         ordChannel.lockscreenVisibility = 1
         notificationManager.createNotificationChannel(ordChannel)
+
+        //sound: RawResourceAndroidNotificationSound('exit_request')
     }
 }

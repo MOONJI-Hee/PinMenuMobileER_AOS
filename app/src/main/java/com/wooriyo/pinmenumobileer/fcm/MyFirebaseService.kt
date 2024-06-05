@@ -13,6 +13,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import com.sewoo.jpos.command.ESCPOSConst
 import com.wooriyo.pinmenumobileer.BaseActivity.Companion.currentActivity
 import com.wooriyo.pinmenumobileer.MainActivity
@@ -28,6 +30,7 @@ import com.wooriyo.pinmenumobileer.model.ReceiptDTO
 import com.wooriyo.pinmenumobileer.store.StoreListFragment
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.util.AppHelper
+import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Response
 
@@ -44,8 +47,8 @@ class MyFirebaseService: FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
 
-        Log.d(TAG, "message.data >> ${message.data}")
-        Log.d(TAG, "message.notification.body >> ${message.notification?.body}")
+        println(message.data.toString())
+        println(message.notification)
 
         createNotification(message)
 

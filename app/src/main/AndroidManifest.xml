@@ -158,9 +158,6 @@
             android:name=".member.SignupActivity"
             android:exported="false" />
         <activity
-            android:name=".call.CallListActivity"
-            android:exported="false" />
-        <activity
             android:name=".member.FindPwdActivity"
             android:exported="false" />
         <activity
@@ -178,10 +175,6 @@
         <activity
             android:name=".more.MemberSetActivity"
             android:exported="false" />
-        <activity
-            android:name=".order.OrderListActivity"
-            android:exported="false" />
-
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_appKey" />
