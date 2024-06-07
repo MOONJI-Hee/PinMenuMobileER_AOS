@@ -10,13 +10,13 @@ data class OrderHistoryDTO(
     @SerializedName("ordcode") var ordcode : String,                // 주문 번호 (매일 갱신)
     @SerializedName("ordcode_key") var ordcode_key : String,        // 주문 코드
     @SerializedName("glist") var olist : ArrayList<OrderDTO>,       // 주문 상세 리스트
+    @SerializedName("rlist") var rlist : ArrayList<ReservationDTO>, // 예약 정보
     @SerializedName("amount") var amount : Int,                     // 총 금액
     @SerializedName("paytype") var paytype : Int,                   // 3: 큐알 결제 완료, 0: 그 외
     @SerializedName("ordType") var ordType: Int,                    // 1: 주문, 2: 호출
-    @SerializedName("reserType") var reserType: Int,                // 1: 예약
-    @SerializedName("isreser") var isreser: Int,                    // 1: 예약
+    @SerializedName("reserType") var reserType: Int,                // 0: 일반 주문, 1: 예약, 2: 포장
+    @SerializedName("isreser") var isreser: Int,                    // 0: 예약 확인 전, 1: 예약 확인 완료
     @SerializedName("regdt") var regdt : String,                    // 등록일시 (주문일시)
-    @SerializedName("orddt") var orddt : String,                    // (주문일시) (KPN POS 연동시 사용하기 위함)
     @SerializedName("iscompleted") var iscompleted : Int,           // 완료 여부 (1 : 완료, 0 : 미완료)
     @SerializedName("complate_updt") var complate_updt : String,    // 완료일시 (결제일시)
     @SerializedName("total_gea") var total : Int,                   // 총 개수

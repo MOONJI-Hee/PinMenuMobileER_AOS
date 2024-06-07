@@ -16,6 +16,7 @@ class AppProperties {
 
                 // 푸시 알림 아이디
                 const val NOTIFICATION_ID_ORDER = 1
+                const val NOTIFICATION_ID_CALL = 2
 
                 // 푸시 알림 채널
                 const val CHANNEL_ID_ORDER = "pinmenuer_mobile_order"

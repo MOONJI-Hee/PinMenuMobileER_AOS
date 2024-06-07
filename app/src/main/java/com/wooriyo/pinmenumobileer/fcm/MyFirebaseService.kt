@@ -22,7 +22,9 @@ import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.escposPrinter
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.config.AppProperties
+import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.CHANNEL_ID_CALL
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.CHANNEL_ID_ORDER
+import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.NOTIFICATION_ID_CALL
 import com.wooriyo.pinmenumobileer.config.AppProperties.Companion.NOTIFICATION_ID_ORDER
 import com.wooriyo.pinmenumobileer.history.ByHistoryActivity
 import com.wooriyo.pinmenumobileer.member.StartActivity
@@ -145,21 +147,31 @@ class MyFirebaseService: FirebaseMessagingService() {
     }
 
     private fun createNotification(message: RemoteMessage) {
-        val sound = R.raw.customnoti
-        val uri: Uri = Uri.parse("android.resource://com.wooriyo.pinmenuer/$sound")
+        val notificationManager = NotificationManagerCompat.from(this)
 
-        val builder = NotificationCompat.Builder(this, CHANNEL_ID_ORDER)
+        var channelId = ""
+        var notificationId = 0
+
+        when(message.data["moredata"]) {
+            "call" -> {
+                channelId = CHANNEL_ID_CALL
+                notificationId = NOTIFICATION_ID_CALL
+            }
+            else -> {
+                channelId = CHANNEL_ID_ORDER
+                notificationId = NOTIFICATION_ID_ORDER
+            }
+        }
+
+        val builder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.ic_noti)
             .setContentTitle(message.notification?.title)
             .setContentText(message.notification?.body)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-//            .setSound(uri, AudioManager.STREAM_NOTIFICATION)
 //            .setContentIntent(createPendingIntent())
             .setAutoCancel(true)
 
-        // 알림 생성
-        val notificationManager = NotificationManagerCompat.from(this)
-        notificationManager.notify(NOTIFICATION_ID_ORDER, builder.build())
+        notificationManager.notify(notificationId, builder.build())
     }
 
     private fun createPendingIntent () : PendingIntent {
@@ -169,9 +181,9 @@ class MyFirebaseService: FirebaseMessagingService() {
         stackBuilder.addParentStack(StartActivity::class.java)
         stackBuilder.addNextIntent(intent)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-            return stackBuilder.getPendingIntent(0, PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            stackBuilder.getPendingIntent(0, PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
         else
-            return  stackBuilder.getPendingIntent(0, PendingIntent.FLAG_ONE_SHOT)
+            stackBuilder.getPendingIntent(0, PendingIntent.FLAG_ONE_SHOT)
     }
 }
