@@ -45,6 +45,15 @@
             app:layout_constraintTop_toBottomOf="@+id/tvTableNo"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:text="185" />
+        <ImageView
+            android:id="@+id/arrowTableNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:src="@drawable/icon_orderlist_arrow_down"
+            app:layout_constraintStart_toEndOf="@+id/tvTableNo"
+            app:layout_constraintTop_toTopOf="@+id/tvTableNo"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTableNo"/>
         <TextView
             style="@style/text_num"
             android:id="@+id/regdt"
@@ -150,6 +159,7 @@
                     android:id="@+id/tvAddr"
                     android:layout_marginTop="10dp"
                     android:text="@string/reserv_addr"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/reservRequest"
                     app:layout_constraintStart_toStartOf="parent"/>
                 <TextView
@@ -157,6 +167,7 @@
                     android:id="@+id/reservAddr"
                     android:layout_width="match_parent"
                     android:layout_marginTop="5dp"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvAddr"
                     tools:text="전북특별자치도 전주시 완산구 홍산남로 75 승우빌딩 6층 601호"/>

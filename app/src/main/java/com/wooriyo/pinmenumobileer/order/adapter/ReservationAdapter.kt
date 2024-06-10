@@ -8,16 +8,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.annotations.SerializedName
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.common.dialog.AlertDialog
-import com.wooriyo.pinmenumobileer.databinding.ListOrderBinding
 import com.wooriyo.pinmenumobileer.databinding.ListReservationBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.OrderHistoryDTO
+import com.wooriyo.pinmenumobileer.model.ReservationDTO
 import com.wooriyo.pinmenumobileer.util.AppHelper
 
-class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ReservationAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapter<ReservationAdapter.ViewHolder>() {
     lateinit var completeListener: ItemClickListener
     lateinit var deleteListener: ItemClickListener
     lateinit var printClickListener: ItemClickListener
@@ -33,44 +34,56 @@ class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapte
     fun setOnPrintClickListener(printClickListener: ItemClickListener) {
         this.printClickListener = printClickListener
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val binding = ListOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ListReservationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         binding.rv.layoutManager = LinearLayoutManager(parent.context, LinearLayoutManager.VERTICAL, false)
-
-        val reservBinding = ListReservationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        reservBinding.rv.layoutManager = LinearLayoutManager(parent.context, LinearLayoutManager.VERTICAL, false)
-
-        return if(viewType == 10) ViewHolder(binding, parent.context, completeListener, deleteListener, printClickListener)
-            else ReservationAdapter.ViewHolder(reservBinding, parent.context, completeListener, deleteListener, printClickListener)
+        return ViewHolder(binding, parent.context, completeListener, deleteListener, printClickListener)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if(getItemViewType(position) == 10) {
-            holder as ViewHolder
-            holder.bind(dataSet[position])
-        }else {
-            holder as ReservationAdapter.ViewHolder
-            holder.bind(dataSet[position])
-        }
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(dataSet[position])
     }
 
     override fun getItemCount(): Int {
         return dataSet.size
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return if(dataSet[position].reserType == 0) 10 else 22
-    }
-
-    class ViewHolder(val binding: ListOrderBinding, val context: Context, val completeListener: ItemClickListener, val deleteListener: ItemClickListener, val printClickListener: ItemClickListener): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(val binding: ListReservationBinding, val context: Context, val completeListener: ItemClickListener, val deleteListener: ItemClickListener, val printClickListener: ItemClickListener): RecyclerView.ViewHolder(binding.root) {
         fun bind (data : OrderHistoryDTO) {
             binding.run {
+                when(data.reserType) {
+                    0 -> {
+                        reservType.visibility = View.GONE
+                    }
+                    1 -> {
+                        reservType.visibility = View.VISIBLE
+                        reservType.setBackgroundColor(Color.parseColor("#FF005E"))
+                        reservType.text = context.getString(R.string.reserv_store)
+                        tvDate.text = String.format(context.getString(R.string.reserv_date), "매장")
+                    }
+                    2 -> {
+                        reservType.visibility = View.VISIBLE
+                        reservType.setBackgroundColor(Color.parseColor("#46B6FF"))
+                        reservType.text = context.getString(R.string.reserv_togo)
+                        tvDate.text = String.format(context.getString(R.string.reserv_date), "포장")
+                    }
+                }
+
+                if(data.rlist.isNotEmpty()) {
+                    val rsv = data.rlist[0]
+                    reservTel.text = rsv.tel
+                    reservName.text = rsv.name
+                    reservRequest.text = rsv.memo
+                    reservAddr.text = rsv.addr
+                    reservDate.text = rsv.reserdt
+                }
+
                 rv.adapter = OrderDetailAdapter(data.olist)
 
                 tableNo.text = data.tableNo
                 regdt.text = data.regdt
                 orderNo.text = data.ordcode
-                gea.text = data.total.toString()
+//                gea.text = data.total.toString()
                 price.text = AppHelper.price(data.amount)
 
                 if(data.iscompleted == 1) {
@@ -81,14 +94,6 @@ class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapte
                     complete.visibility = View.VISIBLE
                     completeQr.visibility = View.GONE
                     completePos.visibility = View.GONE
-                } else if (data.paytype == 3) { // QR오더에서 들어온 주문 > 결제 완료
-                    top.setBackgroundResource(R.color.main)
-                    clPrice.setBackgroundResource(R.drawable.bg_r6g)
-                    btnComplete.setBackgroundResource(R.drawable.bg_r6y)
-                    btnComplete.text = "완료"
-                    complete.visibility = View.GONE
-                    completeQr.visibility = View.VISIBLE
-                    completePos.visibility = View.GONE
                 } else if (data.paytype == 4) {
                     top.setBackgroundResource(R.color.main)
                     clPrice.setBackgroundResource(R.drawable.bg_r6y)
@@ -97,6 +102,8 @@ class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapte
                     complete.visibility = View.GONE
                     completeQr.visibility = View.GONE
                     completePos.visibility = View.VISIBLE
+                } else if (data.isreser != 0) {
+
                 } else {
                     top.setBackgroundResource(R.color.main)
                     clPrice.setBackgroundResource(R.drawable.bg_r6y)
@@ -105,6 +112,15 @@ class OrderAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapte
                     complete.visibility = View.GONE
                     completeQr.visibility = View.GONE
                     completePos.visibility = View.GONE
+                }
+
+                if(data.isreser == 0) {
+                    binding.btnComplete.text = context.getString(R.string.confirm)
+                }
+                else  {
+                    top.setBackgroundResource(R.color.main)
+                    clPrice.setBackgroundResource(R.drawable.bg_r6g)
+                    btnComplete.setBackgroundResource(R.drawable.bg_r6y)
                 }
 
                 delete.setOnClickListener { deleteListener.onItemClick(adapterPosition) }

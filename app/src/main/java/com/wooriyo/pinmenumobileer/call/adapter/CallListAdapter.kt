@@ -13,11 +13,11 @@ import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.CallHistoryDTO
 
 class CallListAdapter(val dataSet: ArrayList<CallHistoryDTO>): RecyclerView.Adapter<ViewHolder>() {
-    lateinit var itemClickListener: ItemClickListener
+    lateinit var completeListener: ItemClickListener
     lateinit var deleteListener: ItemClickListener
 
-    fun setOnItemClickListener(itemClickListener: ItemClickListener) {
-        this.itemClickListener = itemClickListener
+    fun setOnItemClickListener(completeListener: ItemClickListener) {
+        this.completeListener = completeListener
     }
 
     fun setOnDeleteListener(deleteListener: ItemClickListener) {
@@ -27,19 +27,19 @@ class CallListAdapter(val dataSet: ArrayList<CallHistoryDTO>): RecyclerView.Adap
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ListCallBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         binding.rv.layoutManager = LinearLayoutManager(parent.context, LinearLayoutManager.VERTICAL, false)
-        return ViewHolder(binding)
+        return ViewHolder(binding, completeListener, deleteListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(dataSet[position], itemClickListener, deleteListener)
+        holder.bind(dataSet[position])
     }
 
     override fun getItemCount(): Int {
         return dataSet.size
     }
 
-    class ViewHolder(val binding: ListCallBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind (data : CallHistoryDTO, itemClickListener : ItemClickListener, deleteListener: ItemClickListener) {
+    class ViewHolder(val binding: ListCallBinding, val completeListener : ItemClickListener, val deleteListener: ItemClickListener): RecyclerView.ViewHolder(binding.root) {
+        fun bind (data : CallHistoryDTO) {
             binding.run {
                 rv.adapter = CallDetailAdapter(data.clist)
 
@@ -57,9 +57,8 @@ class CallListAdapter(val dataSet: ArrayList<CallHistoryDTO>): RecyclerView.Adap
                 }
 
                 delete.setOnClickListener { deleteListener.onItemClick(adapterPosition) }
-                complete.setOnClickListener { itemClickListener.onItemClick(adapterPosition) }
+                complete.setOnClickListener { completeListener.onItemClick(adapterPosition) }
             }
         }
-
     }
 }
