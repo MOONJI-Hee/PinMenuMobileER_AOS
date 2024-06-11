@@ -12,7 +12,7 @@ data class OrderHistoryDTO(
     @SerializedName("glist") var olist : ArrayList<OrderDTO>,       // 주문 상세 리스트
     @SerializedName("rlist") var rlist : ArrayList<ReservationDTO>, // 예약 정보
     @SerializedName("amount") var amount : Int,                     // 총 금액
-    @SerializedName("paytype") var paytype : Int,                   // 3: 큐알 결제 완료, 0: 그 외
+    @SerializedName("paytype") var paytype : Int,                   // 3: 큐알 결제 완료, 4: 포스 전송 완료, 0: 그 외
     @SerializedName("ordType") var ordType: Int,                    // 1: 주문, 2: 호출
     @SerializedName("reserType") var reserType: Int,                // 0: 일반 주문, 1: 예약, 2: 포장
     @SerializedName("isreser") var isreser: Int,                    // 0: 예약 확인 전, 1: 예약 확인 완료

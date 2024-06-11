@@ -7,7 +7,7 @@ class AppProperties {
                 private const val TEST_SERVER: String = "http://testapp.pinmenu.biz/api/"
                 private const val WEB_SERVER: String = "http://pinmenu.biz/api/"
 
-                const val SERVER: String = TEST_SERVER
+                const val SERVER: String = REAL_SERVER
         //        const val IMG_SERVER: String = "http://49.247.22.8/api/"
                 const val IMG_SERVER: String = "http://img.pinmenu.biz/api/"
                 const val CP_SERVER: String = "http://cp.wooriyo.com/api/"
@@ -29,6 +29,7 @@ class AppProperties {
 
                 const val VIEW_TYPE_ORDER = 3
                 const val VIEW_TYPE_CALL = 4
+                const val VIEW_TYPE_RESERVATION = 5
 
                 // Activity Result Code
                 const val RESULT_DELETE = 10

@@ -1,4 +1,4 @@
-package com.wooriyo.pinmenumobileer.order.adapter
+package com.wooriyo.pinmenumobileer.pay.adapter
 
 import android.view.LayoutInflater
 import android.view.View

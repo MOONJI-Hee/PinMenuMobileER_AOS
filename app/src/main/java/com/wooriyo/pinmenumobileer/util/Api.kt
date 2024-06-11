@@ -350,6 +350,30 @@ interface Api {
         @Query("storeidx") storeidx: Int
     ): Call<ResultDTO>
 
+    // 예약 주문 관련
+    // 예약 테이블 번호 변경
+    @GET("m/udtTableNo.php")
+    fun udtReservTableNo(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("ordidx") ordidx: Int,
+        @Query("tableNo") tableNo: String
+    ): Call<ResultDTO>
+
+    // 테이블번호 리스트
+    @GET("u/tableNo.list.php")
+    fun getTableNo(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int
+    ): Call<TableNoListDTO>
+    // 예약 주문 확인 (isreser 1로 변경)
+    @GET("m/udtCompletedReser.php")
+    fun confirmReservation(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("ordidx") ordidx: Int
+    ): Call<ResultDTO>
+
     // 직원 호출 히스토리 조회
     @GET("m/callHistory.php")
     fun getCallHistory(
@@ -434,7 +458,7 @@ interface Api {
         @Query("storeidx") storeidx: Int,
         @Query("uuid") androidId : String,
         @Query("nick") nick: String,
-        @Query("type") type: Int        // 1 : 관리자 기기, 2 : 프린트 기기
+        @Query("type") type: Int           // 1 : 관리자 기기, 2 : 프린트 기기
     ): Call<ResultDTO>
 
     // 사용가능한 프린터 목록

@@ -1,4 +1,4 @@
-package com.wooriyo.pinmenumobileer.call.adapter
+package com.wooriyo.pinmenumobileer.history.adapter
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wooriyo.pinmenumobileer.R
-import com.wooriyo.pinmenumobileer.call.adapter.CallListAdapter.ViewHolder
+import com.wooriyo.pinmenumobileer.history.adapter.CallListAdapter.ViewHolder
 import com.wooriyo.pinmenumobileer.databinding.ListCallBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.CallHistoryDTO

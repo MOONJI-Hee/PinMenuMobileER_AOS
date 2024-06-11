@@ -113,7 +113,7 @@
             android:name=".payment.QrActivity"
             android:exported="false" />
         <activity
-            android:name=".order.SelMenuActivity"
+            android:name=".pay.SelMenuActivity"
             android:exported="false" />
         <activity
             android:name=".payment.SetNicepayActivity"
@@ -122,7 +122,7 @@
             android:name=".payment.ReaderModelActivity"
             android:exported="false" />
         <activity
-            android:name=".order.PayCardActivity"
+            android:name=".pay.PayCardActivity"
             android:exported="false" />
         <activity
             android:name=".printer.SelectCateActivity"

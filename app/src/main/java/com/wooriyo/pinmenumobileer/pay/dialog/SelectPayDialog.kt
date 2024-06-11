@@ -1,6 +1,5 @@
-package com.wooriyo.pinmenumobileer.order.dialog
+package com.wooriyo.pinmenumobileer.pay.dialog
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater

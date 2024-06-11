@@ -1,24 +1,18 @@
 package com.wooriyo.pinmenumobileer.history.adapter
 
-import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.R
-import com.wooriyo.pinmenumobileer.common.dialog.AlertDialog
 import com.wooriyo.pinmenumobileer.config.AppProperties
 import com.wooriyo.pinmenumobileer.databinding.ListCallBinding
 import com.wooriyo.pinmenumobileer.databinding.ListOrderBinding
+import com.wooriyo.pinmenumobileer.databinding.ListReservationBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
-import com.wooriyo.pinmenumobileer.order.adapter.OrderDetailAdapter
-import com.wooriyo.pinmenumobileer.util.AppHelper
 import com.wooriyo.pinmenumobileer.model.OrderHistoryDTO
-import com.wooriyo.pinmenumobileer.order.adapter.OrderAdapter
 
 class HistoryAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     lateinit var orderCompleteListener: ItemClickListener
@@ -50,16 +44,23 @@ class HistoryAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adap
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val bindingOrder = ListOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val bindingCall = ListCallBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val bindingReserv = ListReservationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         bindingOrder.rv.layoutManager = LinearLayoutManager(parent.context, LinearLayoutManager.VERTICAL, false)
         bindingCall.rv.layoutManager = LinearLayoutManager(parent.context, LinearLayoutManager.VERTICAL, false)
+        bindingReserv.rv.layoutManager = LinearLayoutManager(parent.context, LinearLayoutManager.VERTICAL, false)
 
-        return if(viewType == AppProperties.VIEW_TYPE_ORDER) {
-//            ViewHolderOrder(parent.context, bindingOrder, orderCompleteListener, deleteListener, printClickListener)
-            OrderAdapter.ViewHolder(bindingOrder, parent.context, orderCompleteListener, deleteListener, printClickListener)
+        return when(viewType) {
+            AppProperties.VIEW_TYPE_ORDER -> {
+                OrderAdapter.ViewHolder(bindingOrder, parent.context, orderCompleteListener, deleteListener, printClickListener)
+            }
+            AppProperties.VIEW_TYPE_CALL -> {
+                ViewHolderCall(bindingCall, callCompleteListener, callDeleteListener)
+            }
+            else -> {
+                ReservationAdapter.ViewHolder(bindingReserv, parent.context, orderCompleteListener, null, deleteListener, printClickListener, null)
+            }
         }
-        else
-            ViewHolderCall(bindingCall, callCompleteListener, callDeleteListener)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -72,6 +73,10 @@ class HistoryAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adap
                 holder as ViewHolderCall
                 holder.bind(dataSet[position])
             }
+            AppProperties.VIEW_TYPE_RESERVATION -> {
+                holder as ReservationAdapter.ViewHolder
+                holder.bind(dataSet[position])
+            }
         }
     }
 
@@ -80,7 +85,9 @@ class HistoryAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adap
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if(dataSet[position].ordType == 1) AppProperties.VIEW_TYPE_ORDER else AppProperties.VIEW_TYPE_CALL
+        return if(dataSet[position].reserType > 0) AppProperties.VIEW_TYPE_RESERVATION
+            else if(dataSet[position].ordType == 1) AppProperties.VIEW_TYPE_ORDER
+            else AppProperties.VIEW_TYPE_CALL
     }
 
     class ViewHolderCall(val binding: ListCallBinding, val callCompleteListener: ItemClickListener, val callDeleteListener: ItemClickListener): RecyclerView.ViewHolder(binding.root) {

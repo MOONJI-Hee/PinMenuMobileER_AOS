@@ -9,14 +9,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sam4s.printer.Sam4sBuilder
 import com.sewoo.jpos.command.ESCPOSConst
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeidx
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.useridx
 import com.wooriyo.pinmenumobileer.R
-import com.wooriyo.pinmenumobileer.call.adapter.CallListAdapter
+import com.wooriyo.pinmenumobileer.history.adapter.CallListAdapter
 import com.wooriyo.pinmenumobileer.common.dialog.ClearDialog
 import com.wooriyo.pinmenumobileer.common.dialog.ConfirmDialog
 import com.wooriyo.pinmenumobileer.config.AppProperties
@@ -25,11 +24,12 @@ import com.wooriyo.pinmenumobileer.history.adapter.HistoryAdapter
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.CallHistoryDTO
 import com.wooriyo.pinmenumobileer.model.CallListDTO
-import com.wooriyo.pinmenumobileer.model.OrderDTO
 import com.wooriyo.pinmenumobileer.model.OrderHistoryDTO
 import com.wooriyo.pinmenumobileer.model.OrderListDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
-import com.wooriyo.pinmenumobileer.order.adapter.OrderAdapter
+import com.wooriyo.pinmenumobileer.history.adapter.OrderAdapter
+import com.wooriyo.pinmenumobileer.history.dialog.SetTableNoDialog
+import com.wooriyo.pinmenumobileer.listener.DialogListener
 import com.wooriyo.pinmenumobileer.util.ApiClient
 import com.wooriyo.pinmenumobileer.util.AppHelper
 import retrofit2.Call
@@ -202,6 +202,12 @@ class ByHistoryActivity: BaseActivity() {
             }
         })
 
+        orderAdapter.setOnConfirmListener(object : ItemClickListener{
+            override fun onItemClick(position: Int) {
+                confirmReservation(position)
+            }
+        })
+
         orderAdapter.setOnDeleteListener(object:ItemClickListener{
             override fun onItemClick(position: Int) {
                 ConfirmDialog(
@@ -214,6 +220,19 @@ class ByHistoryActivity: BaseActivity() {
 
         orderAdapter.setOnPrintClickListener(object:ItemClickListener{
             override fun onItemClick(position: Int) {print(position)}
+        })
+
+        orderAdapter.setOnTableNoListener(object: ItemClickListener{
+            override fun onItemClick(position: Int) {
+                SetTableNoDialog(
+                    orderList[position].idx,
+                    object : DialogListener{
+                        override fun onTableNoSet(tableNo: String) {
+                            orderList[position].tableNo = tableNo
+                            orderAdapter.notifyItemChanged(position)
+                        }
+                }).show(supportFragmentManager, "SetTableNoDialog")
+            }
         })
     }
 
@@ -492,6 +511,33 @@ class ByHistoryActivity: BaseActivity() {
         })
     }
 
+    // 예약 확인 처리
+    fun confirmReservation(position: Int) {
+        ApiClient.service.confirmReservation(useridx, storeidx, orderList[position].idx)
+            .enqueue(object:Callback<ResultDTO>{
+                override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                    Log.d(TAG, "예약 확인 url : $response")
+                    if(!response.isSuccessful) return
+
+                    val result = response.body() ?: return
+                    when(result.status){
+                        1 -> {
+                            Toast.makeText(mActivity, R.string.msg_complete, Toast.LENGTH_SHORT).show()
+                            orderList[position].isreser = 1
+                            orderAdapter.notifyItemChanged(position)
+                        }
+                        else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                    Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "예약 확인 실패 > $t")
+                    Log.d(TAG, "예약 확인 실패 > ${call.request()}")
+                }
+            })
+    }
+
     // 주문 프린트
     fun print(position: Int) {
         val pOrderDt = orderList[position].regdt
@@ -557,73 +603,4 @@ class ByHistoryActivity: BaseActivity() {
 //
 //        }
     }
-
-//    fun getPrint(ord: OrderDTO) : String {
-//        var total = 0.0
-//
-//        val result: StringBuilder = StringBuilder()
-//        val underline1 = StringBuilder()
-//        val underline2 = StringBuilder()
-//
-//        ord.name.forEach {
-//            if(total < one_line)
-//                result.append(it)
-//            else if(total < (one_line * 2))
-//                underline1.append(it)
-//            else
-//                underline2.append(it)
-//
-//            if(it == ' ') {
-//                total++
-//            }else
-//                total += hangul_size
-//        }
-//
-//        val mlength = result.toString().length
-//        val mHangul = result.toString().replace(" ", "").length
-//        val mSpace = mlength - mHangul
-//        val mLine = mHangul * hangul_size + mSpace
-//
-//        var diff = (one_line - mLine + 0.5).toInt()
-//
-//        if(MyApplication.store.fontsize == 1) {
-//            if(ord.gea < 10) {
-//                diff += 1
-//                space = 4
-//            } else if (ord.gea >= 100) {
-//                space = 1
-//            }
-//        }else if(MyApplication.store.fontsize == 2) {
-//            if(ord.gea < 10) {
-//                diff += 1
-//                space += 2
-//            } else if (ord.gea < 100) {
-//                space += 1
-//            }
-//        }
-//
-//        for(i in 1..diff) {
-//            result.append(" ")
-//        }
-//        result.append(ord.gea.toString())
-//
-//        for (i in 1..space) {
-//            result.append(" ")
-//        }
-//
-//        var togo = ""
-//        when(ord.togotype) {
-//            1-> togo = "신규"
-//            2-> togo = "포장"
-//        }
-//        result.append(togo)
-//
-//        if(underline1.toString() != "")
-//            result.append("\n$underline1")
-//
-//        if(underline2.toString() != "")
-//            result.append("\n$underline2")
-//
-//        return result.toString()
-//    }
 }

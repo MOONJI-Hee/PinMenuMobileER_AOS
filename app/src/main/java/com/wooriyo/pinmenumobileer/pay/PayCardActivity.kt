@@ -1,4 +1,4 @@
-package com.wooriyo.pinmenumobileer.order
+package com.wooriyo.pinmenumobileer.pay
 
 import android.content.ComponentName
 import android.content.Intent

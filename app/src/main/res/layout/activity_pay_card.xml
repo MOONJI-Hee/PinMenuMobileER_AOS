@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/f9"
-    tools:context=".order.PayCardActivity">
+    tools:context=".pay.PayCardActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/title"

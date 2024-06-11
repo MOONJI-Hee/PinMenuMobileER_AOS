@@ -1,4 +1,4 @@
-package com.wooriyo.pinmenumobileer.call.adapter
+package com.wooriyo.pinmenumobileer.history.adapter
 
 import android.view.LayoutInflater
 import android.view.View

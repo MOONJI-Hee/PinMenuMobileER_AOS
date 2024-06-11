@@ -22,7 +22,8 @@
     <string name="delete_order">주문삭제</string>
     <string name="total_gea">총 %d개</string>
 
-    <string name="set_tableno">테이블 번호 설정</string>
+    <string name="set_tableno">테이블 이동</string>
+    <string name="sel_tableno">테이블번호 선택</string>
     <string name="tableno">테이블 번호</string>
     <string name="tablepass">테이블 비밀번호</string>
 

@@ -1,4 +1,4 @@
-package com.wooriyo.pinmenumobileer.order
+package com.wooriyo.pinmenumobileer.pay
 
 import android.os.Bundle
 import android.widget.CheckBox
@@ -8,7 +8,7 @@ import com.wooriyo.pinmenumobileer.databinding.ActivitySelMenuBinding
 import com.wooriyo.pinmenumobileer.listener.ItemClickListener
 import com.wooriyo.pinmenumobileer.model.OrderDTO
 import com.wooriyo.pinmenumobileer.model.OrderHistoryDTO
-import com.wooriyo.pinmenumobileer.order.adapter.OrderPayDetailAdapter
+import com.wooriyo.pinmenumobileer.pay.adapter.OrderPayDetailAdapter
 import com.wooriyo.pinmenumobileer.util.AppHelper
 
 class SelMenuActivity : BaseActivity() {
