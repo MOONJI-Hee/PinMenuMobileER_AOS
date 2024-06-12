@@ -251,7 +251,8 @@ class QrDetailActivity : BaseActivity() {
     }
 
     fun udtQr(qidx: Int, tableNo: String) {
-        ApiClient.imgService.udtQr(MyApplication.useridx, MyApplication.storeidx, qidx, tableNo, qrCode!!.qrbuse).enqueue(object : Callback<ResultDTO> {
+        ApiClient.imgService.udtQr(MyApplication.useridx, MyApplication.storeidx, qidx, tableNo, qrCode!!.qrbuse)
+            .enqueue(object : Callback<ResultDTO> {
             override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
                 Log.d(TAG, "Qr 등록 url : $response")
                 if(!response.isSuccessful) return
