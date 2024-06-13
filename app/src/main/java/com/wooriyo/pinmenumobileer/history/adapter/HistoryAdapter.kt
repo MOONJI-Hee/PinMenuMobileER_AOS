@@ -16,13 +16,19 @@ import com.wooriyo.pinmenumobileer.model.OrderHistoryDTO
 
 class HistoryAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     lateinit var orderCompleteListener: ItemClickListener
-    lateinit var callCompleteListener: ItemClickListener
+    lateinit var confirmListener: ItemClickListener
     lateinit var deleteListener: ItemClickListener
-    lateinit var callDeleteListener: ItemClickListener
     lateinit var printClickListener: ItemClickListener
+    lateinit var setTableNoListener: ItemClickListener
+    lateinit var callCompleteListener: ItemClickListener
+    lateinit var callDeleteListener: ItemClickListener
 
     fun setOnOrderCompleteListener(orderCompleteListener: ItemClickListener) {
         this.orderCompleteListener = orderCompleteListener
+    }
+
+    fun setOnConfirmListener(confirmListener: ItemClickListener) {
+        this.confirmListener = confirmListener
     }
 
     fun setOnDeleteListener(deleteListener: ItemClickListener) {
@@ -31,6 +37,10 @@ class HistoryAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adap
 
     fun setOnPrintClickListener(printClickListener: ItemClickListener) {
         this.printClickListener = printClickListener
+    }
+
+    fun setOnTableNoListener(setTableNoListener: ItemClickListener) {
+        this.setTableNoListener = setTableNoListener
     }
 
     fun setOnCallCompleteListener(callCompleteListener: ItemClickListener) {
@@ -58,7 +68,7 @@ class HistoryAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adap
                 ViewHolderCall(bindingCall, callCompleteListener, callDeleteListener)
             }
             else -> {
-                ReservationAdapter.ViewHolder(bindingReserv, parent.context, orderCompleteListener, null, deleteListener, printClickListener, null)
+                ReservationAdapter.ViewHolder(bindingReserv, parent.context, orderCompleteListener, confirmListener, deleteListener, printClickListener, setTableNoListener)
             }
         }
     }

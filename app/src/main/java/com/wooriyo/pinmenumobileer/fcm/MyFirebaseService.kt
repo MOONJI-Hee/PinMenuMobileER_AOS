@@ -59,13 +59,12 @@ class MyFirebaseService: FirebaseMessagingService() {
 
             if(currentActivity!!.localClassName == "history.ByHistoryActivity") {
                 if(message.data["chk_udt"] == "1") {
-                    when(message.data["moredata"]) {
-                        "call" -> {
-                            (currentActivity as ByHistoryActivity).newCall()
-                        }
-                        else -> {
-                            (currentActivity as ByHistoryActivity).newOrder()
-                        }
+                    if(message.data["moredata"] == "call") {
+                        (currentActivity as ByHistoryActivity).newCall()
+                    }else if (message.data["reserv_type"] == "0") {
+                        (currentActivity as ByHistoryActivity).newOrder()
+                    } else {
+                        (currentActivity as ByHistoryActivity).newReservation()
                     }
                 }
             }else if (currentActivity!!.localClassName == "MainActivity") {
@@ -127,6 +126,46 @@ class MyFirebaseService: FirebaseMessagingService() {
                                     val pOrder = AppHelper.getPrint(it)
                                     escposPrinter.printAndroidFont(pOrder,AppProperties.FONT_WIDTH, font_size, ESCPOSConst.LK_ALIGNMENT_LEFT)
                                 }
+
+                                if(result.reserType > 0 && result.rlist.isNotEmpty()) {
+                                    val reserv = result.rlist[0]
+
+                                    escposPrinter.lineFeed(2)
+
+                                    escposPrinter.printAndroidFont("전화번호",
+                                        AppProperties.FONT_WIDTH,
+                                        20, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                                    escposPrinter.printAndroidFont(reserv.tel,
+                                        AppProperties.FONT_WIDTH,
+                                        33, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                                    escposPrinter.printAndroidFont("예약자명",
+                                        AppProperties.FONT_WIDTH,
+                                        20, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                                    escposPrinter.printAndroidFont(reserv.name,
+                                        AppProperties.FONT_WIDTH,
+                                        33, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                                    escposPrinter.printAndroidFont("요청사항",
+                                        AppProperties.FONT_WIDTH,
+                                        20, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                                    escposPrinter.printAndroidFont(reserv.memo,
+                                        AppProperties.FONT_WIDTH,
+                                        33, ESCPOSConst.LK_ALIGNMENT_LEFT)
+
+                                    var str = ""
+                                    when(result.reserType) {
+                                        1 -> str = "매장"
+                                        2 -> str = "포장"
+                                    }
+                                    escposPrinter.printAndroidFont(
+                                        String.format(getString(R.string.reserv_date), str),
+                                        AppProperties.FONT_WIDTH,
+                                        20, ESCPOSConst.LK_ALIGNMENT_LEFT)
+
+                                    escposPrinter.printAndroidFont(reserv.reserdt,
+                                        AppProperties.FONT_WIDTH,
+                                        33, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                                }
+
                                 escposPrinter.lineFeed(4)
                                 escposPrinter.cutPaper()
                             }else {

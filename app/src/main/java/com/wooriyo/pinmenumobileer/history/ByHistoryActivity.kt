@@ -28,6 +28,7 @@ import com.wooriyo.pinmenumobileer.model.OrderHistoryDTO
 import com.wooriyo.pinmenumobileer.model.OrderListDTO
 import com.wooriyo.pinmenumobileer.model.ResultDTO
 import com.wooriyo.pinmenumobileer.history.adapter.OrderAdapter
+import com.wooriyo.pinmenumobileer.history.adapter.ReservationAdapter
 import com.wooriyo.pinmenumobileer.history.dialog.SetTableNoDialog
 import com.wooriyo.pinmenumobileer.listener.DialogListener
 import com.wooriyo.pinmenumobileer.util.ApiClient
@@ -41,6 +42,9 @@ class ByHistoryActivity: BaseActivity() {
 
     private val orderList = ArrayList<OrderHistoryDTO>()
     val orderAdapter = OrderAdapter(orderList)
+
+    private val reservList = ArrayList<OrderHistoryDTO>()
+    val reservAdapter = ReservationAdapter(reservList)
 
     private val callList = ArrayList<CallHistoryDTO>()
     val callAdapter = CallListAdapter(callList)
@@ -68,6 +72,7 @@ class ByHistoryActivity: BaseActivity() {
 
         setAdapterListener(completeAdapter, completeList)
         setOrderAdapter()
+        setReservAdapter()
         setCallAdapter()
 
         binding.rv.layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false)
@@ -78,6 +83,13 @@ class ByHistoryActivity: BaseActivity() {
             binding.rv.adapter = orderAdapter
             getOrderList()
             binding.newOrder.visibility = View.INVISIBLE
+        }
+
+        binding.tabReserv.setOnClickListener {
+            selectTab(binding.tvReserv)
+            binding.rv.adapter = reservAdapter
+            getReservList()
+            binding.newReserv.visibility = View.INVISIBLE
         }
 
         binding.tabCall.setOnClickListener {
@@ -118,6 +130,7 @@ class ByHistoryActivity: BaseActivity() {
     fun reload() {
         when(selText) {
             binding.tvOrder -> getOrderList()
+            binding.tvReserv -> getReservList()
             binding.tvCall -> getCallList()
             binding.tvCmplt -> getCompletedList()
         }
@@ -129,6 +142,16 @@ class ByHistoryActivity: BaseActivity() {
                 getOrderList()
             }else {
                 binding.newOrder.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    fun newReservation() {
+        runOnUiThread{
+            if(selText == binding.tvReserv) {
+                getReservList()
+            }else {
+                binding.newReserv.visibility = View.VISIBLE
             }
         }
     }
@@ -156,6 +179,12 @@ class ByHistoryActivity: BaseActivity() {
             }
         })
 
+        adapter.setOnConfirmListener(object : ItemClickListener{
+            override fun onItemClick(position: Int) {
+                confirmReservation(position)
+            }
+        })
+
         adapter.setOnDeleteListener(object:ItemClickListener{
             override fun onItemClick(position: Int) {
                 ConfirmDialog(
@@ -167,7 +196,20 @@ class ByHistoryActivity: BaseActivity() {
         })
 
         adapter.setOnPrintClickListener(object:ItemClickListener{
-            override fun onItemClick(position: Int) {print(position)}
+            override fun onItemClick(position: Int) {print(list[position])}
+        })
+
+        adapter.setOnTableNoListener(object: ItemClickListener{
+            override fun onItemClick(position: Int) {
+                SetTableNoDialog(
+                    list[position].idx,
+                    object : DialogListener {
+                        override fun onTableNoSet(tableNo: String) {
+                            list[position].tableNo = tableNo
+                            adapter.notifyItemChanged(position)
+                        }
+                    }).show(supportFragmentManager, "SetTableNoDialog")
+            }
         })
 
         adapter.setOnCallCompleteListener(object : ItemClickListener{
@@ -219,7 +261,7 @@ class ByHistoryActivity: BaseActivity() {
         })
 
         orderAdapter.setOnPrintClickListener(object:ItemClickListener{
-            override fun onItemClick(position: Int) {print(position)}
+            override fun onItemClick(position: Int) {print(orderList[position])}
         })
 
         orderAdapter.setOnTableNoListener(object: ItemClickListener{
@@ -232,6 +274,53 @@ class ByHistoryActivity: BaseActivity() {
                             orderAdapter.notifyItemChanged(position)
                         }
                 }).show(supportFragmentManager, "SetTableNoDialog")
+            }
+        })
+    }
+
+    fun setReservAdapter() {
+        reservAdapter.setOnCompleteListener(object : ItemClickListener{
+            override fun onItemClick(position: Int) {
+                super.onItemClick(position)
+
+                if(reservList[position].iscompleted == 0) {
+                    showCompleteDialog("주문") { completeOrder(reservList[position].idx, 1) }
+                }else {
+                    completeOrder(reservList[position].idx, 0)
+                }
+            }
+        })
+
+        reservAdapter.setOnConfirmListener(object : ItemClickListener{
+            override fun onItemClick(position: Int) {
+                confirmReservation(position)
+            }
+        })
+
+        reservAdapter.setOnDeleteListener(object:ItemClickListener{
+            override fun onItemClick(position: Int) {
+                ConfirmDialog(
+                    getString(R.string.btn_delete),
+                    getString(R.string.dialog_delete),
+                    getString(R.string.btn_delete)
+                ) { deleteOrder(reservList[position].idx) }.show(supportFragmentManager, "DeleteDialog")
+            }
+        })
+
+        reservAdapter.setOnPrintClickListener(object:ItemClickListener{
+            override fun onItemClick(position: Int) {print(reservList[position])}
+        })
+
+        reservAdapter.setOnTableNoListener(object: ItemClickListener{
+            override fun onItemClick(position: Int) {
+                SetTableNoDialog(
+                    reservList[position].idx,
+                    object : DialogListener{
+                        override fun onTableNoSet(tableNo: String) {
+                            reservList[position].tableNo = tableNo
+                            reservAdapter.notifyItemChanged(position)
+                        }
+                    }).show(supportFragmentManager, "SetTableNoDialog")
             }
         })
     }
@@ -292,6 +381,43 @@ class ByHistoryActivity: BaseActivity() {
                 Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "주문 목록 조회 오류 > $t")
                 Log.d(TAG, "주문 목록 조회 오류 > ${call.request()}")
+            }
+        })
+    }
+
+    // 예약 목록 조회
+    fun getReservList() {
+        //TODO API 생성 및 바꾸기
+        ApiClient.service.getReservList(useridx, storeidx).enqueue(object: Callback<OrderListDTO> {
+            override fun onResponse(call: Call<OrderListDTO>, response: Response<OrderListDTO>) {
+                Log.d(TAG, "예약 목록 조회 url : $response")
+                if(!response.isSuccessful) return
+
+                val result = response.body()
+                if(result != null) {
+                    when(result.status){
+                        1 -> {
+                            reservList.clear()
+                            reservList.addAll(result.orderlist)
+
+                            if(reservList.isEmpty()) {
+                                binding.empty.visibility = View.VISIBLE
+                                binding.rv.visibility = View.GONE
+                            }else {
+                                binding.empty.visibility = View.GONE
+                                binding.rv.visibility = View.VISIBLE
+                                reservAdapter.notifyDataSetChanged()
+                            }
+                        }
+                        else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<OrderListDTO>, t: Throwable) {
+                Toast.makeText(mActivity, R.string.msg_retry, Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "예약 목록 조회 오류 > $t")
+                Log.d(TAG, "예약 목록 조회 오류 > ${call.request()}")
             }
         })
     }
@@ -539,10 +665,10 @@ class ByHistoryActivity: BaseActivity() {
     }
 
     // 주문 프린트
-    fun print(position: Int) {
-        val pOrderDt = orderList[position].regdt
-        val pTableNo = orderList[position].tableNo
-        val pOrderNo = orderList[position].ordcode
+    fun print(order: OrderHistoryDTO) {
+        val pOrderDt = order.regdt
+        val pTableNo = order.tableNo
+        val pOrderNo = order.ordcode
 
         if(MyApplication.bluetoothPort.isConnected){
             MyApplication.escposPrinter.printAndroidFont(
@@ -565,11 +691,51 @@ class ByHistoryActivity: BaseActivity() {
             MyApplication.escposPrinter.printAndroidFont(hyphen.toString(),
                 AppProperties.FONT_WIDTH, font_size, ESCPOSConst.LK_ALIGNMENT_LEFT)
 
-            orderList[position].olist.forEach {
+            order.olist.forEach {
                 val pOrder = AppHelper.getPrint(it)
                 MyApplication.escposPrinter.printAndroidFont(pOrder,
                     AppProperties.FONT_WIDTH, font_size, ESCPOSConst.LK_ALIGNMENT_LEFT)
             }
+
+            if(order.reserType > 0 && order.rlist.isNotEmpty()) {
+                val reserv = order.rlist[0]
+
+                MyApplication.escposPrinter.lineFeed(2)
+
+                MyApplication.escposPrinter.printAndroidFont("전화번호",
+                    AppProperties.FONT_WIDTH,
+                    20, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                MyApplication.escposPrinter.printAndroidFont(reserv.tel,
+                    AppProperties.FONT_WIDTH,
+                    33, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                MyApplication.escposPrinter.printAndroidFont("예약자명",
+                    AppProperties.FONT_WIDTH,
+                    20, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                MyApplication.escposPrinter.printAndroidFont(reserv.name,
+                    AppProperties.FONT_WIDTH,
+                    33, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                MyApplication.escposPrinter.printAndroidFont("요청사항",
+                    AppProperties.FONT_WIDTH,
+                    20, ESCPOSConst.LK_ALIGNMENT_LEFT)
+                MyApplication.escposPrinter.printAndroidFont(reserv.memo,
+                    AppProperties.FONT_WIDTH,
+                    33, ESCPOSConst.LK_ALIGNMENT_LEFT)
+
+                var str = ""
+                when(order.reserType) {
+                    1 -> str = "매장"
+                    2 -> str = "포장"
+                }
+                MyApplication.escposPrinter.printAndroidFont(
+                    "${String.format(getString(R.string.reserv_date), str)}",
+                    AppProperties.FONT_WIDTH,
+                    20, ESCPOSConst.LK_ALIGNMENT_LEFT)
+
+                MyApplication.escposPrinter.printAndroidFont(reserv.reserdt,
+                    AppProperties.FONT_WIDTH,
+                    33, ESCPOSConst.LK_ALIGNMENT_LEFT)
+            }
+
             MyApplication.escposPrinter.lineFeed(4)
             MyApplication.escposPrinter.cutPaper()
         }

@@ -351,6 +351,13 @@ interface Api {
     ): Call<ResultDTO>
 
     // 예약 주문 관련
+    // 예약만 호출
+    @GET("m/reservation.list.php")
+    fun getReservList(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int
+    ): Call<OrderListDTO>
+
     // 예약 테이블 번호 변경
     @GET("m/udtTableNo.php")
     fun udtReservTableNo(

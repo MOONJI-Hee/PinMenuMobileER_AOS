@@ -78,16 +78,53 @@
             android:background="#4DFFFFFF"
             app:layout_constraintTop_toTopOf="@+id/tabOrder"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tabCall"
+            app:layout_constraintEnd_toStartOf="@+id/tabReserv"
             app:layout_constraintStart_toEndOf="@+id/tabOrder"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/tabReserv"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintEnd_toStartOf="@+id/tl2"
+            app:layout_constraintStart_toEndOf="@+id/tl1">
+            <TextView
+                style="@style/text16w"
+                android:id="@+id/tvReserv"
+                android:text="@string/reservation"
+                android:textColor="@color/white"
+                android:layout_marginHorizontal="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+            <View
+                style="@style/new_badge"
+                android:id="@+id/newReserv"
+                android:layout_marginStart="5dp"
+                android:visibility="invisible"
+                app:layout_constraintTop_toTopOf="@+id/tvReserv"
+                app:layout_constraintStart_toEndOf="@+id/tvReserv" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/tl2"
+            android:layout_width="1dp"
+            android:layout_height="18dp"
+            android:background="#4DFFFFFF"
+            app:layout_constraintTop_toTopOf="@+id/tabReserv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tabReserv"
+            app:layout_constraintEnd_toStartOf="@+id/tabCall"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/tabCall"
             android:layout_width="0dp"
             android:layout_height="48dp"
             app:layout_constraintTop_toBottomOf="@+id/title"
-            app:layout_constraintEnd_toStartOf="@+id/tl2"
-            app:layout_constraintStart_toEndOf="@+id/tl1">
+            app:layout_constraintEnd_toStartOf="@+id/tl3"
+            app:layout_constraintStart_toEndOf="@+id/tl2">
             <TextView
                 style="@style/text16w"
                 android:id="@+id/tvCall"
@@ -106,7 +143,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
-            android:id="@+id/tl2"
+            android:id="@+id/tl3"
             android:layout_width="1dp"
             android:layout_height="18dp"
             android:background="#4DFFFFFF"
@@ -120,8 +157,8 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             app:layout_constraintTop_toBottomOf="@+id/title"
-            app:layout_constraintEnd_toStartOf="@+id/tl3"
-            app:layout_constraintStart_toEndOf="@+id/tl2">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tl3">
             <TextView
                 style="@style/text16w"
                 android:id="@+id/tvCmplt"
@@ -137,42 +174,6 @@
                 android:visibility="invisible"
                 app:layout_constraintTop_toTopOf="@+id/tvCmplt"
                 app:layout_constraintStart_toEndOf="@+id/tvCmplt"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <View
-            android:id="@+id/tl3"
-            android:layout_width="1dp"
-            android:layout_height="18dp"
-            android:background="#4DFFFFFF"
-            android:visibility="gone"
-            app:layout_constraintTop_toTopOf="@+id/tabCmplt"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tabPos"
-            app:layout_constraintStart_toEndOf="@+id/tabCmplt"/>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/tabPos"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tl3"
-            app:layout_constraintEnd_toEndOf="parent">
-            <TextView
-                style="@style/text16w"
-                android:id="@+id/tvPos"
-                android:text="@string/pos"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-            <View
-                style="@style/new_badge"
-                android:id="@+id/newPos"
-                android:layout_marginStart="5dp"
-                android:visibility="invisible"
-                app:layout_constraintTop_toTopOf="@+id/tvPos"
-                app:layout_constraintStart_toEndOf="@+id/tvPos"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
