@@ -16,9 +16,9 @@ import com.wooriyo.pinmenumobileer.model.OrderHistoryDTO
 
 class HistoryAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     lateinit var orderCompleteListener: ItemClickListener
-    lateinit var confirmListener: ItemClickListener
-    lateinit var deleteListener: ItemClickListener
+    lateinit var orderDeleteListener: ItemClickListener
     lateinit var printClickListener: ItemClickListener
+    lateinit var confirmListener: ItemClickListener
     lateinit var setTableNoListener: ItemClickListener
     lateinit var callCompleteListener: ItemClickListener
     lateinit var callDeleteListener: ItemClickListener
@@ -27,16 +27,16 @@ class HistoryAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adap
         this.orderCompleteListener = orderCompleteListener
     }
 
-    fun setOnConfirmListener(confirmListener: ItemClickListener) {
-        this.confirmListener = confirmListener
-    }
-
-    fun setOnDeleteListener(deleteListener: ItemClickListener) {
-        this.deleteListener = deleteListener
+    fun setOnDeleteListener(orderDeleteListener: ItemClickListener) {
+        this.orderDeleteListener = orderDeleteListener
     }
 
     fun setOnPrintClickListener(printClickListener: ItemClickListener) {
         this.printClickListener = printClickListener
+    }
+
+    fun setOnConfirmListener(confirmListener: ItemClickListener) {
+        this.confirmListener = confirmListener
     }
 
     fun setOnTableNoListener(setTableNoListener: ItemClickListener) {
@@ -62,13 +62,13 @@ class HistoryAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adap
 
         return when(viewType) {
             AppProperties.VIEW_TYPE_ORDER -> {
-                OrderAdapter.ViewHolder(bindingOrder, parent.context, orderCompleteListener, deleteListener, printClickListener)
+                OrderAdapter.ViewHolder(bindingOrder, parent.context, orderCompleteListener, orderDeleteListener, printClickListener)
             }
             AppProperties.VIEW_TYPE_CALL -> {
                 ViewHolderCall(bindingCall, callCompleteListener, callDeleteListener)
             }
             else -> {
-                ReservationAdapter.ViewHolder(bindingReserv, parent.context, orderCompleteListener, confirmListener, deleteListener, printClickListener, setTableNoListener)
+                ReservationAdapter.ViewHolder(bindingReserv, parent.context, orderCompleteListener, orderDeleteListener, printClickListener, confirmListener, setTableNoListener)
             }
         }
     }

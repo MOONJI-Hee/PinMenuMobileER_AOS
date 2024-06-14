@@ -18,17 +18,13 @@ import com.wooriyo.pinmenumobileer.util.AppHelper
 
 class ReservationAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.Adapter<ReservationAdapter.ViewHolder>() {
     lateinit var completeListener: ItemClickListener
-    lateinit var confirmListener: ItemClickListener
     lateinit var deleteListener: ItemClickListener
     lateinit var printClickListener: ItemClickListener
+    lateinit var confirmListener: ItemClickListener
     lateinit var setTableNoListener: ItemClickListener
 
     fun setOnCompleteListener(completeListener: ItemClickListener) {
         this.completeListener = completeListener
-    }
-
-    fun setOnConfirmListener(confirmListener: ItemClickListener) {
-        this.confirmListener = confirmListener
     }
 
     fun setOnDeleteListener(deleteListener: ItemClickListener) {
@@ -39,6 +35,10 @@ class ReservationAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.
         this.printClickListener = printClickListener
     }
 
+    fun setOnConfirmListener(confirmListener: ItemClickListener) {
+        this.confirmListener = confirmListener
+    }
+
     fun setOnTableNoListener(setTableNoListener: ItemClickListener) {
         this.setTableNoListener = setTableNoListener
     }
@@ -46,7 +46,7 @@ class ReservationAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ListReservationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         binding.rv.layoutManager = LinearLayoutManager(parent.context, LinearLayoutManager.VERTICAL, false)
-        return ViewHolder(binding, parent.context, completeListener, confirmListener, deleteListener, printClickListener, setTableNoListener)
+        return ViewHolder(binding, parent.context, completeListener, deleteListener, printClickListener, confirmListener, setTableNoListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -57,13 +57,17 @@ class ReservationAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.
         return dataSet.size
     }
 
+    override fun getItemId(position: Int): Long {
+        return dataSet[position].idx.toLong()
+    }
+
     class ViewHolder(
         val binding: ListReservationBinding,
         val context: Context,
         val completeListener: ItemClickListener,
-        val confirmListener: ItemClickListener?,
         val deleteListener: ItemClickListener,
         val printClickListener: ItemClickListener,
+        val confirmListener: ItemClickListener?,
         val setTableNoListener: ItemClickListener?
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind (data : OrderHistoryDTO) {
