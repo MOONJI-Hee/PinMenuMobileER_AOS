@@ -3,7 +3,7 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">app.pinmenu.biz</domain>
         <domain includeSubdomains="true">pinmenu.biz</domain>
-        <domain includeSubdomains="true">3.15.29.1</domain>
+        <domain includeSubdomains="true">3.137.162.70</domain>
         <domain includeSubdomains="true">49.247.20.125</domain>
         <domain includeSubdomains="true">49.247.22.8</domain>
         <domain includeSubdomains="true">img.pinmenu.biz</domain>

@@ -135,7 +135,7 @@ class SetQrcodeFragment : Fragment() {
             plus.setOnClickListener{
                 if(qrList.size < qrCnt) {
                     val intent = Intent(context, QrDetailActivity::class.java)
-                    intent.putExtra("seq", qrList.size)
+                    intent.putExtra("seq", qrList.size + 1)
                     startActivity(intent)
                 }else {
                     AlertDialog("", getString(R.string.dialog_disable_qr)).show((context as MainActivity).supportFragmentManager, "DisableQrDialog")
@@ -236,6 +236,8 @@ class SetQrcodeFragment : Fragment() {
                         if(!storeName.isNullOrEmpty()) {
                             binding.etStoreName.setText(storeName)
                         }
+
+                        if (qrList.size <= 0) return
 
                         bisCnt = 0
                         qrList.forEach {

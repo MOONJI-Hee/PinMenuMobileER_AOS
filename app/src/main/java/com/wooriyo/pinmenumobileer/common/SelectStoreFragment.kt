@@ -52,6 +52,11 @@ class SelectStoreFragment : Fragment() {
             binding.rvStore.adapter = storeAdapter
         }else {
             val storeAdapter = StoreAdapter(MyApplication.storeList)
+
+            if(type == "qr") {
+                storeAdapter.setIsFree(true)
+            }
+
             storeAdapter.setOnItemClickListener(object : ItemClickListener {
                 override fun onItemClick(position: Int) {
                     super.onItemClick(position)

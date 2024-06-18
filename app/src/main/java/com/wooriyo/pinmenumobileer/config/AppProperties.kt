@@ -5,7 +5,7 @@ class AppProperties {
 
                 private const val REAL_SERVER: String = "http://app.pinmenu.biz/api/"
                 private const val TEST_SERVER: String = "http://testapp.pinmenu.biz/api/"
-                private const val AWS_SERVER: String = "http://3.15.29.1/api/"
+                private const val AWS_SERVER: String = "http://3.137.162.70/api/"
 
                 const val SERVER: String = REAL_SERVER
                 const val IMG_SERVER: String = "http://img.pinmenu.biz/api/"
