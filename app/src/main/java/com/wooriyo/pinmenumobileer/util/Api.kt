@@ -368,7 +368,7 @@ interface Api {
     ): Call<ResultDTO>
 
     // 테이블번호 리스트
-    @GET("u/tableNo.list.php")
+    @GET("m/tableNo.list.php")
     fun getTableNo(
         @Query("useridx") useridx: Int,
         @Query("storeidx") storeidx: Int

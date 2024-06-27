@@ -114,6 +114,8 @@ class StoreListFragment : Fragment() {
                     if(response.isSuccessful) {
                         val storeListDTO = response.body() ?: return
                         if(storeListDTO.status == 1) {
+                            MyApplication.manualPdf = storeListDTO.manual
+
                             MyApplication.storeList.clear()
                             MyApplication.storeList.addAll(storeListDTO.storeList)
 

@@ -33,7 +33,7 @@ class MoreFragment : Fragment() {
 
             manual.setOnClickListener {
                 val browserIntent = Intent(Intent.ACTION_VIEW).apply {
-                    setDataAndType(Uri.parse("https://pinmenu.biz/file/pinmenu_manual_0325.pdf"), "application/pdf")
+                    setDataAndType(Uri.parse(MyApplication.manualPdf), "application/pdf")
                 }
                 startActivity(Intent.createChooser(browserIntent, "Choose an Application"))
             }

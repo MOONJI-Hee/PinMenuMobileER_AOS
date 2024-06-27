@@ -91,7 +91,7 @@ class MainActivity : BaseActivity() {
 
         val type : Int = intent.getIntExtra("type", 0)
 
-        if(type == null || type == 0) {
+        if(type == 0) {
             goMain()
         }
 //        else if(type == 1) {
@@ -328,24 +328,26 @@ class MainActivity : BaseActivity() {
     }
 
     private fun setNavi(id:Int) {
-        if(isMain) {
-            binding.run{
-                bottomNav.setBackgroundColor(getColor(R.color.white))
-                ivMain.setImageResource(R.drawable.ic_main_tabar_main_n_white)
-                setTxtBlack(tvMain)
-                setTxtBlack(tvMenu)
-                setTxtBlack(tvQr)
-                setTxtBlack(tvPrint)
-                setTxtBlack(tvMore)
+        if(storeList.size != 1 || id != R.id.icMenu) {
+            if(isMain) {
+                binding.run{
+                    bottomNav.setBackgroundColor(getColor(R.color.white))
+                    ivMain.setImageResource(R.drawable.ic_main_tabar_main_n_white)
+                    setTxtBlack(tvMain)
+                    setTxtBlack(tvMenu)
+                    setTxtBlack(tvQr)
+                    setTxtBlack(tvPrint)
+                    setTxtBlack(tvMore)
+                }
             }
-        }
-        isMain = false
+            isMain = false
 
-        binding.run {
-            ivMenu.setImageResource(R.drawable.icon_menuset_n_black)
-            ivQr.setImageResource(R.drawable.icon_qr_n_black)
-            ivPrint.setImageResource(R.drawable.icon_print_n_black)
-            ivMore.setImageResource(R.drawable.ic_main_tabar_more_n_black)
+            binding.run {
+                ivMenu.setImageResource(R.drawable.icon_menuset_n_black)
+                ivQr.setImageResource(R.drawable.icon_qr_n_black)
+                ivPrint.setImageResource(R.drawable.icon_print_n_black)
+                ivMore.setImageResource(R.drawable.ic_main_tabar_more_n_black)
+            }
         }
 
         when(id) {
@@ -363,7 +365,6 @@ class MainActivity : BaseActivity() {
                 when(MyApplication.storeList.size) {
                     0 -> Toast.makeText(mActivity, R.string.msg_no_store, Toast.LENGTH_SHORT).show()
                     1 -> {
-                        goMenuSet()
                         MyApplication.store = storeList[0]
                         MyApplication.storeidx = storeList[0].idx
 

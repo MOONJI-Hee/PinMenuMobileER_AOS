@@ -46,6 +46,12 @@ class EventPreviewActivity : BaseActivity() {
                 .into(binding.img)
         }
 
+        if(link.isNullOrEmpty()) {
+            binding.link.visibility = View.GONE
+        }else {
+            binding.link.visibility = View.VISIBLE
+        }
+
         binding.popup.clipToOutline = true
 
         binding.back.setOnClickListener { finish() }

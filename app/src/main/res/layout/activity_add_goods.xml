@@ -135,21 +135,14 @@
                 app:layout_constraintEnd_toEndOf="@+id/price"
                 app:layout_constraintTop_toTopOf="@+id/price"
                 app:layout_constraintBottom_toBottomOf="@+id/price"/>
-            <TextView
-                style="@style/text15d"
-                android:id="@+id/img_info1"
-                android:layout_marginTop="20dp"
-                android:text="@string/menu_img_reg_info1"
-                app:layout_constraintStart_toStartOf="@+id/explain"
-                app:layout_constraintTop_toBottomOf="@+id/price"/>
 
             <LinearLayout
                 style="@style/thum"
                 android:id="@+id/thum1"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
                 app:layout_constraintDimensionRatio="4:3"
-                app:layout_constraintTop_toBottomOf="@+id/img_info1"
+                app:layout_constraintTop_toBottomOf="@+id/price"
                 app:layout_constraintStart_toStartOf="@+id/explain"
                 app:layout_constraintEnd_toStartOf="@+id/thum2">
                 <ImageView
@@ -228,7 +221,7 @@
                 app:layout_constraintTop_toTopOf="@+id/thum3"
                 app:layout_constraintEnd_toEndOf="@+id/thum3"/>
             <TextView
-                style="@style/text15d"
+                style="@style/subtext"
                 android:id="@+id/img_info2"
                 android:layout_marginTop="10dp"
                 android:text="@string/menu_img_reg_info2"

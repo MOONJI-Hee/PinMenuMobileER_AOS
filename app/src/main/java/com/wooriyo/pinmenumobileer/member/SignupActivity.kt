@@ -107,6 +107,8 @@ class SignupActivity : BaseActivity(), View.OnClickListener {
         val appvs = MyApplication.appver
         val md = MyApplication.md
 
+        val isAlpha = if(arpaLinked) "Y" else "N"
+
         if(userid.isEmpty() || userid == "") {
             Toast.makeText(mActivity, R.string.msg_no_id, Toast.LENGTH_SHORT).show()
         }else if (!verifyEmail(userid)) {
@@ -134,7 +136,7 @@ class SignupActivity : BaseActivity(), View.OnClickListener {
                                 Toast.makeText(mActivity, R.string.msg_complete, Toast.LENGTH_SHORT).show()
 
                                 val useridx = result.useridx
-                                val memberDTO = MemberDTO(result.status, result.msg, useridx, userid, arpayoId)
+                                val memberDTO = MemberDTO(result.status, result.msg, useridx, userid, isAlpha, arpayoId)
 
                                 MyApplication.pref.setMbrDTO(memberDTO)
                                 MyApplication.pref.setUserIdx(memberDTO.useridx)

@@ -80,6 +80,8 @@ class MyApplication: Application() {
 
         var bidx = 0    //프린터 설정 시 부여되는 idx (기기별 매장 하나 당 한개씩 부여)
 
+        var manualPdf = ""  // 사용설명서 경로
+
         fun setStoreDTO() {
             store = StoreDTO(useridx)
         }
