@@ -75,6 +75,8 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        MyApplication.useridx = MyApplication.pref.getUserIdx()
+
         thread = Thread(Runnable{
             val reVal = AppHelper.getPairedDevice()
             if(reVal == 1) {
