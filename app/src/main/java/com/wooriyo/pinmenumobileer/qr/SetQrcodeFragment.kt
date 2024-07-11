@@ -352,6 +352,7 @@ class SetQrcodeFragment : Fragment() {
                 val result = response.body() ?: return
                 when (result.status) {
                     1 -> {
+                        Toast.makeText(context, R.string.msg_complete, Toast.LENGTH_SHORT).show()
                         store.qrbuse = buse
                     }
                     else -> Toast.makeText(context, result.msg, Toast.LENGTH_SHORT).show()
