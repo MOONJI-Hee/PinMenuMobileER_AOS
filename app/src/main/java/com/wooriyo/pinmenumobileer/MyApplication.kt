@@ -9,14 +9,11 @@ import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.graphics.Point
 import android.media.AudioAttributes
-import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.view.WindowManager
-import com.sam4s.io.ethernet.SocketInfo
 import com.sam4s.printer.Sam4sBuilder
-import com.sam4s.printer.Sam4sPrint
 import com.sewoo.jpos.printer.ESCPOSPrinter
 import com.sewoo.port.android.BluetoothPort
 import com.wooriyo.pinmenumobileer.config.AppProperties

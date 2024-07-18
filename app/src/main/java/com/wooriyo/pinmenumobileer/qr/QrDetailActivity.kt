@@ -3,12 +3,14 @@ package com.wooriyo.pinmenumobileer.qr
 import android.Manifest
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.CheckBox
@@ -36,6 +38,7 @@ import retrofit2.Response
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.OutputStream
 
 
 class QrDetailActivity : BaseActivity() {
@@ -202,15 +205,23 @@ class QrDetailActivity : BaseActivity() {
         }
         Log.d(TAG, "fileName > $fileName")
 
-        val folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString()
-        val filePath = "$folder/$fileName"
+//        val folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString()
 
-        Log.d(TAG, "filePath > $filePath")
+//        val fpinmenu = File(folder)
+//        if(!fpinmenu.exists())
+//            fpinmenu.mkdir()
 
-        val fos: FileOutputStream
+        val contentValues = ContentValues()
+        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+        contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
+        contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+
+        val test = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues) ?: return
+
         try{
-            fos = FileOutputStream(File(filePath))
-            bitmap.compress(Bitmap.CompressFormat.JPEG,100,fos)
+//            val fos: FileOutputStream
+            val fos = contentResolver.openOutputStream(test) ?: return
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100, fos)
             fos.close()
 
             Toast.makeText(mActivity, R.string.msg_success_down, Toast.LENGTH_SHORT).show()

@@ -56,6 +56,7 @@ class QrAgreeActivity : BaseActivity() {
                 val result = response.body() ?: return
                 when(result.status) {
                     1 -> {
+                        MyApplication.store.agree = "Y"
                         setResult(RESULT_OK, intent)
                         finish()
                     }
