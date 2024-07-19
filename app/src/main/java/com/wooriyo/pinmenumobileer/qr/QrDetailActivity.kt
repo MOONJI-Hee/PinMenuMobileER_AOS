@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide
 import com.wooriyo.pinmenumobileer.BaseActivity
 import com.wooriyo.pinmenumobileer.MainActivity
 import com.wooriyo.pinmenumobileer.MyApplication
+import com.wooriyo.pinmenumobileer.MyApplication.Companion.appver
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.engStoreName
 import com.wooriyo.pinmenumobileer.R
 import com.wooriyo.pinmenumobileer.common.dialog.AlertDialog
@@ -205,29 +206,45 @@ class QrDetailActivity : BaseActivity() {
         }
         Log.d(TAG, "fileName > $fileName")
 
-//        val folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString()
-
 //        val fpinmenu = File(folder)
 //        if(!fpinmenu.exists())
 //            fpinmenu.mkdir()
 
-        val contentValues = ContentValues()
-        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
-        contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
-        contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+            val contentValues = ContentValues()
+            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
+            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
 
-        val test = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues) ?: return
+            val path = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues) ?: return
 
-        try{
-//            val fos: FileOutputStream
-            val fos = contentResolver.openOutputStream(test) ?: return
-            bitmap.compress(Bitmap.CompressFormat.JPEG,100, fos)
-            fos.close()
+            try{
+                val fos = contentResolver.openOutputStream(path) ?: return
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100, fos)
+                fos.close()
 
-            Toast.makeText(mActivity, R.string.msg_success_down, Toast.LENGTH_SHORT).show()
-        }catch (e: IOException) {
-            Toast.makeText(mActivity, R.string.msg_fail_down, Toast.LENGTH_SHORT).show()
-            e.printStackTrace()
+                Toast.makeText(mActivity, R.string.msg_success_down, Toast.LENGTH_SHORT).show()
+            }catch (e: IOException) {
+                Toast.makeText(mActivity, R.string.msg_fail_down, Toast.LENGTH_SHORT).show()
+                e.printStackTrace()
+            }
+        }else { // oreo(8/26) 버전에서 경로 조회 / 저장 안되는 이슈로 분기 처리 > 추후 수정
+            val folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString()
+            val filePath = "$folder/$fileName"
+
+            Log.d(TAG, "filePath > $filePath")
+
+            val fos: FileOutputStream
+            try{
+                fos = FileOutputStream(File(filePath))
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,fos)
+                fos.close()
+
+                Toast.makeText(mActivity, R.string.msg_success_down, Toast.LENGTH_SHORT).show()
+            }catch (e: IOException) {
+                Toast.makeText(mActivity, R.string.msg_fail_down, Toast.LENGTH_SHORT).show()
+                e.printStackTrace()
+            }
         }
     }
 
