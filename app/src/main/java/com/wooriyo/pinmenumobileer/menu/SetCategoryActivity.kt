@@ -62,9 +62,10 @@ class SetCategoryActivity : BaseActivity() {
 
                             if(cateList.size > 0) {
                                 binding.changeSeq.visibility = View.VISIBLE
-                                cateAdapter.notifyDataSetChanged()
                             }else
                                 binding.changeSeq.visibility = View.GONE
+
+                            cateAdapter.notifyDataSetChanged()
                         }
                         else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                     }

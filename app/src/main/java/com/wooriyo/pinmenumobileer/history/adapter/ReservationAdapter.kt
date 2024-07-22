@@ -86,6 +86,11 @@ class ReservationAdapter(val dataSet: ArrayList<OrderHistoryDTO>): RecyclerView.
                     reservRequest.text = rsv.memo
                     reservAddr.text = rsv.addr
                     reservDate.text = rsv.reserdt
+
+                    if(rsv.memo.isEmpty()) {
+                        tvRequest.visibility = View.GONE
+                        reservRequest.visibility = View.GONE
+                    }
                 }
 
                 when(data.reserType) {
