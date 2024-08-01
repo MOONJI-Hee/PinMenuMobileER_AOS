@@ -20,8 +20,6 @@ import retrofit2.Response
 
 class PgHistoryActivity : BaseActivity() {
     lateinit var binding: ActivityPgHistoryBinding
-//    val mActivity = this@PgHistoryActivity
-//    val TAG = "PgHistoryActivity"
 
     val pgHistoryList = ArrayList<PgHistoryDTO>()
     val pgHistoryAdapter = PgHistoryAdapter(pgHistoryList)

@@ -13,5 +13,8 @@ data class PgDetailDTO(
     @SerializedName("storeidx") var storeidx: Int,
     @SerializedName("tableNo") var tableNo: String,
     @SerializedName("ordcode_key") var ordcode_key: String,
-    @SerializedName("regdt") var regdt: String
+    @SerializedName("tid") var tid: String,
+    @SerializedName("regdt") var regdt: String,
+    @SerializedName("opt") var opt: String,     // opt1 / opt2 / opt3 ...
+    @SerializedName("optlist") var optList: ArrayList<OrderOptDTO>
 )

@@ -27,8 +27,7 @@ class PgGoodsAdapter(val dataSet: ArrayList<PgDetailDTO>): RecyclerView.Adapter<
                 name.text = data.name
                 cnt.text = data.gea.toString()
                 price.text = AppHelper.price(data.price)
-
-                //TODO option
+                option.text = data.opt
             }
         }
     }

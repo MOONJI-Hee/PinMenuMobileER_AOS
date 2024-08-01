@@ -22,8 +22,11 @@
     <TextView
         style="@style/text17"
         android:id="@+id/goods"
+        android:layout_width="0dp"
+        android:layout_marginEnd="3dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintEnd_toStartOf="@+id/btnCancel" />
 
     <TextView
         style="@style/text_num_b"

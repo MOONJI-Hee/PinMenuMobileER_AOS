@@ -719,7 +719,8 @@ interface Api {
     fun getPgDetail(
         @Query("useridx") useridx: Int,
         @Query("storeidx") storeidx: Int,
-        @Query("ordcode") ordcode: String
+        @Query("ordcode") ordcode: String,
+        @Query("tid") tid: String
     ): Call<PgDetailResultDTO>
 
     // pg 결제 취소

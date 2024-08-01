@@ -30,7 +30,10 @@ class PgAdapter(val dataSet: ArrayList<PgDetailDTO>): RecyclerView.Adapter<PgAda
     class ViewHolder(val context: Context, val binding: ListPgBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(data: PgDetailDTO) {
             binding.run {
-                cardInfo.text = "${data.cardname} 뒷자리 ${data.cardnum}"
+                if(data.cardname == "KB국민")
+                    cardInfo.text = data.cardname
+                else
+                    cardInfo.text = "${data.cardname} 뒷자리 ${data.cardnum}"
                 regdt.text = data.regdt
                 goods.text = data.name
                 price.text = AppHelper.price(data.price)
@@ -50,6 +53,7 @@ class PgAdapter(val dataSet: ArrayList<PgDetailDTO>): RecyclerView.Adapter<PgAda
                 btnCancel.setOnClickListener {
                     val intent = Intent(context, PgCancelActivity::class.java)
                     intent.putExtra("ordcode", data.ordcode_key)
+                    intent.putExtra("tid", data.tid)
                     context.startActivity(intent)
                 }
             }

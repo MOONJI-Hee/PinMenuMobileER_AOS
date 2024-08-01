@@ -22,8 +22,6 @@ import retrofit2.Response
 
 class PgCancelActivity : BaseActivity() {
     lateinit var binding: ActivityPgCancelBinding
-//    val mActivity = this@PgCancelActivity
-//    val TAG = "PgCancelActivity"
 
     val goodsList = ArrayList<PgDetailDTO>()
     val goodsAdapter = PgGoodsAdapter(goodsList)
@@ -37,6 +35,7 @@ class PgCancelActivity : BaseActivity() {
         setContentView(binding.root)
 
         ordcode = intent.getStringExtra("ordcode") ?: ""
+        tid = intent.getStringExtra("tid") ?: ""
 
         binding.rvGoods.layoutManager = LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false)
         binding.rvGoods.adapter = goodsAdapter
@@ -50,7 +49,7 @@ class PgCancelActivity : BaseActivity() {
     }
 
     fun getPgDetail() {
-        ApiClient.service.getPgDetail(MyApplication.useridx, MyApplication.storeidx, ordcode).enqueue(object: Callback<PgDetailResultDTO> {
+        ApiClient.service.getPgDetail(MyApplication.useridx, MyApplication.storeidx, ordcode, tid).enqueue(object: Callback<PgDetailResultDTO> {
             override fun onResponse(call: Call<PgDetailResultDTO>, response: Response<PgDetailResultDTO>) {
                 Log.d(TAG, "pg 결제 내역 상세 조회 url : $response")
 
@@ -65,13 +64,14 @@ class PgCancelActivity : BaseActivity() {
                         goodsAdapter.notifyDataSetChanged()
 
                         binding.run {
-                            cardInfo.text = "${result.cardname} 뒷자리 ${result.cardnum}"
+                            if(result.cardname == "KB국민")
+                                cardInfo.text = result.cardname
+                            else
+                                cardInfo.text = "${result.cardname} 뒷자리 ${result.cardnum}"
                             price.text = AppHelper.price(result.amt)
                             regdt.text = result.pay_regdt
                             tableNo.text = result.tableNo
                         }
-
-                        tid = result.tid
                     }
                     else -> Toast.makeText(mActivity, result.msg, Toast.LENGTH_SHORT).show()
                 }

@@ -483,8 +483,8 @@
 
     <!--  예약 정보  -->
     <string name="reserv_no">예약번호</string>
-    <string name="reserv_store">매\n장</string>
-    <string name="reserv_togo">포\n장</string>
+    <string name="reserv_store">매장</string>
+    <string name="reserv_togo">포장</string>
     <string name="reserv_paid">선결제</string>
     <string name="reserv_tel">전화번호</string>
     <string name="reserv_name">예약자명</string>
