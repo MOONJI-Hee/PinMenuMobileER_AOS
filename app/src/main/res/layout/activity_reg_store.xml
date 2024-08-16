@@ -30,7 +30,6 @@
         <TextView
             style="@style/text15"
             android:layout_marginBottom="9dp"
-            android:layout_marginEnd="27dp"
             android:textColor="#FF6200"
             android:text="@string/essential"
             app:layout_constraintEnd_toEndOf="@id/et_name"
@@ -60,7 +59,7 @@
 
         <TextView
             style="@style/text15"
-            android:id="@+id/tv_arpayo"
+            android:id="@+id/tv_address"
             android:layout_marginTop="20dp"
             android:text="@string/store_addr"
             app:layout_constraintStart_toStartOf="parent"
@@ -76,24 +75,27 @@
 <!--            app:layout_constraintBottom_toTopOf="@+id/btn_map"/>-->
 
         <EditText
-            style="@style/edittext"
+            style="@style/edittext_big"
             android:id="@+id/et_addr"
             android:layout_width="0dp"
+            android:layout_height="74dp"
             android:layout_marginTop="10dp"
             android:hint="@string/store_addr_hint"
-            android:inputType="text"
-            android:maxLines="1"
+            android:inputType="textMultiLine"
+            android:enabled="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_map"
-            app:layout_constraintTop_toBottomOf="@+id/tv_arpayo"/>
+            app:layout_constraintTop_toBottomOf="@+id/tv_address"/>
 
         <TextView
             style="@style/btn_sub"
             android:id="@+id/btn_map"
-            android:layout_width="83dp"
+            android:layout_width="55dp"
+            android:layout_height="74dp"
             android:layout_marginStart="10dp"
             android:text="@string/store_map"
             android:textSize="17sp"
+            android:lineSpacingExtra="-3dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/et_addr"
             app:layout_constraintBottom_toBottomOf="@+id/et_addr"

@@ -731,6 +731,20 @@ interface Api {
         @Query("tid") tid: String
     ): Call<ResultDTO>
 
+    // 다국어 설정
+    @GET("m/ins_lang_setting.php")
+    fun insLangSetting(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+    ): Call<LangResultDTO>
+
+    @GET("m/setLanguage")
+    fun setLanguage(
+        @Query("useridx") useridx: Int,
+        @Query("storeidx") storeidx: Int,
+        @Query("lang") lang: String
+    ):Call<ResultDTO>
+
     // 버전 체크
     @GET("check_version.php")
     fun checkVersion(

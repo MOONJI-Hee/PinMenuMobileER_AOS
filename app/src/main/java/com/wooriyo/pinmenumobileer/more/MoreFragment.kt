@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.wooriyo.pinmenumobileer.MainActivity
 import com.wooriyo.pinmenumobileer.MyApplication
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.pref
 import com.wooriyo.pinmenumobileer.MyApplication.Companion.storeList
@@ -70,6 +71,13 @@ class MoreFragment : Fragment() {
                             Intent(requireContext(), SelectStoreActivity::class.java).apply{ putExtra("type", "storeImg") }
                         )
                     }
+                }
+            }
+            language.setOnClickListener {
+                when(storeList.size) {
+                    0 -> Toast.makeText(context, R.string.msg_no_store, Toast.LENGTH_SHORT).show()
+                    1 -> (context as MainActivity).insLangSetting(0)
+                    else -> (context as MainActivity).goSelStore("language")
                 }
             }
             setting.setOnClickListener { requireContext().startActivity(Intent(requireContext(), SetActivity::class.java)) }

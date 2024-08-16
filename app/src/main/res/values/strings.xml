@@ -110,7 +110,7 @@
     <string name="link_before">연동전</string>
     <string name="link_after">연동됨</string>
     <string name="link_fail">연동불가</string>
-    <string name="arpayo_id">알파요 아이디(이메일)</string>
+    <string name="arpayo_id">알파요 아이디(선택)</string>
     <string name="arpayo_id_hint">알파요 ID(이메일) 입력해 주세요.</string>
     <string name="signup_info1">아이디(이메일)는\n비밀번호 찾기를 할 때 필요한 정보입니다.\n사용 가능한 이메일로 가입해 주세요.</string>
     <string name="signup_info2">알파요 앱 아이디를 연동해주시면\n자동시급계산 앱 알파요를 사용 중인 사장님들에게\n추가 보상을 드립니다.</string>
@@ -145,7 +145,7 @@
     <string name="store_name_hint2">매장명을 입력해 주세요. (선택)</string>
     <string name="store_addr">매장주소</string>
     <string name="store_addr_hint">지도검색 버튼을 눌러서 입력</string>
-    <string name="store_map">지도검색</string>
+    <string name="store_map">지도\n검색</string>
     <string name="map_hint">주소를 입력하세요.</string>
     <string name="store_addr_info1">매장 주소를 토대로 주변 고객분들께 이벤트가 진행됩니다. 매장 주소를 정확하게 입력해 주세요.</string>
     <string name="store_addr_info2">핀메뉴 관리자 앱을 사용하시기 위해서는 1개의\n매장을 필수로 등록 하셔야 이용이 가능합니다.</string>
@@ -451,6 +451,11 @@
     <string name="pwd_new">새로운 비밀번호</string>
     <string name="pwd_new_hint">새로운 비밀번호를 입력</string>
     <string name="version_info">버전 정보</string>
+
+    <!--  다국어 설정  -->
+    <string name="language">Language</string>
+    <string name="title_set_language">다국어 설정</string>
+    <string name="set_language_info">On smartphones, you can toggle the language settings on and off.\nYou can enter language-specific text on the Pinmenu website.\nURL : www.pinmenu.net\nPlease sign in with your Pinmenu Mgmt app ID.</string>
 
     <!-- 직원 호출 -->
     <string name="call_emp">직원호출</string>

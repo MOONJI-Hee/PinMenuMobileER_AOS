@@ -32,6 +32,8 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(dataSet[position])
+        holder.binding.storeName.setHorizontallyScrolling(true)
+        holder.binding.storeName.isSelected = true
     }
 
     override fun getItemId(position: Int): Long {
@@ -105,7 +107,6 @@ class StoreAdapter(val dataSet: ArrayList<StoreDTO>): RecyclerView.Adapter<Store
                     payCnt.isEnabled = true
                     payTxt.isEnabled = true
                 }
-
 
                 if (usePay || data.paytype == 4) {
                     storeName.isEnabled = true

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:paddingStart="20dp"
+    android:paddingEnd="15dp">
+    <ImageView
+        android:id="@+id/imgLang"
+        android:layout_width="60dp"
+        android:layout_height="37dp"
+        android:src="@drawable/img_language_eng_s"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <TextView
+        style="@style/text17"
+        android:id="@+id/tvLang"
+        android:layout_marginStart="15dp"
+        app:layout_constraintStart_toEndOf="@+id/imgLang"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <CheckBox
+        style="@style/toggle"
+        android:id="@+id/check"
+        android:checked="true"
+        android:clickable="false"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <View
+        android:id="@+id/disable"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@color/white70"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/imgLang"
+        app:layout_constraintEnd_toEndOf="@+id/tvLang"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

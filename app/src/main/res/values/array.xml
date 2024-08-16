@@ -11,4 +11,52 @@
         <item>+</item>
         <item>-</item>
     </array>
+    <array name="language">
+        <item>English</item>
+        <item>Español</item>
+        <item>한국어</item>
+        <item>中國語</item>
+        <item>日本語</item>
+        <item>हिन्दी</item>
+        <item>français</item>
+        <item>עִברִית</item>
+        <item>العربية</item>
+        <item>বাংলা</item>
+        <item>Русский</item>
+        <item>Português</item>
+        <item>ภาษาไทย</item>
+        <item>Tiếng Việt</item>
+    </array>
+    <array name="language_img">
+        <item>img_language_eng_s</item>
+        <item>img_language_spa_s</item>
+        <item>img_language_kor_s</item>
+        <item>img_language_chi_s</item>
+        <item>img_language_jpn_s</item>
+        <item>img_language_hin_s</item>
+        <item>img_language_fre_s</item>
+        <item>img_language_ara_s</item>
+        <item>img_language_heb_s</item>
+        <item>img_language_ben_s</item>
+        <item>img_language_rus_s</item>
+        <item>img_language_por_s</item>
+        <item>img_language_tha_s</item>
+        <item>img_language_vie_s</item>
+    </array>
+    <array name="language_code">
+        <item>lang_use_eng</item>
+        <item>lang_use_spa</item>
+        <item>lang_use_kor</item>
+        <item>lang_use_chi</item>
+        <item>lang_use_jpn</item>
+        <item>lang_use_hin</item>
+        <item>lang_use_fre</item>
+        <item>lang_use_ara</item>
+        <item>lang_use_heb</item>
+        <item>lang_use_ben</item>
+        <item>lang_use_rus</item>
+        <item>lang_use_por</item>
+        <item>lang_use_tha</item>
+        <item>lang_use_vie</item>
+    </array>
 </resources>

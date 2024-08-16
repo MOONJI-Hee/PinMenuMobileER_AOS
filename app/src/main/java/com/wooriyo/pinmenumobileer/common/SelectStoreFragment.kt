@@ -64,6 +64,7 @@ class SelectStoreFragment : Fragment() {
                         "pay"   ->  (activity as MainActivity).insPaySetting(position)
                         "print" ->  (activity as MainActivity).insPrintSetting(position)
                         "qr"    ->  (activity as MainActivity).checkQrAgree(position)
+                        "language" -> (context as MainActivity).insLangSetting(position)
                     }
                 }
             })
