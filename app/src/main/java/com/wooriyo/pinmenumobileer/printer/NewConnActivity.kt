@@ -116,9 +116,9 @@ class NewConnActivity : BaseActivity() {
         setContentView(binding.root)
 
         // BroadCast Receiver
-        registerReceiver(discoveryResult, IntentFilter(BluetoothDevice.ACTION_FOUND))
-        registerReceiver(connectDevice, IntentFilter(BluetoothDevice.ACTION_ACL_CONNECTED))
-        registerReceiver(connectDevice, IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED))
+        registerReceiver(discoveryResult, IntentFilter(BluetoothDevice.ACTION_FOUND), Context.RECEIVER_NOT_EXPORTED)
+        registerReceiver(connectDevice, IntentFilter(BluetoothDevice.ACTION_ACL_CONNECTED), Context.RECEIVER_NOT_EXPORTED)
+        registerReceiver(connectDevice, IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED), Context.RECEIVER_NOT_EXPORTED)
 
         getPrintSetting()
 

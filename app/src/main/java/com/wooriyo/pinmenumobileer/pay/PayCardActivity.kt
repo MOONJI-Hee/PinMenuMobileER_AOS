@@ -1,6 +1,7 @@
 package com.wooriyo.pinmenumobileer.pay
 
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
@@ -109,7 +110,7 @@ class PayCardActivity : BaseActivity() {
             }
         })
         val filter = IntentFilter("kr.co.kicc.ectablet.broadcast")
-        this.registerReceiver(receiver, filter)
+        this.registerReceiver(receiver, filter, Context.RECEIVER_NOT_EXPORTED)
     }
 
     // 카드 결제 처리 (KICC 앱으로 이동)

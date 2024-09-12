@@ -1,9 +1,12 @@
 package com.wooriyo.pinmenumobileer.qr
 
 import android.app.DownloadManager
+import android.content.Context
+import android.content.Context.RECEIVER_EXPORTED
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -203,7 +206,11 @@ class SetQrcodeFragment : Fragment() {
 
             val intentFilter = IntentFilter()
             intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
-            (activity as MainActivity).registerReceiver(DownloadReceiver(requireContext()), intentFilter)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                (activity as MainActivity).registerReceiver(DownloadReceiver(requireContext()), intentFilter, Context.RECEIVER_NOT_EXPORTED)
+            }else {
+                (activity as MainActivity).registerReceiver(DownloadReceiver(requireContext()), intentFilter)
+            }
         }
     }
 

@@ -110,9 +110,7 @@ class SetConnActivity : BaseActivity() {
                 }else
                     Toast.makeText(context, "검색된 블루투스 기기가 없습니다.", Toast.LENGTH_SHORT).show()
             }
-        }, IntentFilter(BluetoothDevice.ACTION_FOUND))
-//        registerReceiver(connectDevice, IntentFilter(BluetoothDevice.ACTION_ACL_CONNECTED))
-//        registerReceiver(connectDevice, IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED))
+        }, IntentFilter(BluetoothDevice.ACTION_FOUND), Context.RECEIVER_NOT_EXPORTED)
 
         // 연결 프린트 리사이클러뷰
         sewooAdapter.setConnClickListener(object : ItemClickListener {
